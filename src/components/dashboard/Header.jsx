@@ -23,30 +23,7 @@ NotificationItem.propTypes = {
 };
 
 const Header = ({ userName, userImage, userRole, onMenuClick }) => {
-  const location = useLocation();
-  const getSubtitle = (pathname) => {
-    const base = (
-      <Link
-        to="/"
-        className="text-muted-foreground text-[14px] md:text-[16px] not-italic font-normal leading-[160%] hover:underline"
-      >
-        Home
-      </Link>
-    );
 
-    const map = {
-      '/': "Here's your dashboard overview.",
-      '/students': <>{base} / Students</>,
-      '/alumni': <>{base} / Alumni</>,
-      '/impression': <>{base} / Impression</>,
-      '/career-checklist': <>{base} / Career Checklist</>,
-      '/risk-alerts': <>{base} / Risk Alerts</>,
-      '/ai-nudges': <>{base} / AI Nudges</>,
-      '/scheduled': <>{base} / Scheduled</>,
-    };
-
-    return map[pathname] || 'Dashboard';
-  };
 
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -93,14 +70,7 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
             <Menu size={22} />
           </button>
 
-          <div>
-            <h1 className=" font-[poppins] text-[18px] sm:text-[20px] md:text-[24px] lg:text-[32px] not-italic font-medium leading-[150%] tracking-[-0.32px]">
-              Good morning, {userName}
-            </h1>
-            <p className="font-[manrope] text-[14px] md:text-[16px] not-italic font-medium leading-[normal]">
-              {getSubtitle(location.pathname)}
-            </p>
-          </div>
+          
         </div>
 
         <div className="flex items-center space-x-4">
@@ -125,8 +95,6 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
               <Search className="h-5 w-5 text-muted-foreground" />
             </button>
           </div>
-
-          <ModeToggle />
 
           {/* Notification dropdown */}
           <div className="relative dropdown-container">
