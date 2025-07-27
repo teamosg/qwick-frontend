@@ -29,7 +29,7 @@ const SignIn = () => {
   return (
     <div className="min-h-screen flex bg-gray-50">
       {/* Left side - Form */}
-      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col justify-center">
+      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col ">
         <div className="max-w-md mx-auto w-full">
           {/* Logo */}
           <Link
@@ -83,7 +83,8 @@ const SignIn = () => {
               </svg>
             </span>
           </Link>
-
+        </div>
+        <div className="max-w-md mx-auto w-full flex flex-col h-full justify-center">
           <div className="mb-8 text-center">
             {/* Title */}
             <h2 className="text-[#000] text-center font-[Inter] text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] not-italic font-medium leading-[120%] uppercase">
@@ -94,25 +95,30 @@ const SignIn = () => {
             </p>
           </div>
 
-          {/* Social Buttons */}
-          <div className="mb-8">
-            <div className="flex md:flex-row flex-col items-center gap-2 md:gap-3.5">
-              <button className="w-full py-2.5 px-4 md:px-2 lg:px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition relative">
-                <div className="flex items-center gap-2">
-                  <FcGoogle className="text-lg" />
-                  <span>Google</span>
-                </div>
-                <img src={arrowRight} alt="arrow" />
-              </button>
-              <button className="w-full py-2.5 px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition relative">
-                <div className="flex items-center gap-2">
-                  <FaFacebook className="text-lg text-blue-600" />
-                  <span>Facebook</span>
-                </div>
-                <img src={arrowRight} alt="arrow" />
-              </button>
-            </div>
-          </div>
+             {/* Social Buttons */}
+                   <div className="flex md:flex-row flex-col items-center gap-2 md:gap-3.5 ">
+                     <button className="w-full py-2.5 px-4 md:px-2 lg:px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition cursor-pointer ">
+                       <div className="flex items-center gap-2 ">
+                         <FcGoogle className="text-lg" />
+                         <span>Google</span>
+                       </div>
+                       <img src={arrowRight} />
+                     </button>
+                     <button className="w-full py-2.5 px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition cursor-pointer ">
+                       <div className="flex items-center gap-2">
+                         <FaFacebook className="text-lg text-blue-600" />
+                         <span>Facebook</span>
+                       </div>
+                       <img src={arrowRight} />
+                     </button>
+                   </div>
+         
+                   {/* Divider */}
+                   <div className="my-6 md:my-7.5 flex items-center">
+                     <div className="flex-1 border-t border-gray-300"></div>
+                     <span className="px-3 text-gray-500 text-sm">or</span>
+                     <div className="flex-1 border-t border-gray-300"></div>
+                   </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

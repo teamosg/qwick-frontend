@@ -48,8 +48,8 @@ const SignUp = () => {
                 fill="none"
               >
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M49.0833 34.0223C49.0845 34.6257 49.0845 35.3618 49.0845 35.9639C49.0845 36.566 48.6128 37.1121 47.9924 37.1779C46.8272 37.2961 45.7193 37.6045 44.6979 38.0701C42.2883 39.167 40.3638 41.1415 39.34 43.5816C38.9524 44.5055 38.694 45.4951 38.5855 46.5299C38.5197 47.1503 37.998 47.6196 37.3752 47.6196C36.8024 47.622 36.1125 47.622 35.5396 47.622C34.9156 47.622 34.3915 47.1515 34.3257 46.5311C34.3233 46.5092 34.3208 46.486 34.3184 46.4641C34.1685 45.0954 33.7541 43.8059 33.1252 42.648C32.6925 41.8509 32.1562 41.1305 31.5382 40.5016C29.7648 38.6941 27.3138 37.6349 24.7079 37.6349H9.64446C6.27684 37.6349 3.27121 35.5215 2.13161 32.3513C1.87444 31.6346 1.65017 30.9034 1.46004 30.1574C0.973723 28.2475 0.715332 26.2462 0.715332 24.1852C0.715332 10.8366 11.5519 0 24.9005 0C38.2491 0 49.0845 10.8366 49.0845 24.1852C49.0845 26.4168 48.781 28.5778 48.2142 30.6291C45.7595 30.3756 43.6168 29.0666 42.2603 27.1652C42.426 26.1962 42.5126 25.2005 42.5126 24.1852C42.5126 14.4638 34.6207 6.57191 24.9005 6.57191C15.1804 6.57191 7.28725 14.4638 7.28725 24.1852C7.28725 26.2816 7.65411 28.2926 8.32812 30.1574C8.80347 31.4738 10.0528 32.3513 11.452 32.3513H24.7104C28.2218 32.3513 31.4529 30.428 33.1264 27.3395C33.765 26.1621 34.1831 24.8507 34.3281 23.4575C34.394 22.8384 34.9168 22.3679 35.5396 22.3679C36.1125 22.3679 36.8024 22.3679 37.3752 22.3679C37.9992 22.3679 38.5221 22.8384 38.5879 23.4588C38.8414 25.9135 39.9481 28.1183 41.6057 29.7747C43.1695 31.3385 45.2244 32.4147 47.5195 32.7547C47.6755 32.7767 47.8327 32.7974 47.9912 32.8133C48.6116 32.8778 49.0833 33.4007 49.0833 34.0235V34.0223ZM32.2293 47.2356C29.9172 47.9718 27.4552 48.3691 24.9005 48.3691C20.9271 48.3691 17.1756 47.4087 13.8665 45.7072C13.8579 45.7036 13.8482 45.6987 13.8397 45.6938C11.0217 44.241 8.52557 42.2506 6.4877 39.8581L6.48404 39.8544C6.47551 39.8459 6.46819 39.8374 6.4621 39.8288C6.22443 39.5485 5.99163 39.2633 5.76737 38.972C6.417 39.2974 7.13245 39.4961 7.89666 39.4961H16.1957C16.3968 39.6119 16.6015 39.7228 16.8075 39.8288C17.4254 40.1506 18.0641 40.4358 18.7235 40.6832H18.7259C20.648 41.4035 22.7273 41.7972 24.9005 41.7972C26.3521 41.7972 27.7623 41.6217 29.1128 41.289C29.9599 41.9179 30.6765 42.7321 31.197 43.6925C31.7003 44.6225 32.0306 45.6572 32.144 46.7566V46.7591C32.1611 46.9224 32.1903 47.0808 32.2293 47.2356Z"
                   fill="#003933"
                 />
@@ -86,7 +86,8 @@ const SignUp = () => {
               </svg>
             </span>
           </Link>
-
+        </div>
+        <div className="max-w-md mx-auto w-full flex flex-col justify-center">
           <div className="mb-8 text-center">
             {/* Title */}
             <h2 className=" text-[#000] text-center font-[Inter] text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] not-italic font-medium leading-[120%] uppercase">
@@ -99,23 +100,28 @@ const SignUp = () => {
           </div>
 
           {/* Social Buttons */}
-          <div className="mb-8">
-            <div className="flex md:flex-row flex-col items-center gap-2 md:gap-3.5 ">
-              <button className="w-full py-2.5 px-4 md:px-2 lg:px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition relative ">
-                <div className="flex items-center gap-2">
-                  <FcGoogle className="text-lg" />
-                  <span>Google</span>
-                </div>
-                <img src={arrowRight} />
-              </button>
-              <button className="w-full py-2.5 px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition relative ">
-                <div className="flex items-center gap-2">
-                  <FaFacebook className="text-lg text-blue-600" />
-                  <span>Facebook</span>
-                </div>
-                <img src={arrowRight} />
-              </button>
-            </div>
+          <div className="flex md:flex-row flex-col items-center gap-2 md:gap-3.5 ">
+            <button className="w-full py-2.5 px-4 md:px-2 lg:px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition cursor-pointer ">
+              <div className="flex items-center gap-2 ">
+                <FcGoogle className="text-lg" />
+                <span>Google</span>
+              </div>
+              <img src={arrowRight} />
+            </button>
+            <button className="w-full py-2.5 px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition cursor-pointer ">
+              <div className="flex items-center gap-2">
+                <FaFacebook className="text-lg text-blue-600" />
+                <span>Facebook</span>
+              </div>
+              <img src={arrowRight} />
+            </button>
+          </div>
+
+          {/* Divider */}
+          <div className="my-6 md:my-7.5 flex items-center">
+            <div className="flex-1 border-t border-gray-300"></div>
+            <span className="px-3 text-gray-500 text-sm">or</span>
+            <div className="flex-1 border-t border-gray-300"></div>
           </div>
 
           {/* Form */}
@@ -278,15 +284,8 @@ const SignUp = () => {
             </button>
           </form>
 
-          {/* Divider */}
-          <div className="my-6 flex items-center">
-            <div className="flex-1 border-t border-gray-300"></div>
-            <span className="px-3 text-gray-500 text-sm">or</span>
-            <div className="flex-1 border-t border-gray-300"></div>
-          </div>
-
           {/* Sign In link */}
-          <div className="text-center">
+          <div className="mt-6 text-center">
             <p className="text-gray-600">
               Already have an account?{' '}
               <Link
@@ -296,11 +295,6 @@ const SignUp = () => {
                 Sign In
               </Link>
             </p>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-8 text-center text-sm text-gray-500">
-            <p>Back home on account? Sign up</p>
           </div>
         </div>
       </div>
