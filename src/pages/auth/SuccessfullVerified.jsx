@@ -66,14 +66,17 @@ const SuccessfullVerified = () => {
             <img src={successfull} alt="" srcset="" />
           </div>
 
-          <div className="mb-8 text-center">
+          <div className="text-center flex flex-col gap-4 md:gap-7 lf:gap-8">
             {/* Title */}
             <h2 className="text-[#000] text-center font-[Inter] text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] not-italic font-medium leading-[120%] uppercase">
-              FORGOT PASSWORD
+              Password updated successfully
             </h2>
             <p className="text-[#6F6F6F] text-center font-[Inter] text-[15px] md:text-[16px] not-italic font-normal leading-[140%]">
-              NO WORRIES, WE’LL SEND YOU RESET INSTRUCTIONS
+              Your password has been successfully updated, please log in first
             </p>
+            <Link to="/sign-in" className="w-full bg-[#003933] text-white py-2.5 px-4 rounded-md hover:bg-[#002822] transition mt-2 font-medium block cursor-pointer">
+              Login Now
+            </Link>
           </div>
         </div>
       </div>

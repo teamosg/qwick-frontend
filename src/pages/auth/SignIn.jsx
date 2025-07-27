@@ -216,7 +216,7 @@ const SignIn = () => {
 
             <button
               type="submit"
-              className="w-full bg-[#003933] text-white py-2.5 px-4 rounded-md hover:bg-[#002822] transition mt-2 font-medium"
+              className="w-full bg-[#003933] text-white py-2.5 px-4 rounded-md hover:bg-[#002822] transition mt-2 font-medium cursor-pointer"
             >
               Sign in
             </button>

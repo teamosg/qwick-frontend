@@ -8,6 +8,8 @@ import SignUp from '@/pages/auth/SignUp';
 import ForgotPassword from '@/pages/auth/ForgotPassword';
 import ResetPassword from '@/pages/auth/ResetPassword';
 import SuccessfullVerified from '@/pages/auth/SuccessfullVerified';
+import SuccessfullUpdated from '@/pages/auth/SuccessfullUpdated';
+import VerifyAccount from '@/pages/auth/VerifyAccount';
 
 const router = createBrowserRouter([
   //Admin Dashboard layout
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: '/successfull-verified',
         element: <SuccessfullVerified />,
+      },
+      {
+        path: '/successfull-updated',
+        element: <SuccessfullUpdated />,
+      },
+      {
+        path: '/verify-account',
+        element: <VerifyAccount />,
       },
     ],
   },
