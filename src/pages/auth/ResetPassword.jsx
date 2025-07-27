@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FcGoogle } from 'react-icons/fc';
 import {
-  FaFacebook,
   FaEye,
   FaEyeSlash,
   FaLock,
   FaEnvelope,
 } from 'react-icons/fa';
 import commonAuthLogo from '../../assets/authImg.png';
-import arrowRight from '../../assets/arrow-right.svg';
 import { Link } from 'react-router-dom';
 
-const SignIn = () => {
+const ResetPassword = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -88,152 +87,101 @@ const SignIn = () => {
           <div className="mb-8 text-center">
             {/* Title */}
             <h2 className="text-[#000] text-center font-[Inter] text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] not-italic font-medium leading-[120%] uppercase">
-              SIGN IN
+            RESET PASSWORD
             </h2>
             <p className="text-[#6F6F6F] text-center font-[Inter] text-[15px] md:text-[16px] not-italic font-normal leading-[140%]">
-              Start earning rewards for your content
+             USE STRONG PASSWORD TO KEEP YOUR ACCOUNT SAFE
             </p>
           </div>
 
-             {/* Social Buttons */}
-                   <div className="flex md:flex-row flex-col items-center gap-2 md:gap-3.5 ">
-                     <button className="w-full py-2.5 px-4 md:px-2 lg:px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition cursor-pointer ">
-                       <div className="flex items-center gap-2 ">
-                         <FcGoogle className="text-lg" />
-                         <span>Google</span>
-                       </div>
-                       <img src={arrowRight} />
-                     </button>
-                     <button className="w-full py-2.5 px-4 border border-gray-300 rounded-md text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 transition cursor-pointer ">
-                       <div className="flex items-center gap-2">
-                         <FaFacebook className="text-lg text-blue-600" />
-                         <span>Facebook</span>
-                       </div>
-                       <img src={arrowRight} />
-                     </button>
-                   </div>
-         
-                   {/* Divider */}
-                   <div className="my-6 md:my-7.5 flex items-center">
-                     <div className="flex-1 border-t border-gray-300"></div>
-                     <span className="px-3 text-gray-500 text-sm">or</span>
-                     <div className="flex-1 border-t border-gray-300"></div>
-                   </div>
-
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Email */}
-            <div>
-              <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
-                Email
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaEnvelope className="text-gray-400" />
-                </div>
-                <input
-                  type="email"
-                  {...register('email', {
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Invalid email address',
-                    },
-                  })}
-                  placeholder="Enter email"
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#003933] focus:border-[#003933]"
-                />
-              </div>
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
+         
 
             {/* Password */}
-            <div>
-              <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="text-gray-400" />
-                </div>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  {...register('password', {
-                    required: 'Password is required',
-                  })}
-                  placeholder="Enter password"
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#003933] focus:border-[#003933]"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <FaEyeSlash className="text-gray-400 hover:text-gray-600" />
-                  ) : (
-                    <FaEye className="text-gray-400 hover:text-gray-600" />
-                  )}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-
-            {/* Remember me & Forgot password */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-[#003933] focus:ring-[#003933] border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-700"
-                >
-                  Keep me signed in
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <Link
-                  to="/forgot-password"
-                  className="font-medium text-[#003933] hover:text-[#002822]"
-                >
-                  Forget your password?
-                </Link>
-              </div>
-            </div>
+                      <div>
+                        <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
+                          Password
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <FaLock className="text-gray-400" />
+                          </div>
+                          <input
+                            type={showPassword ? 'text' : 'password'}
+                            {...register('password', {
+                              required: 'Password is required',
+                              minLength: {
+                                value: 6,
+                                message: 'Password must be at least 6 characters',
+                              },
+                            })}
+                            placeholder="Your password"
+                            className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#003933] focus:border-[#003933]"
+                          />
+                          <button
+                            type="button"
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <FaEyeSlash className="text-gray-400 hover:text-gray-600" />
+                            ) : (
+                              <FaEye className="text-gray-400 hover:text-gray-600" />
+                            )}
+                          </button>
+                        </div>
+                        {errors.password && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.password.message}
+                          </p>
+                        )}
+                      </div>
+          
+                      {/* Confirm Password */}
+                      <div>
+                        <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
+                          Confirm Password
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <FaLock className="text-gray-400" />
+                          </div>
+                          <input
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            {...register('confirmPassword', {
+                              validate: (value) =>
+                                value === watch('password') || 'Passwords do not match',
+                            })}
+                            placeholder="Your password"
+                            className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#003933] focus:border-[#003933]"
+                          />
+                          <button
+                            type="button"
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          >
+                            {showConfirmPassword ? (
+                              <FaEyeSlash className="text-gray-400 hover:text-gray-600" />
+                            ) : (
+                              <FaEye className="text-gray-400 hover:text-gray-600" />
+                            )}
+                          </button>
+                        </div>
+                        {errors.confirmPassword && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.confirmPassword.message}
+                          </p>
+                        )}
+                      </div>
 
             <button
               type="submit"
-              className="w-full bg-[#003933] text-white py-2.5 px-4 rounded-md hover:bg-[#002822] transition mt-2 font-medium"
+              className="w-full bg-[#003933] text-white py-2.5 px-4 rounded-md hover:bg-[#002822] transition mt-2 font-medium cursor-pointer"
             >
               Sign in
             </button>
           </form>
-
-          {/* Sign up link */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              Don't have an account?{' '}
-              <Link
-                to="/sign-up"
-                className="text-[#003933] font-medium hover:underline"
-              >
-                Sign up
-              </Link>
-            </p>
-          </div>
         </div>
       </div>
 
@@ -251,4 +199,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default ResetPassword;

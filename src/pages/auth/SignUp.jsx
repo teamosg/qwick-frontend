@@ -129,7 +129,7 @@ const SignUp = () => {
             {/* Name Row */}
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1">
-                <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2">
+                <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
                   First Name
                 </label>
                 <div className="relative">
@@ -153,7 +153,7 @@ const SignUp = () => {
               </div>
 
               <div className="flex-1">
-                <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2">
+                <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
                   Last Name
                 </label>
                 <div className="relative">
@@ -172,7 +172,7 @@ const SignUp = () => {
 
             {/* Email */}
             <div>
-              <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2">
+              <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
                 Email
               </label>
               <div className="relative">
@@ -201,7 +201,7 @@ const SignUp = () => {
 
             {/* Password */}
             <div>
-              <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2">
+              <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
                 Password
               </label>
               <div className="relative">
@@ -241,7 +241,7 @@ const SignUp = () => {
 
             {/* Confirm Password */}
             <div>
-              <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2">
+              <label className="text-[#0D0D12] font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
                 Confirm Password
               </label>
               <div className="relative">
