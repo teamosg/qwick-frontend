@@ -10,6 +10,7 @@ import ResetPassword from '@/pages/auth/ResetPassword';
 import SuccessfullVerified from '@/pages/auth/SuccessfullVerified';
 import SuccessfullUpdated from '@/pages/auth/SuccessfullUpdated';
 import VerifyAccount from '@/pages/auth/VerifyAccount';
+import Discover from '@/pages/dashboard/Discover';
 
 const router = createBrowserRouter([
   //Admin Dashboard layout
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
         element: <Home />,
       },
 
+      {
+        path: '/discover',
+        element: <Discover/>,
+      },
       // if page now found
       {
         path: '*',

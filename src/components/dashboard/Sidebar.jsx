@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Compass,
+  Home,
   Search as SearchIcon,
   LayoutDashboard,
   Wallet,
@@ -9,10 +10,10 @@ import {
   X,
   Sun,
   Moon,
+  MessageSquareMore,
 } from 'lucide-react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useTheme } from 'next-themes';
 
 
 const NavItem = ({ icon, text, to }) => {
@@ -22,7 +23,7 @@ const NavItem = ({ icon, text, to }) => {
       className={({ isActive, isPending }) =>
         `flex items-center space-x-3 p-3 rounded-lg text-muted-foreground border ${
           isActive || isPending
-            ? 'bg-sidebar-link-active text-sidebar-primary border-sidebar-primary'
+            ? 'bg-sidebar-link-active !text-[#003933] dark:!text-[#FFF] border-[#003933] dark:border-[#fff] bg-[#E4E4E7] dark:bg-[#6a6a75]'
             : 'hover:bg-accent border-transparent'
         }`
       }
@@ -32,7 +33,7 @@ const NavItem = ({ icon, text, to }) => {
           <div
             className={
               isActive || isPending
-                ? 'text-sidebar-primary'
+                ? 'text-[#003933] dark:text-[#fff]'
                 : 'text-sidebar-foreground'
             }
           >
@@ -46,12 +47,8 @@ const NavItem = ({ icon, text, to }) => {
 };
 
 const Sidebar = ({ onClose }) => {
-  const [showSettings, setShowSettings] = React.useState(false);
-  const { theme, setTheme } = useTheme();
 
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
+
 
   return (
     <div className="bg-sidebar h-full flex flex-col border-r border-sidebar-border">
@@ -119,12 +116,8 @@ const Sidebar = ({ onClose }) => {
       </div>
 
       <div className="flex-1 px-3 py-2 space-y-1">
-        <NavItem icon={<Compass size={20} />} text="Home" to="/" />
-        <NavItem
-          icon={<SearchIcon size={20} />}
-          text="Discover"
-          to="/discover"
-        />
+        <NavItem icon={<Home size={20} />} text="Home" to="/" />
+        <NavItem icon={<Compass size={20} />} text="Discover" to="/discover" />
         <NavItem
           icon={<LayoutDashboard size={20} />}
           text="Dashboard"
@@ -132,46 +125,11 @@ const Sidebar = ({ onClose }) => {
         />
         <NavItem icon={<Wallet size={20} />} text="Payout" to="/payout" />
         <NavItem icon={<UserCircle size={20} />} text="Profile" to="/profile" />
-      </div>
-
-      <div className="p-4 border-t border-sidebar-border">
-        {/* Theme Toggle */}
-        <button
-          onClick={toggleTheme}
-          className="w-full flex items-center space-x-3 p-3 rounded-lg transition-colors hover:bg-accent"
-        >
-          {theme === 'dark' ? (
-            <Sun size={20} className="text-sidebar-foreground" />
-          ) : (
-            <Moon size={20} className="text-sidebar-foreground" />
-          )}
-          <span className="font-medium text-sidebar-foreground">
-            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-          </span>
-        </button>
-
-        {/* Settings */}
-        <button
-          onClick={() => setShowSettings(!showSettings)}
-          className="w-full flex items-center space-x-3 p-3 rounded-lg transition-colors hover:bg-accent mt-1"
-        >
-          <Settings size={20} className="text-sidebar-foreground" />
-          <span className="font-medium text-sidebar-foreground">Settings</span>
-        </button>
-
-        {showSettings && (
-          <div className="mt-2 py-2 px-3 bg-accent rounded-lg">
-            <button className="w-full text-left py-2 px-3 text-sm text-sidebar-foreground hover:bg-sidebar-link-active rounded-sm">
-              Account Settings
-            </button>
-            <button className="w-full text-left py-2 px-3 text-sm text-sidebar-foreground hover:bg-sidebar-link-active rounded-sm">
-              Notifications
-            </button>
-            <button className="w-full text-left py-2 px-3 text-sm text-sidebar-foreground hover:bg-sidebar-link-active rounded-sm">
-              Privacy
-            </button>
-          </div>
-        )}
+        <NavItem
+          icon={<MessageSquareMore size={20} />}
+          text="Message"
+          to="/message"
+        />
       </div>
     </div>
   );
