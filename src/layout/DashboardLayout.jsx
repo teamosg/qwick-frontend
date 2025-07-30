@@ -16,7 +16,7 @@ function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -45,8 +45,10 @@ function DashboardLayout() {
           onMenuClick={() => setSidebarOpen(true)}
         />
 
-        <main className="bg-grey-white flex-1 overflow-x-hidden overflow-y-auto">
-          <Outlet />
+        <main className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-y-auto">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

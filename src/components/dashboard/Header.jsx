@@ -33,7 +33,7 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
-  const { theme, setTheme } = useTheme(); // Get theme from ThemeProvider
+  const { theme, setTheme } = useTheme(); 
 
   const notifications = [
     {

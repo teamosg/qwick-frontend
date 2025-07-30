@@ -119,7 +119,7 @@ const Sidebar = ({ onClose }) => {
       </div>
 
       <div className="flex-1 px-3 py-2 space-y-1">
-        <NavItem icon={<Compass size={20} />} text="Explore" to="/" />
+        <NavItem icon={<Compass size={20} />} text="Home" to="/" />
         <NavItem
           icon={<SearchIcon size={20} />}
           text="Discover"

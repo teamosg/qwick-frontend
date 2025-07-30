@@ -1,0 +1,128 @@
+import React, { useState } from 'react';
+import Post from '../../components/dashboard/Home/Post';
+import PostForm from '@/components/dashboard/Home/PostForm';
+
+const Home = () => {
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      author: 'John Doe',
+      authorImage: 'https://i.pravatar.cc/150?img=1',
+      time: '2 hours ago',
+      content: 'This is a sample post with comments!',
+      image: 'https://picsum.photos/800/400',
+      likes: 42,
+      comments: [
+        {
+          user: 'Jane Smith',
+          userImage: 'https://i.pravatar.cc/150?img=2',
+          text: 'Great post! 😊',
+          time: '1 hour ago',
+        },
+      ],
+      shares: 5,
+      isLiked: false,
+      isSaved: false,
+      postType: 'public',
+    },
+  ]);
+
+
+  const handleSubmitPost = (newPost) => {
+    const post = {
+      id: Date.now(),
+      author: 'Current User',
+      authorImage: 'https://i.pravatar.cc/150?img=5',
+      time: 'Just now',
+      content: newPost.content,
+      image: newPost.image,
+      likes: 0,
+      comments: [],
+      shares: 0,
+      isLiked: false,
+      isSaved: false,
+      postType: newPost.postType,
+      group: newPost.group || null,
+    };
+    setPosts([post, ...posts]);
+  };
+
+  const handleLike = (postId) => {
+    setPosts(
+      posts.map((post) => {
+        if (post.id === postId) {
+          return {
+            ...post,
+            isLiked: !post.isLiked,
+            likes: post.isLiked ? post.likes - 1 : post.likes + 1,
+          };
+        }
+        return post;
+      })
+    );
+  };
+
+  const handleSave = (postId) => {
+    setPosts(
+      posts.map((post) => {
+        if (post.id === postId) {
+          return {
+            ...post,
+            isSaved: !post.isSaved,
+          };
+        }
+        return post;
+      })
+    );
+  };
+
+  const handleDelete = (postId) => {
+    setPosts(posts.filter((post) => post.id !== postId));
+  };
+
+  const handleEdit = (postId) => {
+    console.log('Edit post:', postId);
+  };
+
+  const handleCommentSubmit = (postId, comment) => {
+    setPosts(
+      posts.map((post) => {
+        if (post.id === postId) {
+          return {
+            ...post,
+            comments: [
+              ...post.comments,
+              {
+                user: 'Current User',
+                userImage: 'https://i.pravatar.cc/150?img=5',
+                text: comment.text,
+                image: comment.image,
+                time: 'Just now',
+              },
+            ],
+          };
+        }
+        return post;
+      })
+    );
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto p-4">
+      <PostForm onSubmit={handleSubmitPost} />
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          post={post}
+          onLike={handleLike}
+          onSave={handleSave}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          onCommentSubmit={handleCommentSubmit}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default Home;

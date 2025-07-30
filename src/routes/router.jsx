@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import DashboardLayout from './../layout/DashboardLayout';
 import SignIn from '../pages/auth/SignIn';
 import AuthLayout from '../layout/AuthLayout';
-import DashboardHome from './../pages/dashboard/DashboardHome';
+import Home from '../pages/dashboard/Home';
 import NotFound from '@/shared/NotFound';
 import SignUp from '@/pages/auth/SignUp';
 import ForgotPassword from '@/pages/auth/ForgotPassword';
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardHome />,
+        element: <Home />,
       },
 
       // if page now found
