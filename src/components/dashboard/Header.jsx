@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import { Bell, Search, LogOut, User, Settings, Menu } from 'lucide-react';
+import {
+  Bell,
+  Search,
+  LogOut,
+  User,
+  Settings,
+  Menu,
+  Sun,
+  Moon,
+} from 'lucide-react';
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
-
-import ModeToggle from './../ui/mode-toggle';
+import { useTheme } from '../shared/ThemeProvider'; 
 
 const NotificationItem = ({ title, time, isRead }) => (
   <div
     className={`p-4 ${
-      !isRead ? 'bg-blue-50' : ''
-    } hover:bg-gray-50 cursor-pointer`}
+      !isRead ? 'bg-primary/10' : ''
+    } hover:bg-accent cursor-pointer`}
   >
-    <p className="text-sm font-medium text-gray-800">{title}</p>
+    <p className="text-sm font-medium text-foreground">{title}</p>
     <p className="text-xs text-muted-foreground mt-1">{time}</p>
   </div>
 );
@@ -23,11 +30,10 @@ NotificationItem.propTypes = {
 };
 
 const Header = ({ userName, userImage, userRole, onMenuClick }) => {
-
-
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const { theme, setTheme } = useTheme(); // Get theme from ThemeProvider
 
   const notifications = [
     {
@@ -58,48 +64,59 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
     });
   };
 
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <>
-      <header className="bg-grey-white py-4 px-6 flex items-center justify-between border-b border-gray-200">
+      <header className="bg-card py-4 px-6 flex items-center justify-between border-b border-border">
         <div className="flex items-center space-x-2 md:space-x-4">
-          {/* Sidebar toggle button (mobile) */}
           <button
-            className="lg:hidden p-1 md:p-2 rounded-md  hover:bg-[#15C8E8]"
+            className="lg:hidden p-1 md:p-2 rounded-md hover:bg-accent"
             onClick={onMenuClick}
           >
-            <Menu size={22} />
+            <Menu size={22} className="text-foreground" />
           </button>
-
-          
         </div>
 
         <div className="flex items-center space-x-4">
-          {/* Search bar (desktop only) */}
           <div className="relative hidden sm:block">
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 text-[#6317C3]" />
+              <Search className="h-4 w-4 text-primary" />
             </div>
             <input
               type="text"
               placeholder="Search"
-              className="pr-10 pl-4 py-2 text-[#6317C3] font-[poppins] text-[14px] font-medium border border-[#D6DDEB] bg-[#FCF6FF] rounded-full focus:ring-2 focus:ring-purple-500 focus:outline-none"
+              className="pr-10 pl-4 py-2 text-primary font-[poppins] text-[14px] font-medium border border-border bg-popover rounded-full focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
 
-          {/* Search icon (mobile only) */}
           <div className="sm:hidden">
             <button
               onClick={() => setShowMobileSearch((prev) => !prev)}
-              className="p-2 rounded-full hover:bg-gray-100"
+              className="p-2 rounded-full hover:bg-accent"
             >
               <Search className="h-5 w-5 text-muted-foreground" />
             </button>
           </div>
 
-          {/* Notification dropdown */}
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="hidden sm:block p-2 rounded-full hover:bg-accent"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? (
+              <Sun className="h-5 w-5 text-foreground" /> // You'll need to import Sun icon from lucide-react
+            ) : (
+              <Moon className="h-5 w-5 text-foreground" /> // You'll need to import Moon icon from lucide-react
+            )}
+          </button>
+
           <div className="relative dropdown-container">
             <button
-              className="p-2 rounded-full hover:bg-gray-100 relative"
+              className="p-2 rounded-full hover:bg-accent relative"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowNotifications(!showNotifications);
@@ -108,13 +125,15 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
               }}
             >
               <Bell className="h-5 w-5 text-muted-foreground" />
-              <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full" />
+              <span className="absolute top-0 right-0 h-2 w-2 bg-destructive rounded-full" />
             </button>
 
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                <div className="p-4 border-b border-gray-200">
-                  <h3 className="font-semibold">Notifications</h3>
+              <div className="absolute right-0 mt-2 w-80 bg-popover rounded-lg shadow-lg border border-border z-50">
+                <div className="p-4 border-b border-border">
+                  <h3 className="font-semibold text-foreground">
+                    Notifications
+                  </h3>
                 </div>
                 <div className="max-h-96 overflow-y-auto">
                   {notifications.map((notification) => (
@@ -126,8 +145,8 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
                     />
                   ))}
                 </div>
-                <div className="p-4 border-t border-gray-200">
-                  <button className="text-sm text-blue-600 hover:text-blue-800">
+                <div className="p-4 border-t border-border">
+                  <button className="text-sm text-primary hover:text-primary/80">
                     View all notifications
                   </button>
                 </div>
@@ -135,7 +154,6 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
             )}
           </div>
 
-          {/* Profile dropdown */}
           <div className="relative dropdown-container">
             <button
               className="flex items-center space-x-3 cursor-pointer"
@@ -149,10 +167,12 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
               <img
                 src={userImage}
                 alt={userName}
-                className="h-8 w-8 rounded-full object-cover border border-gray-200"
+                className="h-8 w-8 rounded-full object-cover border border-border"
               />
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium">{userName}</p>
+                <p className="text-sm font-medium text-foreground">
+                  {userName}
+                </p>
                 {userRole && (
                   <p className="text-xs text-muted-foreground">{userRole}</p>
                 )}
@@ -160,18 +180,18 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
             </button>
 
             {showProfileMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+              <div className="absolute right-0 mt-2 w-48 bg-popover rounded-lg shadow-lg border border-border z-50">
                 <div className="py-1">
-                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                  <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
                     <User size={16} className="mr-2" />
                     Edit Profile
                   </button>
-                  <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                  <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
                     <Settings size={16} className="mr-2" />
                     Settings
                   </button>
-                  <hr className="my-1" />
-                  <button className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 flex items-center">
+                  <hr className="my-1 border-border" />
+                  <button className="w-full px-4 py-2 text-left text-sm text-destructive hover:bg-accent flex items-center">
                     <LogOut size={16} className="mr-2" />
                     Log Out
                   </button>
@@ -182,13 +202,12 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
         </div>
       </header>
 
-      {/* Mobile Search Bar (below header) */}
       {showMobileSearch && (
         <div className="sm:hidden px-4 pb-2 mt-[-10px]">
           <input
             type="text"
             placeholder="Search"
-            className="w-full px-4 py-2 text-[#6317C3] font-[poppins] text-[14px] border border-[#D6DDEB] bg-[#FCF6FF] rounded-full focus:ring-2 focus:ring-purple-500 focus:outline-none"
+            className="w-full px-4 py-2 text-primary font-[poppins] text-[14px] border border-border bg-popover rounded-full focus:ring-2 focus:ring-primary focus:outline-none"
           />
         </div>
       )}
