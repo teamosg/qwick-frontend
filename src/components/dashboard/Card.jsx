@@ -18,10 +18,10 @@ const Card = ({ progress = 7 }) => {
       </div>
 
       {/* Title and Description */}
-      <h3 className="font-semibold text-zinc-900 dark:text-white text-sm mb-1">
+      <h3 className="font-semibold text-[#090003] dark:text-white text-sm mb-1">
         Destroying 1on1’s Clips
       </h3>
-      <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-3 leading-snug">
+      <p className="text-xs text-[#717171] dark:text-zinc-400 mb-3 leading-snug">
         It is a long established fact that a reader will be distracted by the
         readable content of a page when looking...
       </p>
@@ -31,21 +31,21 @@ const Card = ({ progress = 7 }) => {
         ${1673.18} of ${14968.3}
         <span className="ml-2">{progress}%</span>
       </div>
-      <div className="h-2 bg-zinc-200 dark:bg-zinc-700 rounded-full overflow-hidden mb-4">
+      <div className="h-2 bg-[#E2E2E2]  rounded-full overflow-hidden mb-4">
         <div
-          className="h-full bg-green-600 rounded-full transition-all duration-300"
+          className="h-full bg-[#003933] dark:bg-[#48c4b5] rounded-full transition-all duration-300"
           style={{ width: progressWidth }}
         />
       </div>
 
       {/* Meta info */}
-      <div className="grid grid-cols-3 text-xs text-zinc-600 dark:text-zinc-400 mb-4">
+      <div className="grid grid-cols-3 text-xs text-[#717171] dark:text-zinc-400 mb-4">
         <div>
-          <p className="font-semibold text-zinc-900 dark:text-white">Type</p>
+          <p className="font-semibold text-[#090003] dark:text-white">Type</p>
           <p>Clipping</p>
         </div>
         <div>
-          <p className="font-semibold text-zinc-900 dark:text-white">
+          <p className="font-semibold text-[#090003] dark:text-white">
             Platforms
           </p>
           <div className="flex gap-1 mt-1">
@@ -55,15 +55,15 @@ const Card = ({ progress = 7 }) => {
           </div>
         </div>
         <div>
-          <p className="font-semibold text-zinc-900 dark:text-white">Views</p>
+          <p className="font-semibold text-[#090003] dark:text-white">Views</p>
           <p>47,116</p>
         </div>
       </div>
 
       {/* Compensation & Button */}
-      <div className="flex items-center justify-between text-xs text-zinc-600 dark:text-zinc-400">
+      <div className="flex items-center justify-between text-xs text-[#717171] dark:text-zinc-400">
         <div>
-          <p className="font-semibold text-zinc-900 dark:text-white">
+          <p className="font-semibold text-[#090003] dark:text-white">
             Compensation
           </p>
           <p>$1 per 1k views</p>
