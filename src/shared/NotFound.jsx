@@ -1,7 +1,6 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star } from 'lucide-react';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // Starry background component
 const StarryBackground = () => (
@@ -52,14 +51,14 @@ const NotFound = () => {
   };
 
   return (
-    <div className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-gray-900 text-white">
+    <div className="relative h-screen w-full flex items-center justify-center  bg-gray-900 text-white">
       <StarryBackground />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/60 z-10" />
 
       <motion.div
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className="relative z-20 flex flex-col items-center justify-center text-center p-8 bg-black/30 rounded-2xl shadow-2xl shadow-purple-500/20 border border-purple-500/30 backdrop-blur-md"
       >
         <motion.div
@@ -71,15 +70,15 @@ const NotFound = () => {
           transition={{
             duration: 3,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: "easeInOut",
           }}
-          style={{ transformStyle: 'preserve-3d' }}
+          style={{ transformStyle: "preserve-3d" }}
         />
 
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
         >
           <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 relative group">
             Under Construction
@@ -98,11 +97,11 @@ const NotFound = () => {
         </motion.p>
 
         <motion.button
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
           className="flex items-center gap-2 px-6 py-3 bg-purple-600/80 text-white font-semibold rounded-lg hover:bg-purple-500 transition-all duration-300 shadow-lg shadow-purple-500/30 cursor-pointer z-20"
           whileHover={{
             scale: 1.05,
-            boxShadow: '0px 10px 30px rgba(138, 43, 226, 0.5)',
+            boxShadow: "0px 10px 30px rgba(138, 43, 226, 0.5)",
           }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, scale: 0.8 }}

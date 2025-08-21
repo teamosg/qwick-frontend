@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -123,4 +122,9 @@
 
 body {
   font-family: "Inter", sans-serif;
+}
+body,
+html,
+#root {
+  overflow: auto;
 }
