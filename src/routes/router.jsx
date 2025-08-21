@@ -4,6 +4,7 @@ import SignUp from "@/pages/auth/SignUp";
 import SuccessfullUpdated from "@/pages/auth/SuccessfullUpdated";
 import SuccessfullVerified from "@/pages/auth/SuccessfullVerified";
 import VerifyAccount from "@/pages/auth/VerifyAccount";
+import Apply from "@/pages/dashboard/Apply";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import NotFound from "@/shared/NotFound";
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "/join-community",
         element: <JoinCommunity />,
+      },
+      {
+        path: "/apply",
+        element: <Apply />,
       },
       // if page now found
       {
