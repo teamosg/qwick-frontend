@@ -1,57 +1,58 @@
-import { createBrowserRouter } from 'react-router-dom';
-import DashboardLayout from './../layout/DashboardLayout';
-import SignIn from '../pages/auth/SignIn';
-import AuthLayout from '../layout/AuthLayout';
-import Home from '../pages/dashboard/Home';
-import NotFound from '@/shared/NotFound';
-import SignUp from '@/pages/auth/SignUp';
-import ForgotPassword from '@/pages/auth/ForgotPassword';
-import ResetPassword from '@/pages/auth/ResetPassword';
-import SuccessfullVerified from '@/pages/auth/SuccessfullVerified';
-import SuccessfullUpdated from '@/pages/auth/SuccessfullUpdated';
-import VerifyAccount from '@/pages/auth/VerifyAccount';
-import Discover from '@/pages/dashboard/Discover';
+import ForgotPassword from "@/pages/auth/ForgotPassword";
+import ResetPassword from "@/pages/auth/ResetPassword";
+import SignUp from "@/pages/auth/SignUp";
+import SuccessfullUpdated from "@/pages/auth/SuccessfullUpdated";
+import SuccessfullVerified from "@/pages/auth/SuccessfullVerified";
+import VerifyAccount from "@/pages/auth/VerifyAccount";
+import Discover from "@/pages/dashboard/Discover";
+import JoinCommunity from "@/pages/dashboard/JoinCommunity";
+import NotFound from "@/shared/NotFound";
+import { createBrowserRouter } from "react-router-dom";
+import AuthLayout from "../layout/AuthLayout";
+import SignIn from "../pages/auth/SignIn";
+import Home from "../pages/dashboard/Home";
+import DashboardLayout from "./../layout/DashboardLayout";
 
 const router = createBrowserRouter([
   //Admin Dashboard layout
 
   {
-    path: '/',
+    path: "/",
     element: <AuthLayout />,
     children: [
       {
-        path: '/sign-in',
+        path: "/sign-in",
         element: <SignIn />,
       },
       {
-        path: '/sign-up',
+        path: "/sign-up",
         element: <SignUp />,
       },
       {
-        path: '/forgot-password',
+        path: "/forgot-password",
         element: <ForgotPassword />,
       },
       {
-        path: '/reset-password',
+        path: "/reset-password",
         element: <ResetPassword />,
       },
       {
-        path: '/successfull-verified',
+        path: "/successfull-verified",
         element: <SuccessfullVerified />,
       },
       {
-        path: '/successfull-updated',
+        path: "/successfull-updated",
         element: <SuccessfullUpdated />,
       },
       {
-        path: '/verify-account',
+        path: "/verify-account",
         element: <VerifyAccount />,
       },
     ],
   },
 
   {
-    path: '/',
+    path: "/",
     element: <DashboardLayout />,
     children: [
       {
@@ -60,12 +61,16 @@ const router = createBrowserRouter([
       },
 
       {
-        path: '/discover',
-        element: <Discover/>,
+        path: "/discover",
+        element: <Discover />,
+      },
+      {
+        path: "/join-community",
+        element: <JoinCommunity />,
       },
       // if page now found
       {
-        path: '*',
+        path: "*",
         element: <NotFound />,
       },
     ],

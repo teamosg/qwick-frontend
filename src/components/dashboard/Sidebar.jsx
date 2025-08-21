@@ -1,30 +1,24 @@
-import React from 'react';
 import {
   Compass,
   Home,
-  Search as SearchIcon,
   LayoutDashboard,
-  Wallet,
-  UserCircle,
-  Settings,
-  X,
-  Sun,
-  Moon,
   MessageSquareMore,
-} from 'lucide-react';
-import { Link, NavLink} from 'react-router-dom';
-import PropTypes from 'prop-types';
-
+  UserCircle,
+  Wallet,
+  X,
+} from "lucide-react";
+import PropTypes from "prop-types";
+import { Link, NavLink } from "react-router-dom";
 
 const NavItem = ({ icon, text, to }) => {
   return (
     <NavLink
       to={to}
       className={({ isActive, isPending }) =>
-        `flex items-center space-x-3 p-3 rounded-lg text-muted-foreground border ${
+        `flex items-center space-x-3 p-3 rounded-full text-muted-foreground border ${
           isActive || isPending
-            ? 'bg-sidebar-link-active !text-[#003933] dark:!text-[#FFF] border-[#003933] dark:border-[#fff] bg-[#E4E4E7] dark:bg-[#6a6a75]'
-            : 'hover:bg-accent border-transparent'
+            ? "bg-sidebar-link-active !text-[#003933] dark:!text-[#FFF] border-[#003933] dark:border-[#fff] bg-[#E4E4E7] dark:bg-[#6a6a75]"
+            : "hover:bg-accent border-transparent"
         }`
       }
     >
@@ -33,8 +27,8 @@ const NavItem = ({ icon, text, to }) => {
           <div
             className={
               isActive || isPending
-                ? 'text-[#003933] dark:text-[#fff]'
-                : 'text-sidebar-foreground'
+                ? "text-[#003933] dark:text-[#fff]"
+                : "text-sidebar-foreground"
             }
           >
             {icon}
@@ -47,9 +41,6 @@ const NavItem = ({ icon, text, to }) => {
 };
 
 const Sidebar = ({ onClose }) => {
-
-
-
   return (
     <div className="bg-sidebar h-full flex flex-col border-r border-sidebar-border">
       <div className="p-6 flex items-center justify-between">
