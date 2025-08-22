@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import Header from './../components/dashboard/Header';
-import Sidebar from './../components/dashboard/Sidebar';
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Header from "./../components/dashboard/Header";
+import Sidebar from "./../components/dashboard/Sidebar";
 
 // Default user data
 const userData = {
-  name: 'Chris',
-  fullName: 'Chris Miguel',
-  role: 'Admin',
+  name: "Chris",
+  fullName: "Chris Miguel",
+  role: "Admin",
   image:
-    'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 };
 
 function DashboardLayout() {
@@ -29,7 +29,7 @@ function DashboardLayout() {
       <div
         className={`
           fixed inset-y-0 left-0 z-30 w-64  transform 
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:relative lg:translate-x-0 transition-transform duration-200 ease-in-out
         `}
       >
