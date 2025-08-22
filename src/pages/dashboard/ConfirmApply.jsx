@@ -8,6 +8,7 @@ import {
 import { ArrowLeft, X } from "lucide-react";
 import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { Link } from "react-router";
 
 const ConfirmApply = () => {
   const [files, setFiles] = useState();
@@ -190,7 +191,7 @@ const ConfirmApply = () => {
                     type="text"
                     value={link}
                     onChange={(e) => setLink(e.target.value)}
-                    placeholder="Https/www"
+                    placeholder="https/www"
                     className="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   />
                 </div>
@@ -226,12 +227,13 @@ const ConfirmApply = () => {
                 </div>
 
                 {/* Submit Button */}
-                <button
+                <Link
+                  to="#"
                   onClick={handleSubmit}
-                  className="w-full bg-[#003933] hover:bg-emerald-700 dark:bg-[#3fa796] dark:hover:bg-[#0dc4a5] text-white font-medium py-3 px-4 rounded-lg transition-colors"
+                  className="block w-full bg-emerald-800 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-full text-center transition-colors"
                 >
                   Apply
-                </button>
+                </Link>
               </div>
             </div>
           </div>

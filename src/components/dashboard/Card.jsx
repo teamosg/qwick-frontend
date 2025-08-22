@@ -1,4 +1,5 @@
-import { Instagram, Facebook, Youtube } from 'lucide-react';
+import { Facebook, Instagram, Youtube } from "lucide-react";
+import { Link } from "react-router";
 
 const Card = ({ progress = 7 }) => {
   const progressWidth = `${progress}%`;
@@ -68,9 +69,12 @@ const Card = ({ progress = 7 }) => {
           </p>
           <p>$1 per 1k views</p>
         </div>
-        <button className="bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-semibold py-1.5 px-4 rounded-full transition">
+        <Link
+          to="/apply"
+          className="bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-semibold py-1.5 px-4 rounded-full transition"
+        >
           Apply
-        </button>
+        </Link>
       </div>
     </div>
   );

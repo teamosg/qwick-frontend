@@ -8,6 +8,7 @@ import Apply from "@/pages/dashboard/Apply";
 import ConfirmApply from "@/pages/dashboard/ConfirmApply";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
+import Profile from "@/pages/dashboard/Profile";
 import NotFound from "@/shared/NotFound";
 import { createBrowserRouter } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "/confirm-apply",
         element: <ConfirmApply />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
       // if page now found
       {

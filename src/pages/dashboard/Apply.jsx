@@ -133,10 +133,13 @@ const Apply = () => {
           </ul>
         </div>
         <div className="text-center">
-          <button className="mb-2.5 w-full text-white bg-[#003933] dark:bg-[#3fa796] dark:hover:bg-[#0dc4a5]  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition">
+          <Link
+            to="/confirm-apply"
+            className="block mb-2.5 w-full text-white bg-emerald-800 hover:bg-emerald-700 text-[18px] font-semibold p-2.5 rounded-full cursor-pointer  transition"
+          >
             Apply
-          </button>
-          <Link className="text-[#090003] text-xs dark:text-zinc-400" to="#">
+          </Link>
+          <Link to="/" className="text-[#090003] text-xs dark:text-zinc-400">
             Save for later
           </Link>
         </div>
