@@ -1,5 +1,10 @@
+import ProfileBalance from "@/components/dashboard/Profile/Balance";
 import ConnectedAccounts from "@/components/dashboard/Profile/ConnectedAccounts";
 import ProfileGeneral from "@/components/dashboard/Profile/General";
+import PaymentMethod from "@/components/dashboard/Profile/PaymentMethod";
+import ProfileBillingHistory from "@/components/dashboard/Profile/ProfileBillingHistory";
+import ProfileMySubmission from "@/components/dashboard/Profile/ProfileMySubmission";
+import SecurityPrivacy from "@/components/dashboard/Profile/SecurityPrivacy";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Captions,
@@ -29,31 +34,31 @@ const tabs = [
     name: "Security & Privacy",
     value: "accounts-privacy",
     icon: Lock,
-    content: "Security & Privacy content goes here",
+    content: <SecurityPrivacy />,
   },
   {
     name: "Payment method",
     value: "payment-method",
     icon: CreditCard,
-    content: "Payment method content goes here",
+    content: <PaymentMethod />,
   },
   {
     name: "Balance",
     value: "balance",
     icon: DollarSign,
-    content: "Balance content goes here",
+    content: <ProfileBalance />,
   },
   {
     name: "Billing history",
     value: "billing-history",
     icon: FaFileInvoice,
-    content: "Billing history content goes here",
+    content: <ProfileBillingHistory />,
   },
   {
     name: "My submission",
     value: "my-submission",
     icon: Captions,
-    content: "My submission content goes here",
+    content: <ProfileMySubmission />,
   },
   {
     name: "Danger zone",
@@ -69,7 +74,7 @@ const Profile = () => {
       <Tabs
         orientation="vertical"
         defaultValue={tabs[0].value}
-        className="w-full flex flex-row gap-4 h-full"
+        className="w-full flex flex-row gap-4 h-auto"
       >
         <TabsList className="shrink-0 grid grid-cols-1 gap-4 p-0 bg-background">
           {tabs.map((tab) => (
@@ -87,7 +92,7 @@ const Profile = () => {
             <TabsContent
               key={tab.value}
               value={tab.value}
-              className="flex sm:block w-full h-full"
+              className="flex sm:block w-full h-auto"
             >
               {tab?.content}
             </TabsContent>
