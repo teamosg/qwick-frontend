@@ -5,6 +5,7 @@ import SuccessfullUpdated from "@/pages/auth/SuccessfullUpdated";
 import SuccessfullVerified from "@/pages/auth/SuccessfullVerified";
 import VerifyAccount from "@/pages/auth/VerifyAccount";
 import Apply from "@/pages/dashboard/Apply";
+import ConfirmApply from "@/pages/dashboard/ConfirmApply";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import NotFound from "@/shared/NotFound";
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: "/apply",
         element: <Apply />,
+      },
+      {
+        path: "/confirm-apply",
+        element: <ConfirmApply />,
       },
       // if page now found
       {
