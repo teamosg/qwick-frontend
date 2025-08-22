@@ -1,3 +1,4 @@
+import ConnectedAccounts from "@/components/dashboard/Profile/ConnectedAccounts";
 import ProfileGeneral from "@/components/dashboard/Profile/General";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -22,7 +23,7 @@ const tabs = [
     name: "Connected accounts",
     value: "connected-accounts",
     icon: Link2,
-    content: "Connected accounts content goes here",
+    content: <ConnectedAccounts />,
   },
   {
     name: "Security & Privacy",
@@ -86,7 +87,7 @@ const Profile = () => {
             <TabsContent
               key={tab.value}
               value={tab.value}
-              className="flex sm:block w-full sm:w-3xl h-full"
+              className="flex sm:block w-full h-full"
             >
               {tab?.content}
             </TabsContent>
