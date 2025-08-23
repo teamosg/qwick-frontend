@@ -112,7 +112,7 @@ const Sidebar = ({ onClose }) => {
         <NavItem
           icon={<LayoutDashboard size={20} />}
           text="Dashboard"
-          to="/dashboard-page"
+          to="/dashboard"
         />
         <NavItem icon={<Wallet size={20} />} text="Payout" to="/payout" />
         <NavItem icon={<UserCircle size={20} />} text="Profile" to="/profile" />

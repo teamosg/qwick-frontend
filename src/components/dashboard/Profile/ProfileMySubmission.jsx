@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router";
 
 const ProfileMySubmission = () => {
   const submissions = [
@@ -91,7 +92,7 @@ const ProfileMySubmission = () => {
                 {/* Image Section */}
                 <div className="w-[320px] sm:w-48 h-48 sm:h-40 flex-shrink-0">
                   <img
-                    src="http://placehold.co/1200x800"
+                    src="/submission.png"
                     className="h-full w-full object-cover rounded-xl"
                     alt=""
                   />
@@ -102,10 +103,8 @@ const ProfileMySubmission = () => {
                   {/* User Info and Status */}
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full flex items-center justify-center">
-                        <span className="text-white font-semibold text-sm">
-                          SC
-                        </span>
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center">
+                        <img src="/image.png" alt="" />
                       </div>
                       <div>
                         <div className="font-medium">
@@ -117,9 +116,12 @@ const ProfileMySubmission = () => {
 
                     <div className="flex items-center gap-2">
                       {getStatusBadge(submission.status)}
-                      <a className="text-[#15803D] bg-[#F0FDF4] border border-[#15803D] rounded-full px-3 py-1 text-xs ">
+                      <Link
+                        to={"#"}
+                        className="text-[#15803D] bg-[#F0FDF4] border border-[#15803D] rounded-full px-3 py-1 text-xs "
+                      >
                         Update
-                      </a>
+                      </Link>
                     </div>
                   </div>
 

@@ -24,7 +24,7 @@ const ConnectedAccounts = () => {
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
-      <div className="text-center text-[#717171] text-[16px] mb-8 py-10 w-full shadow rounded-[24px] ">
+      <div className="text-center text-[#717171] text-[16px] mb-8 py-10 px-4 w-full shadow rounded-[24px] ">
         <p> No Accounts connected yet</p>
       </div>
 
