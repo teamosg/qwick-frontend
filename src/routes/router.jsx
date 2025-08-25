@@ -1,3 +1,4 @@
+import { DashboardDefault } from "@/components/dashboard/Dashboard/DashboardDefault";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
 import SignUp from "@/pages/auth/SignUp";
@@ -6,6 +7,7 @@ import SuccessfullVerified from "@/pages/auth/SuccessfullVerified";
 import VerifyAccount from "@/pages/auth/VerifyAccount";
 import Apply from "@/pages/dashboard/Apply";
 import ConfirmApply from "@/pages/dashboard/ConfirmApply";
+import Dashboard from "@/pages/dashboard/Dashboard";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
@@ -78,6 +80,29 @@ const router = createBrowserRouter([
       {
         path: "/confirm-apply",
         element: <ConfirmApply />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+        children: [
+          {
+            path: "community-hub",
+            element: <h1>Community Hub</h1>,
+          },
+          {
+            path: "",
+            index: true,
+            element: <DashboardDefault />,
+          },
+          {
+            path: "edit-store",
+            element: <h1>Edit Store</h1>,
+          },
+          {
+            path: "content-reward",
+            element: <h1>Content Reward</h1>,
+          },
+        ],
       },
       {
         path: "/profile",

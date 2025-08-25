@@ -24,7 +24,7 @@ const Apply = () => {
               className="w-7 h-7 rounded-full"
             />
             <Link to="">
-              <span className="text-sm font-medium text-[#717171] dark:text-white capitalize">
+              <span className="text-sm font-medium text-[#717171] dark:text-white hover:text-[#090003] transition capitalize">
                 Prothinidi Thomas
               </span>
             </Link>

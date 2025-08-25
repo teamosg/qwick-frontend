@@ -5,7 +5,7 @@ import {
   DropzoneEmptyState,
 } from "@/components/ui/shadcn-io/dropzone";
 
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, CircleAlert, X } from "lucide-react";
 import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router";
@@ -62,9 +62,14 @@ const ConfirmApply = () => {
               alt=""
               className="w-full h-auto object-cover mb-7 rounded-xl"
             />
-            <p className="text-[#717171] text-xs mb-7 dark:text-zinc-400">
-              Only views after you submit count towards payout. Submit as soon
-              as you post to get paid for all of your views.
+            <p className="text-[#717171] text-xs mb-7 dark:text-zinc-400 flex gap-2 items-center">
+              <span>
+                <CircleAlert className="text-[#FEC260]" />
+              </span>
+              <span>
+                Only views after you submit count towards payout. Submit as soon
+                as you post to get paid for all of your views.
+              </span>
             </p>
             <div className="mb-2.5">
               <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white">
@@ -76,7 +81,7 @@ const ConfirmApply = () => {
             </div>
             <Progress value={7} indicatorColor="red" className="mb-3.5" />
           </div>
-          <div className="flex gap-6 md:gap-0 justify-between mb-9">
+          <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between mb-9">
             <div>
               <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
                 Reward
@@ -143,7 +148,7 @@ const ConfirmApply = () => {
       {/* Popup Modal */}
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-zinc-800 rounded-2xl max-w-3xl w-full mx-4 relative">
+          <div className="bg-white dark:bg-zinc-800 rounded-2xl w-full max-w-3xl mx-auto relative overflow-y-auto max-h-[90vh] sm:p-6 p-4">
             {/* Close Button */}
             <button
               onClick={handleClosePopup}
@@ -152,14 +157,14 @@ const ConfirmApply = () => {
               <X size={24} />
             </button>
 
-            <div className="p-6">
+            <div className="space-y-6 mt-2 sm:mt-0">
               {/* Header */}
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Create submission
               </h2>
 
               {/* Info Alert */}
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-3 mb-6 flex items-start gap-2 mb-4">
+              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-3 flex items-start gap-3">
                 <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-white text-xs font-bold">!</span>
                 </div>
@@ -172,45 +177,45 @@ const ConfirmApply = () => {
               {/* Form Content */}
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-sm font-medium text-[#090003] dark:text-white mb-2">
+                  <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
                     Submit your social media post
                   </h3>
-                  <p className="text-sm text-[#717171] dark:text-zinc-400 mb-4">
-                    Share your posts and the the original image or video below.
-                    Once approved, you'll start earning rewards based on the
-                    views your content generates
+                  <p className="text-sm text-gray-600 dark:text-zinc-400">
+                    Share your posts and the original image or video below. Once
+                    approved, you'll start earning rewards based on the views
+                    your content generates.
                   </p>
                 </div>
 
                 {/* Link Input */}
                 <div>
-                  <label className="block text-sm font-medium text-[#090003] dark:text-white mb-2">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                     Provide link<span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={link}
                     onChange={(e) => setLink(e.target.value)}
-                    placeholder="https/www"
+                    placeholder="https://www..."
                     className="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   />
                 </div>
 
                 {/* Media Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-[#090003] dark:text-white mb-2">
+                  <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                     Media<span className="text-red-500">*</span>
                   </label>
 
                   <div
-                    className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors border-[#003933] dark:border-gray-600`}
+                    className="border-2 border-dashed rounded-lg p-6 sm:p-8 text-center transition-colors border-[#003933] dark:border-gray-600"
                     onDrop={handleDrop}
                   >
-                    <div className="flex flex-col items-center">
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                    <div className="flex flex-col items-center space-y-3">
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
                         Upload the original media file you posted (not a
                         screenshot). For videos, upload the video file. For
-                        posts with multiple files, upload the first file
+                        posts with multiple files, upload the first file.
                       </p>
                       <Dropzone
                         maxFiles={3}
