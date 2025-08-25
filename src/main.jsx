@@ -13,7 +13,7 @@ AOS.init({
   duration: 1000,
   once: true,
 });
-
+// Main App
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <StrictMode>
