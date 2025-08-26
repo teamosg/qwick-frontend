@@ -1,58 +1,58 @@
-import React, { useEffect, useRef, useState } from 'react';
+import EmojiPicker from "emoji-picker-react";
 import {
-  ThumbsUp,
-  MessageSquare,
-  Share2,
   Bookmark,
-  MoreHorizontal,
-  Smile,
-  Image as ImageIcon,
   Clock,
-  Globe,
-  Users,
   Edit,
-  Trash2,
+  Globe,
+  Image as ImageIcon,
+  MessageSquare,
+  MoreHorizontal,
   Send,
+  Share2,
+  Smile,
+  ThumbsUp,
+  Trash2,
+  Users,
   X,
-} from 'lucide-react';
-import EmojiPicker from 'emoji-picker-react';
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
-  const [commentText, setCommentText] = useState('');
+  const [commentText, setCommentText] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-    const emojiPickerRef = useRef(null);
+  const emojiPickerRef = useRef(null);
 
-    useEffect(() => {
-      const handleClickOutside = (event) => {
-        if (
-          emojiPickerRef.current &&
-          !emojiPickerRef.current.contains(event.target)
-        ) {
-          const emojiButton = document.querySelector(
-            `.comment-emoji-button-${post.id}`
-          );
-          if (!emojiButton || !emojiButton.contains(event.target)) {
-            setShowEmojiPicker(false);
-          }
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target)
+      ) {
+        const emojiButton = document.querySelector(
+          `.comment-emoji-button-${post.id}`
+        );
+        if (!emojiButton || !emojiButton.contains(event.target)) {
+          setShowEmojiPicker(false);
         }
-      };
+      }
+    };
 
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, [post.id]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [post.id]);
 
   const dropdownItems = [
     {
-      label: 'Edit',
+      label: "Edit",
       icon: <Edit size={16} className="mr-2" />,
       action: () => onEdit(post.id),
     },
     {
-      label: 'Delete',
+      label: "Delete",
       icon: <Trash2 size={16} className="mr-2" />,
       action: () => onDelete(post.id),
     },
@@ -65,7 +65,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
         text: commentText,
         image: imagePreview,
       });
-      setCommentText('');
+      setCommentText("");
       setImagePreview(null);
     }
   };
@@ -99,7 +99,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
             <div className="flex items-center space-x-2">
               <h3 className="font-semibold">{post.author}</h3>
               <span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full flex items-center">
-                {post.postType === 'group' ? (
+                {post.postType === "group" ? (
                   <>
                     <Users size={12} className="mr-1" /> {post.group}
                   </>
@@ -175,8 +175,8 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
             onClick={() => onLike(post.id)}
             className={`flex items-center space-x-1 px-3 py-1 rounded-md ${
               post.isLiked
-                ? 'text-blue-500'
-                : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                ? "text-blue-500"
+                : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
             }`}
           >
             <ThumbsUp size={18} />
@@ -195,8 +195,8 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
             onClick={() => onSave(post.id)}
             className={`flex items-center space-x-1 px-3 py-1 rounded-md ${
               post.isSaved
-                ? 'text-blue-500'
-                : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                ? "text-blue-500"
+                : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
             }`}
           >
             <Bookmark size={18} />
@@ -214,7 +214,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
         {post.comments.map((comment, index) => (
           <div key={index} className="flex space-x-2">
             <img
-              src={comment.userImage || 'https://i.pravatar.cc/150?img=3'}
+              src={comment.userImage || "https://i.pravatar.cc/150?img=3"}
               alt={comment.user}
               className="w-8 h-8 rounded-full object-cover"
             />
@@ -274,8 +274,8 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
                 disabled={!commentText.trim() && !imagePreview}
                 className={`p-1 ${
                   commentText.trim() || imagePreview
-                    ? 'text-primary'
-                    : 'text-gray-400'
+                    ? "text-primary"
+                    : "text-gray-400"
                 }`}
               >
                 <Send size={18} />
