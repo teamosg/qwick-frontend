@@ -57,7 +57,7 @@ const Card = ({ progress = 7 }) => {
           <p>$1 per 1k views</p>
         </div>
         <Link
-          to="/apply"
+          to="/join-community"
           className="bg-emerald-700 hover:bg-[#003933] text-white text-sm font-semibold py-1.5 px-4 rounded-full transition duration-300"
         >
           Submission

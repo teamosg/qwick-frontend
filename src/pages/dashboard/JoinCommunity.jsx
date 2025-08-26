@@ -3,6 +3,11 @@ import { Link } from "react-router";
 const JoinCommunity = () => {
   return (
     <div className="p-6">
+      <div className="mb-9 inline-block">
+        <h1 className=" text-[#191919] text-2xl font-semibold">
+          Join Community
+        </h1>
+      </div>
       <div className="bg-gray-100 dark:bg-zinc-950 p-6 rounded-xl max-w-2xl items-center justify-center mx-auto">
         <img
           src="/public/join-community.png"
