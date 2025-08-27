@@ -36,9 +36,12 @@ const JoinCommunity = () => {
             the readable content of a page when looking at its layout. The point
             of{" "}
           </p>
-          <button className="max-w-sm w-full text-white bg-[#003933] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition">
+          <Link
+            to={`/announcement`}
+            className="inline-block max-w-sm w-full text-white bg-[#003933] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition"
+          >
             Join
-          </button>
+          </Link>
         </div>
       </div>
     </div>

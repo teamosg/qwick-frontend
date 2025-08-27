@@ -1,4 +1,5 @@
 import {
+  BellDot,
   Compass,
   Home,
   LayoutDashboard,
@@ -125,7 +126,7 @@ const Sidebar = ({ onClose }) => {
               to="/message"
             />
             <NavItem
-              icon={<MessageSquareMore size={20} />}
+              icon={<BellDot size={20} />}
               text="Notifications"
               to="/notifications"
             />

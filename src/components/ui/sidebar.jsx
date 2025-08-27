@@ -229,7 +229,13 @@ function Sidebar({
   );
 }
 
-function SidebarTrigger({ className, onClick, ...props }) {
+function SidebarTrigger({
+  className,
+  onClick,
+  isButtonShow = true,
+  children,
+  ...props
+}) {
   const { toggleSidebar } = useSidebar();
 
   return (
@@ -245,8 +251,9 @@ function SidebarTrigger({ className, onClick, ...props }) {
       }}
       {...props}
     >
-      <PanelLeftIcon />
-      <span className="sr-only">Toggle Sidebar</span>
+      {isButtonShow && <PanelLeftIcon />}
+      {children}
+      <span className="sr-only">Toggle Sidebar"</span>
     </Button>
   );
 }
