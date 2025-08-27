@@ -73,7 +73,7 @@ export function AnnouncementSidebar() {
                       className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
                       to={item.url}
                     >
-                      <span className="hover:bg-none hover:shadow-none">
+                      <span className="hover:bg-none hover:shadow-none font-medium">
                         {item.title}
                       </span>
                     </Link>
