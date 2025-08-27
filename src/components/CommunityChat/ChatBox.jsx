@@ -19,7 +19,7 @@ export default function ChatBox() {
   };
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col h-full">
       {/* Chat Messages Container */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {/* First Message Group */}
