@@ -13,13 +13,15 @@ export function SidebarCommunity() {
         {tags.map((tag) => (
           <React.Fragment key={tag}>
             <div className="text-sm  mb-3">
-              <img
-                src="https://placehold.co/60x60"
-                alt=""
-                className="rounded-full inline mr-2 object-cover h-8 w-8"
-              />
-
-              {tag}
+              <button className="cursor-pointer transition duration-300 hover:text-[#17173c]">
+                {" "}
+                <img
+                  src="https://placehold.co/60x60"
+                  alt=""
+                  className="rounded-full inline mr-2 object-cover h-8 w-8"
+                />
+                {tag}
+              </button>
             </div>
           </React.Fragment>
         ))}

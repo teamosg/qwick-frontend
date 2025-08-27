@@ -154,7 +154,7 @@ const Sidebar = ({ onClose }) => {
           <Plus />
           <Button
             variant="ghost"
-            className="hover:bg-transparent text-[16px] font-semibold px-0 py-0"
+            className="hover:bg-transparent text-[16px] font-semibold px-0 py-0 cursor-pointer"
           >
             Add Community
           </Button>

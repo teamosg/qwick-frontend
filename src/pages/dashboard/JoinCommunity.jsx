@@ -10,7 +10,7 @@ const JoinCommunity = () => {
       </div>
       <div className="bg-gray-100 dark:bg-zinc-950 p-6 rounded-xl max-w-2xl items-center justify-center mx-auto">
         <img
-          src="/public/join-community.png"
+          src="https://placehold.co/1200x800"
           alt=""
           className="max-w-full object-cover rounded-xl mb-6"
         />

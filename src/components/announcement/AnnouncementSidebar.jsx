@@ -7,7 +7,6 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar";
 
-import { SelectSeparator } from "@/components/ui/select";
 import {
   SidebarGroupContent,
   SidebarMenu,
@@ -15,7 +14,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router";
-import ExampleCombobox from "./CommunitySwitcher";
+import CommunitySwitcher from "./CommunitySwitcher";
 
 // Menu items.
 const items = [
@@ -35,10 +34,10 @@ const items = [
 
 export function AnnouncementSidebar() {
   return (
-    <Sidebar className="sticky left-64 md:left-64 left-0">
+    <Sidebar className="sticky  md:left-64 left-0">
       <SidebarHeader className="p-0 bg-[url(https://placehold.co/400x250)] bg-center bg-cover bg-no-repeat h-[135px] relative">
         <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute inset-0 p-2.5 flex flex-col justify-between">
+        {/* <div className="absolute inset-0 p-2.5 flex flex-col justify-between">
           <div className="flex items-center justify-between text-[#fff]">
             <div className="flex items-center gap-2">
               <div className="w-12 h-12 rounded-full flex items-center justify-center">
@@ -53,7 +52,8 @@ export function AnnouncementSidebar() {
               <ExampleCombobox />
             </div>
           </div>
-        </div>
+        </div> */}
+        <CommunitySwitcher />
       </SidebarHeader>
 
       <SidebarContent>
@@ -61,19 +61,24 @@ export function AnnouncementSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem
+                  key={item.title}
+                  className="hover:hover:bg-none h-auto hover:shadow-none"
+                >
                   <SidebarMenuButton
                     asChild
-                    className="text-[#717171] text-[16px] flex gap-4 "
+                    className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
                   >
                     <Link
                       className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
                       to={item.url}
                     >
-                      <span>{item.title}</span>
+                      <span className="hover:bg-none hover:shadow-none">
+                        {item.title}
+                      </span>
                     </Link>
                   </SidebarMenuButton>
-                  <SelectSeparator />
+                  <hr />
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

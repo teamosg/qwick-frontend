@@ -5,12 +5,12 @@ import {
   DropzoneEmptyState,
 } from "@/components/ui/shadcn-io/dropzone";
 
-import { ArrowLeft, CircleAlert, X } from "lucide-react";
+import { CircleAlert, X } from "lucide-react";
 import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router";
 
-const ConfirmApply = () => {
+const ContentRewardDetailsPayment = () => {
   const [files, setFiles] = useState();
   const handleDrop = (files) => {
     console.log(files);
@@ -46,15 +46,6 @@ const ConfirmApply = () => {
   return (
     <>
       <div className="p-6 text-[#717171]">
-        <div className="mb-9 inline-block">
-          <a
-            href="#"
-            className=" px-4 py-2.5 bg-[#3fa796] rounded-2xl text-white text-[16px] font-light flex gap-1.5 "
-          >
-            <ArrowLeft />
-            Back to rewards
-          </a>
-        </div>
         <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl">
           <div className="mb-6">
             <img
@@ -248,4 +239,4 @@ const ConfirmApply = () => {
   );
 };
 
-export default ConfirmApply;
+export default ContentRewardDetailsPayment;
