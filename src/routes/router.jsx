@@ -1,4 +1,6 @@
 import AnnouncementFeed from "@/components/announcement/AnnouncementFeed";
+import CommunityChat from "@/components/CommunityChat/CommunityChat";
+import ContentReward from "@/components/contentReward/ContentReword";
 import { DashboardDefault } from "@/components/dashboard/Dashboard/DashboardDefault";
 import Announcement from "@/pages/announcement/Announcement";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
@@ -93,11 +95,11 @@ const router = createBrowserRouter([
           },
           {
             path: "content-reward",
-            element: <h1>Content Reward</h1>,
+            element: <ContentReward />,
           },
           {
             path: "community-chat",
-            element: <h1>Community Chat</h1>,
+            element: <CommunityChat />,
           },
         ],
       },
