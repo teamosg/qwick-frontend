@@ -151,19 +151,24 @@ const Sidebar = ({ onClose }) => {
 
         {/* Add Community */}
         <div className="p-4 border-t border-sidebar-border flex gap-3  items-center">
-          <Plus />
           <Button
             variant="ghost"
             className="hover:bg-transparent text-[16px] font-semibold px-0 py-0 cursor-pointer"
           >
+            <Plus />
             Add Community
           </Button>
         </div>
 
         {/* Menu */}
         <div className="p-4 border-t border-sidebar-border flex gap-3  items-center">
-          <Menu />
-          <span className="text-[16px] font-semibold">Menu</span>
+          <Button
+            variant="ghost"
+            className="hover:bg-transparent text-[16px] font-semibold px-0 py-0 cursor-pointer"
+          >
+            <Menu />
+            Menu
+          </Button>
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import Dashboard from "@/pages/dashboard/Dashboard";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
+import Message from "@/pages/Message/Message";
 import NotFound from "@/shared/NotFound";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "/join-community",
         element: <JoinCommunity />,
+      },
+      {
+        path: "/message",
+        element: <Message />,
       },
       {
         element: <Announcement />,
