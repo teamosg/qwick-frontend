@@ -1,6 +1,7 @@
 import AnnouncementFeed from "@/components/announcement/AnnouncementFeed";
 import CommunityChat from "@/components/CommunityChat/CommunityChat";
-import ContentReward from "@/components/contentReward/ContentReword";
+import ContentReword from "@/components/contentReward/ContentReword";
+import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import { DashboardDefault } from "@/components/dashboard/Dashboard/DashboardDefault";
 import Announcement from "@/pages/announcement/Announcement";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
@@ -9,19 +10,17 @@ import SignUp from "@/pages/auth/SignUp";
 import SuccessfullUpdated from "@/pages/auth/SuccessfullUpdated";
 import SuccessfullVerified from "@/pages/auth/SuccessfullVerified";
 import VerifyAccount from "@/pages/auth/VerifyAccount";
-import Apply from "@/pages/dashboard/Apply";
 import ConfirmApply from "@/pages/dashboard/ConfirmApply";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
 import NotFound from "@/shared/NotFound";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import SignIn from "../pages/auth/SignIn";
 import Home from "../pages/dashboard/Home";
 import DashboardLayout from "./../layout/DashboardLayout";
-
 const router = createBrowserRouter([
   //Admin Dashboard layout
 
@@ -77,10 +76,7 @@ const router = createBrowserRouter([
         path: "/join-community",
         element: <JoinCommunity />,
       },
-      {
-        path: "/apply",
-        element: <Apply />,
-      },
+
       {
         path: "/confirm-apply",
         element: <ConfirmApply />,
@@ -94,18 +90,24 @@ const router = createBrowserRouter([
             element: <AnnouncementFeed />,
           },
           {
-            path: "content-reward",
-            element: <ContentReward />,
+            path: "/content-reward",
+            element: <Outlet />,
+            children: [
+              {
+                index: true,
+                element: <ContentReword />,
+              },
+              {
+                path: "reward-retails",
+                element: <ContentRewardDetails />,
+              },
+            ],
           },
           {
             path: "community-chat",
             element: <CommunityChat />,
           },
         ],
-      },
-      {
-        path: "/confirm-apply",
-        element: <ConfirmApply />,
       },
       {
         path: "/dashboard",
