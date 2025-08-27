@@ -1,4 +1,8 @@
+import AnnouncementFeed from "@/components/announcement/AnnouncementFeed";
+import CommunityChat from "@/components/CommunityChat/CommunityChat";
+import ContentReward from "@/components/contentReward/ContentReword";
 import { DashboardDefault } from "@/components/dashboard/Dashboard/DashboardDefault";
+import Announcement from "@/pages/announcement/Announcement";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
 import SignUp from "@/pages/auth/SignUp";
@@ -76,6 +80,28 @@ const router = createBrowserRouter([
       {
         path: "/apply",
         element: <Apply />,
+      },
+      {
+        path: "/confirm-apply",
+        element: <ConfirmApply />,
+      },
+      {
+        element: <Announcement />,
+        children: [
+          {
+            path: "/announcement",
+            index: true,
+            element: <AnnouncementFeed />,
+          },
+          {
+            path: "content-reward",
+            element: <ContentReward />,
+          },
+          {
+            path: "community-chat",
+            element: <CommunityChat />,
+          },
+        ],
       },
       {
         path: "/confirm-apply",

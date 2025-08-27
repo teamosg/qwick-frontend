@@ -3,6 +3,11 @@ import { Link } from "react-router";
 const JoinCommunity = () => {
   return (
     <div className="p-6">
+      <div className="mb-9 inline-block">
+        <h1 className=" text-[#191919] text-2xl font-semibold">
+          Join Community
+        </h1>
+      </div>
       <div className="bg-gray-100 dark:bg-zinc-950 p-6 rounded-xl max-w-2xl items-center justify-center mx-auto">
         <img
           src="/public/join-community.png"
@@ -31,9 +36,12 @@ const JoinCommunity = () => {
             the readable content of a page when looking at its layout. The point
             of{" "}
           </p>
-          <button className="max-w-sm w-full text-white bg-[#003933] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition">
+          <Link
+            to={`/announcement`}
+            className="inline-block max-w-sm w-full text-white bg-[#003933] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition"
+          >
             Join
-          </button>
+          </Link>
         </div>
       </div>
     </div>
