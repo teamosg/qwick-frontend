@@ -97,7 +97,7 @@ const ContentRewardDetails = () => {
       <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6">
         <div className="mb-3.5">
           <h3 className="text-[#090003] dark:text-white text-sm font-semibold mb-4">
-            ContentRewardDetails for this reward
+            ContentReward Details for this reward
           </h3>
           <ul className="flex flex-col gap-2 ">
             <li className="flex gap-1 items-center">
@@ -128,7 +128,7 @@ const ContentRewardDetails = () => {
         </div>
         <div className="text-center">
           <Link
-            to="/confirm-ContentRewardDetails"
+            to={`/content-reward/reward-details-payment`}
             className="block mb-2.5 w-full text-white bg-emerald-800 hover:bg-emerald-700 text-[18px] font-semibold p-2.5 rounded-full cursor-pointer  transition"
           >
             Apply

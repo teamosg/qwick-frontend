@@ -14,8 +14,7 @@ const SingleRewardItem = () => {
         <div className="flex-1">
           <div className="mb-2.5">
             <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white">
-              <Link to={`/content-reward/reward-retails`}>
-                {" "}
+              <Link to={`/content-reward/reward-details`}>
                 Destroying 1on1’s Clips
               </Link>
             </h4>

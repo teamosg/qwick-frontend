@@ -1,5 +1,6 @@
 import AnnouncementFeed from "@/components/announcement/AnnouncementFeed";
 import CommunityChat from "@/components/CommunityChat/CommunityChat";
+import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
 import ContentReword from "@/components/contentReward/ContentReword";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import { DashboardDefault } from "@/components/dashboard/Dashboard/DashboardDefault";
@@ -10,7 +11,6 @@ import SignUp from "@/pages/auth/SignUp";
 import SuccessfullUpdated from "@/pages/auth/SuccessfullUpdated";
 import SuccessfullVerified from "@/pages/auth/SuccessfullVerified";
 import VerifyAccount from "@/pages/auth/VerifyAccount";
-import ConfirmApply from "@/pages/dashboard/ConfirmApply";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
@@ -76,11 +76,6 @@ const router = createBrowserRouter([
         path: "/join-community",
         element: <JoinCommunity />,
       },
-
-      {
-        path: "/confirm-apply",
-        element: <ConfirmApply />,
-      },
       {
         element: <Announcement />,
         children: [
@@ -98,8 +93,12 @@ const router = createBrowserRouter([
                 element: <ContentReword />,
               },
               {
-                path: "reward-retails",
+                path: "reward-details",
                 element: <ContentRewardDetails />,
+              },
+              {
+                path: "reward-details-payment",
+                element: <ContentRewardDetailsPayment />,
               },
             ],
           },

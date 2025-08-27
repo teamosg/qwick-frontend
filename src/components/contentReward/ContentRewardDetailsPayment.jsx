@@ -10,7 +10,7 @@ import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router";
 
-const ConfirmApply = () => {
+const ContentRewardDetailsPayment = () => {
   const [files, setFiles] = useState();
   const handleDrop = (files) => {
     console.log(files);
@@ -248,4 +248,4 @@ const ConfirmApply = () => {
   );
 };
 
-export default ConfirmApply;
+export default ContentRewardDetailsPayment;
