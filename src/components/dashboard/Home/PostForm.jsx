@@ -1,47 +1,39 @@
 // src/components/dashboard/Home/PostForm.jsx
-import React, { useState, useRef, useEffect } from 'react';
-import {
-  Image as ImageIcon,
-  Paperclip,
-  Smile,
-  Globe,
-  Users,
-  ChevronDown,
-  X,
-} from 'lucide-react';
-import EmojiPicker from 'emoji-picker-react';
+import EmojiPicker from "emoji-picker-react";
+import { Image as ImageIcon, Paperclip, Smile, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const PostForm = ({ onSubmit }) => {
-  const [content, setContent] = useState('');
-  const [postType, setPostType] = useState('public');
-  const [selectedGroup, setSelectedGroup] = useState('Theory 2');
+  const [content, setContent] = useState("");
+  // const [postType, setPostType] = useState("public");
+  const [selectedGroup, setSelectedGroup] = useState("Theory 2");
   const [previewImage, setPreviewImage] = useState(null);
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const fileInputRef = useRef(null);
   const emojiPickerRef = useRef(null);
 
-  const postTypes = [
-    { value: 'public', label: 'Public', icon: <Globe size={16} /> },
-    { value: 'group', label: 'Group', icon: <Users size={16} /> },
-  ];
+  // const postTypes = [
+  //   { value: "public", label: "Public", icon: <Globe size={16} /> },
+  //   { value: "group", label: "Group", icon: <Users size={16} /> },
+  // ];
 
-  const groups = [
-    'Theory 1',
-    'Theory 2',
-    'Research Group',
-    'Academic Discussions',
-  ];
+  // const groups = [
+  //   "Theory 1",
+  //   "Theory 2",
+  //   "Research Group",
+  //   "Academic Discussions",
+  // ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
       content,
-      postType,
-      group: postType === 'group' ? selectedGroup : null,
+      // postType,
+      // group: postType === "group" ? selectedGroup : null,
       image: previewImage,
     });
-    setContent('');
+    setContent("");
     setPreviewImage(null);
   };
 
@@ -65,28 +57,28 @@ const PostForm = ({ onSubmit }) => {
     fileInputRef.current.click();
   };
 
-    useEffect(() => {
-      const handleClickOutside = (event) => {
-        if (
-          emojiPickerRef.current &&
-          !emojiPickerRef.current.contains(event.target)
-        ) {
-          // Check if click was on the emoji button
-          const emojiButton = document.querySelector('.emoji-button');
-          if (!emojiButton || !emojiButton.contains(event.target)) {
-            setShowEmojiPicker(false);
-          }
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target)
+      ) {
+        // Check if click was on the emoji button
+        const emojiButton = document.querySelector(".emoji-button");
+        if (!emojiButton || !emojiButton.contains(event.target)) {
+          setShowEmojiPicker(false);
         }
-      };
+      }
+    };
 
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-6">
+    <div className="bg-white dark:bg-zinc-900 rounded-lg shadow p-4 mb-6">
       <form onSubmit={handleSubmit}>
         <div className="flex items-start space-x-3">
           <img
@@ -96,7 +88,7 @@ const PostForm = ({ onSubmit }) => {
           />
           <div className="flex-1">
             {/* Post Type Dropdown */}
-            <div className="relative mb-3">
+            {/* <div className="relative mb-3">
               <button
                 type="button"
                 onClick={() => setShowTypeDropdown(!showTypeDropdown)}
@@ -157,14 +149,14 @@ const PostForm = ({ onSubmit }) => {
                   )}
                 </div>
               )}
-            </div>
+            </div> */}
 
             {/* Content Textarea */}
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="What's on your mind?"
-              className="w-full bg-gray-100 dark:bg-gray-700 rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-gray-700 rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-primary resize-none"
               rows={3}
             />
 
@@ -222,8 +214,8 @@ const PostForm = ({ onSubmit }) => {
                 disabled={!content.trim() && !previewImage}
                 className={`px-4 py-2 rounded-full ${
                   content.trim() || previewImage
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
+                    ? "bg-[#003933] text-white cursor-pointer"
+                    : "bg-[#003933] dark:bg-gray-700 text-white cursor-not-allowed"
                 }`}
               >
                 Post

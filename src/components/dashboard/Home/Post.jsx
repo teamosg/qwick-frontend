@@ -3,19 +3,17 @@ import {
   Bookmark,
   Clock,
   Edit,
-  Globe,
   Image as ImageIcon,
   MessageSquare,
   MoreHorizontal,
   Send,
-  Share2,
   Smile,
   ThumbsUp,
   Trash2,
-  Users,
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { PostShare } from "./PostShare";
 
 const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
   const [commentText, setCommentText] = useState("");
@@ -86,7 +84,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6">
+    <div className="bg-white dark:bg-zinc-900 rounded-lg shadow p-6 mb-6">
       {/* Post Header */}
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center space-x-3">
@@ -97,8 +95,10 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
           />
           <div>
             <div className="flex items-center space-x-2">
-              <h3 className="font-semibold">{post.author}</h3>
-              <span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full flex items-center">
+              <h3 className="font-semibold text-base dark:text-white">
+                {post.author}
+              </h3>
+              {/* <span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full flex items-center">
                 {post.postType === "group" ? (
                   <>
                     <Users size={12} className="mr-1" /> {post.group}
@@ -108,9 +108,9 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
                     <Globe size={12} className="mr-1" /> Public
                   </>
                 )}
-              </span>
+              </span> */}
             </div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+            <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
               <Clock size={12} className="mr-1" /> {post.time}
             </div>
           </div>
@@ -173,7 +173,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
         <div className="flex justify-between">
           <button
             onClick={() => onLike(post.id)}
-            className={`flex items-center space-x-1 px-3 py-1 rounded-md ${
+            className={`flex items-center space-x-1 px-3 py-1 rounded-md cursor-pointer ${
               post.isLiked
                 ? "text-blue-500"
                 : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -186,14 +186,14 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
             onClick={() =>
               document.getElementById(`comment-${post.id}`).focus()
             }
-            className="flex items-center space-x-1 px-3 py-1 rounded-md text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            className="flex cursor-pointer items-center space-x-1 px-3 py-1 rounded-md text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
           >
             <MessageSquare size={18} />
             <span>Comment</span>
           </button>
           <button
             onClick={() => onSave(post.id)}
-            className={`flex items-center space-x-1 px-3 py-1 rounded-md ${
+            className={`flex items-center space-x-1 px-3 py-1 rounded-md cursor-pointer ${
               post.isSaved
                 ? "text-blue-500"
                 : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -202,10 +202,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
             <Bookmark size={18} />
             <span>Save</span>
           </button>
-          <button className="flex items-center space-x-1 px-3 py-1 rounded-md text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
-            <Share2 size={18} />
-            <span>Share</span>
-          </button>
+          <PostShare />
         </div>
       </div>
 
@@ -219,8 +216,10 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
               className="w-8 h-8 rounded-full object-cover"
             />
             <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-2 flex-1">
-              <div className="font-medium text-sm">{comment.user}</div>
-              <div className="text-gray-700 dark:text-gray-300 text-sm">
+              <div className="font-medium text-sm dark:text-white">
+                {comment.user}
+              </div>
+              <div className="text-gray-700 dark:text-zinc-400 text-sm">
                 {comment.text}
               </div>
               {comment.image && (

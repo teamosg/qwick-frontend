@@ -22,7 +22,7 @@ const Card = ({ progress = 7 }) => {
           </div>
         </div>
 
-        <div className="text-[#003933]">48m</div>
+        <div className="text-[#003933] dark:text-zinc-400">48m</div>
       </div>
 
       {/* Title and Description */}
