@@ -1,3 +1,4 @@
+import SingleNotificationItem from "@/components/notifications/SingleNotificationItem";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SquareCheck } from "lucide-react";
 import { Link } from "react-router";
@@ -40,10 +41,13 @@ const Notifications = () => {
               </div>
             </div>
             <TabsContent value="all-notifications">
-              <h1>All Notifications</h1>
+              <SingleNotificationItem />
+              <SingleNotificationItem />
+              <SingleNotificationItem />
+              <SingleNotificationItem />
             </TabsContent>
             <TabsContent value="unread">
-              <h1>Unread</h1>
+              <SingleNotificationItem />
             </TabsContent>
           </Tabs>
         </div>
