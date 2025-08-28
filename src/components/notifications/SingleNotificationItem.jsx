@@ -34,9 +34,9 @@ const SingleNotificationItem = () => {
   ];
 
   return (
-    <div className="bg-white mb-5">
+    <div className="bg-white dark:bg-zinc-900 dark:text-zinc-300 mb-5">
       {/* Date Header */}
-      <div className="mb-2 text-sm font-medium  text-black">
+      <div className="mb-2 text-sm font-medium  text-black dark:text-white">
         Sat, 9 Nov 2024
       </div>
       <SelectSeparator />
@@ -50,7 +50,7 @@ const SingleNotificationItem = () => {
               {" "}
               <div
                 key={post.id}
-                className="p-4 hover:bg-[#e7f5ff] transition-colors"
+                className="p-4 hover:bg-[#e7f5ff] dark:hover:bg-transparent transition-colors"
               >
                 <div className="flex items-center justify-center space-x-3">
                   {/* Avatar */}
@@ -64,10 +64,10 @@ const SingleNotificationItem = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <span className="font-semibold text-black">
+                        <span className="font-semibold text-black dark:text-white">
                           {post.user}
                         </span>
-                        <span className="text-[#6F6F6F] text-base">
+                        <span className="text-[#6F6F6F] dark:text-zinc-400 text-base">
                           {post.action}
                         </span>
                       </div>
@@ -97,7 +97,7 @@ const SingleNotificationItem = () => {
                           {post.description}
                         </a>
                       ) : (
-                        <span className="text-[#6F6F6F] text-sm">
+                        <span className="text-[#6F6F6F] dark:text-zinc-400 text-sm">
                           {post.description}
                         </span>
                       )}

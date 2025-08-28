@@ -6,9 +6,11 @@ import { Link } from "react-router";
 const Notifications = () => {
   return (
     <div className="p-6">
-      <div className="bg-white p-6">
+      <div className="bg-white dark:bg-zinc-900 p-6">
         <div class="mb-9 inline-block">
-          <h1 class="text-[#191919] text-xl font-semibold">Notifications</h1>
+          <h1 class="text-[#191919] dark:text-white text-xl font-semibold">
+            Notifications
+          </h1>
         </div>
         <div className="flex w-full flex-col gap-6">
           <Tabs defaultValue="all-notifications">
@@ -33,9 +35,9 @@ const Notifications = () => {
               <div className="">
                 <Link
                   to="#"
-                  className="font-semibold text-[#003933] flex gap-1 justify-center items-center text-sm"
+                  className="font-semibold text-[#003933] dark:text-white flex gap-1 justify-center items-center text-sm"
                 >
-                  <SquareCheck color="#003933" />
+                  <SquareCheck />
                   <span className=""> Mark all as read</span>
                 </Link>
               </div>
