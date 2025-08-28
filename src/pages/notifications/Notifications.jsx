@@ -33,10 +33,10 @@ const Notifications = () => {
               <div className="">
                 <Link
                   to="#"
-                  className=" font-semibold text-[#003933] flex gap-1 justify-center items-start text-sm"
+                  className="font-semibold text-[#003933] flex gap-1 justify-center items-center text-sm"
                 >
                   <SquareCheck color="#003933" />
-                  Mark all as read
+                  <span className=""> Mark all as read</span>
                 </Link>
               </div>
             </div>
