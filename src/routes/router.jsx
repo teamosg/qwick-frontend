@@ -16,6 +16,7 @@ import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
 import Message from "@/pages/Message/Message";
+import Notifications from "@/pages/notifications/Notifications";
 import NotFound from "@/shared/NotFound";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
@@ -139,6 +140,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/notifications",
+        element: <Notifications />,
       },
       // if page now found
       {
