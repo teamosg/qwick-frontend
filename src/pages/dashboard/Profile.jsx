@@ -95,7 +95,7 @@ const Profile = () => {
         <div
           className={`${
             isTabsOpen ? "block" : "hidden"
-          } shrink-0 md:grid grid-cols-1 gap-4 p-0 bg-background`}
+          } shrink-0 md:grid grid-cols-1 gap-4  p-6 bg-background`}
         >
           <TabsList className="shrink-0 grid grid-cols-1 gap-4 p-0 bg-background">
             {tabs.map((tab) => (
