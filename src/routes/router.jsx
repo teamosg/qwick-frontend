@@ -4,6 +4,7 @@ import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewar
 import ContentReword from "@/components/contentReward/ContentReword";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import { DashboardDefault } from "@/components/dashboard/Dashboard/DashboardDefault";
+import AddCommunity from "@/pages/addcommunity/addcommunity";
 import Announcement from "@/pages/announcement/Announcement";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: "/message",
         element: <Message />,
+      },
+      {
+        path: "/addcommunity",
+        element: <AddCommunity />,
       },
       {
         element: <Announcement />,

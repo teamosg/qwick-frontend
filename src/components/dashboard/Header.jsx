@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
 import {
   Bell,
-  Search,
   LogOut,
-  User,
-  Settings,
   Menu,
-  Sun,
   Moon,
-} from 'lucide-react';
-import PropTypes from 'prop-types';
-import { useTheme } from '../shared/ThemeProvider'; 
+  Search,
+  Settings,
+  Sun,
+  User,
+} from "lucide-react";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import { Link } from "react-router";
+import { useTheme } from "../shared/ThemeProvider";
 
 const NotificationItem = ({ title, time, isRead }) => (
   <div
     className={`p-4 ${
-      !isRead ? 'bg-primary/10' : ''
+      !isRead ? "bg-primary/10" : ""
     } hover:bg-accent cursor-pointer`}
   >
     <p className="text-sm font-medium text-foreground">{title}</p>
@@ -33,39 +34,39 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
-  const { theme, setTheme } = useTheme(); 
+  const { theme, setTheme } = useTheme();
 
   const notifications = [
     {
       id: 1,
-      title: 'New alumni request',
-      time: '5 minutes ago',
+      title: "New alumni request",
+      time: "5 minutes ago",
       isRead: false,
     },
     {
       id: 2,
-      title: 'Career readiness update',
-      time: '1 hour ago',
+      title: "Career readiness update",
+      time: "1 hour ago",
       isRead: false,
     },
     {
       id: 3,
-      title: 'Monthly report available',
-      time: '2 hours ago',
+      title: "Monthly report available",
+      time: "2 hours ago",
       isRead: true,
     },
   ];
 
   const handleClickOutside = (setter) => {
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.dropdown-container')) {
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".dropdown-container")) {
         setter(false);
       }
     });
   };
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -105,9 +106,9 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
           <button
             onClick={toggleTheme}
             className="hidden sm:block p-2 rounded-full hover:bg-accent"
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
           >
-            {theme === 'dark' ? (
+            {theme === "dark" ? (
               <Sun className="h-5 w-5 text-foreground" /> // You'll need to import Sun icon from lucide-react
             ) : (
               <Moon className="h-5 w-5 text-foreground" /> // You'll need to import Moon icon from lucide-react
@@ -146,9 +147,13 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
                   ))}
                 </div>
                 <div className="p-4 border-t border-border">
-                  <button className="text-sm text-primary hover:text-primary/80">
+                  <Link
+                    to="http://localhost:5173/notifications"
+                    className="text-sm text-primary hover:text-primary/80"
+                    onClick={() => setShowNotifications(!showNotifications)}
+                  >
                     View all notifications
-                  </button>
+                  </Link>
                 </div>
               </div>
             )}
