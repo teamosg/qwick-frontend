@@ -215,7 +215,7 @@ const CommunityChat = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen">
+    <div className="flex flex-col w-full  h-[calc(100vh-116px)] sm:h-[calc(100vh-96px)] ">
       <div className="flex-1 p-2 md:p-4 overflow-y-auto">
         <AnimatePresence>
           {messages.map((message) => (

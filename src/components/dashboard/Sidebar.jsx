@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import PropTypes from "prop-types";
 import { Link, NavLink } from "react-router-dom";
-import { Button } from "../ui/button";
 import { SidebarCommunity } from "./Sidebar/SidebarCommunity";
 import { SidebarSearchCommunity } from "./Sidebar/SidebarSearchCommunity";
 
@@ -150,10 +149,10 @@ const Sidebar = ({ onClose }) => {
         </div>
 
         {/* Add Community */}
-        <div className="p-4 border-t border-sidebar-border ">
+        <div className="p-4 border-t border-sidebar-border flex gap-3  items-center">
           <Link
             to={`/addcommunity`}
-            className="hover:bg-transparent text-[16px] font-semibold px-0 py-0 cursor-pointer flex gap-3  items-center"
+            className="hover:bg-transparent text-[16px] font-semibold px-0 py-0 cursor-pointer flex gap-3 items-center"
           >
             <Plus />
             <span>Add Community</span>
@@ -162,13 +161,13 @@ const Sidebar = ({ onClose }) => {
 
         {/* Menu */}
         <div className="p-4 border-t border-sidebar-border flex gap-3  items-center">
-          <Button
-            variant="ghost"
-            className="hover:bg-transparent text-[16px] font-semibold px-0 py-0 cursor-pointer"
+          <Link
+            to=""
+            className="hover:bg-transparent text-[16px] font-semibold px-0 py-0 cursor-pointer flex gap-3 items-center"
           >
             <Menu />
             Menu
-          </Button>
+          </Link>
         </div>
       </div>
     </div>

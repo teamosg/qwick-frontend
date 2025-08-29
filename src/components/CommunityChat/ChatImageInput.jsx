@@ -21,7 +21,7 @@ const ImagePreview = ({ url, onRemove }) => (
 export default function ChatImageInput() {
   const [profilePicture, setProfilePicture] = useState(null);
   return (
-    <div className="w-full max-w-40">
+    <div className="w-full max-w-40 sticky bottom-0  ">
       <Label htmlFor="profile">Profile Picture</Label>
       <div className="mt-1 w-full">
         {profilePicture ? (
