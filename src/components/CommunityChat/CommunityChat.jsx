@@ -21,6 +21,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Loader } from "lucide-react";
 import { FiImage } from "react-icons/fi";
 import { LuFile, LuPaperclip, LuSend, LuX } from "react-icons/lu";
+import ChatHeader from "./ChatHeader";
 
 const CommunityChat = () => {
   const [messages, setMessages] = useState([
@@ -201,11 +202,11 @@ const CommunityChat = () => {
     },
   };
 
-  const reactionVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 10 },
-  };
+  // const reactionVariants = {
+  //   hidden: { opacity: 0, y: 10 },
+  //   visible: { opacity: 1, y: 0 },
+  //   exit: { opacity: 0, y: 10 },
+  // };
 
   // Format file size for display
   const formatFileSize = (bytes) => {
@@ -216,6 +217,7 @@ const CommunityChat = () => {
 
   return (
     <div className="flex flex-col w-full  h-[calc(100vh-116px)] sm:h-[calc(100vh-96px)] ">
+      <ChatHeader />
       <div className="flex-1 p-2 md:p-4 overflow-y-auto">
         <AnimatePresence>
           {messages.map((message) => (

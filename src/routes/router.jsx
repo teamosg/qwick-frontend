@@ -3,7 +3,9 @@ import CommunityChat from "@/components/CommunityChat/CommunityChat";
 import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
 import ContentReword from "@/components/contentReward/ContentReword";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
-import { DashboardDefault } from "@/components/dashboard/Dashboard/DashboardDefault";
+import Payments from "@/components/dashboard/Dashboard/Payments";
+import Users from "@/components/dashboard/Dashboard/Users";
+import WaitList from "@/components/dashboard/Dashboard/WaitList";
 import AddCommunity from "@/pages/addcommunity/addcommunity";
 import Announcement from "@/pages/announcement/Announcement";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
@@ -124,21 +126,16 @@ const router = createBrowserRouter([
         element: <Dashboard />,
         children: [
           {
-            path: "community-hub",
-            element: <h1>Community Hub</h1>,
-          },
-          {
-            path: "",
             index: true,
-            element: <DashboardDefault />,
+            element: <Users />,
           },
           {
-            path: "edit-store",
-            element: <h1>Edit Store</h1>,
+            path: "wait-list",
+            element: <WaitList />,
           },
           {
-            path: "content-reward",
-            element: <h1>Content Reward</h1>,
+            path: "payments",
+            element: <Payments />,
           },
         ],
       },

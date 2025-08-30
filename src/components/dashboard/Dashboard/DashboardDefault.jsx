@@ -1,12 +1,10 @@
 "use client";
 
-import { ArrowUpRight, ShoppingCart } from "lucide-react";
-import { DashboardChart } from "./DashboardChart";
-
 export function DashboardDefault() {
   return (
     <div className="grid grid-1 lg:grid-cols-2 2xl:grid-cols-2 gap-4 p-4">
-      <div className="p-4 rounded-lg lg:col-span-2 xl:col-span-1 2xl:col-span-2 shadow">
+      Sidebar
+      {/* <div className="p-4 rounded-lg lg:col-span-2 xl:col-span-1 2xl:col-span-2 shadow">
         <DashboardChart />
       </div>
       <div className="shadow p-4 rounded-lg">
@@ -91,7 +89,7 @@ export function DashboardDefault() {
             <h3 className="text-[#858D9D] text-sm">From last week</h3>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

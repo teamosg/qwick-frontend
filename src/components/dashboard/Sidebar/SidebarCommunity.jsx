@@ -3,7 +3,7 @@ import * as React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`
+  (_, i, a) => `Profile ${a.length - i}`
 );
 
 export function SidebarCommunity() {
@@ -14,7 +14,6 @@ export function SidebarCommunity() {
           <React.Fragment key={tag}>
             <div className="text-sm  mb-3">
               <button className="cursor-pointer transition duration-300 hover:text-[#17173c]">
-                {" "}
                 <img
                   src="https://placehold.co/60x60"
                   alt=""
