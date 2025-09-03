@@ -4,6 +4,7 @@ import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewar
 import ContentReword from "@/components/contentReward/ContentReword";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import Payments from "@/components/dashboard/Dashboard/Payments";
+import Payout from "@/components/dashboard/Dashboard/Payout";
 import Users from "@/components/dashboard/Dashboard/Users";
 import WaitList from "@/components/dashboard/Dashboard/WaitList";
 import AddCommunity from "@/pages/addcommunity/addcommunity";
@@ -136,6 +137,10 @@ const router = createBrowserRouter([
           {
             path: "payments",
             element: <Payments />,
+          },
+          {
+            path: "payout",
+            element: <Payout />,
           },
         ],
       },

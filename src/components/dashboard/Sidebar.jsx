@@ -14,10 +14,11 @@ import { Link, NavLink } from "react-router-dom";
 import { SidebarCommunity } from "./Sidebar/SidebarCommunity";
 import { SidebarSearchCommunity } from "./Sidebar/SidebarSearchCommunity";
 
-const NavItem = ({ icon, text, to }) => {
+const NavItem = ({ icon, text, to, onClose }) => {
   return (
     <NavLink
       to={to}
+      onClick={onClose}
       className={({ isActive, isPending }) =>
         `flex items-center space-x-3 p-3 rounded-full text-muted-foreground border transition duration-600 ease-out ${
           isActive || isPending
@@ -113,45 +114,56 @@ const Sidebar = ({ onClose }) => {
           </div>
 
           <div className="flex-1 px-3 py-2 space-y-1">
-            <NavItem icon={<Home size={20} />} text="Home" to="/" />
+            <NavItem
+              icon={<Home size={20} />}
+              text="Home"
+              to="/"
+              onClose={onClose}
+            />
             <NavItem
               icon={<Compass size={20} />}
               text="Discover"
               to="/discover"
+              onClose={onClose}
             />
             <NavItem
               icon={<MessageSquareMore size={20} />}
               text="Message"
               to="/message"
+              onClose={onClose}
             />
             <NavItem
               icon={<BellDot size={20} />}
               text="Notifications"
               to="/notifications"
+              onClose={onClose}
             />
             <NavItem
               icon={<LayoutDashboard size={20} />}
               text="Dashboard"
               to="/dashboard"
+              onClose={onClose}
             />
             {/* <NavItem icon={<Wallet size={20} />} text="Payout" to="/payout" /> */}
             <NavItem
               icon={<UserCircle size={20} />}
               text="Profile"
               to="/profile"
+              onClose={onClose}
             />
           </div>
         </div>
         {/* Search Community */}
         <div className="p-4 border-t border-sidebar-border">
           <SidebarSearchCommunity />
-          <SidebarCommunity />
+          <SidebarCommunity onClose={onClose} />
         </div>
 
         {/* Add Community */}
         <div className="p-4 border-t border-sidebar-border flex gap-3  items-center">
           <Link
             to={`/addcommunity`}
+            onClick={onClose}
             className="hover:bg-transparent text-[16px] font-semibold px-0 py-0 cursor-pointer flex gap-3 items-center"
           >
             <Plus />
@@ -163,6 +175,7 @@ const Sidebar = ({ onClose }) => {
         <div className="p-4 border-t border-sidebar-border flex gap-3  items-center">
           <Link
             to=""
+            onClick={onClose}
             className="hover:bg-transparent text-[16px] font-semibold px-0 py-0 cursor-pointer flex gap-3 items-center"
           >
             <Menu />
@@ -175,6 +188,13 @@ const Sidebar = ({ onClose }) => {
 };
 
 Sidebar.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
+
+NavItem.propTypes = {
+  icon: PropTypes.node.isRequired,
+  text: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

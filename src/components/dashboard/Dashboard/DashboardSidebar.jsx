@@ -6,7 +6,6 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarProvider,
-  useSidebar,
 } from "@/components/ui/sidebar";
 
 import {
@@ -48,8 +47,6 @@ const items = [
 
 // Main sidebar content component
 export function DashboardSidebarContent() {
-  const { setOpenMobile } = useSidebar();
-
   return (
     <Sidebar className="sticky md:left-64 left-0">
       <SidebarHeader className="p-0 bg-[url(https://placehold.co/400x250)] bg-center bg-cover bg-no-repeat h-[135px] relative">
