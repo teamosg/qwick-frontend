@@ -30,7 +30,7 @@ const ConnectedAccounts = () => {
 
       {/* Add new account section */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-gray-900 mb-6">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
           Add new account
         </h2>
 

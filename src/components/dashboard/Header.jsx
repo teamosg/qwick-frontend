@@ -3,7 +3,7 @@ import {
   LogOut,
   Menu,
   Moon,
-  Search,
+  Plus,
   Settings,
   Sun,
   User,
@@ -19,8 +19,8 @@ const NotificationItem = ({ title, time, isRead }) => (
       !isRead ? "bg-primary/10" : ""
     } hover:bg-accent cursor-pointer`}
   >
-    <p className="text-sm font-medium text-foreground">{title}</p>
-    <p className="text-xs text-muted-foreground mt-1">{time}</p>
+    <p className="text-sm font-medium text-gray-900 dark:text-white">{title}</p>
+    <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">{time}</p>
   </div>
 );
 
@@ -81,8 +81,30 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
           </button>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <div className="relative hidden sm:block">
+        <div className="flex items-center justify-center space-x-4">
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="hidden bg-[#0D99FF1A] sm:block p-2 rounded-full hover:bg-[#0d9aff54]"
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5 text-foreground" /> // You'll need to import Sun icon from lucide-react
+            ) : (
+              <Moon className="h-5 w-5 text-foreground" /> // You'll need to import Moon icon from lucide-react
+            )}
+          </button>
+
+          <Link
+            to={`/addcommunity`}
+            type="submit"
+            className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+          >
+            <Plus />
+            Add Community
+          </Link>
+
+          {/* <div className="relative hidden sm:block">
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <Search className="h-4 w-4 text-primary" />
             </div>
@@ -100,20 +122,7 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
             >
               <Search className="h-5 w-5 text-muted-foreground" />
             </button>
-          </div>
-
-          {/* Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            className="hidden sm:block p-2 rounded-full hover:bg-accent"
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-          >
-            {theme === "dark" ? (
-              <Sun className="h-5 w-5 text-foreground" /> // You'll need to import Sun icon from lucide-react
-            ) : (
-              <Moon className="h-5 w-5 text-foreground" /> // You'll need to import Moon icon from lucide-react
-            )}
-          </button>
+          </div> */}
 
           <div className="relative dropdown-container">
             <button
@@ -132,7 +141,7 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
             {showNotifications && (
               <div className="absolute right-0 mt-2 w-80 bg-popover rounded-lg shadow-lg border border-border z-50">
                 <div className="p-4 border-b border-border">
-                  <h3 className="font-semibold text-foreground">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
                     Notifications
                   </h3>
                 </div>
@@ -175,11 +184,13 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
                 className="h-8 w-8 rounded-full object-cover border border-border"
               />
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium text-foreground">
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
                   {userName}
                 </p>
                 {userRole && (
-                  <p className="text-xs text-muted-foreground">{userRole}</p>
+                  <p className="text-xs text-gray-600 dark:text-zinc-400">
+                    {userRole}
+                  </p>
                 )}
               </div>
             </button>

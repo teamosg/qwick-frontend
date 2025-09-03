@@ -143,6 +143,7 @@ const ProfileGeneral = () => {
               </SelectItem>
             </SelectContent>
           </Select>
+
           <Input
             id="phone"
             type="tel"

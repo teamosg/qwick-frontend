@@ -75,12 +75,12 @@ const Profile = () => {
   const [isTabsOpen, setIsTabsOpen] = useState(false);
 
   return (
-    <div className="p-6 h-screen">
+    <div className="p-6 h-screen bg-[#f9fafb] dark:bg-zinc-950">
       {/* Mobile Toggle Button */}
       <div className="md:hidden mb-4">
         <button
           onClick={() => setIsTabsOpen(!isTabsOpen)}
-          className="text-gray-700 dark:text-white p-2 rounded-md border border-gray-300 dark:border-gray-600"
+          className="text-gray-700 dark:text-white p-2 rounded-md border border-gray-300 dark:border-zinc-700"
         >
           <Menu className="h-5 w-5" />
         </button>

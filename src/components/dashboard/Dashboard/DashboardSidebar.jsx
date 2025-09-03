@@ -61,8 +61,8 @@ export function DashboardSidebarContent() {
                 <img src="/dashboardProfile.png" alt="" />
               </div>
               <div className="hidden sm:block">
-                <h2 className="text-[16px] font-semibold ">Darren Chua</h2>
-                <p className="text-sm">@lofttypayoff</p>
+                <h2 className="text-[16px] font-semibold text-gray-900 dark:text-white">Darren Chua</h2>
+                <p className="text-sm text-gray-600 dark:text-zinc-400">@lofttypayoff</p>
               </div>
             </div>
             <div className="hidden sm:block">

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import AddCommunityItem from "./AddCommunityItem";
 
 const communityOneData = [
@@ -12,20 +13,41 @@ const communityOneData = [
   { id: "1a2b3c09", title: "Time Tactics" },
 ];
 
-const AddCommunityOne = ({ currentStep, setCurrentStep }) => {
+const AddCommunityOne = ({
+  currentStep,
+  setCurrentStep,
+  formData,
+  updateFormData,
+  onNext,
+  isLoading,
+}) => {
   return (
-    <div className="">
+    <motion.div
+      className=""
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="grid grid-cols-1 gap-4 sm:grid sm:grid-cols-3 sm:gap-6">
-        {communityOneData.map((data) => (
-          <AddCommunityItem
+        {communityOneData.map((data, index) => (
+          <motion.div
             key={data.id}
-            data={data}
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-          />
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+          >
+            <AddCommunityItem
+              data={data}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              formData={formData}
+              updateFormData={updateFormData}
+              onNext={onNext}
+            />
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
