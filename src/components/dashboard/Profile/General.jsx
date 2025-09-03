@@ -9,10 +9,50 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 const ProfileGeneral = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    bio: "",
+    username: "",
+    email: "",
+    phone: "",
+    countryCode: "us",
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      // TODO: Implement API call here
+      console.log("Form data to submit:", formData);
+
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // TODO: Handle success response
+      console.log("Profile updated successfully");
+    } catch (error) {
+      // TODO: Handle error response
+      console.error("Error updating profile:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="p-6 space-y-6">
+    <form onSubmit={handleSubmit} className="p-6 space-y-6">
       {/* Name Field */}
       <div className="space-y-2">
         <Label htmlFor="name" className="text-sm font-medium text-gray-700">
@@ -21,7 +61,9 @@ const ProfileGeneral = () => {
         <Input
           id="name"
           type="text"
-          placeholder="user@gmail.com"
+          value={formData.name}
+          onChange={(e) => handleInputChange("name", e.target.value)}
+          placeholder="Enter your name"
           className="w-full rounded-full border-gray-300 px-4 py-3 text-gray-600"
         />
       </div>
@@ -33,7 +75,9 @@ const ProfileGeneral = () => {
         </Label>
         <Textarea
           id="bio"
-          placeholder="Input your first name"
+          value={formData.bio}
+          onChange={(e) => handleInputChange("bio", e.target.value)}
+          placeholder="Tell us about yourself"
           className="w-full min-h-[100px] rounded-xl border-gray-300 px-4 py-3 text-gray-600 resize-none"
         />
       </div>
@@ -46,7 +90,9 @@ const ProfileGeneral = () => {
         <Input
           id="username"
           type="text"
-          placeholder="JHJKDhaHBD"
+          value={formData.username}
+          onChange={(e) => handleInputChange("username", e.target.value)}
+          placeholder="Enter your username"
           className="w-full rounded-full border-gray-300 px-4 py-3 text-gray-600"
         />
       </div>
@@ -59,7 +105,9 @@ const ProfileGeneral = () => {
         <Input
           id="email"
           type="email"
-          placeholder="dam@sdakvjg"
+          value={formData.email}
+          onChange={(e) => handleInputChange("email", e.target.value)}
+          placeholder="Enter your email"
           className="w-full rounded-full border-gray-300 px-4 py-3 text-gray-600"
         />
       </div>
@@ -70,10 +118,17 @@ const ProfileGeneral = () => {
           Phone Number
         </Label>
         <div className="flex gap-2">
-          <Select defaultValue="us">
+          <Select
+            value={formData.countryCode}
+            onValueChange={(value) => handleInputChange("countryCode", value)}
+          >
             <SelectTrigger className="w-20 rounded-full border-gray-300">
               <SelectValue>
-                <div className="flex items-center gap-2">🇺🇸</div>
+                <div className="flex items-center gap-2">
+                  {formData.countryCode === "us" && "🇺🇸"}
+                  {formData.countryCode === "uk" && "🇬🇧"}
+                  {formData.countryCode === "ca" && "🇨🇦"}
+                </div>
               </SelectValue>
             </SelectTrigger>
             <SelectContent>
@@ -91,17 +146,23 @@ const ProfileGeneral = () => {
           <Input
             id="phone"
             type="tel"
-            placeholder="••••••••••"
+            value={formData.phone}
+            onChange={(e) => handleInputChange("phone", e.target.value)}
+            placeholder="Enter phone number"
             className="flex-1 rounded-full border-gray-300 px-4 py-3 text-gray-600"
           />
         </div>
       </div>
 
-      {/* Sign In Button */}
-      <Button className="w-full bg-emerald-800 hover:bg-emerald-900 text-white rounded-full py-6 text-lg font-medium mt-8">
-        Sign in
+      {/* Update Button */}
+      <Button
+        type="submit"
+        disabled={isLoading}
+        className="w-full bg-emerald-800 hover:bg-emerald-900 text-white rounded-full py-6 text-lg font-medium mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {isLoading ? "Updating..." : "Update"}
       </Button>
-    </div>
+    </form>
   );
 };
 

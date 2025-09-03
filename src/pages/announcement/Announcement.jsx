@@ -11,12 +11,9 @@ const Announcement = () => {
         <main className="w-full">
           {/* Mobile toggle button */}
           <div className="md:hidden mb-4">
-            <SidebarTrigger
-              isButtonShow={false}
-              className="flex items-center justify-center rounded-lg border"
-            >
-              <span className="block">Show Community</span>
-            </SidebarTrigger>
+            <div className="md:hidden mb-4">
+              <SidebarTrigger className="flex items-center justify-center rounded-lg border px-4 py-2 text-sm font-medium"></SidebarTrigger>
+            </div>
           </div>
 
           <div className="w-full">

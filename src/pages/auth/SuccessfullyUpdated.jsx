@@ -1,13 +1,11 @@
-import React from 'react'
-import commonAuthLogo from '../../assets/authImg.png';
-import successfull from '../../assets/successfull.gif';
-import { Link } from 'react-router-dom';
-
-const SuccessfullUpdated = () => {
+import { Link } from "react-router-dom";
+import commonAuthLogo from "../../assets/authImg.png";
+import successfull from "../../assets/successfull.gif";
+const SuccessfullyUpdated = () => {
   return (
     <div className="min-h-screen flex bg-gray-50">
       {/* Left side - Form */}
-      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col ">
+      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col items-center justify-center ">
         <div className="max-w-md mx-auto w-full">
           {/* Logo */}
           <Link
@@ -64,19 +62,20 @@ const SuccessfullUpdated = () => {
         </div>
         <div className="max-w-md mx-auto w-full flex flex-col h-full justify-center">
           <div className="">
-            <img src={successfull} alt="" srcset="" />
+            <img src={successfull} alt="" srcSet="" />
           </div>
 
           <div className="text-center flex flex-col gap-4 md:gap-7 lf:gap-8">
             {/* Title */}
-            <h2 className="text-[#000] text-center font-[Inter] text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] not-italic font-medium leading-[120%] uppercase">
-              Your account has been verified successfully
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-[30px] sm:text-[24px] md:text-[28px] lg:text-[30px] not-italic font-medium  uppercase mb-2 leading-11">
+              Password Update Successful
             </h2>
+
             <button
-              to="/sign-in"
-              className="w-full bg-[#003933] text-white py-2.5 px-4 rounded-md hover:bg-[#002822] transition mt-2 font-medium block cursor-pointer"
+              type="submit"
+              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
             >
-              Continue
+              Sign in
             </button>
           </div>
         </div>
@@ -94,6 +93,6 @@ const SuccessfullUpdated = () => {
       </div>
     </div>
   );
-}
+};
 
-export default SuccessfullUpdated
+export default SuccessfullyUpdated;

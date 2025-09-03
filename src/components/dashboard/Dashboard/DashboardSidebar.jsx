@@ -1,129 +1,117 @@
+// DashboardSidebar.jsx
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
+  SidebarProvider,
 } from "@/components/ui/sidebar";
-import { ChartSpline, ChevronDown, ShoppingBag } from "lucide-react";
 
-import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import {
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import { Link } from "react-router";
+import DashboardSwitcher from "./DashboardSwitcher";
 
 // Menu items.
 const items = [
   {
-    title: "Community hub",
-    url: "community-hub",
-    icon: ChartSpline,
+    title: "Users",
+    url: "",
   },
   {
-    title: "Edit store page",
-    url: "edit-store",
-    icon: ShoppingBag,
+    title: "Wait list",
+    url: "wait-list",
   },
   {
-    title: "Content Reward",
-    url: "content-reward",
-    icon: ChartSpline,
+    title: "Payments",
+    url: "payments",
+  },
+  {
+    title: "Payout",
+    url: "payout",
+  },
+  {
+    title: "Automated Message",
+    url: "automated-message",
+  },
+  {
+    title: "Dashboard Settings",
+    url: "dashboard-settings",
   },
 ];
-export function DashboardSidebar() {
+
+// Main sidebar content component
+export function DashboardSidebarContent() {
   return (
-    <Sidebar className={"sticky left-64"}>
-      <SidebarHeader>
-        <div className="">
-          <div className="flex items-center justify-between ">
+    <Sidebar className="sticky md:left-64 left-0">
+      <SidebarHeader className="p-0 bg-[url(https://placehold.co/400x250)] bg-center bg-cover bg-no-repeat h-[135px] relative">
+        <div className="absolute inset-0 bg-black/30"></div>
+
+        {/* Mobile close button */}
+
+        {/* <div className="absolute inset-0 p-2.5 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-[#fff]">
             <div className="flex items-center gap-2">
               <div className="w-12 h-12 rounded-full flex items-center justify-center">
                 <img src="/dashboardProfile.png" alt="" />
               </div>
-
-              <div>
-                <h2 className="text-[16px] font-semibold text-[#191919]">
-                  Darren Chua
-                </h2>
-                <p className="text-sm text-gray-600">@lofttypayoff</p>
+              <div className="hidden sm:block">
+                <h2 className="text-[16px] font-semibold ">Darren Chua</h2>
+                <p className="text-sm">@lofttypayoff</p>
               </div>
             </div>
-            <div>
-              <ChevronDown />
+            <div className="hidden sm:block">
+              <ExampleCombobox />
             </div>
           </div>
-
-          <div className="mt-4 flex justify-end">
-            <button className="flex items-center space-x-2 px-4 py-2 bg-white rounded-full border border-white hover:bg-gray-50 transition-colors">
-              <span className="text-xs font-medium text-[#090003]">
-                Upload banner
-              </span>
-            </button>
-          </div>
-        </div>
+        </div> */}
+        <DashboardSwitcher />
       </SidebarHeader>
+
       <SidebarContent>
-        <SidebarGroup>
+        <SidebarGroup className="p-0">
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem
+                  key={item.title}
+                  className="hover:hover:bg-none h-auto hover:shadow-none"
+                >
                   <SidebarMenuButton
                     asChild
-                    className="text-[#717171] text-[16px] flex gap-4"
+                    className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
                   >
                     <Link
-                      className=" hover:bg-none hover:shadow-none"
+                      className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
                       to={item.url}
                     >
-                      <item.icon />
-                      <span>{item.title}</span>
+                      <span className="hover:bg-none hover:shadow-none font-medium">
+                        {item.title}
+                      </span>
                     </Link>
                   </SidebarMenuButton>
+                  <hr />
                 </SidebarMenuItem>
               ))}
-
-              <SidebarGroup>
-                <Collapsible defaultOpen className="group/collapsible p-0">
-                  <SidebarGroup
-                    className={" p-0 text-[#090003] text-[16px] flex"}
-                  >
-                    <SidebarGroupLabel className="p-0" asChild>
-                      <CollapsibleTrigger className="text-[#090003] text-[16px]">
-                        Chat
-                        <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                      </CollapsibleTrigger>
-                    </SidebarGroupLabel>
-                    <CollapsibleContent>
-                      <SidebarMenu>
-                        <SidebarMenuItem>
-                          <SidebarMenuButton asChild>
-                            <Link href="/">
-                              <img
-                                src="/dashboardProfile.png"
-                                className="w-6 h-6 rounded-full"
-                                alt=""
-                              />
-                              Chat
-                            </Link>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      </SidebarMenu>
-                    </CollapsibleContent>
-                  </SidebarGroup>
-                </Collapsible>
-              </SidebarGroup>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
+  );
+}
+
+// Main export - use this when you need the sidebar with its own provider
+export function DashboardSidebar() {
+  return (
+    <SidebarProvider>
+      <DashboardSidebarContent />
+    </SidebarProvider>
   );
 }

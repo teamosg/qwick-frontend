@@ -30,7 +30,7 @@ const ResetPassword = () => {
   return (
     <div className={`min-h-screen flex ${darkMode ? "dark" : ""}`}>
       {/* Left side - Form */}
-      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-gray-50 dark:bg-gray-900">
+      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-gray-50 dark:bg-gray-900 ">
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
           {/* Logo */}
           <Link
@@ -107,11 +107,11 @@ const ResetPassword = () => {
 
         <div className="max-w-md mx-auto w-full flex flex-col h-full justify-center">
           <div className="mb-8 text-center">
-            <h2 className="text-gray-900 dark:text-white text-center font-[Inter] text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30px] not-italic font-medium leading-[120%] uppercase">
-              RESET PASSWORD
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-[30px] sm:text-[24px] md:text-[28px] lg:text-[30px] not-italic font-medium leading-[120%] uppercase mb-2">
+              FORGOT PASSWORD
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-center font-[Inter] text-[15px] md:text-[16px] not-italic font-normal leading-[140%]">
-              USE STRONG PASSWORD TO KEEP YOUR ACCOUNT SAFE
+            <p className="dark:text-gray-400 text-center font-[Inter] text-[15px] md:text-[16px] not-italic font-normal leading-[140%]">
+              NO WORRIES, WE’LL SEND YOU RESET INSTRUCTIONS
             </p>
           </div>
 
@@ -136,7 +136,7 @@ const ResetPassword = () => {
                     },
                   })}
                   placeholder="Your password"
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
                 <button
                   type="button"
@@ -173,7 +173,7 @@ const ResetPassword = () => {
                       value === watch("password") || "Passwords do not match",
                   })}
                   placeholder="Confirm your password"
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
                 <button
                   type="button"
@@ -193,10 +193,9 @@ const ResetPassword = () => {
                 </p>
               )}
             </div>
-
             <button
               type="submit"
-              className="w-full bg-[#003933] dark:bg-primary text-white py-2.5 px-4 rounded-md hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
+              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
             >
               Reset Password
             </button>
