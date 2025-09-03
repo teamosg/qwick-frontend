@@ -11,9 +11,10 @@ import AddCommunity from "@/pages/addcommunity/addcommunity";
 import Announcement from "@/pages/announcement/Announcement";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
+import ResetPasswordOtp from "@/pages/auth/ResetPasswordOtp";
 import SignUp from "@/pages/auth/SignUp";
-import SuccessfullUpdated from "@/pages/auth/SuccessfullUpdated";
-import SuccessfullVerified from "@/pages/auth/SuccessfullVerified";
+import SuccessfullyUpdated from "@/pages/auth/SuccessfullyUpdated";
+import SuccessfullyVerified from "@/pages/auth/SuccessfullyVerified";
 import VerifyAccount from "@/pages/auth/VerifyAccount";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import Discover from "@/pages/dashboard/Discover";
@@ -43,24 +44,29 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
+        path: "/verify-account",
+        element: <VerifyAccount />,
+      },
+      {
+        path: "/successfully-verified",
+        element: <SuccessfullyVerified />,
+      },
+      {
         path: "/forgot-password",
         element: <ForgotPassword />,
+      },
+      {
+        path: "/enter-otp",
+        element: <ResetPasswordOtp />,
       },
       {
         path: "/reset-password",
         element: <ResetPassword />,
       },
+
       {
-        path: "/successfull-verified",
-        element: <SuccessfullVerified />,
-      },
-      {
-        path: "/successfull-updated",
-        element: <SuccessfullUpdated />,
-      },
-      {
-        path: "/verify-account",
-        element: <VerifyAccount />,
+        path: "/successfully-updated",
+        element: <SuccessfullyUpdated />,
       },
     ],
   },

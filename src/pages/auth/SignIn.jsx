@@ -30,7 +30,7 @@ const SignIn = () => {
   return (
     <div className={`min-h-screen flex ${darkMode ? "dark" : ""}`}>
       {/* Left side - Form */}
-      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-white dark:bg-gray-900">
+      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-white dark:bg-gray-900 ">
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
           {/* Logo */}
           <Link
