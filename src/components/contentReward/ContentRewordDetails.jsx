@@ -6,7 +6,7 @@ import { Link } from "react-router";
 const ContentRewardDetails = () => {
   return (
     <div className="p-6 text-[#717171]">
-      <h2 className="text-[24px] text-[#191919] font-semibold mb-3">
+      <h2 className="text-[24px] text-[#191919] dark:text-white font-semibold mb-3">
         Content Reward Details
       </h2>
       <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6">

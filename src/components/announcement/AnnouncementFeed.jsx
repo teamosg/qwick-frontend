@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { Image, X } from "lucide-react";
 import { useRef, useState } from "react";
 import FeedSinglePost from "./FeedSinglePost";
@@ -109,59 +110,153 @@ const AnnouncementFeed = () => {
     );
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      scale: 0.95,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const imagePreviewVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.3 },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.8,
+      transition: { duration: 0.2 },
+    },
+  };
+
   return (
-    <div>
-      <h2 className="text-[24px] text-gray-900 dark:text-white font-semibold mb-3">
+    <motion.div
+      className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen p-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <motion.h2
+        className="text-[24px] text-gray-900 dark:text-white font-semibold mb-3"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
         Announcement
-      </h2>
-      <div className="bg-white dark:bg-gray-800 shadow rounded-[12px] p-4 mb-8 border border-gray-200 dark:border-gray-700">
+      </motion.h2>
+
+      <motion.div
+        className="bg-white dark:bg-zinc-900 shadow rounded-[12px] p-4 mb-8 border border-gray-200 dark:border-zinc-700"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        whileHover={{
+          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+          transition: { duration: 0.2 },
+        }}
+      >
         <div className="flex items-start gap-6">
           {/* Profile Avatar */}
-          <div className="flex-shrink-0">
+          <motion.div
+            className="flex-shrink-0"
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.2 }}
+          >
             <img
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face"
               alt="Profile"
               className="w-10 h-10 rounded-full object-cover"
             />
-          </div>
+          </motion.div>
 
           {/* Text Input Area */}
           <div className="flex-1">
-            <textarea
+            <motion.textarea
               value={postText}
               onChange={(e) => setPostText(e.target.value)}
               placeholder="Write something"
-              className="w-full resize-none border-none outline-none text-gray-700 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400 text-base leading-relaxed min-h-[50px] px-5 py-5 bg-gray-100 dark:bg-gray-700 rounded-full mb-4 transition-colors"
+              className="w-full resize-none border-none outline-none text-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-zinc-400 text-base leading-relaxed min-h-[50px] px-5 py-5 bg-gray-100 dark:bg-zinc-700 rounded-full mb-4 transition-colors"
               rows="1"
+              whileFocus={{
+                boxShadow: "0 0 0 2px rgba(0, 59, 51, 0.2)",
+                transition: { duration: 0.2 },
+              }}
             />
 
             {/* Image Preview Grid */}
-            {imagePreviewUrls.length > 0 && (
-              <div className="mb-4">
-                <div className="grid grid-cols-2 gap-3">
-                  {imagePreviewUrls.map((url, index) => (
-                    <div key={index} className="relative group">
-                      <img
-                        src={url}
-                        alt={`Preview ${index + 1}`}
-                        className="w-full h-24 object-cover rounded-lg"
-                      />
-                      <button
-                        onClick={() => removeImage(index)}
-                        className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+            <AnimatePresence>
+              {imagePreviewUrls.length > 0 && (
+                <motion.div
+                  className="mb-4"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="grid grid-cols-2 gap-3">
+                    {imagePreviewUrls.map((url, index) => (
+                      <motion.div
+                        key={index}
+                        className="relative group"
+                        variants={imagePreviewVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
                       >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+                        <img
+                          src={url}
+                          alt={`Preview ${index + 1}`}
+                          className="w-full h-24 object-cover rounded-lg"
+                        />
+                        <motion.button
+                          onClick={() => removeImage(index)}
+                          className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <X className="w-4 h-4" />
+                        </motion.button>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="pt-3 border-t border-gray-200 dark:border-gray-600">
+        <motion.div
+          className="pt-3 border-t border-gray-200 dark:border-zinc-600"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.3 }}
+        >
           <div className="flex items-center justify-between">
             {/* Media Upload Button */}
             <div className="flex items-center gap-2">
@@ -173,41 +268,65 @@ const AnnouncementFeed = () => {
                 onChange={handleImageUpload}
                 className="hidden"
               />
-              <button
+              <motion.button
                 onClick={() => fileInputRef.current.click()}
-                className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors"
                 title="Upload images (max 4)"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
                 <Image className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-              </button>
-              {selectedImages.length > 0 && (
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {selectedImages.length}/4 images
-                </span>
-              )}
+              </motion.button>
+              <AnimatePresence>
+                {selectedImages.length > 0 && (
+                  <motion.span
+                    className="text-sm text-gray-500 dark:text-zinc-400"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {selectedImages.length}/4 images
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Post Button */}
-            <button
+            <motion.button
               onClick={handlePostSubmit}
               disabled={!postText.trim() && selectedImages.length === 0}
-              className="px-8 py-2 bg-transparent border border-[#003933] dark:border-gray-600 hover:[#003933] hover:bg-[#003933] dark:hover:bg-gray-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
+              className="px-8 py-2 bg-transparent border border-[#003933] dark:border-zinc-600 hover:[#003933] hover:bg-[#003933] dark:hover:bg-zinc-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 dark:text-zinc-300 text-sm font-medium rounded-lg transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               Post
-            </button>
+            </motion.button>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Render posts dynamically */}
-      {posts.map((post) => (
-        <FeedSinglePost
-          key={post.id}
-          post={post}
-          onLike={() => handleLike(post.id)}
-        />
-      ))}
-    </div>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <AnimatePresence>
+          {posts.map((post) => (
+            <motion.div
+              key={post.id}
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+              exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
+            >
+              <FeedSinglePost post={post} onLike={() => handleLike(post.id)} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
   );
 };
 

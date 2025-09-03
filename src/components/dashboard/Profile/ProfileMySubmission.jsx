@@ -76,7 +76,7 @@ const ProfileMySubmission = () => {
   return (
     <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       {/* Header */}
-      <h1 className="text-lg sm:text-xl font-semibold text-[#15161E] mb-4 sm:mb-6">
+              <h1 className="text-lg sm:text-xl font-semibold text-[#15161E] dark:text-white mb-4 sm:mb-6">
         Content Submissions
       </h1>
 

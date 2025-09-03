@@ -105,7 +105,7 @@ const PostForm = ({ onSubmit }) => {
               </button>
 
               {showTypeDropdown && (
-                <div className="absolute z-10 mt-1 w-56 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700">
+                <div className="absolute z-10 mt-1 w-56 bg-white dark:bg-zinc-900 rounded-md shadow-lg border border-gray-200 dark:border-zinc-700">
                   <div className="py-1">
                     {postTypes.map((type) => (
                       <button

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Dropdown = ({ items, onClose }) => {
   return (
-    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-700">
+    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-zinc-900 rounded-md shadow-lg z-10 border border-gray-200 dark:border-zinc-700">
       <div className="py-1">
         {items.map((item, index) => (
           <button

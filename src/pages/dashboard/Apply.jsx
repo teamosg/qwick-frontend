@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const Apply = () => {
   return (
-    <div className="p-6 text-[#717171]">
+    <div className="p-6 text-[#717171] bg-[#f9fafb] dark:bg-zinc-950 min-h-screen">
       <div className="mb-9 inline-block">
         <Link
           to="#"
@@ -15,7 +15,7 @@ const Apply = () => {
           Back to rewards
         </Link>
       </div>
-      <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6">
+      <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6 border border-gray-200 dark:border-zinc-700">
         <div className="flex justify-between mb-3.5">
           <div className="flex items-center justify-center gap-3 mb-3">
             <img
@@ -100,7 +100,7 @@ const Apply = () => {
           </div>
         </div>
       </div>
-      <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6">
+      <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6 border border-gray-200 dark:border-zinc-700">
         <div className="mb-3.5">
           <h3 className="text-[#090003] dark:text-white text-sm font-semibold mb-4">
             Apply for this reward

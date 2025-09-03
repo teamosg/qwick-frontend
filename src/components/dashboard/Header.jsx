@@ -19,8 +19,8 @@ const NotificationItem = ({ title, time, isRead }) => (
       !isRead ? "bg-primary/10" : ""
     } hover:bg-accent cursor-pointer`}
   >
-    <p className="text-sm font-medium text-foreground">{title}</p>
-    <p className="text-xs text-muted-foreground mt-1">{time}</p>
+    <p className="text-sm font-medium text-gray-900 dark:text-white">{title}</p>
+    <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">{time}</p>
   </div>
 );
 
@@ -141,7 +141,7 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
             {showNotifications && (
               <div className="absolute right-0 mt-2 w-80 bg-popover rounded-lg shadow-lg border border-border z-50">
                 <div className="p-4 border-b border-border">
-                  <h3 className="font-semibold text-foreground">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
                     Notifications
                   </h3>
                 </div>
@@ -184,11 +184,13 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
                 className="h-8 w-8 rounded-full object-cover border border-border"
               />
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium text-foreground">
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
                   {userName}
                 </p>
                 {userRole && (
-                  <p className="text-xs text-muted-foreground">{userRole}</p>
+                  <p className="text-xs text-gray-600 dark:text-zinc-400">
+                    {userRole}
+                  </p>
                 )}
               </div>
             </button>

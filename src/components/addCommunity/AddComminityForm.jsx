@@ -61,7 +61,7 @@ export default function AddCommunityForm({
 
   return (
     <motion.div
-      className="mx-auto p-6 bg-white"
+      className="mx-auto p-6 bg-white dark:bg-zinc-900 dark:text-white"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -75,7 +75,7 @@ export default function AddCommunityForm({
         >
           <label
             htmlFor="businessName"
-            className="block text-base font-medium text-[#0D0D12] mb-2"
+            className="block text-base font-medium text-[#0D0D12] mb-2 dark:text-white"
           >
             Business Name
           </label>
@@ -85,7 +85,7 @@ export default function AddCommunityForm({
             value={formData?.step3?.businessName || ""}
             onChange={handleBusinessNameChange}
             placeholder="Write here..."
-            className={`w-full px-4 py-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-sm transition-colors duration-200 ${
+            className={`w-full px-4 py-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-sm transition-colors duration-200  dark:text-white ${
               errors?.businessName
                 ? "border-red-500 focus:ring-red-500"
                 : "border-gray-200"
@@ -111,7 +111,7 @@ export default function AddCommunityForm({
         >
           <label
             htmlFor="country"
-            className="block text-base font-medium text-[#0D0D12] mb-2"
+            className="block text-base font-medium text-[#0D0D12] mb-2 dark:text-white"
           >
             Country
           </label>
@@ -119,7 +119,7 @@ export default function AddCommunityForm({
             <button
               type="button"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className={`w-full px-4 py-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-left text-sm flex items-center justify-between transition-colors duration-200 ${
+              className={`w-full px-4 py-3 border dark:text-white rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-left text-sm flex items-center justify-between transition-colors duration-200 ${
                 errors?.country
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-200"

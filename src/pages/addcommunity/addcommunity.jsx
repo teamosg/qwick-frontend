@@ -200,7 +200,7 @@ const AddCommunity = () => {
             transition={pageTransition}
             className="space-y-6"
           >
-            <h1 className="my-8 text-3xl md:text-4xl font-bold text-[#15161E] text-center">
+            <h1 className="my-8 text-3xl md:text-4xl font-bold text-[#15161E] dark:text-white text-center">
               Which model best describes your offer?
             </h1>
             {errors.step1 && (
@@ -227,7 +227,7 @@ const AddCommunity = () => {
             transition={pageTransition}
             className="space-y-6"
           >
-            <h1 className="my-8 text-3xl md:text-4xl font-bold text-[#15161E] text-center">
+            <h1 className="my-8 text-3xl md:text-4xl font-bold text-[#15161E] dark:text-white text-center">
               Choose your category
             </h1>
             {errors.step2 && (
@@ -254,7 +254,7 @@ const AddCommunity = () => {
             transition={pageTransition}
             className="space-y-6"
           >
-            <h1 className="my-8 text-3xl md:text-4xl font-bold text-[#15161E] text-center">
+            <h1 className="my-8 text-3xl md:text-4xl font-bold text-[#15161E] dark:text-white text-center">
               Name your business
             </h1>
             {errors.submit && (
@@ -295,7 +295,9 @@ const AddCommunity = () => {
         >
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#003933] mx-auto"></div>
-            <p className="mt-2 text-sm text-gray-600">Loading...</p>
+            <p className="mt-2 text-sm text-gray-600 dark:text-zinc-400">
+              Loading...
+            </p>
           </div>
         </motion.div>
       )}

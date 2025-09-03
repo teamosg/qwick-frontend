@@ -63,7 +63,7 @@ const AddCommunityItem = ({
       onClick={handleClick}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className={`bg-white rounded-md px-6 py-8 shadow transition-all duration-300 border-2 cursor-pointer ${
+      className={`bg-white rounded-md px-6 py-8 shadow transition-all duration-300 border-2 cursor-pointer  dark:bg-zinc-900  ${
         isSelected
           ? "border-[#003933] bg-[#f0fdf4] shadow-lg"
           : "border-transparent hover:border-[#003933] hover:shadow-md"
@@ -79,7 +79,7 @@ const AddCommunityItem = ({
       </motion.div>
 
       <h3
-        className={`text-xl font-semibold transition-colors duration-300 ${
+        className={`text-xl font-semibold transition-colors duration-300 dark:text-white ${
           isSelected ? "text-[#003933]" : "text-[#090003]"
         }`}
       >
