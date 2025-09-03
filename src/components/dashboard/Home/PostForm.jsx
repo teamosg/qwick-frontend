@@ -183,13 +183,6 @@ const PostForm = ({ onSubmit }) => {
               <div className="flex space-x-2">
                 <button
                   type="button"
-                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  <Smile size={20} />
-                </button>
-                <button
-                  type="button"
                   onClick={triggerFileInput}
                   className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
@@ -207,6 +200,13 @@ const PostForm = ({ onSubmit }) => {
                   className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <Paperclip size={20} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                  className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <Smile size={20} />
                 </button>
               </div>
               <button

@@ -38,7 +38,7 @@ const JoinCommunity = () => {
           </p>
           <Link
             to={`/announcement`}
-            className="inline-block max-w-sm w-full text-white bg-[#003933] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition"
+            className="inline-block max-w-sm w-full text-white bg-[#003933] hover:bg-[#003933]/80 text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition"
           >
             Join
           </Link>

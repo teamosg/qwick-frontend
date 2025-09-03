@@ -58,7 +58,7 @@ const Card = ({ progress = 7 }) => {
         </div>
         <Link
           to="/join-community"
-          className="bg-emerald-700 hover:bg-[#003933] text-white text-sm font-semibold py-1.5 px-4 rounded-full transition duration-300"
+          className="bg-[#003933] hover:bg-[#003933]/80 text-white text-sm font-semibold py-1.5 px-4 rounded-full transition duration-300"
         >
           Submission
         </Link>

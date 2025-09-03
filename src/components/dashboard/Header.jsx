@@ -3,7 +3,7 @@ import {
   LogOut,
   Menu,
   Moon,
-  Search,
+  Plus,
   Settings,
   Sun,
   User,
@@ -81,8 +81,30 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
           </button>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <div className="relative hidden sm:block">
+        <div className="flex items-center justify-center space-x-4">
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="hidden bg-[#0D99FF1A] sm:block p-2 rounded-full hover:bg-[#0d9aff54]"
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5 text-foreground" /> // You'll need to import Sun icon from lucide-react
+            ) : (
+              <Moon className="h-5 w-5 text-foreground" /> // You'll need to import Moon icon from lucide-react
+            )}
+          </button>
+
+          <Link
+            to={`/addcommunity`}
+            type="submit"
+            className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+          >
+            <Plus />
+            Add Community
+          </Link>
+
+          {/* <div className="relative hidden sm:block">
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <Search className="h-4 w-4 text-primary" />
             </div>
@@ -100,20 +122,7 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
             >
               <Search className="h-5 w-5 text-muted-foreground" />
             </button>
-          </div>
-
-          {/* Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            className="hidden sm:block p-2 rounded-full hover:bg-accent"
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-          >
-            {theme === "dark" ? (
-              <Sun className="h-5 w-5 text-foreground" /> // You'll need to import Sun icon from lucide-react
-            ) : (
-              <Moon className="h-5 w-5 text-foreground" /> // You'll need to import Moon icon from lucide-react
-            )}
-          </button>
+          </div> */}
 
           <div className="relative dropdown-container">
             <button

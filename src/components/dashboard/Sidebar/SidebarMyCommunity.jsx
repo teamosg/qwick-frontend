@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const tags = Array.from({ length: 50 }).map(
+const tags = Array.from({ length: 3 }).map(
   (_, i, a) => `Profile ${a.length - i}`
 );
 export function SidebarMyCommunity({ onClose }) {
