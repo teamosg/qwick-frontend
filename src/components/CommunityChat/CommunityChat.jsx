@@ -240,13 +240,13 @@ const CommunityChat = () => {
   };
 
   return (
-    <div className="flex flex-col w-full  h-[calc(100vh-116px)] sm:h-[calc(100vh-96px)] ">
+    <div className="flex flex-col w-full h-[calc(100vh-116px)] sm:h-[calc(100vh-96px)]">
       <ChatHeader
         onSearch={handleSearch}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-      <div className="flex-1 p-2 md:p-4 overflow-y-auto">
+      <div className="flex-1 p-2 md:p-4 overflow-y-auto pb-4">
         <AnimatePresence>
           {filteredMessages.map((message) => (
             <motion.div
@@ -401,7 +401,7 @@ const CommunityChat = () => {
       </div>
 
       {/* Message Input */}
-      <div className="bg-white dark:bg-slate-900 dark:border-slate-700 px-6 py-2 border border-border rounded-full shadow ">
+      <div className="sticky bottom-0 bg-white dark:bg-slate-900 dark:border-slate-700 px-6 py-2 border border-border rounded-full shadow mx-2 md:mx-4 mb-2">
         {/* Attachments preview */}
         {(attachments.length || isUploading) && (
           <div className="mb-2 flex flex-wrap gap-2">

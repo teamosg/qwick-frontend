@@ -8,7 +8,6 @@ import {
 import { CircleAlert, X } from "lucide-react";
 import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
-import { Link } from "react-router";
 
 const ContentRewardApply = () => {
   const [files, setFiles] = useState();
@@ -18,7 +17,17 @@ const ContentRewardApply = () => {
   };
 
   const [showPopup, setShowPopup] = useState(false);
-  const [link, setLink] = useState("");
+
+  // Separate state for each social media platform
+  const [formData, setFormData] = useState({
+    youtube: "",
+    instagram: "",
+    tiktok: "",
+    linkedin: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleApplyClick = () => {
     setShowPopup(true);
@@ -26,13 +35,86 @@ const ContentRewardApply = () => {
 
   const handleClosePopup = () => {
     setShowPopup(false);
-    setLink("");
+    setFormData({
+      youtube: "",
+      instagram: "",
+      tiktok: "",
+      linkedin: "",
+    });
+    setErrors({});
+    setIsSubmitting(false);
   };
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log("Submitting with link:", link);
-    setShowPopup(false);
+  const handleInputChange = (platform, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [platform]: value,
+    }));
+
+    // Clear error when user starts typing
+    if (errors[platform]) {
+      setErrors((prev) => ({
+        ...prev,
+        [platform]: "",
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Check if at least one platform has a link
+    const hasAnyLink = Object.values(formData).some(
+      (link) => link.trim() !== ""
+    );
+    if (!hasAnyLink) {
+      newErrors.general = "Please provide at least one social media link";
+    }
+
+    // Validate individual links (basic URL validation)
+    Object.entries(formData).forEach(([platform, link]) => {
+      if (link.trim() !== "" && !isValidUrl(link)) {
+        newErrors[platform] = "Please enter a valid URL";
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const isValidUrl = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      console.log("Submitting with links:", formData);
+
+      // Reset form and close popup
+      handleClosePopup();
+
+      // You could add a success message here
+      alert("Application submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      setErrors({ general: "Failed to submit application. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   //   const handleDrop = (e) => {
@@ -154,6 +236,15 @@ const ContentRewardApply = () => {
                 Create submission
               </h2>
 
+              {/* General Error Message */}
+              {errors.general && (
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
+                  <p className="text-sm text-red-800 dark:text-red-200">
+                    {errors.general}
+                  </p>
+                </div>
+              )}
+
               {/* Info Alert */}
               <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-3 flex items-start gap-3">
                 <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -178,18 +269,103 @@ const ContentRewardApply = () => {
                   </p>
                 </div>
 
-                {/* Link Input */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                    Provide link<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={link}
-                    onChange={(e) => setLink(e.target.value)}
-                    placeholder="https://www..."
-                    className="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                  />
+                {/* Link Inputs */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                      Provide YouTube link
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.youtube}
+                      onChange={(e) =>
+                        handleInputChange("youtube", e.target.value)
+                      }
+                      placeholder="https://www.youtube.com/watch?v=..."
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
+                        errors.youtube
+                          ? "border-red-300 dark:border-red-600"
+                          : "border-gray-300 dark:border-gray-600"
+                      }`}
+                    />
+                    {errors.youtube && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.youtube}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                      Provide Instagram link
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.instagram}
+                      onChange={(e) =>
+                        handleInputChange("instagram", e.target.value)
+                      }
+                      placeholder="https://www.instagram.com/p/..."
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
+                        errors.instagram
+                          ? "border-red-300 dark:border-red-600"
+                          : "border-gray-300 dark:border-gray-600"
+                      }`}
+                    />
+                    {errors.instagram && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.instagram}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                      Provide TikTok link
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.tiktok}
+                      onChange={(e) =>
+                        handleInputChange("tiktok", e.target.value)
+                      }
+                      placeholder="https://www.tiktok.com/@user/video/..."
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
+                        errors.tiktok
+                          ? "border-red-300 dark:border-red-600"
+                          : "border-gray-300 dark:border-gray-600"
+                      }`}
+                    />
+                    {errors.tiktok && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.tiktok}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                      Provide LinkedIn link
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.linkedin}
+                      onChange={(e) =>
+                        handleInputChange("linkedin", e.target.value)
+                      }
+                      placeholder="https://www.linkedin.com/posts/..."
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
+                        errors.linkedin
+                          ? "border-red-300 dark:border-red-600"
+                          : "border-gray-300 dark:border-gray-600"
+                      }`}
+                    />
+                    {errors.linkedin && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.linkedin}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 {/* Media Upload */}
@@ -223,13 +399,13 @@ const ContentRewardApply = () => {
                 </div>
 
                 {/* Submit Button */}
-                <Link
-                  to="#"
+                <button
                   onClick={handleSubmit}
-                  className="block w-full bg-emerald-800 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-full text-center transition-colors"
+                  disabled={isSubmitting}
+                  className="block w-full bg-emerald-800 hover:bg-emerald-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-full text-center transition-colors"
                 >
-                  Apply
-                </Link>
+                  {isSubmitting ? "Submitting..." : "Apply"}
+                </button>
               </div>
             </div>
           </div>
