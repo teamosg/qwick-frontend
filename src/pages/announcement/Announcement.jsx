@@ -1,9 +1,29 @@
 // Announcement.jsx
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { useState } from "react";
 import { Outlet } from "react-router";
 import { AnnouncementSidebar } from "../../components/announcement/AnnouncementSidebar";
+import ImageUploadModal from "../../components/announcement/ImageUploadModal";
 
 const Announcement = () => {
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState(null);
+
+  const handleImageUpload = (imageFile) => {
+    // Convert the uploaded image to a preview URL
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setUploadedImage({
+        file: imageFile,
+        previewUrl: e.target.result,
+      });
+    };
+    reader.readAsDataURL(imageFile);
+
+    // Close the modal after successful upload
+    setIsImageModalOpen(false);
+  };
+
   return (
     <SidebarProvider>
       <AnnouncementSidebar />
@@ -17,10 +37,23 @@ const Announcement = () => {
           </div>
 
           <div className="w-full">
-            <Outlet />
+            <Outlet
+              context={{
+                openImageModal: () => setIsImageModalOpen(true),
+                uploadedImage,
+                setUploadedImage,
+              }}
+            />
           </div>
         </main>
       </div>
+
+      {/* Image Upload Modal */}
+      <ImageUploadModal
+        isOpen={isImageModalOpen}
+        onClose={() => setIsImageModalOpen(false)}
+        onImageUpload={handleImageUpload}
+      />
     </SidebarProvider>
   );
 };

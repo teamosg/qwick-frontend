@@ -13,8 +13,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { PencilIcon } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router";
 import CommunitySwitcher from "./CommunitySwitcher";
+import ImageUploadModal from "./ImageUploadModal";
 
 // Menu items.
 const items = [
@@ -33,59 +36,116 @@ const items = [
 ];
 
 export function AnnouncementSidebar() {
-  return (
-    <Sidebar className="sticky  md:left-64 left-0">
-      <SidebarHeader className="p-0 bg-[url(https://placehold.co/400x250)] bg-center bg-cover bg-no-repeat h-[135px] relative">
-        <div className="absolute inset-0 bg-black/30"></div>
-        {/* <div className="absolute inset-0 p-2.5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#fff]">
-            <div className="flex items-center gap-2">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center">
-                <img src="/dashboardProfile.png" alt="" />
-              </div>
-              <div className="hidden sm:block">
-                <h2 className="text-[16px] font-semibold text-gray-900 dark:text-white">Darren Chua</h2>
-                <p className="text-sm text-gray-600 dark:text-zinc-400">@lofttypayoff</p>
-              </div>
-            </div>
-            <div className="hidden sm:block">
-              <ExampleCombobox />
-            </div>
-          </div>
-        </div> */}
-        <CommunitySwitcher />
-      </SidebarHeader>
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState(null);
 
-      <SidebarContent>
-        <SidebarGroup className="p-0">
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem
-                  key={item.title}
-                  className="hover:hover:bg-none h-auto hover:shadow-none"
-                >
-                  <SidebarMenuButton
-                    asChild
-                    className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
+  const handleImageUpload = (imageFile) => {
+    // Convert the uploaded image to a preview URL
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setUploadedImage({
+        file: imageFile,
+        previewUrl: e.target.result,
+      });
+    };
+    reader.readAsDataURL(imageFile);
+
+    // Close the modal after successful upload
+    setIsImageModalOpen(false);
+  };
+
+  const openImageModal = () => {
+    setIsImageModalOpen(true);
+  };
+
+  const handleMenuItemClick = () => {
+    // Close the sidebar on mobile when a menu item is clicked
+    // Use a more reliable method by dispatching a keyboard event
+    setTimeout(() => {
+      // Simulate pressing Escape key to close sidebar
+      const escapeEvent = new KeyboardEvent("keydown", {
+        key: "Escape",
+        keyCode: 27,
+        which: 27,
+        bubbles: true,
+        cancelable: true,
+      });
+      document.dispatchEvent(escapeEvent);
+
+      // Also try clicking the trigger button
+      const trigger = document.querySelector('button[aria-expanded="true"]');
+      if (trigger) {
+        trigger.click();
+      }
+    }, 150);
+  };
+
+  return (
+    <>
+      <Sidebar className="sticky  md:left-64 left-0">
+        <SidebarHeader
+          className="p-0 bg-[url(https://placehold.co/400x250)] bg-center bg-cover bg-no-repeat h-[135px] relative"
+          style={
+            uploadedImage?.previewUrl
+              ? { backgroundImage: `url(${uploadedImage.previewUrl})` }
+              : {}
+          }
+        >
+          <div className="absolute inset-0 bg-black/30"></div>
+
+          {/* Image Upload Button */}
+          <div className="absolute bottom-2 right-2">
+            <button
+              onClick={openImageModal}
+              className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
+              title="Edit banner"
+            >
+              <PencilIcon size={16} className="text-white" />
+            </button>
+          </div>
+
+          <CommunitySwitcher />
+        </SidebarHeader>
+
+        <SidebarContent>
+          <SidebarGroup className="p-0">
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem
+                    key={item.title}
+                    className="hover:hover:bg-none h-auto hover:shadow-none"
                   >
-                    <Link
-                      className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
-                      to={item.url}
+                    <SidebarMenuButton
+                      asChild
+                      className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
                     >
-                      <span className="hover:bg-none hover:shadow-none font-medium">
-                        {item.title}
-                      </span>
-                    </Link>
-                  </SidebarMenuButton>
-                  <hr />
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-      <SidebarFooter />
-    </Sidebar>
+                      <Link
+                        className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
+                        to={item.url}
+                        onClick={handleMenuItemClick}
+                      >
+                        <span className="hover:bg-none hover:shadow-none font-medium">
+                          {item.title}
+                        </span>
+                      </Link>
+                    </SidebarMenuButton>
+                    <hr />
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter />
+      </Sidebar>
+
+      {/* Image Upload Modal */}
+      <ImageUploadModal
+        isOpen={isImageModalOpen}
+        onClose={() => setIsImageModalOpen(false)}
+        onImageUpload={handleImageUpload}
+      />
+    </>
   );
 }

@@ -17,7 +17,7 @@ export function PostShare() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex items-center cursor-pointer space-x-1 px-3 py-1 rounded-md text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+        <button className="flex items-center cursor-pointer space-x-1 px-3 py-1 rounded-md hover:text-[#003933] dark:hover:text-gray-300">
           <Share2 size={18} />
           <span>Share</span>
         </button>

@@ -147,36 +147,59 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       </div>
 
       {/* Post Content */}
-      <p className="text-gray-700 dark:text-gray-300 mb-4 whitespace-pre-line">
+      <p className="dark:text-gray-300 mb-4 whitespace-pre-line">
         {post.content}
       </p>
 
-      {post.image && (
-        <img
-          src={post.image}
-          alt="Post"
-          className="rounded-lg mb-4 w-full h-auto max-h-96 object-cover"
-        />
+      {/* Images - only show if images exist */}
+      {post.images && post.images.length > 0 && (
+        <div className="mb-4">
+          {post.images.length === 1 ? (
+            // Single image - centered with 50% width
+            <div className="flex justify-center">
+              <div className="w-1/2">
+                <img
+                  src={post.images[0]}
+                  alt="Post image"
+                  className="w-full h-64 object-cover rounded-lg"
+                />
+              </div>
+            </div>
+          ) : (
+            // Multiple images - 2 per row with 50% width each
+            <div className="grid grid-cols-2 gap-3">
+              {post.images.map((image, index) => (
+                <div key={index} className="w-full">
+                  <img
+                    src={image}
+                    alt={`Post image ${index + 1}`}
+                    className="w-full h-64 object-cover rounded-lg"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       )}
 
       {/* Post Stats */}
-      <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+      <div className="text-sm flex justify-between dark:text-gray-400 mb-4  font-semibold">
         <span>{post.likes} Likes</span>
-        <span className="mx-2">•</span>
-        <span>{post.comments.length} Comments</span>
-        <span className="mx-2">•</span>
-        <span>{post.shares} Shares</span>
+        <div className="flex gap-7">
+          <span>{post.comments.length} Comments</span>
+          <span>{post.shares} Shares</span>
+        </div>
       </div>
 
       {/* Post Actions */}
-      <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-4">
+      <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-4 font-semibold">
         <div className="flex justify-between">
           <button
             onClick={() => onLike(post.id)}
             className={`flex items-center space-x-1 px-3 py-1 rounded-md cursor-pointer ${
               post.isLiked
-                ? "text-blue-500"
-                : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                ? "text-[#003933]"
+                : "text-gray-500 hover:text-[#003933] dark:hover:text-gray-300"
             }`}
           >
             <ThumbsUp size={18} />
@@ -186,7 +209,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
             onClick={() =>
               document.getElementById(`comment-${post.id}`).focus()
             }
-            className="flex cursor-pointer items-center space-x-1 px-3 py-1 rounded-md text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            className="flex cursor-pointer items-center space-x-1 px-3 py-1 rounded-md hover:text-[#003933] dark:hover:text-gray-300"
           >
             <MessageSquare size={18} />
             <span>Comment</span>
@@ -195,8 +218,8 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
             onClick={() => onSave(post.id)}
             className={`flex items-center space-x-1 px-3 py-1 rounded-md cursor-pointer ${
               post.isSaved
-                ? "text-blue-500"
-                : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                ? "text-[#003933]"
+                : "text-gray-500 hover:text-[#003933] dark:hover:text-gray-300"
             }`}
           >
             <Bookmark size={18} />

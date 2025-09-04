@@ -1,48 +1,46 @@
-import React, { useState } from 'react';
-import Post from '../../components/dashboard/Home/Post';
-import PostForm from '@/components/dashboard/Home/PostForm';
+import PostForm from "@/components/dashboard/Home/PostForm";
+import { useState } from "react";
+import Post from "../../components/dashboard/Home/Post";
 
 const Home = () => {
   const [posts, setPosts] = useState([
     {
       id: 1,
-      author: 'John Doe',
-      authorImage: 'https://i.pravatar.cc/150?img=1',
-      time: '2 hours ago',
-      content: 'This is a sample post with comments!',
-      image: 'https://picsum.photos/800/400',
+      author: "John Doe",
+      authorImage: "https://i.pravatar.cc/150?img=1",
+      time: "2 hours ago",
+      content: "This is a sample post with comments!",
+      images: ["https://picsum.photos/800/400"],
       likes: 42,
       comments: [
         {
-          user: 'Jane Smith',
-          userImage: 'https://i.pravatar.cc/150?img=2',
-          text: 'Great post! 😊',
-          time: '1 hour ago',
+          user: "Jane Smith",
+          userImage: "https://i.pravatar.cc/150?img=2",
+          text: "Great post! 😊",
+          time: "1 hour ago",
         },
       ],
       shares: 5,
       isLiked: false,
       isSaved: false,
-      postType: 'public',
+      postType: "public",
     },
   ]);
-
 
   const handleSubmitPost = (newPost) => {
     const post = {
       id: Date.now(),
-      author: 'Current User',
-      authorImage: 'https://i.pravatar.cc/150?img=5',
-      time: 'Just now',
+      author: "Current User",
+      authorImage: "https://i.pravatar.cc/150?img=5",
+      time: "Just now",
       content: newPost.content,
-      image: newPost.image,
+      images: newPost.images || [],
       likes: 0,
       comments: [],
       shares: 0,
       isLiked: false,
       isSaved: false,
-      postType: newPost.postType,
-      group: newPost.group || null,
+      postType: "public",
     };
     setPosts([post, ...posts]);
   };
@@ -81,7 +79,7 @@ const Home = () => {
   };
 
   const handleEdit = (postId) => {
-    console.log('Edit post:', postId);
+    console.log("Edit post:", postId);
   };
 
   const handleCommentSubmit = (postId, comment) => {
@@ -93,11 +91,11 @@ const Home = () => {
             comments: [
               ...post.comments,
               {
-                user: 'Current User',
-                userImage: 'https://i.pravatar.cc/150?img=5',
+                user: "Current User",
+                userImage: "https://i.pravatar.cc/150?img=5",
                 text: comment.text,
                 image: comment.image,
-                time: 'Just now',
+                time: "Just now",
               },
             ],
           };
@@ -108,7 +106,7 @@ const Home = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-[#f9fafb] dark:bg-zinc-950 min-h-screen">
+    <div className="max-w-3xl mx-auto p-4 bg-[#f9fafb] dark:bg-zinc-950 min-h-screen">
       <PostForm onSubmit={handleSubmitPost} />
       {posts.map((post) => (
         <Post

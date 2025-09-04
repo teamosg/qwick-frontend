@@ -68,6 +68,9 @@ const CommunityChat = () => {
   const [attachments, setAttachments] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [totalAttachments, setTotalAttachments] = useState(0);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredMessages, setFilteredMessages] = useState([]);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -78,8 +81,28 @@ const CommunityChat = () => {
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    // Only scroll to bottom when shouldScrollToBottom is true
+    if (shouldScrollToBottom) {
+      scrollToBottom();
+      setShouldScrollToBottom(false);
+    }
+  }, [messages, shouldScrollToBottom]);
+
+  // Filter messages based on search query
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredMessages(messages);
+    } else {
+      const filtered = messages.filter((message) =>
+        message.text.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredMessages(filtered);
+    }
+  }, [messages, searchQuery]);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
 
   const handleSendMessage = () => {
     if (newMessage.trim() === "" && attachments.length === 0) return;
@@ -109,6 +132,7 @@ const CommunityChat = () => {
 
     setNewMessage("");
     setAttachments([]);
+    setShouldScrollToBottom(true); // Set flag to scroll to bottom after new message
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -216,11 +240,15 @@ const CommunityChat = () => {
   };
 
   return (
-    <div className="flex flex-col w-full  h-[calc(100vh-116px)] sm:h-[calc(100vh-96px)] ">
-      <ChatHeader />
-      <div className="flex-1 p-2 md:p-4 overflow-y-auto">
+    <div className="flex flex-col w-full h-[calc(100vh-116px)] sm:h-[calc(100vh-96px)]">
+      <ChatHeader
+        onSearch={handleSearch}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
+      <div className="flex-1 p-2 md:p-4 overflow-y-auto pb-4">
         <AnimatePresence>
-          {messages.map((message) => (
+          {filteredMessages.map((message) => (
             <motion.div
               key={message.id}
               variants={messageVariants}
@@ -373,7 +401,7 @@ const CommunityChat = () => {
       </div>
 
       {/* Message Input */}
-      <div className="bg-white dark:bg-slate-900 dark:border-slate-700 px-6 py-2 border border-border rounded-full shadow ">
+      <div className="sticky bottom-0 bg-white dark:bg-slate-900 dark:border-slate-700 px-6 py-2 border border-border rounded-full shadow mx-2 md:mx-4 mb-2">
         {/* Attachments preview */}
         {(attachments.length || isUploading) && (
           <div className="mb-2 flex flex-wrap gap-2">
