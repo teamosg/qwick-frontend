@@ -208,7 +208,7 @@ const ChatBox = ({ selectedChat }) => {
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-gray-800">
+    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-gray-800 max-h-full">
       {/* Messages Area */}
       <div className="flex-1 p-4 overflow-y-auto">
         <AnimatePresence>

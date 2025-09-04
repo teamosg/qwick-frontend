@@ -240,7 +240,7 @@ const CommunityChat = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[calc(100vh-116px)] sm:h-[calc(100vh-96px)]">
+    <div className="flex flex-col w-full h-[calc(100vh-80px)] sm:h-[calc(100vh-80px)]">
       <ChatHeader
         onSearch={handleSearch}
         searchQuery={searchQuery}
