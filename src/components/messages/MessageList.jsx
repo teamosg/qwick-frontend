@@ -1,5 +1,5 @@
+import { ChevronDown, List, Pin, Search } from "lucide-react";
 import { useState } from "react";
-import { ChevronDown, Pin, List, Search } from "lucide-react";
 
 const MessageList = ({ onSelectChat, selectedChatId }) => {
   const [sortBy, setSortBy] = useState("Newest");
@@ -93,7 +93,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
     },
   ];
 
-  const ChatItem = ({ chat, isPinned = false }) => (
+  const ChatItem = ({ chat }) => (
     <div
       onClick={() => onSelectChat(chat)}
       className={`flex items-center gap-3 p-3 cursor-pointer transition-colors ${
@@ -112,7 +112,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
           <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
         )}
       </div>
-      
+
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between">
           <h3 className="font-medium text-sm text-gray-900 dark:text-white truncate">
@@ -122,7 +122,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
             {chat.time}
           </span>
         </div>
-        
+
         <div className="flex items-center justify-between mt-1">
           <p className="text-xs text-gray-600 dark:text-gray-300 truncate">
             {chat.lastMessage}
@@ -140,7 +140,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
   );
 
   return (
-    <div className="w-80 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 flex flex-col h-full">
+    <div className="w-80 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 flex flex-col h-full max-h-full">
       {/* Header */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
@@ -188,7 +188,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
           </div>
           <div className="space-y-1">
             {pinnedChats.map((chat) => (
-              <ChatItem key={chat.id} chat={chat} isPinned={true} />
+              <ChatItem key={chat.id} chat={chat} />
             ))}
           </div>
         </div>

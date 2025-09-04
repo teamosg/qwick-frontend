@@ -11,7 +11,7 @@ const Message = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex h-[calc(100vh-80px)] bg-gray-50 dark:bg-gray-900">
       {/* Left Sidebar - Message List */}
       <MessageList
         onSelectChat={handleSelectChat}

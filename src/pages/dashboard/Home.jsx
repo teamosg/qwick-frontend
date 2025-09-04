@@ -106,7 +106,7 @@ const Home = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-[#f9fafb] dark:bg-zinc-950 min-h-screen">
+    <div className="max-w-3xl mx-auto p-4 bg-[#f9fafb] dark:bg-zinc-950 h-full">
       <PostForm onSubmit={handleSubmitPost} />
       {posts.map((post) => (
         <Post
