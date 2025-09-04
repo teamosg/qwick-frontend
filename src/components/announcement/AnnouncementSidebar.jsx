@@ -58,6 +58,28 @@ export function AnnouncementSidebar() {
     setIsImageModalOpen(true);
   };
 
+  const handleMenuItemClick = () => {
+    // Close the sidebar on mobile when a menu item is clicked
+    // Use a more reliable method by dispatching a keyboard event
+    setTimeout(() => {
+      // Simulate pressing Escape key to close sidebar
+      const escapeEvent = new KeyboardEvent("keydown", {
+        key: "Escape",
+        keyCode: 27,
+        which: 27,
+        bubbles: true,
+        cancelable: true,
+      });
+      document.dispatchEvent(escapeEvent);
+
+      // Also try clicking the trigger button
+      const trigger = document.querySelector('button[aria-expanded="true"]');
+      if (trigger) {
+        trigger.click();
+      }
+    }, 150);
+  };
+
   return (
     <>
       <Sidebar className="sticky  md:left-64 left-0">
@@ -101,6 +123,7 @@ export function AnnouncementSidebar() {
                       <Link
                         className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
                         to={item.url}
+                        onClick={handleMenuItemClick}
                       >
                         <span className="hover:bg-none hover:shadow-none font-medium">
                           {item.title}
