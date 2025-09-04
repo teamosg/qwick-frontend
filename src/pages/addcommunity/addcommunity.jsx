@@ -1,4 +1,4 @@
-import AddCommunityForm from "@/components/addCommunity/AddComminityForm";
+import AddCommunityForm from "@/components/addCommunity/AddCommunityForm";
 import AddCommunityOne from "@/components/addCommunity/AddCommunityOne";
 import CommunityStepper from "@/components/addCommunity/AddCommunityStepper";
 import AddCommunityTwo from "@/components/addCommunity/AddCommunityTwo";
