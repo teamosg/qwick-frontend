@@ -68,6 +68,9 @@ const CommunityChat = () => {
   const [attachments, setAttachments] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [totalAttachments, setTotalAttachments] = useState(0);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredMessages, setFilteredMessages] = useState([]);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -78,8 +81,28 @@ const CommunityChat = () => {
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    // Only scroll to bottom when shouldScrollToBottom is true
+    if (shouldScrollToBottom) {
+      scrollToBottom();
+      setShouldScrollToBottom(false);
+    }
+  }, [messages, shouldScrollToBottom]);
+
+  // Filter messages based on search query
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredMessages(messages);
+    } else {
+      const filtered = messages.filter((message) =>
+        message.text.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredMessages(filtered);
+    }
+  }, [messages, searchQuery]);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
 
   const handleSendMessage = () => {
     if (newMessage.trim() === "" && attachments.length === 0) return;
@@ -109,6 +132,7 @@ const CommunityChat = () => {
 
     setNewMessage("");
     setAttachments([]);
+    setShouldScrollToBottom(true); // Set flag to scroll to bottom after new message
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -217,10 +241,14 @@ const CommunityChat = () => {
 
   return (
     <div className="flex flex-col w-full  h-[calc(100vh-116px)] sm:h-[calc(100vh-96px)] ">
-      <ChatHeader />
+      <ChatHeader
+        onSearch={handleSearch}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <div className="flex-1 p-2 md:p-4 overflow-y-auto">
         <AnimatePresence>
-          {messages.map((message) => (
+          {filteredMessages.map((message) => (
             <motion.div
               key={message.id}
               variants={messageVariants}

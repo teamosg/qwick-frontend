@@ -1,4 +1,5 @@
 import Card from "@/components/dashboard/Card";
+import Pagination from "@/components/discover/Pagination";
 import { motion } from "framer-motion";
 
 const Discover = () => {
@@ -58,6 +59,7 @@ const Discover = () => {
           </motion.div>
         ))}
       </motion.div>
+      <Pagination />
     </motion.div>
   );
 };

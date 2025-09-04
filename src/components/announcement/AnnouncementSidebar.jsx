@@ -13,7 +13,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router";
+import { Image as ImageIcon } from "lucide-react";
+import { Link, useOutletContext } from "react-router";
 import CommunitySwitcher from "./CommunitySwitcher";
 
 // Menu items.
@@ -33,26 +34,24 @@ const items = [
 ];
 
 export function AnnouncementSidebar() {
+  const { openImageModal } = useOutletContext() || {};
+
   return (
     <Sidebar className="sticky  md:left-64 left-0">
       <SidebarHeader className="p-0 bg-[url(https://placehold.co/400x250)] bg-center bg-cover bg-no-repeat h-[135px] relative">
         <div className="absolute inset-0 bg-black/30"></div>
-        {/* <div className="absolute inset-0 p-2.5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#fff]">
-            <div className="flex items-center gap-2">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center">
-                <img src="/dashboardProfile.png" alt="" />
-              </div>
-              <div className="hidden sm:block">
-                <h2 className="text-[16px] font-semibold text-gray-900 dark:text-white">Darren Chua</h2>
-                <p className="text-sm text-gray-600 dark:text-zinc-400">@lofttypayoff</p>
-              </div>
-            </div>
-            <div className="hidden sm:block">
-              <ExampleCombobox />
-            </div>
-          </div>
-        </div> */}
+
+        {/* Image Upload Button */}
+        <div className="absolute top-2 right-2">
+          <button
+            onClick={openImageModal}
+            className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
+            title="Edit banner"
+          >
+            <ImageIcon size={16} className="text-white" />
+          </button>
+        </div>
+
         <CommunitySwitcher />
       </SidebarHeader>
 

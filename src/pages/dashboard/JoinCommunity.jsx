@@ -53,10 +53,6 @@ const JoinCommunity = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        whileHover={{
-          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
-          transition: { duration: 0.2 },
-        }}
       >
         <motion.img
           src="https://placehold.co/1200x800"
@@ -95,7 +91,6 @@ const JoinCommunity = () => {
               </Link>
             </motion.div>
           </motion.div>
-
           <motion.h2
             className="text-2xl text-[#090003] dark:text-white font-semibold mb-6"
             variants={itemVariants}
@@ -103,7 +98,6 @@ const JoinCommunity = () => {
             It is a long established fact that a reader will be distracted by
             the
           </motion.h2>
-
           <motion.p
             className="text-[18px] text-[#717171] dark:text-zinc-400 mb-11"
             variants={itemVariants}
@@ -112,7 +106,18 @@ const JoinCommunity = () => {
             the readable content of a page when looking at its layout. The point
             of{" "}
           </motion.p>
-
+          <motion.div
+            variants={itemVariants}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link
+              to={`/`}
+              className="inline-block max-w-sm w-full text-[#003933] hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition mb-4 border border-[#003933] hover:text-white"
+            >
+              Join to WaitList
+            </Link>
+          </motion.div>{" "}
           <motion.div
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}

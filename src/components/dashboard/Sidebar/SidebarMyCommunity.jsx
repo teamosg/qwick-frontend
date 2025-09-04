@@ -15,7 +15,7 @@ export function SidebarMyCommunity({ onClose }) {
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
-        <AccordionTrigger className="text-[#090003] font-semibold text-base hover:no-underline">
+        <AccordionTrigger className="text-[#090003] dark:text-white font-semibold text-base hover:no-underline">
           My Community
         </AccordionTrigger>
         <AccordionContent>
