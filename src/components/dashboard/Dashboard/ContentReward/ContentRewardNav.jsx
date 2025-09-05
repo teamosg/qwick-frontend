@@ -5,7 +5,7 @@ const ContentRewardNav = () => {
   const currentPath = location.pathname.split("/").pop() || "content-reward";
 
   return (
-    <div className="grid w-full grid-cols-3 bg-transparent dark:bg-gray-800 mb-6">
+    <div className="grid max-w-xl grid-cols-3 bg-transparent dark:bg-gray-800 mb-6">
       <Link
         to="/dashboard/content-reward"
         className={`px-4 py-3 rounded-full text-center transition-colors ${

@@ -146,7 +146,7 @@ const PaymentsData = () => {
             <div className="p-1">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="text-gray-900 border-black rounded-full bg-white">
+                  <TableRow className="bg-[#f5f5f5] text-gray-900 border-black rounded-full">
                     <TableHead className="font-medium py-4 px-6">
                       Name
                     </TableHead>

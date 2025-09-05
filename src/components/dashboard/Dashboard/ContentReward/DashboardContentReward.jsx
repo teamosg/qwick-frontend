@@ -5,9 +5,42 @@ import ContentRewardNav from "./ContentRewardNav";
 import DashboardContentRewardBlank from "./DashboardContentRewardBlank";
 
 const DashboardContentReward = () => {
-  const [hasContentRewards, setHasContentRewards] = useState(false);
+  const [hasContentRewards, setHasContentRewards] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [rewards, setRewards] = useState([]);
+  const [rewards, setRewards] = useState([
+    {
+      id: 1,
+      name: "Content Reward 1",
+      description: "Description 1",
+      status: "active",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: 2,
+      name: "Content Reward 2",
+      description: "Description 2",
+      status: "active",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: 3,
+      name: "Content Reward 3",
+      description: "Description 3",
+      status: "active",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: 4,
+      name: "Content Reward 4",
+      description: "Description 4",
+      status: "active",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+  ]);
 
   const handleCreateReward = () => {
     console.log("handleCreateReward called!");
@@ -43,10 +76,10 @@ const DashboardContentReward = () => {
       <ContentRewardNav />
 
       {/* Debug State */}
-      <div className="mb-4 p-2 bg-yellow-100 dark:bg-yellow-900 rounded text-sm">
+      {/* <div className="mb-4 p-2 bg-yellow-100 dark:bg-yellow-900 rounded text-sm">
         Debug: showForm={showForm.toString()}, hasContentRewards=
         {hasContentRewards.toString()}
-      </div>
+      </div> */}
 
       {showForm ? (
         <ContentRewardForm
@@ -57,12 +90,12 @@ const DashboardContentReward = () => {
         <div>
           <div className="mb-6 flex justify-between items-center">
             <p className="text-gray-600 dark:text-gray-400">
-              You have {rewards.length} active content reward
+              Active {rewards.length} content reward
               {rewards.length !== 1 ? "s" : ""}
             </p>
             <button
               onClick={handleCreateReward}
-              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 rounded-lg hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium"
+              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
             >
               Create New Reward
             </button>
