@@ -184,8 +184,51 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
 
       {/* Post Stats */}
       <div className="text-sm flex justify-between dark:text-gray-400 mb-4  font-semibold">
-        <span>{post.likes} Likes</span>
-        <div className="flex gap-7">
+        <div class="*:border-background flex justify-center -space-x-2 *:border-2">
+          <span
+            data-slot="avatar"
+            class="relative flex shrink-0 overflow-hidden rounded-full size-8"
+          >
+            <img
+              alt="shadcn ui kit avatar"
+              src="https://bundui-images.netlify.app/avatars/01.png"
+            />
+          </span>
+          <span
+            data-slot="avatar"
+            class="relative flex shrink-0 overflow-hidden rounded-full size-8"
+          >
+            <img
+              alt="shadcn ui kit avatar"
+              src="https://bundui-images.netlify.app/avatars/03.png"
+            />
+          </span>
+          <span
+            data-slot="avatar"
+            class="relative flex shrink-0 overflow-hidden rounded-full size-8"
+          >
+            <img
+              alt="shadcn ui kit avatar"
+              src="https://bundui-images.netlify.app/avatars/05.png"
+            />
+          </span>
+          <span
+            data-slot="avatar"
+            class="relative flex shrink-0 overflow-hidden rounded-full size-8"
+          >
+            <img
+              alt="shadcn ui kit avatar"
+              src="https://bundui-images.netlify.app/avatars/06.png"
+            />
+          </span>
+          <span
+            data-slot="avatar"
+            class="relative flex items-center justify-center text-white shrink-0 overflow-hidden rounded-full size-8 bg-[#4e5d78]"
+          >
+            +9
+          </span>
+        </div>
+        <div className="flex gap-7 text-[#959eae]">
           <span>{post.comments.length} Comments</span>
           <span>{post.shares} Shares</span>
         </div>
@@ -205,6 +248,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
             <ThumbsUp size={18} />
             <span>Like</span>
           </button>
+
           <button
             onClick={() =>
               document.getElementById(`comment-${post.id}`).focus()

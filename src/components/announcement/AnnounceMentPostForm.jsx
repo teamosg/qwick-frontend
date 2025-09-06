@@ -166,10 +166,10 @@ const AnnouncementPostForm = ({
               <button
                 type="submit"
                 disabled={!postText.trim() && imagePreviewUrls.length === 0}
-                className={`px-4 py-2 rounded-full ${
+                className={`px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors ${
                   postText.trim() || imagePreviewUrls.length > 0
-                    ? "bg-[#003933] text-white cursor-pointer"
-                    : "bg-[#003933] dark:bg-gray-700 text-white cursor-not-allowed"
+                    ? "bg-[#003933] text-white cursor-pointer hover:bg-[#002a26]"
+                    : "bg-[#003933] dark:bg-gray-700 text-white cursor-not-allowed opacity-50"
                 }`}
               >
                 Post

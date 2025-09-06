@@ -5,9 +5,8 @@ import Sidebar from "./../components/dashboard/Sidebar";
 
 // Default user data
 const userData = {
-  name: "Chris",
-  fullName: "Chris Miguel",
-  role: "Admin",
+  name: "Linda smith",
+  fullName: "Linda smith",
   image:
     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 };
@@ -41,7 +40,6 @@ function DashboardLayout() {
         <Header
           userName={userData.name}
           userImage={userData.image}
-          userRole={userData.role}
           onMenuClick={() => setSidebarOpen(true)}
         />
 

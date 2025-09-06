@@ -1,7 +1,7 @@
 import { useTheme } from "@/components/shared/ThemeProvider";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash, FaFacebook, FaMoon, FaSun } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import arrowRight from "../../assets/arrow-right.svg";
@@ -92,7 +92,7 @@ const SignIn = () => {
           </Link>
 
           {/* Theme Toggle */}
-          <button
+          {/* <button
             onClick={toggleDarkMode}
             className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             aria-label={`Switch to ${darkMode ? "light" : "dark"} mode`}
@@ -102,7 +102,7 @@ const SignIn = () => {
             ) : (
               <FaMoon className="text-gray-600" size={20} />
             )}
-          </button>
+          </button> */}
         </div>
 
         <div className="max-w-md mx-auto w-full flex flex-col h-full justify-center">

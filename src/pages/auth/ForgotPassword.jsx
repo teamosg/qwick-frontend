@@ -1,6 +1,5 @@
 import { useTheme } from "@/components/shared/ThemeProvider";
 import { useForm } from "react-hook-form";
-import { FaMoon, FaSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 
@@ -88,7 +87,7 @@ const ForgotPassword = () => {
           </Link>
 
           {/* Theme Toggle */}
-          <button
+          {/* <button
             onClick={toggleDarkMode}
             className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             aria-label={`Switch to ${darkMode ? "light" : "dark"} mode`}
@@ -98,7 +97,7 @@ const ForgotPassword = () => {
             ) : (
               <FaMoon className="text-gray-600" size={20} />
             )}
-          </button>
+          </button> */}
         </div>
 
         <div className="max-w-md mx-auto w-full flex flex-col h-full justify-center">

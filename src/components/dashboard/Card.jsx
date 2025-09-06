@@ -129,9 +129,9 @@ const Card = ({ progress = 7 }) => {
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link
             to="/join-community"
-            className="bg-[#003933] hover:bg-[#002822]  text-white text-sm font-semibold py-1.5 px-4 rounded-full transition duration-300"
+            className="bg-[#003933] hover:bg-[#002822]  text-white text-sm font-semibold py-3 px-5 rounded-full transition duration-300"
           >
-            Submission
+            Apply
           </Link>
         </motion.div>
       </motion.div>
