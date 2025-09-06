@@ -21,7 +21,7 @@ NotificationItem.propTypes = {
   isRead: PropTypes.bool,
 };
 
-const Header = ({ userName, userImage, userRole, onMenuClick }) => {
+const Header = ({ userName, userImage, onMenuClick }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -72,28 +72,32 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
           </button>
         </div>
 
-        <div className="flex items-center justify-center space-x-4">
+        <div className="flex items-center justify-between gap-10 space-x-4">
           {/* Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            className="hidden bg-[#0D99FF1A] sm:block p-2 rounded-full hover:bg-[#0d9aff54]"
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-          >
-            {theme === "dark" ? (
-              <Sun className="h-5 w-5 text-foreground" /> // You'll need to import Sun icon from lucide-react
-            ) : (
-              <Moon className="h-5 w-5 text-foreground" /> // You'll need to import Moon icon from lucide-react
-            )}
-          </button>
-
-          <Link
-            to={`/addcommunity`}
-            type="submit"
-            className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
-          >
-            <Plus />
-            Add Community
-          </Link>
+          <>
+            {" "}
+            <button
+              onClick={toggleTheme}
+              className="hidden bg-[#0D99FF1A] sm:block p-2 rounded-full hover:bg-[#0d9aff54]"
+              aria-label={`Switch to ${
+                theme === "dark" ? "light" : "dark"
+              } mode`}
+            >
+              {theme === "dark" ? (
+                <Sun className="h-7 w-7 text-foreground" /> // You'll need to import Sun icon from lucide-react
+              ) : (
+                <Moon className="h-7 w-7 text-foreground" /> // You'll need to import Moon icon from lucide-react
+              )}
+            </button>
+            <Link
+              to={`/addcommunity`}
+              type="submit"
+              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+            >
+              <Plus />
+              Add Community
+            </Link>
+          </>
 
           {/* <div className="relative hidden sm:block">
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -178,12 +182,24 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
                 <p className="text-sm font-medium text-gray-900 dark:text-white">
                   {userName}
                 </p>
-                {userRole && (
-                  <p className="text-xs text-gray-600 dark:text-zinc-400">
-                    {userRole}
-                  </p>
-                )}
               </div>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-text-align-end-icon lucide-text-align-end dark:text-white"
+              >
+                <path d="M21 5H3" />
+                <path d="M21 12H9" />
+                <path d="M21 19H7" />
+              </svg>
             </button>
 
             {showProfileMenu && (
