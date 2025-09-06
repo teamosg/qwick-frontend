@@ -1,8 +1,8 @@
-import SingleRewardItem from "@/components/contentReward/SingleRewardItem";
 import { useState } from "react";
 import ContentRewardForm from "./ContentRewardForm";
 import ContentRewardNav from "./ContentRewardNav";
 import DashboardContentRewardBlank from "./DashboardContentRewardBlank";
+import DashboardSingleRewardItem from "./DashboardSingleRewardItem";
 
 const DashboardContentReward = () => {
   const [hasContentRewards, setHasContentRewards] = useState(true);
@@ -101,7 +101,7 @@ const DashboardContentReward = () => {
             </button>
           </div>
           {rewards.map((reward) => (
-            <SingleRewardItem key={reward.id} reward={reward} />
+            <DashboardSingleRewardItem key={reward.id} reward={reward} />
           ))}
         </div>
       ) : (

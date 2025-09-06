@@ -2,21 +2,26 @@ import { Upload } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../ui/button";
 
-const CampaignForm = () => {
+const CampaignForm = ({
+  initialData,
+  onSubmit,
+  onCancel,
+  isEditMode = false,
+}) => {
   const [formData, setFormData] = useState({
-    thumbnailPreview: null,
-    campaignName: "",
-    type: "",
-    personalBrand: "",
-    campaignBudget: "",
-    currency: "USD",
-    rewardRate: "",
-    minPayout: "",
-    maxPayout: "",
-    flatFeeBonus: "",
-    platforms: [],
-    availableContent: "",
-    contentRequirement: "",
+    thumbnailPreview: initialData?.thumbnailPreview || null,
+    campaignName: initialData?.campaignName || "",
+    type: initialData?.type || "",
+    personalBrand: initialData?.personalBrand || "",
+    campaignBudget: initialData?.campaignBudget || "",
+    currency: initialData?.currency || "USD",
+    rewardRate: initialData?.rewardRate || "",
+    minPayout: initialData?.minPayout || "",
+    maxPayout: initialData?.maxPayout || "",
+    flatFeeBonus: initialData?.flatFeeBonus || "",
+    platforms: initialData?.platforms || [],
+    availableContent: initialData?.availableContent || "",
+    contentRequirement: initialData?.contentRequirement || "",
   });
 
   const [errors, setErrors] = useState({});
@@ -73,11 +78,19 @@ const CampaignForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    if (onSubmit) {
+      onSubmit(formData);
+    } else {
+      console.log("Form submitted:", formData);
+    }
   };
 
   const handleCancel = () => {
-    console.log("Form cancelled");
+    if (onCancel) {
+      onCancel();
+    } else {
+      console.log("Form cancelled");
+    }
   };
 
   return (
@@ -380,7 +393,7 @@ const CampaignForm = () => {
             type="submit"
             className="bg-[#003933] dark:bg-[#003933] text-white hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium px-6 py-4 rounded-full"
           >
-            Create Campaign
+            {isEditMode ? "Update Campaign" : "Create Campaign"}
           </Button>
           <Button
             type="button"
