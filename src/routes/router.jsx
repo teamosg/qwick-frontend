@@ -10,7 +10,7 @@ import Payments from "@/components/dashboard/Dashboard/Payments";
 import Payout from "@/components/dashboard/Dashboard/Payout";
 import Users from "@/components/dashboard/Dashboard/Users";
 import WaitList from "@/components/dashboard/Dashboard/WaitList";
-import AddCommunity from "@/pages/addcommunity/Addcommunity";
+import AddCommunity from "@/pages/AddCommunity/Addcommunity";
 import Announcement from "@/pages/announcement/Announcement";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
