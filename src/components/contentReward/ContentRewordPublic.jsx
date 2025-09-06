@@ -1,6 +1,6 @@
 import SingleRewardItem from "./SingleRewardItem";
 
-const ContentReword = () => {
+const ContentRewordPublic = () => {
   return (
     <div>
       <h2 className="text-[24px] text-[#191919] dark:text-white font-semibold mb-3">
@@ -14,4 +14,4 @@ const ContentReword = () => {
   );
 };
 
-export default ContentReword;
+export default ContentRewordPublic;

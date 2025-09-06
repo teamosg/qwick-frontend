@@ -87,6 +87,48 @@ const WaitListData = () => {
       contact: "0191-392912",
       joined_at: "02-10-2025",
     },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "waiting",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "waiting",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "waiting",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "waiting",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "waiting",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "waiting",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
   ];
   console.log(users);
 
@@ -141,7 +183,7 @@ const WaitListData = () => {
             <div className="p-1">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="text-gray-900 border-black rounded-full bg-white">
+                  <TableRow className="bg-[#f5f5f5] text-gray-900 border-black rounded-full">
                     <TableHead className="font-medium py-4 px-6">
                       Name
                     </TableHead>

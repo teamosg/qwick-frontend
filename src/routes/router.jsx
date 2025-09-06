@@ -1,8 +1,11 @@
 import AnnouncementFeed from "@/components/announcement/AnnouncementFeed";
 import CommunityChat from "@/components/CommunityChat/CommunityChat";
 import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
-import ContentReword from "@/components/contentReward/ContentReword";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
+import ContentRewordPublic from "@/components/contentReward/ContentRewordPublic";
+import Analytics from "@/components/dashboard/Dashboard/ContentReward/Analytics";
+import DashboardContentReward from "@/components/dashboard/Dashboard/ContentReward/DashboardContentReward";
+import MySubmissions from "@/components/dashboard/Dashboard/ContentReward/MySubmissions";
 import Payments from "@/components/dashboard/Dashboard/Payments";
 import Payout from "@/components/dashboard/Dashboard/Payout";
 import Users from "@/components/dashboard/Dashboard/Users";
@@ -110,7 +113,7 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <ContentReword />,
+                element: <ContentRewordPublic />,
               },
               {
                 path: "reward-details",
@@ -134,6 +137,22 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
+            element: <DashboardContentReward />,
+          },
+          {
+            path: "content-reward",
+            element: <DashboardContentReward />,
+          },
+          {
+            path: "my-submissions",
+            element: <MySubmissions />,
+          },
+          {
+            path: "analytics",
+            element: <Analytics />,
+          },
+          {
+            path: "users",
             element: <Users />,
           },
           {

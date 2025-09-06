@@ -87,6 +87,41 @@ const UsersData = () => {
       contact: "0191-392912",
       joined_at: "02-10-2025",
     },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "cancel",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "active",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "cancel",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "active",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
+    {
+      name: "Adam smith",
+      email: "adam@gmail.com",
+      status: "pending",
+      contact: "0191-392912",
+      joined_at: "02-10-2025",
+    },
   ];
   console.log(users);
 
@@ -143,7 +178,7 @@ const UsersData = () => {
             <div className="p-1">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="bg-white text-gray-900 border-black rounded-full">
+                  <TableRow className="bg-[#f5f5f5] text-gray-900 border-black rounded-full">
                     <TableHead className="font-medium py-4 px-6">
                       Name
                     </TableHead>
