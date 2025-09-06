@@ -5,12 +5,12 @@ const ContentRewardNav = () => {
   const currentPath = location.pathname.split("/").pop() || "content-reward";
 
   return (
-    <div className="grid max-w-xl grid-cols-3 bg-transparent dark:bg-gray-800 mb-6">
+    <div className="grid max-w-xl grid-cols-1 sm:grid-cols-3 bg-transparent dark:bg-gray-800 mb-6 rounded-full gap-2 sm:gap-0">
       <Link
         to="/dashboard/content-reward"
-        className={`px-4 py-3 rounded-full text-center transition-colors ${
+        className={`px-3 sm:px-4 py-2 sm:py-3 rounded-full dark:bg-transparent text-center transition-colors text-sm sm:text-base ${
           currentPath === "content-reward" || currentPath == "dashboard"
-            ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-[#e4e4e7] shadow-none"
+            ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-[#e4e4e7] shadow-none "
             : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
         }`}
       >
@@ -18,7 +18,7 @@ const ContentRewardNav = () => {
       </Link>
       <Link
         to="/dashboard/my-submissions"
-        className={`px-4 py-3 rounded-full text-center transition-colors ${
+        className={`px-3 sm:px-4 py-2 sm:py-3 rounded-full text-center transition-colors text-sm sm:text-base ${
           currentPath === "my-submissions"
             ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-[#e4e4e7] shadow-none"
             : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
@@ -28,7 +28,7 @@ const ContentRewardNav = () => {
       </Link>
       <Link
         to="/dashboard/analytics"
-        className={`px-4 py-3 rounded-full text-center transition-colors ${
+        className={`px-3 sm:px-4 py-2 sm:py-3 rounded-full text-center transition-colors text-sm sm:text-base ${
           currentPath === "analytics"
             ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-[#e4e4e7] shadow-none"
             : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
