@@ -7,8 +7,6 @@ import {
   FaEyeSlash,
   FaFacebook,
   FaLock,
-  FaMoon,
-  FaSun,
   FaUser,
 } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -103,7 +101,7 @@ const SignUp = () => {
           </Link>
 
           {/* Theme Toggle */}
-          <button
+          {/* <button
             onClick={toggleDarkMode}
             className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             aria-label={`Switch to ${darkMode ? "light" : "dark"} mode`}
@@ -113,7 +111,7 @@ const SignUp = () => {
             ) : (
               <FaMoon className="text-gray-600" size={20} />
             )}
-          </button>
+          </button> */}
         </div>
 
         <div className="max-w-md mx-auto w-full flex flex-col justify-center">

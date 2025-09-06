@@ -1,13 +1,4 @@
-import {
-  Bell,
-  LogOut,
-  Menu,
-  Moon,
-  Plus,
-  Settings,
-  Sun,
-  User,
-} from "lucide-react";
+import { LogOut, Menu, Moon, Plus, Settings, Sun, User } from "lucide-react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link } from "react-router";
@@ -36,26 +27,26 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  const notifications = [
-    {
-      id: 1,
-      title: "New alumni request",
-      time: "5 minutes ago",
-      isRead: false,
-    },
-    {
-      id: 2,
-      title: "Career readiness update",
-      time: "1 hour ago",
-      isRead: false,
-    },
-    {
-      id: 3,
-      title: "Monthly report available",
-      time: "2 hours ago",
-      isRead: true,
-    },
-  ];
+  // const notifications = [
+  //   {
+  //     id: 1,
+  //     title: "New alumni request",
+  //     time: "5 minutes ago",
+  //     isRead: false,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Career readiness update",
+  //     time: "1 hour ago",
+  //     isRead: false,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Monthly report available",
+  //     time: "2 hours ago",
+  //     isRead: true,
+  //   },
+  // ];
 
   const handleClickOutside = (setter) => {
     document.addEventListener("click", (e) => {
@@ -124,7 +115,7 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
             </button>
           </div> */}
 
-          <div className="relative dropdown-container">
+          {/* <div className="relative dropdown-container">
             <button
               className="p-2 rounded-full hover:bg-accent relative"
               onClick={(e) => {
@@ -166,7 +157,7 @@ const Header = ({ userName, userImage, userRole, onMenuClick }) => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
 
           <div className="relative dropdown-container">
             <button
