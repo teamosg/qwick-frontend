@@ -72,7 +72,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
           </button>
         </div>
 
-        <div className="flex items-center justify-between gap-10 space-x-4">
+        <div className="flex items-center justify-between space-x-0 gap-4 sm:gap-10 sm:space-x-4">
           {/* Theme Toggle Button */}
           <>
             {" "}
