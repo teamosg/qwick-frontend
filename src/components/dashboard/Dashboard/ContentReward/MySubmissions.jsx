@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router";
 import ContentRewardNav from "./ContentRewardNav";
 
@@ -59,11 +58,11 @@ const ContentRewardMySubmission = () => {
       <ContentRewardNav />
       <div className="space-y-4 sm:space-y-6">
         {submissions.map((submission) => (
-          <Card
+          <div
             key={submission.id}
-            className="overflow-hidden shadow-sm border border-gray-200 "
+            className="overflow-hidden rounded-xl dark:text-white dark:bg-zinc-900 bg-white"
           >
-            <CardContent className="p-4">
+            <div className="p-4">
               <div className="flex flex-col sm:flex-row">
                 {/* Image Section */}
                 <div className="w-[320px] sm:w-48 h-48 sm:h-40 flex-shrink-0">
@@ -83,17 +82,19 @@ const ContentRewardMySubmission = () => {
                         <img src="/image.png" alt="" />
                       </div>
                       <div>
-                        <div className="font-medium">
+                        <div className="font-medium dark:text-white">
                           {submission.user.name}
                         </div>
-                        <div className="text-xs ">{submission.user.handle}</div>
+                        <div className="text-xs dark:text-white">
+                          {submission.user.handle}
+                        </div>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2">
                       <Link
                         to={"#"}
-                        className="text-[#15803D] bg-[#F0FDF4] border border-[#15803D] rounded-full px-3 py-1 text-xs "
+                        className="text-[#15803D] bg-[#F0FDF4]  rounded-full px-3 py-1 text-xs "
                       >
                         Update
                       </Link>
@@ -101,13 +102,13 @@ const ContentRewardMySubmission = () => {
                   </div>
 
                   {/* Content Description */}
-                  <p className="text-xs leading-relaxed">
+                  <p className="text-xs leading-relaxed dark:text-zinc-400">
                     {submission.content}
                   </p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ))}
       </div>
     </div>

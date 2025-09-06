@@ -4,6 +4,7 @@ import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewar
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import ContentRewordPublic from "@/components/contentReward/ContentRewordPublic";
 import Analytics from "@/components/dashboard/Dashboard/ContentReward/Analytics";
+import ContentRewardDetailsEdit from "@/components/dashboard/Dashboard/ContentReward/ContentRewardDetailsEdit";
 import DashboardContentReward from "@/components/dashboard/Dashboard/ContentReward/DashboardContentReward";
 import MySubmissions from "@/components/dashboard/Dashboard/ContentReward/MySubmissions";
 import Payments from "@/components/dashboard/Dashboard/Payments";
@@ -166,6 +167,10 @@ const router = createBrowserRouter([
           {
             path: "payout",
             element: <Payout />,
+          },
+          {
+            path: "content-reward/edit/:id",
+            element: <ContentRewardDetailsEdit />,
           },
         ],
       },

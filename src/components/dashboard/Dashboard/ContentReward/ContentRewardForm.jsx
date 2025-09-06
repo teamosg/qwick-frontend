@@ -2,21 +2,26 @@ import { Upload } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../ui/button";
 
-const CampaignForm = () => {
+const CampaignForm = ({
+  initialData,
+  onSubmit,
+  onCancel,
+  isEditMode = false,
+}) => {
   const [formData, setFormData] = useState({
-    thumbnailPreview: null,
-    campaignName: "",
-    type: "",
-    personalBrand: "",
-    campaignBudget: "",
-    currency: "USD",
-    rewardRate: "",
-    minPayout: "",
-    maxPayout: "",
-    flatFeeBonus: "",
-    platforms: [],
-    availableContent: "",
-    contentRequirement: "",
+    thumbnailPreview: initialData?.thumbnailPreview || null,
+    campaignName: initialData?.campaignName || "",
+    type: initialData?.type || "",
+    personalBrand: initialData?.personalBrand || "",
+    campaignBudget: initialData?.campaignBudget || "",
+    currency: initialData?.currency || "USD",
+    rewardRate: initialData?.rewardRate || "",
+    minPayout: initialData?.minPayout || "",
+    maxPayout: initialData?.maxPayout || "",
+    flatFeeBonus: initialData?.flatFeeBonus || "",
+    platforms: initialData?.platforms || [],
+    availableContent: initialData?.availableContent || "",
+    contentRequirement: initialData?.contentRequirement || "",
   });
 
   const [errors, setErrors] = useState({});
@@ -73,11 +78,19 @@ const CampaignForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    if (onSubmit) {
+      onSubmit(formData);
+    } else {
+      console.log("Form submitted:", formData);
+    }
   };
 
   const handleCancel = () => {
-    console.log("Form cancelled");
+    if (onCancel) {
+      onCancel();
+    } else {
+      console.log("Form cancelled");
+    }
   };
 
   return (
@@ -92,7 +105,7 @@ const CampaignForm = () => {
                 alt="Thumbnail preview"
                 className="w-full h-40 object-cover rounded-lg"
               />
-              <div className="flex gap-3 mt-4">
+              <div className="flex flex-col sm:flex-row gap-3 mt-4">
                 <button
                   type="button"
                   onClick={() =>
@@ -119,7 +132,7 @@ const CampaignForm = () => {
               />
             </div>
           ) : (
-            <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-10 text-center hover:border-gray-300 dark:hover:border-gray-600 transition-colors cursor-pointer">
+            <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 sm:p-10 text-center hover:border-gray-300 dark:hover:border-gray-600 transition-colors cursor-pointer">
               <div className="flex flex-col items-center space-y-3">
                 <div className="">
                   <button
@@ -200,7 +213,7 @@ const CampaignForm = () => {
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
             Campaign budget*
           </label>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400"></span>
               <input
@@ -216,7 +229,7 @@ const CampaignForm = () => {
             <select
               value={formData.currency}
               onChange={(e) => handleInputChange("currency", e.target.value)}
-              className="w-20 px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full sm:w-20 px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             >
               <option value="USD">USD</option>
               <option value="EUR">EUR</option>
@@ -309,11 +322,11 @@ const CampaignForm = () => {
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
             Platform*
           </label>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {["Facebook", "Instagram", "Youtube", "Tiktok"].map((platform) => (
               <label
                 key={platform}
-                className="flex items-center space-x-3 cursor-pointer"
+                className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-full bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 <input
                   type="checkbox"
@@ -375,12 +388,12 @@ const CampaignForm = () => {
         </div>
 
         {/* Form Actions */}
-        <div className="flex gap-4 pt-4">
+        <div className="flex flex-col sm:flex-row gap-4 pt-4">
           <Button
             type="submit"
             className="bg-[#003933] dark:bg-[#003933] text-white hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium px-6 py-4 rounded-full"
           >
-            Create Campaign
+            {isEditMode ? "Update Campaign" : "Create Campaign"}
           </Button>
           <Button
             type="button"
