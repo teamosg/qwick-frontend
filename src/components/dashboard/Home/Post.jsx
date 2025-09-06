@@ -20,6 +20,9 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
+  const [likeCount, setLikeCount] = useState(post.likes || 0);
+  const [isLiked, setIsLiked] = useState(post.isLiked || false);
+  const [recentLikers, setRecentLikers] = useState(post.recentLikers || []);
   const emojiPickerRef = useRef(null);
 
   useEffect(() => {
@@ -42,6 +45,35 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [post.id]);
+
+  // Initialize with sample likers if none exist
+  useEffect(() => {
+    if (recentLikers.length === 0 && likeCount > 0) {
+      const sampleLikers = [
+        {
+          id: "user1",
+          name: "Alice Johnson",
+          avatar: "https://bundui-images.netlify.app/avatars/01.png",
+        },
+        {
+          id: "user2",
+          name: "Bob Smith",
+          avatar: "https://bundui-images.netlify.app/avatars/03.png",
+        },
+        {
+          id: "user3",
+          name: "Carol Davis",
+          avatar: "https://bundui-images.netlify.app/avatars/05.png",
+        },
+        {
+          id: "user4",
+          name: "David Wilson",
+          avatar: "https://bundui-images.netlify.app/avatars/06.png",
+        },
+      ].slice(0, Math.min(likeCount, 4));
+      setRecentLikers(sampleLikers);
+    }
+  }, [likeCount, recentLikers.length]);
 
   const dropdownItems = [
     {
@@ -81,6 +113,31 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
 
   const handleEmojiClick = (emojiData) => {
     setCommentText((prev) => prev + emojiData.emoji);
+  };
+
+  const handleLike = () => {
+    if (isLiked) {
+      setLikeCount((prev) => prev - 1);
+      setIsLiked(false);
+      // Remove current user from recent likers
+      setRecentLikers((prev) =>
+        prev.filter((liker) => liker.id !== "current-user")
+      );
+    } else {
+      setLikeCount((prev) => prev + 1);
+      setIsLiked(true);
+      // Add current user to recent likers (most recent first)
+      const currentUser = {
+        id: "current-user",
+        name: "You", // or get from user context
+        avatar: "https://i.pravatar.cc/150?img=5", // or get from user context
+      };
+      setRecentLikers((prev) => [currentUser, ...prev.slice(0, 3)]);
+    }
+    // Call the parent onLike function if provided
+    if (onLike) {
+      onLike(post.id);
+    }
   };
 
   return (
@@ -185,50 +242,30 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       {/* Post Stats */}
       <div className="text-sm flex justify-between dark:text-gray-400 mb-4  font-semibold">
         <div class="*:border-background flex justify-center -space-x-2 *:border-2">
-          <span
-            data-slot="avatar"
-            class="relative flex shrink-0 overflow-hidden rounded-full size-8"
-          >
-            <img
-              alt="shadcn ui kit avatar"
-              src="https://bundui-images.netlify.app/avatars/01.png"
-            />
-          </span>
-          <span
-            data-slot="avatar"
-            class="relative flex shrink-0 overflow-hidden rounded-full size-8"
-          >
-            <img
-              alt="shadcn ui kit avatar"
-              src="https://bundui-images.netlify.app/avatars/03.png"
-            />
-          </span>
-          <span
-            data-slot="avatar"
-            class="relative flex shrink-0 overflow-hidden rounded-full size-8"
-          >
-            <img
-              alt="shadcn ui kit avatar"
-              src="https://bundui-images.netlify.app/avatars/05.png"
-            />
-          </span>
-          <span
-            data-slot="avatar"
-            class="relative flex shrink-0 overflow-hidden rounded-full size-8"
-          >
-            <img
-              alt="shadcn ui kit avatar"
-              src="https://bundui-images.netlify.app/avatars/06.png"
-            />
-          </span>
-          <span
-            data-slot="avatar"
-            class="relative flex items-center justify-center text-white shrink-0 overflow-hidden rounded-full size-8 bg-[#4e5d78]"
-          >
-            +9
-          </span>
+          {recentLikers.slice(0, 4).map((liker) => (
+            <span
+              key={liker.id}
+              data-slot="avatar"
+              class="relative flex shrink-0 overflow-hidden rounded-full size-8"
+            >
+              <img
+                alt={`${liker.name} avatar`}
+                src={liker.avatar}
+                className="w-full h-full object-cover"
+              />
+            </span>
+          ))}
+          {likeCount > 4 && (
+            <span
+              data-slot="avatar"
+              class="relative flex items-center justify-center text-white shrink-0 overflow-hidden rounded-full size-8 bg-[#4e5d78]"
+            >
+              +{likeCount - 4}
+            </span>
+          )}
         </div>
         <div className="flex gap-7 text-[#959eae]">
+          {/* <span>{likeCount} Likes</span> */}
           <span>{post.comments.length} Comments</span>
           <span>{post.shares} Shares</span>
         </div>
@@ -238,15 +275,15 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-4 font-semibold">
         <div className="flex justify-between">
           <button
-            onClick={() => onLike(post.id)}
+            onClick={handleLike}
             className={`flex items-center space-x-1 px-3 py-1 rounded-md cursor-pointer ${
-              post.isLiked
+              isLiked
                 ? "text-[#003933]"
                 : "text-gray-500 hover:text-[#003933] dark:hover:text-gray-300"
             }`}
           >
             <ThumbsUp size={18} />
-            <span>Like</span>
+            <span>{isLiked ? "Liked" : "Like"}</span>
           </button>
 
           <button
