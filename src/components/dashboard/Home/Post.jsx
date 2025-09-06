@@ -66,6 +66,11 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
           avatar: "https://bundui-images.netlify.app/avatars/05.png",
         },
         {
+          id: "user5",
+          name: "David Wilson",
+          avatar: "https://bundui-images.netlify.app/avatars/06.png",
+        },
+        {
           id: "user4",
           name: "David Wilson",
           avatar: "https://bundui-images.netlify.app/avatars/06.png",
@@ -141,18 +146,18 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-lg shadow p-6 mb-6">
+    <div className="bg-white dark:bg-zinc-900 rounded-lg shadow p-3 sm:p-6 mb-4 sm:mb-6">
       {/* Post Header */}
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex items-center space-x-3">
+      <div className="flex justify-between items-start mb-3 sm:mb-4">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <img
             src={post.authorImage}
             alt={post.author}
-            className="w-10 h-10 rounded-full object-cover"
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
           />
-          <div>
+          <div className="min-w-0 flex-1">
             <div className="flex items-center space-x-2">
-              <h3 className="font-semibold text-base dark:text-white">
+              <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
                 {post.author}
               </h3>
               {/* <span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full flex items-center">
@@ -168,21 +173,21 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
               </span> */}
             </div>
             <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
-              <Clock size={12} className="mr-1" /> {post.time}
+              <Clock size={10} className="mr-1" /> {post.time}
             </div>
           </div>
         </div>
 
         {/* Three-dot menu */}
-        <div className="relative">
+        <div className="relative flex-shrink-0">
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1"
           >
-            <MoreHorizontal size={20} />
+            <MoreHorizontal size={18} />
           </button>
           {showDropdown && (
-            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-zinc-900 rounded-md shadow-lg z-10 border border-gray-200 dark:border-zinc-700">
+            <div className="absolute right-0 mt-2 w-40 sm:w-48 bg-white dark:bg-zinc-900 rounded-md shadow-lg z-10 border border-gray-200 dark:border-zinc-700">
               <div className="py-1">
                 {dropdownItems.map((item, index) => (
                   <button
@@ -191,7 +196,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
                       item.action();
                       setShowDropdown(false);
                     }}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
+                    className="w-full text-left px-3 sm:px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
                   >
                     {item.icon}
                     {item.label}
@@ -204,33 +209,33 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       </div>
 
       {/* Post Content */}
-      <p className="dark:text-gray-300 mb-4 whitespace-pre-line">
+      <p className="dark:text-gray-300 mb-3 sm:mb-4 whitespace-pre-line text-sm sm:text-base leading-relaxed">
         {post.content}
       </p>
 
       {/* Images - only show if images exist */}
       {post.images && post.images.length > 0 && (
-        <div className="mb-4">
+        <div className="mb-3 sm:mb-4">
           {post.images.length === 1 ? (
-            // Single image - centered with 50% width
+            // Single image - responsive width
             <div className="flex justify-center">
-              <div className="w-1/2">
+              <div className="w-full sm:w-3/4 md:w-1/2">
                 <img
                   src={post.images[0]}
                   alt="Post image"
-                  className="w-full h-64 object-cover rounded-lg"
+                  className="w-full h-48 sm:h-64 object-cover rounded-lg"
                 />
               </div>
             </div>
           ) : (
-            // Multiple images - 2 per row with 50% width each
-            <div className="grid grid-cols-2 gap-3">
+            // Multiple images - responsive grid
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
               {post.images.map((image, index) => (
                 <div key={index} className="w-full">
                   <img
                     src={image}
                     alt={`Post image ${index + 1}`}
-                    className="w-full h-64 object-cover rounded-lg"
+                    className="w-full h-48 sm:h-64 object-cover rounded-lg"
                   />
                 </div>
               ))}
@@ -240,31 +245,33 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       )}
 
       {/* Post Stats */}
-      <div className="text-sm flex justify-between dark:text-gray-400 mb-4  font-semibold">
-        <div class="*:border-background flex justify-center -space-x-2 *:border-2">
-          {recentLikers.slice(0, 4).map((liker) => (
-            <span
-              key={liker.id}
-              data-slot="avatar"
-              class="relative flex shrink-0 overflow-hidden rounded-full size-8"
-            >
-              <img
-                alt={`${liker.name} avatar`}
-                src={liker.avatar}
-                className="w-full h-full object-cover"
-              />
-            </span>
-          ))}
-          {likeCount > 4 && (
-            <span
-              data-slot="avatar"
-              class="relative flex items-center justify-center text-white shrink-0 overflow-hidden rounded-full size-8 bg-[#4e5d78]"
-            >
-              +{likeCount - 4}
-            </span>
-          )}
+      <div className="text-xs sm:text-sm flex flex-col sm:flex-row sm:justify-between dark:text-gray-400 mb-3 sm:mb-4 font-semibold space-y-2 sm:space-y-0">
+        <div className="flex justify-center sm:justify-start">
+          <div className="*:border-background flex -space-x-1 sm:-space-x-2 *:border-2">
+            {recentLikers.slice(0, 4).map((liker) => (
+              <span
+                key={liker.id}
+                data-slot="avatar"
+                className="relative flex shrink-0 overflow-hidden rounded-full size-6 sm:size-8"
+              >
+                <img
+                  alt={`${liker.name} avatar`}
+                  src={liker.avatar}
+                  className="w-full h-full object-cover"
+                />
+              </span>
+            ))}
+            {likeCount > 4 && (
+              <span
+                data-slot="avatar"
+                className="relative flex items-center justify-center text-white shrink-0 overflow-hidden rounded-full size-6 sm:size-8 bg-[#4e5d78] text-xs"
+              >
+                +{likeCount - 4}
+              </span>
+            )}
+          </div>
         </div>
-        <div className="flex gap-7 text-[#959eae]">
+        <div className="flex justify-center sm:justify-end gap-4 sm:gap-7 text-[#959eae]">
           {/* <span>{likeCount} Likes</span> */}
           <span>{post.comments.length} Comments</span>
           <span>{post.shares} Shares</span>
@@ -272,65 +279,74 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       </div>
 
       {/* Post Actions */}
-      <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-4 font-semibold">
-        <div className="flex justify-between">
+      <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-3 sm:mb-4 font-semibold">
+        <div className="grid grid-cols-2 sm:flex sm:justify-between gap-2 sm:gap-0">
           <button
             onClick={handleLike}
-            className={`flex items-center space-x-1 px-3 py-1 rounded-md cursor-pointer ${
+            className={`flex sm:items-center sm:justify-center space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base ${
               isLiked
                 ? "text-[#003933]"
                 : "text-gray-500 hover:text-[#003933] dark:hover:text-gray-300"
             }`}
           >
-            <ThumbsUp size={18} />
-            <span>{isLiked ? "Liked" : "Like"}</span>
+            <ThumbsUp size={16} className="sm:w-[18px] sm:h-[18px]" />
+            <span className="hidden sm:inline">
+              {isLiked ? "Liked" : "Like"}
+            </span>
+            <span className="sm:hidden">{isLiked ? "Liked" : "Like"}</span>
           </button>
 
           <button
             onClick={() =>
               document.getElementById(`comment-${post.id}`).focus()
             }
-            className="flex cursor-pointer items-center space-x-1 px-3 py-1 rounded-md hover:text-[#003933] dark:hover:text-gray-300"
+            className="flex cursor-pointer sm:items-center sm:justify-center space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md hover:text-[#003933] dark:hover:text-gray-300 text-sm sm:text-base"
           >
-            <MessageSquare size={18} />
-            <span>Comment</span>
+            <MessageSquare size={16} className="sm:w-[18px] sm:h-[18px]" />
+            <span className="hidden sm:inline">Comment</span>
+            <span className="sm:hidden">Comment</span>
           </button>
+
+          <div className="sm:col-span-1">
+            <PostShare />
+          </div>
+
           <button
             onClick={() => onSave(post.id)}
-            className={`flex items-center space-x-1 px-3 py-1 rounded-md cursor-pointer ${
+            className={`flex sm:items-center sm:justify-center px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base ${
               post.isSaved
                 ? "text-[#003933]"
                 : "text-gray-500 hover:text-[#003933] dark:hover:text-gray-300"
             }`}
           >
-            <Bookmark size={18} />
-            <span>Save</span>
+            <Bookmark size={16} className="sm:w-[18px] sm:h-[18px]" />
+            <span className="hidden sm:inline">Save</span>
+            <span className="sm:hidden">Save</span>
           </button>
-          <PostShare />
         </div>
       </div>
 
       {/* Comments Section */}
-      <div className="space-y-3 mb-4">
+      <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
         {post.comments.map((comment, index) => (
           <div key={index} className="flex space-x-2">
             <img
               src={comment.userImage || "https://i.pravatar.cc/150?img=3"}
               alt={comment.user}
-              className="w-8 h-8 rounded-full object-cover"
+              className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover flex-shrink-0"
             />
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-2 flex-1">
-              <div className="font-medium text-sm dark:text-white">
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-2 sm:p-3 flex-1 min-w-0">
+              <div className="font-medium text-xs sm:text-sm dark:text-white truncate">
                 {comment.user}
               </div>
-              <div className="text-gray-700 dark:text-zinc-400 text-sm">
+              <div className="text-gray-700 dark:text-zinc-400 text-xs sm:text-sm break-words">
                 {comment.text}
               </div>
               {comment.image && (
                 <img
                   src={comment.image}
                   alt="Comment"
-                  className="mt-2 rounded-lg max-h-40 object-cover"
+                  className="mt-2 rounded-lg max-h-32 sm:max-h-40 object-cover w-full"
                 />
               )}
             </div>
@@ -343,7 +359,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
         <img
           src="https://i.pravatar.cc/150?img=5"
           alt="User"
-          className="w-8 h-8 rounded-full object-cover"
+          className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover flex-shrink-0"
         />
         <div className="flex-1 relative">
           <div className="relative">
@@ -353,18 +369,18 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
               placeholder="Write a comment..."
-              className="w-full bg-gray-100 dark:bg-gray-700 rounded-full py-2 px-4 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary pr-24"
+              className="w-full bg-gray-100 dark:bg-gray-700 rounded-full py-2 px-3 sm:px-4 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary pr-16 sm:pr-24 text-sm sm:text-base"
             />
-            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-1">
+            <div className="absolute right-1 sm:right-2 top-1/2 transform -translate-y-1/2 flex space-x-1">
               <button
                 type="button"
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 className="text-gray-400 hover:text-primary p-1"
               >
-                <Smile size={18} />
+                <Smile size={16} className="sm:w-[18px] sm:h-[18px]" />
               </button>
               <label className="text-gray-400 hover:text-primary p-1 cursor-pointer">
-                <ImageIcon size={18} />
+                <ImageIcon size={16} className="sm:w-[18px] sm:h-[18px]" />
                 <input
                   type="file"
                   accept="image/*"
@@ -381,7 +397,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
                     : "text-gray-400"
                 }`}
               >
-                <Send size={18} />
+                <Send size={16} className="sm:w-[18px] sm:h-[18px]" />
               </button>
             </div>
           </div>
@@ -397,14 +413,16 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 className={`comment-emoji-button-${post.id} text-gray-400 hover:text-primary p-1`}
               >
-                <Smile size={18} />
+                <Smile size={16} className="sm:w-[18px] sm:h-[18px]" />
               </button>
-              <EmojiPicker
-                onEmojiClick={handleEmojiClick}
-                width={300}
-                height={350}
-                previewConfig={{ showPreview: false }}
-              />
+              <div className="w-[280px] sm:w-[300px]">
+                <EmojiPicker
+                  onEmojiClick={handleEmojiClick}
+                  width={280}
+                  height={300}
+                  previewConfig={{ showPreview: false }}
+                />
+              </div>
             </div>
           )}
 
@@ -414,13 +432,13 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
               <img
                 src={imagePreview}
                 alt="Preview"
-                className="rounded-lg max-h-40 object-cover"
+                className="rounded-lg max-h-32 sm:max-h-40 object-cover w-full"
               />
               <button
                 onClick={() => setImagePreview(null)}
                 className="absolute top-2 right-2 bg-gray-800 bg-opacity-50 text-white rounded-full p-1"
               >
-                <X size={16} />
+                <X size={14} className="sm:w-4 sm:h-4" />
               </button>
             </div>
           )}

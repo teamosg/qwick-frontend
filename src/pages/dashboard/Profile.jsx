@@ -149,7 +149,7 @@ const Profile = () => {
         )}
 
         {/* Tabs Content */}
-        <div className="flex-1 border border-gray-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-900 font-medium text-muted-foreground min-h-[600px]">
+        <div className="flex-1 rounded-lg dark:bg-zinc-900 font-medium text-muted-foreground min-h-[600px]">
           {tabs.map((tab) => (
             <TabsContent
               key={tab.value}

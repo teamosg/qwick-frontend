@@ -11,20 +11,36 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Share2 } from "lucide-react";
+import { Copy, Share2 } from "lucide-react";
+import { useState } from "react";
 
 export function PostShare() {
+  const [copied, setCopied] = useState(false);
+  const shareLink = "https://ui.shadcn.com/docs/installation";
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(shareLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch (err) {
+      setCopied(false);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex items-center cursor-pointer space-x-1 px-3 py-1 rounded-md hover:text-[#003933] dark:hover:text-gray-300">
+        <button className="flex items-center cursor-pointer px-2 py-1 rounded-md hover:text-[#003933] dark:hover:text-gray-300">
           <Share2 size={18} />
           <span>Share</span>
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="dark:text-white">Share link</DialogTitle>
+          <DialogTitle className="dark:text-white text-black">
+            Share link
+          </DialogTitle>
           <DialogDescription className="dark:text-zinc-400">
             Anyone who has this link will be able to view this.
           </DialogDescription>
@@ -37,14 +53,29 @@ export function PostShare() {
             <Input
               className="dark:text-white"
               id="link"
-              defaultValue="https://ui.shadcn.com/docs/installation"
+              value={shareLink}
               readOnly
             />
           </div>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleCopy}
+            className="flex items-center gap-1"
+          >
+            <Copy size={16} />
+            {copied ? "Copied!" : "Copy"}
+          </Button>
         </div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
-            <Button type="button" variant="secondary">
+            <Button
+              type="button"
+              variant="secondary"
+              className={
+                "bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+              }
+            >
               Close
             </Button>
           </DialogClose>

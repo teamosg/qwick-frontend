@@ -1,4 +1,5 @@
 import { DollarSign } from "lucide-react";
+import PayoutData from "./PayoutData";
 
 const Payout = () => {
   return (
@@ -11,32 +12,50 @@ const Payout = () => {
           <div className="w-10 h-10 rounded-full bg-[#1BC285] flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
-          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">12,489</h2>
-          <p className="text-xs text-gray-600 dark:text-zinc-400">Total Balance</p>
+          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
+            12,489
+          </h2>
+          <p className="text-xs text-gray-600 dark:text-zinc-400">
+            Total Balance
+          </p>
         </div>
         <div className="p-5 shadow bg-white rounded-xl">
           <div className="w-10 h-10 rounded-full bg-red-400 flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
-          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">12,489</h2>
-          <p className="text-xs text-gray-600 dark:text-zinc-400">Total Withdrawal</p>
+          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
+            12,489
+          </h2>
+          <p className="text-xs text-gray-600 dark:text-zinc-400">
+            Total Withdrawal
+          </p>
         </div>{" "}
         <div className="p-5 shadow bg-white rounded-xl">
           <div className="w-10 h-10 rounded-full bg-red-400 flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
-          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">12,489</h2>
-          <p className="text-xs text-gray-600 dark:text-zinc-400">Total Transfer</p>
+          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
+            12,489
+          </h2>
+          <p className="text-xs text-gray-600 dark:text-zinc-400">
+            Total Transfer
+          </p>
         </div>{" "}
         <div className="p-5 shadow bg-white rounded-xl">
           <div className="w-10 h-10 rounded-full bg-[#1BC285] flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
-          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">12,489</h2>
-          <p className="text-xs text-gray-600 dark:text-zinc-400">Total Cash in</p>
+          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
+            12,489
+          </h2>
+          <p className="text-xs text-gray-600 dark:text-zinc-400">
+            Total Cash in
+          </p>
         </div>
       </div>
-      <div></div>
+      <div>
+        <PayoutData />
+      </div>
     </div>
   );
 };
