@@ -49,7 +49,7 @@ const JoinCommunity = () => {
       </motion.div>
 
       <motion.div
-        className="bg-gray-100 dark:bg-zinc-900 p-6 rounded-xl max-w-2xl items-center justify-center mx-auto border border-gray-200 dark:border-zinc-700"
+        className="bg-gray-100 dark:bg-zinc-900 p-6 rounded-xl max-w-3xl items-center justify-center mx-auto border border-gray-200 dark:border-zinc-700"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

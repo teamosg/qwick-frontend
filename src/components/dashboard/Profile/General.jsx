@@ -1,14 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 
 const ProfileGeneral = () => {
@@ -55,79 +45,80 @@ const ProfileGeneral = () => {
     <form onSubmit={handleSubmit} className="p-6 space-y-6">
       {/* Name Field */}
       <div className="space-y-2">
-        <Label htmlFor="name" className="text-sm font-medium text-gray-700">
+        <label htmlFor="name" className="text-sm font-medium text-[#0d0d12]">
           Name
-        </Label>
-        <Input
+        </label>
+        <input
           id="name"
           type="text"
           value={formData.name}
           onChange={(e) => handleInputChange("name", e.target.value)}
           placeholder="Enter your name"
-          className="w-full rounded-full border-gray-300 px-4 py-3 text-gray-600"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
         />
       </div>
 
       {/* Bio Field */}
       <div className="space-y-2">
-        <Label htmlFor="bio" className="text-sm font-medium text-gray-700">
+        <label htmlFor="bio" className="text-sm font-medium text-gray-700">
           Bio
-        </Label>
-        <Textarea
+        </label>
+        <textarea
           id="bio"
           value={formData.bio}
           onChange={(e) => handleInputChange("bio", e.target.value)}
           placeholder="Tell us about yourself"
-          className="w-full min-h-[100px] rounded-xl border-gray-300 px-4 py-3 text-gray-600 resize-none"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
         />
       </div>
 
       {/* Username Field */}
       <div className="space-y-2">
-        <Label htmlFor="username" className="text-sm font-medium text-gray-700">
+        <label htmlFor="username" className="text-sm font-medium text-gray-700">
           Username
-        </Label>
-        <Input
+        </label>
+        <input
           id="username"
           type="text"
           value={formData.username}
           onChange={(e) => handleInputChange("username", e.target.value)}
           placeholder="Enter your username"
-          className="w-full rounded-full border-gray-300 px-4 py-3 text-gray-600"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
         />
       </div>
 
       {/* Email Field */}
       <div className="space-y-2">
-        <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+        <label htmlFor="email" className="text-sm font-medium text-gray-700">
           Email
-        </Label>
-        <Input
+        </label>
+        <input
           id="email"
           type="email"
           value={formData.email}
           onChange={(e) => handleInputChange("email", e.target.value)}
           placeholder="Enter your email"
-          className="w-full rounded-full border-gray-300 px-4 py-3 text-gray-600"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
         />
       </div>
 
       {/* Phone Number Field */}
+      {/* Phone Number Field */}
       <div className="space-y-2">
-        <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
+        <label htmlFor="phone" className="text-sm font-medium text-gray-700">
           Phone Number
-        </Label>
+        </label>
         <div className="flex gap-2">
-          <Select
+          {/* <Select
             value={formData.countryCode}
             onValueChange={(value) => handleInputChange("countryCode", value)}
           >
-            <SelectTrigger className="w-20 rounded-full border-gray-300">
+            <SelectTrigger className="w-24 mt-2 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]">
               <SelectValue>
                 <div className="flex items-center gap-2">
-                  {formData.countryCode === "us" && "🇺🇸"}
-                  {formData.countryCode === "uk" && "🇬🇧"}
-                  {formData.countryCode === "ca" && "🇨🇦"}
+                  {formData.countryCode === "us" && "🇺🇸 +1"}
+                  {formData.countryCode === "uk" && "🇬🇧 +44"}
+                  {formData.countryCode === "ca" && "🇨🇦 +1"}
                 </div>
               </SelectValue>
             </SelectTrigger>
@@ -142,15 +133,15 @@ const ProfileGeneral = () => {
                 <div className="flex items-center gap-2">🇨🇦 +1</div>
               </SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
 
-          <Input
+          <input
             id="phone"
             type="tel"
             value={formData.phone}
             onChange={(e) => handleInputChange("phone", e.target.value)}
             placeholder="Enter phone number"
-            className="flex-1 rounded-full border-gray-300 px-4 py-3 text-gray-600"
+            className="w-full mt-2 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
           />
         </div>
       </div>
@@ -159,7 +150,8 @@ const ProfileGeneral = () => {
       <Button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-emerald-800 hover:bg-emerald-900 text-white rounded-full py-6 text-lg font-medium mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full  bg-[#003933] dark:bg-[#003933] text-white px-4 py-4 sm:py-6 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2
+        "
       >
         {isLoading ? "Updating..." : "Update"}
       </Button>

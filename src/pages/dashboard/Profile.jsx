@@ -115,12 +115,22 @@ const Profile = () => {
 
           {/* Tabs List Content */}
           <div className="p-6 md:p-0">
-            <TabsList className="shrink-0 grid grid-cols-1 gap-2 p-0 bg-transparent">
+            <div className="p-4 mb-6">
+              <img
+                alt="Linda smith"
+                class="h-16 w-16 rounded-full object-cover border border-border mb-2"
+                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
+              ></img>
+              <h4 className="font-semibold text-base text-[#191919]">
+                Linda smith
+              </h4>
+            </div>
+            <TabsList className="shrink-0 grid grid-cols-1 gap-2 p-0 bg-transparent w-full">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start text-[#9096A2] dark:text-gray-400 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
+                  className="!w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3  hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
                   onClick={() => setIsTabsOpen(false)} // close on mobile when tab clicked
                 >
                   <tab.icon className="h-5 w-5 me-3" /> {tab.name}
@@ -139,7 +149,7 @@ const Profile = () => {
         )}
 
         {/* Tabs Content */}
-        <div className="flex-1 border border-gray-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-900 font-medium text-muted-foreground min-h-[600px]">
+        <div className="flex-1 rounded-lg dark:bg-zinc-900 font-medium text-muted-foreground min-h-[600px]">
           {tabs.map((tab) => (
             <TabsContent
               key={tab.value}

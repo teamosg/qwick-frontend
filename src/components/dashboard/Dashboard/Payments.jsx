@@ -7,8 +7,6 @@ const Payments = () => {
         Payments
       </h2>
       <PaymentsData />
-      <PaymentsData />
-      <PaymentsData />
     </div>
   );
 };
