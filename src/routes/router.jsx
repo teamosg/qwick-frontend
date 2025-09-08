@@ -3,6 +3,7 @@ import CommunityChat from "@/components/CommunityChat/CommunityChat";
 import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import ContentRewordPublic from "@/components/contentReward/ContentRewordPublic";
+import AutomatedMessage from "@/components/dashboard/Dashboard/AutomatedMessage";
 import Analytics from "@/components/dashboard/Dashboard/ContentReward/Analytics";
 import ContentRewardDetailsEdit from "@/components/dashboard/Dashboard/ContentReward/ContentRewardDetailsEdit";
 import DashboardContentReward from "@/components/dashboard/Dashboard/ContentReward/DashboardContentReward";
@@ -167,6 +168,10 @@ const router = createBrowserRouter([
           {
             path: "payout",
             element: <Payout />,
+          },
+          {
+            path: "automated-message",
+            element: <AutomatedMessage />,
           },
           {
             path: "content-reward/edit/:id",

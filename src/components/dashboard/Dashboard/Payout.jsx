@@ -1,13 +1,20 @@
 import { DollarSign } from "lucide-react";
+import { useState } from "react";
 import PayoutData from "./PayoutData";
+import { PayoutTab } from "./PayoutTab";
 
 const Payout = () => {
+  const [activeTab, setActiveTab] = useState("withdrawal");
+
+  const handleTabChange = (tabValue) => {
+    setActiveTab(tabValue);
+  };
   return (
     <div>
       <h2 class="text-[24px] text-gray-900 dark:text-white font-semibold mb-3">
         Payout
       </h2>
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
         <div className="p-5 shadow bg-white rounded-xl">
           <div className="w-10 h-10 rounded-full bg-[#1BC285] flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
@@ -54,7 +61,91 @@ const Payout = () => {
         </div>
       </div>
       <div>
-        <PayoutData />
+        <div className="flex items-center justify-between mb-3">
+          <div className="">
+            <PayoutTab onTabChange={handleTabChange} />
+          </div>
+          <button className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2">
+            Top Up
+          </button>
+        </div>
+
+        {/* Conditional rendering based on active tab */}
+        {activeTab === "withdrawal" && <PayoutData />}
+        {activeTab === "payment-method" && (
+          <div className="space-y-4">
+            {/* Stripe Setup Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  {/* Stripe Logo */}
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-semibold text-sm bg-purple-600 px-2 py-1 rounded">
+                      stripe
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Setup Stripe
+                    </h3>
+                  </div>
+                </div>
+                <div className="text-gray-400">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* senangPay Setup Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  {/* senangPay Logo */}
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <span className="text-green-700 font-semibold text-xs">
+                      <div className="text-center">
+                        <div>senang</div>
+                        <div className="text-xs">Pay</div>
+                      </div>
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Setup senangPay
+                    </h3>
+                  </div>
+                </div>
+                <div className="text-gray-400">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
