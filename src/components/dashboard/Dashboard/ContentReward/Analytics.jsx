@@ -4,7 +4,7 @@ import { AnalyticsChart } from "./AnalyticsChart";
 const Analytics = () => {
   return (
     <div>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="shadow p-4 rounded-lg bg-white">
           <div className="flex flex-col gap-3 p-6">
             <h3 className="flex items-center gap-2">
