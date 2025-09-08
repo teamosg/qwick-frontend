@@ -1,9 +1,11 @@
 import { ArrowUpRight, ShoppingCart, Undo2 } from "lucide-react";
 import { AnalyticsChart } from "./AnalyticsChart";
+import ContentRewardNav from "./ContentRewardNav";
 
 const Analytics = () => {
   return (
     <div>
+      <ContentRewardNav />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="shadow p-4 rounded-lg bg-white">
           <div className="flex flex-col gap-3 p-6">

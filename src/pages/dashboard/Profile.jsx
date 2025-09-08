@@ -121,7 +121,7 @@ const Profile = () => {
                 class="h-16 w-16 rounded-full object-cover border border-border mb-2"
                 src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
               ></img>
-              <h4 className="font-semibold text-base text-[#191919]">
+              <h4 className="font-semibold text-base text-[#191919] dark:text-white">
                 Linda smith
               </h4>
             </div>
