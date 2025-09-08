@@ -56,7 +56,7 @@ const ContentRewardDetailsEdit = () => {
       {/* Tabs Navigation */}
       <ContentRewardNav />
       <div className="p-6 text-[#717171]">
-        <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl">
+        <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl bg-white">
           <div className="mb-6">
             <img
               src="/confirm-apply.png"
