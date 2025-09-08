@@ -120,7 +120,7 @@ const ContentRewardDetailsPayment = () => {
   return (
     <>
       <div className="p-6 text-[#717171]">
-        <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl">
+        <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl bg-white">
           <div className="mb-6">
             <img
               src="/confirm-apply.png"
@@ -137,7 +137,7 @@ const ContentRewardDetailsPayment = () => {
               </span>
             </p>
             <div className="mb-2.5">
-              <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white">
+              <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white font-semibold">
                 PAID OUT
               </h4>
               <p className="text-[#717171] text-xs flex justify-between dark:text-zinc-400">
@@ -204,7 +204,7 @@ const ContentRewardDetailsPayment = () => {
               onClick={handleApplyClick}
               className="w-sm mb-2.5 text-white bg-[#003933] hover:bg-[#002822] dark:hover:bg-[#0dc4a5]  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition"
             >
-              Apply
+              Submit
             </button>
           </div>
         </div>
@@ -274,7 +274,7 @@ const ContentRewardDetailsPayment = () => {
                         handleInputChange("youtube", e.target.value)
                       }
                       placeholder="https://www.youtube.com/watch?v=..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2  focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
                         errors.youtube
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"

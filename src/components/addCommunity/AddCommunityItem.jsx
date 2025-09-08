@@ -70,7 +70,7 @@ const AddCommunityItem = ({
       }`}
     >
       <motion.div
-        className={`p-4 flex items-center justify-center w-15 h-15 rounded-2xl mb-12 transition-colors duration-300 ${
+        className={`p-4 flex items-center justify-center w-15 h-15 rounded-2xl mb-3 transition-colors duration-300 ${
           isSelected ? "bg-[#003933]" : "bg-[#e5fff6]"
         }`}
         whileHover={{ scale: 1.05 }}

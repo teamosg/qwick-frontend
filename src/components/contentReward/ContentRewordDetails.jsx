@@ -9,7 +9,7 @@ const ContentRewardDetails = () => {
       <h2 className="text-[24px] text-[#191919] dark:text-white font-semibold mb-3">
         Content Reward Details
       </h2>
-      <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6">
+      <div className="dark:text-white bg-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6">
         <div className="flex justify-between mb-3.5">
           <div className="flex items-center justify-center gap-3 mb-3">
             <img
@@ -94,7 +94,7 @@ const ContentRewardDetails = () => {
           </div>
         </div>
       </div>
-      <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6">
+      <div className="dark:text-white bg-white dark:bg-zinc-900  p-6 rounded-xl max-w-2xl items-center justify-center mx-auto shadow mb-6">
         <div className="mb-3.5">
           <h3 className="text-[#090003] dark:text-white text-sm font-semibold mb-4">
             ContentReward Details for this reward
