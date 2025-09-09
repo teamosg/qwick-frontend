@@ -8,6 +8,8 @@ import Analytics from "@/components/dashboard/Dashboard/ContentReward/Analytics"
 import ContentRewardDetailsEdit from "@/components/dashboard/Dashboard/ContentReward/ContentRewardDetailsEdit";
 import DashboardContentReward from "@/components/dashboard/Dashboard/ContentReward/DashboardContentReward";
 import MySubmissions from "@/components/dashboard/Dashboard/ContentReward/MySubmissions";
+import DashboardSettings from "@/components/dashboard/Dashboard/DashboardSettings";
+import NotificationsSettings from "@/components/dashboard/Dashboard/NotificationsSettings";
 import Payments from "@/components/dashboard/Dashboard/Payments";
 import Payout from "@/components/dashboard/Dashboard/Payout";
 import Users from "@/components/dashboard/Dashboard/Users";
@@ -25,6 +27,8 @@ import Dashboard from "@/pages/dashboard/Dashboard";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
+import DynamicHelpPage from "@/pages/help/DynamicHelpPage";
+import NeedHelp from "@/pages/help/NeedHelp";
 import Message from "@/pages/Message/Message";
 import Notifications from "@/pages/notifications/Notifications";
 import NotFound from "@/shared/NotFound";
@@ -174,6 +178,14 @@ const router = createBrowserRouter([
             element: <AutomatedMessage />,
           },
           {
+            path: "dashboard-settings",
+            element: <DashboardSettings />,
+          },
+          {
+            path: "dashboard-settings/notifications",
+            element: <NotificationsSettings />,
+          },
+          {
             path: "content-reward/edit/:id",
             element: <ContentRewardDetailsEdit />,
           },
@@ -186,6 +198,14 @@ const router = createBrowserRouter([
       {
         path: "/notifications",
         element: <Notifications />,
+      },
+      {
+        path: "/need-help",
+        element: <NeedHelp />,
+      },
+      {
+        path: "/need-help/:category",
+        element: <DynamicHelpPage />,
       },
       // if page now found
       {
