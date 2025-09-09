@@ -27,7 +27,7 @@ const WriteReviewForm = ({ onSubmit }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+    <div className="bg-white p-6 mb-6 rounded-xl">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Rating Selection */}
         <div className="space-y-4">
