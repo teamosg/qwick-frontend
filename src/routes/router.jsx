@@ -8,6 +8,8 @@ import Analytics from "@/components/dashboard/Dashboard/ContentReward/Analytics"
 import ContentRewardDetailsEdit from "@/components/dashboard/Dashboard/ContentReward/ContentRewardDetailsEdit";
 import DashboardContentReward from "@/components/dashboard/Dashboard/ContentReward/DashboardContentReward";
 import MySubmissions from "@/components/dashboard/Dashboard/ContentReward/MySubmissions";
+import DashboardSettings from "@/components/dashboard/Dashboard/DashboardSettings";
+import NotificationsSettings from "@/components/dashboard/Dashboard/NotificationsSettings";
 import Payments from "@/components/dashboard/Dashboard/Payments";
 import Payout from "@/components/dashboard/Dashboard/Payout";
 import Users from "@/components/dashboard/Dashboard/Users";
@@ -172,6 +174,14 @@ const router = createBrowserRouter([
           {
             path: "automated-message",
             element: <AutomatedMessage />,
+          },
+          {
+            path: "dashboard-settings",
+            element: <DashboardSettings />,
+          },
+          {
+            path: "dashboard-settings/notifications",
+            element: <NotificationsSettings />,
           },
           {
             path: "content-reward/edit/:id",
