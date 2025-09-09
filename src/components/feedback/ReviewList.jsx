@@ -40,7 +40,7 @@ const ReviewCard = ({ review }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-4">
+    <div className="bg-white p-6 mb-4 rounded-xl">
       {/* Main Review */}
       <div className="flex items-start space-x-4">
         <img
