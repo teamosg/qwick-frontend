@@ -1,4 +1,4 @@
-import { LogOut, Menu, Moon, Plus, Settings, Sun, User } from "lucide-react";
+import { LogOut, Menu, Moon, Plus, Settings, Sun } from "lucide-react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link } from "react-router";
@@ -205,10 +205,10 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             {showProfileMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-popover rounded-lg shadow-lg border border-border z-50">
                 <div className="py-1">
-                  <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
+                  {/* <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
                     <User size={16} className="mr-2" />
                     Edit Profile
-                  </button>
+                  </button> */}
                   <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
                     <Settings size={16} className="mr-2" />
                     Settings
@@ -236,13 +236,6 @@ const Header = ({ userName, userImage, onMenuClick }) => {
       )}
     </>
   );
-};
-
-Header.propTypes = {
-  userName: PropTypes.string.isRequired,
-  userImage: PropTypes.string.isRequired,
-  userRole: PropTypes.string,
-  onMenuClick: PropTypes.func.isRequired,
 };
 
 export default Header;

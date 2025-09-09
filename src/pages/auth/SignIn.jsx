@@ -18,9 +18,9 @@ const SignIn = () => {
   const { theme, setTheme } = useTheme();
   const darkMode = theme === "dark";
 
-  const toggleDarkMode = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+  // const toggleDarkMode = () => {
+  //   setTheme(theme === "dark" ? "light" : "dark");
+  // };
 
   const onSubmit = (data) => {
     console.log(data);

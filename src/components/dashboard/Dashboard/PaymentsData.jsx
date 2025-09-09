@@ -88,8 +88,6 @@ const PaymentsData = () => {
       total_amount: "12345",
     },
   ];
-  console.log(users);
-
   const getStatusBadge = (status) => {
     const variants = {
       paid: "bg-green-100 text-green-800 border-green-200",
