@@ -14,7 +14,9 @@ const DashboardSettings = () => {
         >
           <div className="flex items-center justify-center gap-3">
             <Bell />
-            <h3 className="text-[#003933] text-[20px]">Notifications</h3>
+            <h3 className="text-[#003933] text-[20px] font-semibold ">
+              Notifications
+            </h3>
           </div>
           <ChevronRight />
         </Link>
@@ -24,7 +26,7 @@ const DashboardSettings = () => {
         >
           <div className="flex items-center justify-center gap-3">
             <Bell />
-            <h3 className="text-[#003933] text-[20px]">Legal</h3>
+            <h3 className="text-[#003933] text-[20px] font-semibold ">Legal</h3>
           </div>
           <ChevronRight />
         </Link>

@@ -28,6 +28,7 @@ import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
 import Message from "@/pages/Message/Message";
+import NeedHelp from "@/pages/NeedHelp";
 import Notifications from "@/pages/notifications/Notifications";
 import NotFound from "@/shared/NotFound";
 import { createBrowserRouter, Outlet } from "react-router-dom";
@@ -196,6 +197,10 @@ const router = createBrowserRouter([
       {
         path: "/notifications",
         element: <Notifications />,
+      },
+      {
+        path: "/need-help",
+        element: <NeedHelp />,
       },
       // if page now found
       {
