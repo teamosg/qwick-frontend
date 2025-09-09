@@ -27,6 +27,7 @@ import Dashboard from "@/pages/dashboard/Dashboard";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
+import Feedback from "@/pages/feedback/Feedback";
 import DynamicHelpPage from "@/pages/help/DynamicHelpPage";
 import NeedHelp from "@/pages/help/NeedHelp";
 import Message from "@/pages/Message/Message";
@@ -206,6 +207,10 @@ const router = createBrowserRouter([
       {
         path: "/need-help/:category",
         element: <DynamicHelpPage />,
+      },
+      {
+        path: "/feedback",
+        element: <Feedback />,
       },
       // if page now found
       {
