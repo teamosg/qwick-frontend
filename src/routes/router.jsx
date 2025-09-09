@@ -27,8 +27,9 @@ import Dashboard from "@/pages/dashboard/Dashboard";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
+import DynamicHelpPage from "@/pages/help/DynamicHelpPage";
+import NeedHelp from "@/pages/help/NeedHelp";
 import Message from "@/pages/Message/Message";
-import NeedHelp from "@/pages/NeedHelp";
 import Notifications from "@/pages/notifications/Notifications";
 import NotFound from "@/shared/NotFound";
 import { createBrowserRouter, Outlet } from "react-router-dom";
@@ -201,6 +202,10 @@ const router = createBrowserRouter([
       {
         path: "/need-help",
         element: <NeedHelp />,
+      },
+      {
+        path: "/need-help/:category",
+        element: <DynamicHelpPage />,
       },
       // if page now found
       {
