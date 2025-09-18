@@ -1,7 +1,7 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
-const TOTAL_PAGES = 6;
+const TOTAL_PAGES = 4;
 
 const Pagination = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,13 +21,13 @@ const Pagination = () => {
   return (
     <div className="p-6">
       <div className="text-center max-w-full m-auto mt-15">
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-3">
           <button
             type="button"
             aria-label="Previous"
             onClick={handlePrev}
             disabled={currentPage === 1}
-            className={`mr-4 flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square border rounded-sm transition-all ${
+            className={`flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square border rounded-sm transition-all ${
               currentPage === 1
                 ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                 : "hover:bg-[#003933] hover:text-white"
@@ -62,7 +62,7 @@ const Pagination = () => {
             aria-label="Next"
             onClick={handleNext}
             disabled={currentPage === TOTAL_PAGES}
-            className={`ml-4 flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square border rounded-sm transition-all ${
+            className={`flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square border rounded-sm transition-all ${
               currentPage === TOTAL_PAGES
                 ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                 : "hover:bg-[#003933] hover:text-white"

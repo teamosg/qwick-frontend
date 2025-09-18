@@ -1,4 +1,4 @@
-import { LogOut, Menu, Moon, Plus, Settings, Sun, User } from "lucide-react";
+import { LogOut, Menu, Moon, Plus, Settings, Sun } from "lucide-react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link } from "react-router";
@@ -92,7 +92,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             <Link
               to={`/addcommunity`}
               type="submit"
-              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-2.5 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
             >
               <Plus />
               Add Community
@@ -205,10 +205,10 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             {showProfileMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-popover rounded-lg shadow-lg border border-border z-50">
                 <div className="py-1">
-                  <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
+                  {/* <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
                     <User size={16} className="mr-2" />
                     Edit Profile
-                  </button>
+                  </button> */}
                   <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
                     <Settings size={16} className="mr-2" />
                     Settings
@@ -236,13 +236,6 @@ const Header = ({ userName, userImage, onMenuClick }) => {
       )}
     </>
   );
-};
-
-Header.propTypes = {
-  userName: PropTypes.string.isRequired,
-  userImage: PropTypes.string.isRequired,
-  userRole: PropTypes.string,
-  onMenuClick: PropTypes.func.isRequired,
 };
 
 export default Header;
