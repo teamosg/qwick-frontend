@@ -92,7 +92,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             <Link
               to={`/addcommunity`}
               type="submit"
-              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-2.5 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
             >
               <Plus />
               Add Community
