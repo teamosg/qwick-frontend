@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link } from "react-router";
 import { useTheme } from "../shared/ThemeProvider";
+import { useLogout } from "@/hooks/auth.hook";
 
 const NotificationItem = ({ title, time, isRead }) => (
   <div
-    className={`p-4 ${
-      !isRead ? "bg-primary/10" : ""
-    } hover:bg-accent cursor-pointer`}
+    className={`p-4 ${!isRead ? "bg-primary/10" : ""
+      } hover:bg-accent cursor-pointer`}
   >
     <p className="text-sm font-medium text-gray-900 dark:text-white">{title}</p>
     <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">{time}</p>
@@ -26,6 +26,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { mutate, isPending } = useLogout();
 
   // const notifications = [
   //   {
@@ -79,9 +80,8 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             <button
               onClick={toggleTheme}
               className="hidden bg-[#0D99FF1A] sm:block p-2 rounded-full hover:bg-[#0d9aff54]"
-              aria-label={`Switch to ${
-                theme === "dark" ? "light" : "dark"
-              } mode`}
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"
+                } mode`}
             >
               {theme === "dark" ? (
                 <Sun className="h-7 w-7 text-foreground" /> // You'll need to import Sun icon from lucide-react
@@ -214,9 +214,17 @@ const Header = ({ userName, userImage, onMenuClick }) => {
                     Settings
                   </button>
                   <hr className="my-1 border-border" />
-                  <button className="w-full px-4 py-2 text-left text-sm text-destructive hover:bg-accent flex items-center">
+                  {/* <button className="w-full px-4 py-2 text-left text-sm text-destructive hover:bg-accent flex items-center">
                     <LogOut size={16} className="mr-2" />
                     Log Out
+                  </button> */}
+                  <button
+                    onClick={() => mutate()}
+                    disabled={isPending}
+                    className="w-full px-4 py-2 text-left text-sm text-destructive hover:bg-accent flex items-center"
+                  >
+                    <LogOut size={16} className="mr-2" />
+                    {isPending ? "Logging out..." : "Log Out"}
                   </button>
                 </div>
               </div>

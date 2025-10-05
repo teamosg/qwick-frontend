@@ -1,14 +1,16 @@
 import { useTheme } from "@/components/shared/ThemeProvider";
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
+import { useVerifyOtp } from "@/hooks/auth.hook";
+import toast from "react-hot-toast";
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const { theme, setTheme } = useTheme();
   const darkMode = theme === "dark";
   const inputRefs = useRef([]);
-
+  const { mutate, isPending } = useVerifyOtp("account_verification");
   const toggleDarkMode = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
@@ -34,11 +36,25 @@ const VerifyAccount = () => {
     }
   };
 
+  const location = useLocation();
+  const email =
+    location.state?.email || localStorage.getItem("signup_email") || "";
+  const otpCode = location.state?.otp || localStorage.getItem("otp") || "";
   const handleSubmit = (e) => {
     e.preventDefault();
     const code = otp.join("");
-    console.log("Verification code:", code);
-    // Handle verification logic here
+
+    if (!email) {
+      toast.error("Email is missing, please sign up again.");
+      return;
+    }
+
+    // Call your mutation with form data
+    mutate({
+      email,
+      otp: code,
+      otp_type: "account_verification",
+    });
   };
 
   return (
@@ -125,7 +141,7 @@ const VerifyAccount = () => {
               VERIFY YOUR ACCOUNT
             </h2>
             <p className="dark:text-gray-400 text-center font-[Inter] text-[15px] md:text-[16px] not-italic font-normal leading-[140%]">
-              Check your email, we are sending the verification code
+              Check your email, we are sending the verification code {otpCode}
             </p>
           </div>
 

@@ -1,6 +1,5 @@
 import { useTheme } from "@/components/shared/ThemeProvider";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import {
   FaEnvelope,
   FaEye,
@@ -13,27 +12,25 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import arrowRight from "../../assets/arrow-right.svg";
 import commonAuthLogo from "../../assets/authImg.png";
+import { useSignUp } from "../../hooks/auth.hook.js";
 
 const SignUp = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { theme, setTheme } = useTheme();
   const darkMode = theme === "dark";
+
+  // Use the new auth hook
+  const { form, mutate, isPending } = useSignUp();
+  const { register, handleSubmit, watch, formState: { errors } } = form;
 
   const toggleDarkMode = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Handle form submission
+    // Data already matches API schema since we're using the correct field names
+    mutate(data);
   };
 
   return (
@@ -168,16 +165,14 @@ const SignUp = () => {
                   </div>
                   <input
                     type="text"
-                    {...register("firstName", {
-                      required: "First name is required",
-                    })}
+                    {...register("first_name")}
                     placeholder="Enter your first name"
                     className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                   />
                 </div>
-                {errors.firstName && (
+                {errors.first_name && (
                   <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                    {errors.firstName.message}
+                    {errors.first_name.message}
                   </p>
                 )}
               </div>
@@ -192,7 +187,7 @@ const SignUp = () => {
                   </div>
                   <input
                     type="text"
-                    {...register("lastName")}
+                    {...register("last_name")}
                     placeholder="Last Name"
                     className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                   />
@@ -211,13 +206,7 @@ const SignUp = () => {
                 </div>
                 <input
                   type="email"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  })}
+                  {...register("email")}
                   placeholder="Veren@gmail.com"
                   className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
@@ -240,13 +229,7 @@ const SignUp = () => {
                 </div>
                 <input
                   type={showPassword ? "text" : "password"}
-                  {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 6,
-                      message: "Password must be at least 6 characters",
-                    },
-                  })}
+                  {...register("password")}
                   placeholder="Your password"
                   className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
@@ -280,10 +263,7 @@ const SignUp = () => {
                 </div>
                 <input
                   type={showConfirmPassword ? "text" : "password"}
-                  {...register("confirmPassword", {
-                    validate: (value) =>
-                      value === watch("password") || "Passwords do not match",
-                  })}
+                  {...register("confirm_password")}
                   placeholder="Your password"
                   className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
@@ -299,18 +279,19 @@ const SignUp = () => {
                   )}
                 </button>
               </div>
-              {errors.confirmPassword && (
+              {errors.confirm_password && (
                 <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                  {errors.confirmPassword.message}
+                  {errors.confirm_password.message}
                 </p>
               )}
             </div>
 
             <button
               type="submit"
-              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
+              disabled={isPending}
+              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Sign Up
+              {isPending ? "Creating Account..." : "Sign Up"}
             </button>
           </form>
 
