@@ -1,0 +1,1557 @@
+{
+	"info": {
+		"_postman_id": "b1001494-5f45-40b2-a9d1-6c4b3a89f9bc",
+		"name": "API V1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38546819",
+		"_collection_link": "https://codehydra.postman.co/workspace/Darrenchua86~774a2ade-3380-42ab-afa2-71512599f1da/collection/38546819-b1001494-5f45-40b2-a9d1-6c4b3a89f9bc?action=share&source=collection_link&creator=38546819"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"{{$randomFirstName}}\",\r\n    \"last_name\": \"{{$randomLastName}}\",\r\n    \"email\": \"d01b@gmail.com\",\r\n    \"password\": \"pass@123\",\r\n    \"confirm_password\": \"pass@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/signup/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"signup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"d01b@gmail.com\",\r\n    \"otp\":\"985243\",\r\n    \"otp_type\": \"account_verification\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/verify-otp/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"verify-otp",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"d01b@gmail.com\",\r\n    \"password\": \"NewPassword1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/login/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MTU2MjQ2LCJpYXQiOjE3NTUxNTQ0NDYsImp0aSI6ImE5NGRiMWE2Yjg5ZjQ3OGU4MTU1ZGFmNjcwNTgxYzM1IiwidXNlcl9pZCI6IjQifQ.XG24D7GQjmU39F8ukLWatZtN05AEnFaUI2aWJj7ytnU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTI0MDg0NiwiaWF0IjoxNzU1MTU0NDQ2LCJqdGkiOiJkN2MzM2Q5NjlhMmM0OTlhOTRiMzUxMDcyNTdjNTk2OCIsInVzZXJfaWQiOiI0In0.QD5SnuwjODAbcb2dRE-gMKArPf0bM0rFn2-JUAtQOVw\"\r\n    \r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/logout/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MjkxMjgxLCJpYXQiOjE3NTYyODk0ODEsImp0aSI6IjRlZGQ5Mjc1OWUxZjRhODBiZGMwYTEzODkzOGY2NzM3IiwidXNlcl9pZCI6IjQ0In0.3l0QUPYITVHEKh-rUj5C97AyiKGuEne9l1_iza31_9w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"current_password\": \"pass@123\",\r\n    \"new_password\": \"123@pass\",\r\n    \"confirm_password\": \"123@pass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/change-password/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"change-password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Two Factor Status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MTE5NzA1LCJpYXQiOjE3NTYxMTc5MDUsImp0aSI6Ijk1Y2U4YmRjZDMwOTQyY2ViYjMyNGFmNzkzYTQ1MmVkIiwidXNlcl9pZCI6IjQzIn0.8Vw7OcAwXr8UvdJh2TkCc3VJqlatwCDA_d8gSkyOCo8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/two-factor-status/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"two-factor-status",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Two Factor Enable/Disable",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MTE5NzA1LCJpYXQiOjE3NTYxMTc5MDUsImp0aSI6Ijk1Y2U4YmRjZDMwOTQyY2ViYjMyNGFmNzkzYTQ1MmVkIiwidXNlcl9pZCI6IjQzIn0.8Vw7OcAwXr8UvdJh2TkCc3VJqlatwCDA_d8gSkyOCo8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"enable\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/two-factor-enable/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"two-factor-enable",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1ODQwMzk5LCJpYXQiOjE3NTU4Mzg1OTksImp0aSI6IjZhZjJmNGNlZGFiNjQwMTRiODQwOTUzYjY1ZGYyYTIxIiwidXNlcl9pZCI6IjEyIn0.-25JSSGe2limrsyzYQzFZZ11ArDMEild5O8Rvw0U_FY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/account/profile/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"profile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile Edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NjY0NTQwLCJpYXQiOjE3NTU2NjI3NDAsImp0aSI6ImJmNjg2ZmNiOWY2NTQyMDM5Y2U0ZjQ1NmRjMTk2ZDg3IiwidXNlcl9pZCI6IjEwIn0.QpJu1LKNoQxcFzyzUfzTYRtjaxf0nVVL1C-98dAzVa8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "postman-cloud:///1f0477da-0656-48d0-b379-66914a199afe"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/profile/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"profile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Other Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2ODAyMTIxLCJpYXQiOjE3NTY3OTQ5MjEsImp0aSI6IjkyOTNkNTQyZWYxYTRkMTM5ZjAzMmJlODFkNTJiNWRiIiwidXNlcl9pZCI6IjEifQ.6AE7AlYZMnxa1bZeBtfeNcq2zvHjvlTy9Yviwyu2aYA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/account/profile/d0b/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"profile",
+								"d0b",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"d01b@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/forgot-password/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"forgot-password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"d01b@gmail.com\",\r\n    \"new_password\": \"NewPassword1234\",\r\n    \"confirm_password\": \"NewPassword1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/reset-password/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"reset-password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MTYzODIxLCJpYXQiOjE3NTUxNjIwMjEsImp0aSI6IjFkM2NiMDg4ZTM0YjQ0Yzc5MmE4M2U1ZmE3YWRmNTJmIiwidXNlcl9pZCI6IjQifQ.aE3l3_OziALarmEY2pKKUtdrP8UAaN43CN3jG1aOWuY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"rakibhossen12304@gmail.com\",\r\n    \"otp\": \"696312\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/account/delete-account/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"account",
+								"delete-account",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Community",
+			"item": [
+				{
+					"name": "Create Community",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NDY0MTgxLCJpYXQiOjE3NTY0NjIzODIsImp0aSI6ImEwNmMzYWFhNTJmMTRiNzY5MjhkYmQxZjFjNjY4M2JkIiwidXNlcl9pZCI6IjEifQ.xSxIyDLI4N83MjbiEWu_pByjVmcibvEKey5JWGVGiRQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Python Lovers\",\r\n    \"username\": \"python-lovers\",\r\n    \"description\": \"For technology lovers\",\r\n    \"category\": 1,\r\n    \"subcategory\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/communities/p",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"communities",
+								"p"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List of All Community",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MzcyMzcyLCJpYXQiOjE3NTYzNzA1NzIsImp0aSI6ImU2ODc0MWVjZDU0YTRlNGVhMDVlNjM0OWZkOWY3ZGRlIiwidXNlcl9pZCI6IjQ0In0._S6oVoYXRYnvJU02rrw7YTaP6jIXcHX32_7DwleSuz8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/communities/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"communities",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Community",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3NDkxMzU0LCJpYXQiOjE3NTc0ODQxNTQsImp0aSI6ImU2NmVhOGY5MDI0MTQ0Njk5OTdlY2ZkZWQ2MjhjNzllIiwidXNlcl9pZCI6IjEifQ.2X2FmBmOg7FbaHiDHphiFyhHz62-9jbWY6qB2Mr8Ul4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/communities/python-lovers/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"communities",
+								"python-lovers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Community",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTIyMjkyLCJpYXQiOjE3NTU5MjA0OTIsImp0aSI6ImI1NDUxNzU2NGJiNjQ3MjVhNTZmMGEwYjg5MzNiOGJjIiwidXNlcl9pZCI6IjEyIn0.3o_0zz3sytQfG6H-Oin0hfGLYD7cJx1RWu73J1v7zTA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"description\": \"For python lovers\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/communities/tech-team/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"communities",
+								"tech-team",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Join the Community",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NTUzMTgxLCJpYXQiOjE3NTY1NTEzODEsImp0aSI6IjNmYmRiN2M1YzA5NjRhOTliMDdjNGMzN2NlYWFjYTEwIiwidXNlcl9pZCI6IjQifQ.eh-YC0R0UeDINmPC96NGEospBtsFGTp_E8wxRe4fVws",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/communities/python-lovers/join/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"communities",
+								"python-lovers",
+								"join",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Me in Community",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2MzU2NDU5LCJpYXQiOjE3NTYzNTQ2NTksImp0aSI6ImMxYTg2MmQ0MzA1YzQ3ODZhYzUyYzljYjU3YTljOTU1IiwidXNlcl9pZCI6IjQ0In0.EqzuC-JK7twQF6iUCfRkqHvwfdU4gEXWGB4cJXQNwf8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/me/communities/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"me",
+								"communities",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve/Pending Member List",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Community Approve/Reject Member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NDYzNTEzLCJpYXQiOjE3NTY0NjE3MTMsImp0aSI6IjlmNjA2ODhmMGMzYjRlODY5NTRmNzE4NjQzNTlhMDY2IiwidXNlcl9pZCI6IjEifQ.j34bqmcOT1GjrdReYJ_dbp5q9EpGg-RjS6_srtUMt2I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"approve\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/communities/tech-team/handle-member/3/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"communities",
+								"tech-team",
+								"handle-member",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authomated Message Switch On/Off",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3NjgxMjgzLCJpYXQiOjE3NTc2NzQwODMsImp0aSI6IjQzZDhjY2VjYmQwZDQ4NGM5NjA1Mzc5OGFiNzA2ZmM4IiwidXNlcl9pZCI6IjEifQ.GOgMvMlyZ_-ssU89rmE-t8I69vMR12jhDKRU99ZUNbI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/communities/python-lovers/automation-toggle/promotion/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"communities",
+								"python-lovers",
+								"automation-toggle",
+								"promotion",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Promote to Moderator",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NTUzMzkyLCJpYXQiOjE3NTY1NTE1OTIsImp0aSI6ImY2MWQ2NzQ1YmI5NzRlOTRhYjg2OWRkNmUwODM3NzJiIiwidXNlcl9pZCI6IjEifQ.E3iZrHE4u8omx2b9jY18qH8tTaV7_hcm9z1Qhj1Vzbg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/communities/tech-team/promote/3/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"communities",
+								"tech-team",
+								"promote",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Demote to Moderator",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NTU0MTgyLCJpYXQiOjE3NTY1NTIzODIsImp0aSI6IjM4OTMwZjBhY2Y1NTQ1ZTU5NmUxYmU3NmYwMDMxYzU5IiwidXNlcl9pZCI6IjEifQ.lHfaPYS2vwiDPve1C_JYbYSvAbzTYMkrg4Z9WPofgw4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/communities/tech-team/demote/3/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"communities",
+								"tech-team",
+								"demote",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NTQ5Mjc0LCJpYXQiOjE3NTY1NDc0NzQsImp0aSI6IjhlMzMwYWViNmNmOTRiYzBhNmNmNGE2NjYxYmY0MTJkIiwidXNlcl9pZCI6IjEifQ.9crvfecjVwWncIklDxDVrYM-e6fxZ6xW02zuoU65_00",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "New Work from client",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "postman-cloud:///1f0477da-0656-48d0-b379-66914a199afe"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "postman-cloud:///1f047735-5777-4a70-b763-fdd512fafce5"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/python-lovers/announcements/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"python-lovers",
+								"announcements",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Announcements List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2Mzc4NzA4LCJpYXQiOjE3NTYzNzY5MDgsImp0aSI6IjFhODM2YTY5MzJiMzQxNmFiZmFkNzM2MDgyZWNjNThkIiwidXNlcl9pZCI6IjQ0In0._2CT8bQ3iI2DlT4I-li-zChVlFB0Zv2jOBc4y8aAD0Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/tech-team/announcements/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"tech-team",
+								"announcements",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTk1MTQxLCJpYXQiOjE3NTU1OTMzNDEsImp0aSI6ImRmZTI3ZWI0YjQ3ZjQ4NDhiNWEwNTRmOTkzZmMyNDY2IiwidXNlcl9pZCI6IjEwIn0.SIpziyj24a2FM_B-U4e6x_C00Lq35jDBy6xKwTDe-oc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/announcements/1/like/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"announcements",
+								"1",
+								"like",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unlike Announcement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTk1MTQxLCJpYXQiOjE3NTU1OTMzNDEsImp0aSI6ImRmZTI3ZWI0YjQ3ZjQ4NDhiNWEwNTRmOTkzZmMyNDY2IiwidXNlcl9pZCI6IjEwIn0.SIpziyj24a2FM_B-U4e6x_C00Lq35jDBy6xKwTDe-oc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/announcements/1/like/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"announcements",
+								"1",
+								"like",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Announcement Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NjAwNzE2LCJpYXQiOjE3NTU1OTg5MTYsImp0aSI6IjIxNDI5YWZlMjM1NjQ3ZDNhNjY1ZDIzZjI2Mzc2NTE4IiwidXNlcl9pZCI6IjEwIn0.eXHNrco34TacbUa5AtMykl6zyBEvOhGObAfY00O0vNA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"content\": \"Test comment from Postman\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/announcements/1/comments/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"announcements",
+								"1",
+								"comments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NjAwODE0LCJpYXQiOjE3NTU1OTkwMTQsImp0aSI6ImEwNTBlODk0ZWFkYzQ2ZWRiZmI4ZGNlMzQ1YTVlYzEyIiwidXNlcl9pZCI6IjEwIn0.WTKXkMAFvHNDJHGLzTEaqjXHrCB4md_umikYBFidZyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"Test comment from browser\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/announcements/1/comments/3/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"announcements",
+								"1",
+								"comments",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NTk5NTg3LCJpYXQiOjE3NTU1OTc3ODcsImp0aSI6IjBlMGVjYjdiYTdhZjQwY2U5OWEwZTFiMDE1MjkyYmMzIiwidXNlcl9pZCI6IjEwIn0.cAVHhBYbROJL1YDIBZ1IetlOiegv7lzk5JyKsahKYyM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/announcements/1/comments/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"announcements",
+								"1",
+								"comments",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Feed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2NTUzMTgxLCJpYXQiOjE3NTY1NTEzODEsImp0aSI6IjNmYmRiN2M1YzA5NjRhOTliMDdjNGMzN2NlYWFjYTEwIiwidXNlcl9pZCI6IjQifQ.eh-YC0R0UeDINmPC96NGEospBtsFGTp_E8wxRe4fVws",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"New workshop scheduled for Friday\"\r\n   \r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/feed/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"feed",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Balance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3NDE2ODM2LCJpYXQiOjE3NTc0MDk2MzYsImp0aSI6ImE1MjI3YjUzNGQ3NDRjZTY5MzcxNWRmNTM4ZjVlOWVjIiwidXNlcl9pZCI6IjEifQ.fwjiz8Bxo-tGKjI3mreXY7-85pgo1XfIlOM1FkGjiFY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/wallet/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"wallet",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU4MDkyNDkzLCJpYXQiOjE3NTgwODUyOTMsImp0aSI6ImJhZjE3NDlkODY3ZTRkODk5MGE1YWE1MDBkYWEzNzQ0IiwidXNlcl9pZCI6IjQifQ.MWxuc6mELKMXjoFcX0ImzxyrmGa65wRlMUVPDi-GfJ8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"amount\": 30000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/deposit/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"deposit",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Connect Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU4MDkwMTkwLCJpYXQiOjE3NTgwODI5OTAsImp0aSI6IjE4MTU5OGNjNWYzNDQ0M2JiMzRkOTQzZjVjNjM4NDExIiwidXNlcl9pZCI6IjQifQ._ZKo6foybteHdarBiBxSRs71jV7A_5_mRp_2OstyoO4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/stripe/connect/onboarding/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"stripe",
+								"connect",
+								"onboarding",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU2OTc2MTQzLCJpYXQiOjE3NTY5Njg5NDMsImp0aSI6ImNmNTZmODI4MTU2NTQ5ZmQ5NGFiN2VjNDVlMWRmYTcyIiwidXNlcl9pZCI6IjEifQ.j1kVvtEYJt94aYmxhqvJN0J9x2_UdRT2OQTMxUolyTk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"amount\": 50\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/withdraw/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"withdraw",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw Process",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MzE5NDIwLCJpYXQiOjE3NTczMTIyMjAsImp0aSI6IjYxNTU5NzU3MTVjNjRkZmU5ZmY3Mjk1YTAzNjQzNjMzIiwidXNlcl9pZCI6IjcifQ.gH3kZ5dyMzY166SYU9XZsVkr1zX_bNCWOKz6WWSoVCg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"withdrawal_id\": 18\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/withdraw/process/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"withdraw",
+								"process",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Campaign",
+			"item": [
+				{
+					"name": "Create Campaign/Content Reward",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MDU5MzQ4LCJpYXQiOjE3NTcwNTIxNDgsImp0aSI6IjRkNzk1OWM3YWM5MjQwZjY5Y2VlODljYzhjNTk0YzZhIiwidXNlcl9pZCI6IjEifQ.oSwseNuOYYHMhZ3gTpfrf5wfiK66QJ1bxzeJlC01ysA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Summer Video Challenge\",\r\n  \"campaign_type\": \"content\",\r\n  \"category\": \"music\",\r\n  \"platforms\": [\"facebook\", \"instagram\", \"youtube\"],\r\n  \"budget\": 1000,\r\n  \"reward_rate\": 3,\r\n  \"min_payout\": 5,\r\n  \"max_payout\": 50,\r\n  \"available_content\": 10,\r\n  \"content_requirement\": \"Minimum 1 minute video, good lighting\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/2/campaign/create/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"2",
+								"campaign",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Content Submission",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MDYxNTIwLCJpYXQiOjE3NTcwNTQzMjAsImp0aSI6ImY4MDJiMjI3NGE4NjQyNjJhNjA0Yzc4NDU2YjhlYjZlIiwidXNlcl9pZCI6IjcifQ.5RfHY5B7rf7W6Q4BeHgiMwoc87UM4m1lyq-hmRpI_Uk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "links",
+									"value": "[\"https://youtube.com/video1\",\"https://facebook.com/video2\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/campaign/1/content/submit/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"campaign",
+								"1",
+								"content",
+								"submit",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Content Approval",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MDcwODY2LCJpYXQiOjE3NTcwNjM2NjYsImp0aSI6ImZjOTZkY2JhODljMTQwODliZjIxYjY2MzExMTk1MWYyIiwidXNlcl9pZCI6IjEifQ.02b910BIkHiBQvLAk9H5MF1MABKPFeHMMA0KxPURwKE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"approve\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/5/content/approve/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"5",
+								"content",
+								"approve",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Content View",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MDcwODY2LCJpYXQiOjE3NTcwNjM2NjYsImp0aSI6ImZjOTZkY2JhODljMTQwODliZjIxYjY2MzExMTk1MWYyIiwidXNlcl9pZCI6IjEifQ.02b910BIkHiBQvLAk9H5MF1MABKPFeHMMA0KxPURwKE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"action\": \"approve\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/content/1/view/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"content",
+								"1",
+								"view",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Content Creator Earn",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MDc0MzI0LCJpYXQiOjE3NTcwNjcxMjQsImp0aSI6IjE4YTJjM2RhMWU5MjQ3ZGQ4ZjkwN2I1ZmZhYTE3ZGRkIiwidXNlcl9pZCI6IjcifQ.TkWIlnIGPWARGN5KV_nb2ZLSQuv_8SDbFPiFCt5g_jM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/content/2/stats/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"content",
+								"2",
+								"stats",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		}
+	]
+}

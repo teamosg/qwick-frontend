@@ -2,8 +2,9 @@ import { useTheme } from "@/components/shared/ThemeProvider";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
+import { useResetPassword } from "@/hooks/auth.hook";
 
 const ResetPassword = () => {
   const {
@@ -18,12 +19,19 @@ const ResetPassword = () => {
   const { theme, setTheme } = useTheme();
   const darkMode = theme === "dark";
 
+  const { mutate } = useResetPassword();
+
   const toggleDarkMode = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const onSubmit = (data) => {
     console.log(data);
+    mutate({
+      email: data.email,
+      new_password: data.new_password,
+      confirm_password: data.confirm_password,
+    });
     // Handle form submission
   };
 
@@ -117,6 +125,27 @@ const ResetPassword = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {/* mail input */}
+
+            <div>
+              <label className="text-gray-900 dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
+                Email
+              </label>
+              <input
+                name="email"
+                type="email"
+                {...register("email", {
+                  required: "Email is required",
+                  // pattern: {
+                  //   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  //   message: "Invalid email address",
+                  // },
+                })}
+                placeholder="Enter your email"
+                className="w-full px-4 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+              />
+            </div>
+
             {/* Password */}
             <div>
               <label className="text-gray-900 dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
@@ -127,8 +156,9 @@ const ResetPassword = () => {
                   <FaLock className="text-gray-400" />
                 </div>
                 <input
+                  name="new_password"
                   type={showPassword ? "text" : "password"}
-                  {...register("password", {
+                  {...register("new_password", {
                     required: "Password is required",
                     minLength: {
                       value: 6,
@@ -167,10 +197,12 @@ const ResetPassword = () => {
                   <FaLock className="text-gray-400" />
                 </div>
                 <input
+                  name="confirm_password"
                   type={showConfirmPassword ? "text" : "password"}
-                  {...register("confirmPassword", {
+                  {...register("confirm_password", {
                     validate: (value) =>
-                      value === watch("password") || "Passwords do not match",
+                      value === watch("new_password") ||
+                      "Passwords do not match",
                   })}
                   placeholder="Confirm your password"
                   className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"

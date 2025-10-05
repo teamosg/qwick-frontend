@@ -1,30 +1,27 @@
 import { useTheme } from "@/components/shared/ThemeProvider";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import arrowRight from "../../assets/arrow-right.svg";
 import commonAuthLogo from "../../assets/authImg.png";
+import { useSignIn } from "../../hooks/auth.hook.js";
 
 const SignIn = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
   const [showPassword, setShowPassword] = useState(false);
   const { theme, setTheme } = useTheme();
   const darkMode = theme === "dark";
+
+  // Use the new auth hook
+  const { form, mutate, isPending } = useSignIn();
+  const { register, handleSubmit, formState: { errors } } = form;
 
   // const toggleDarkMode = () => {
   //   setTheme(theme === "dark" ? "light" : "dark");
   // };
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Handle form submission
+    mutate(data);
   };
 
   return (
@@ -157,13 +154,7 @@ const SignIn = () => {
                 </div> */}
                 <input
                   type="email"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  })}
+                  {...register("email")}
                   placeholder="Enter email"
                   className="w-full px-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
@@ -186,9 +177,7 @@ const SignIn = () => {
                 </div> */}
                 <input
                   type={showPassword ? "text" : "password"}
-                  {...register("password", {
-                    required: "Password is required",
-                  })}
+                  {...register("password")}
                   placeholder="Enter password"
                   className="w-full px-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
@@ -240,9 +229,10 @@ const SignIn = () => {
 
             <button
               type="submit"
-              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
+              disabled={isPending}
+              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Sign in
+              {isPending ? "Signing in..." : "Sign in"}
             </button>
           </form>
 

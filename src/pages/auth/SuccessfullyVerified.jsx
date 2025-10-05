@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 import successfull from "../../assets/successfull.gif";
 const SuccessfullyVerified = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen flex bg-gray-50">
       {/* Left side - Form */}
@@ -72,6 +73,7 @@ const SuccessfullyVerified = () => {
             </h2>
 
             <button
+              onClick={() => navigate("/sign-in")}
               type="submit"
               className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
             >

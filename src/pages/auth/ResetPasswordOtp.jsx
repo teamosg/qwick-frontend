@@ -1,13 +1,16 @@
 import { useTheme } from "@/components/shared/ThemeProvider";
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
+import { useVerifyOtp } from "@/hooks/auth.hook";
+import toast from "react-hot-toast";
 
 const ResetPasswordOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const { theme, setTheme } = useTheme();
   const darkMode = theme === "dark";
   const inputRefs = useRef([]);
+  const { mutate, isPending } = useVerifyOtp("password_reset");
 
   const toggleDarkMode = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -34,11 +37,31 @@ const ResetPasswordOtp = () => {
     }
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const code = otp.join("");
+  //   console.log("Verification code:", code);
+  //   // Handle verification logic here
+  // };
+  const location = useLocation();
+  const email =
+    location.state?.email || localStorage.getItem("signup_email") || "";
+  const otpCode = location.state?.otp || localStorage.getItem("otp") || "";
   const handleSubmit = (e) => {
     e.preventDefault();
     const code = otp.join("");
-    console.log("Verification code:", code);
-    // Handle verification logic here
+
+    if (!email) {
+      toast.error("Email is missing, please sign up again.");
+      return;
+    }
+
+    // Call your mutation with form data
+    mutate({
+      email,
+      otp: code,
+      otp_type: "password_reset",
+    });
   };
 
   return (
