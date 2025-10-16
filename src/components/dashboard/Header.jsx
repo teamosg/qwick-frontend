@@ -1,14 +1,13 @@
-import { LogOut, Menu, Moon, Plus, Settings, Sun } from "lucide-react";
+import { useLogout } from "@/hooks/auth.hook";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { Link } from "react-router";
 import { useTheme } from "../shared/ThemeProvider";
-import { useLogout } from "@/hooks/auth.hook";
 
 const NotificationItem = ({ title, time, isRead }) => (
   <div
-    className={`p-4 ${!isRead ? "bg-primary/10" : ""
-      } hover:bg-accent cursor-pointer`}
+    className={`p-4 ${
+      !isRead ? "bg-primary/10" : ""
+    } hover:bg-accent cursor-pointer`}
   >
     <p className="text-sm font-medium text-gray-900 dark:text-white">{title}</p>
     <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">{time}</p>
@@ -63,7 +62,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
 
   return (
     <>
-      <header className="bg-card py-4 px-6 flex items-center justify-between border-b border-border">
+      {/* <header className="bg-card py-4 px-6 flex items-center justify-between border-b border-border">
         <div className="flex items-center space-x-2 md:space-x-4">
           <button
             className="lg:hidden p-1 md:p-2 rounded-md hover:bg-accent"
@@ -74,14 +73,14 @@ const Header = ({ userName, userImage, onMenuClick }) => {
         </div>
 
         <div className="flex items-center justify-between space-x-0 gap-4 sm:gap-10 sm:space-x-4">
-          {/* Theme Toggle Button */}
           <>
             {" "}
             <button
               onClick={toggleTheme}
               className="hidden bg-[#0D99FF1A] sm:block p-2 rounded-full hover:bg-[#0d9aff54]"
-              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"
-                } mode`}
+              aria-label={`Switch to ${
+                theme === "dark" ? "light" : "dark"
+              } mode`}
             >
               {theme === "dark" ? (
                 <Sun className="h-7 w-7 text-foreground" /> // You'll need to import Sun icon from lucide-react
@@ -99,7 +98,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             </Link>
           </>
 
-          {/* <div className="relative hidden sm:block">
+          <div className="relative hidden sm:block">
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <Search className="h-4 w-4 text-primary" />
             </div>
@@ -117,9 +116,9 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             >
               <Search className="h-5 w-5 text-muted-foreground" />
             </button>
-          </div> */}
+          </div>
 
-          {/* <div className="relative dropdown-container">
+          <div className="relative dropdown-container">
             <button
               className="p-2 rounded-full hover:bg-accent relative"
               onClick={(e) => {
@@ -161,7 +160,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
                 </div>
               </div>
             )}
-          </div> */}
+          </div>
 
           <div className="relative dropdown-container">
             <button
@@ -205,19 +204,12 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             {showProfileMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-popover rounded-lg shadow-lg border border-border z-50">
                 <div className="py-1">
-                  {/* <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
-                    <User size={16} className="mr-2" />
-                    Edit Profile
-                  </button> */}
                   <button className="w-full px-4 py-2 text-left text-sm text-foreground hover:bg-accent flex items-center">
                     <Settings size={16} className="mr-2" />
                     Settings
                   </button>
                   <hr className="my-1 border-border" />
-                  {/* <button className="w-full px-4 py-2 text-left text-sm text-destructive hover:bg-accent flex items-center">
-                    <LogOut size={16} className="mr-2" />
-                    Log Out
-                  </button> */}
+
                   <button
                     onClick={() => mutate()}
                     disabled={isPending}
@@ -231,7 +223,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             )}
           </div>
         </div>
-      </header>
+      </header> */}
 
       {showMobileSearch && (
         <div className="sm:hidden px-4 pb-2 mt-[-10px]">
