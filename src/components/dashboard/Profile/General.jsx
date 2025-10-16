@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useEditProfile, useProfile } from "@/hooks/auth.hook";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const ProfileGeneral = () => {
   const { data, isLoading: isProfileLoading } = useProfile();
@@ -66,7 +66,7 @@ const ProfileGeneral = () => {
           value={formData.name}
           onChange={(e) => handleInputChange("name", e.target.value)}
           placeholder="Enter your name"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-3xl focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
@@ -80,7 +80,7 @@ const ProfileGeneral = () => {
           value={formData.bio}
           onChange={(e) => handleInputChange("bio", e.target.value)}
           placeholder="Tell us about yourself"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-[50px] focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-3xl focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
@@ -95,7 +95,7 @@ const ProfileGeneral = () => {
           value={formData.username}
           onChange={(e) => handleInputChange("username", e.target.value)}
           placeholder="Enter your username"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-3xl focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
@@ -110,7 +110,7 @@ const ProfileGeneral = () => {
           value={formData.phone}
           onChange={(e) => handleInputChange("phone", e.target.value)}
           placeholder="Enter phone number"
-          className="w-full mt-2 px-8 py-3 bg-white border border-gray-200 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-8 py-3 bg-white border border-gray-200 rounded-3xl focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
@@ -118,7 +118,7 @@ const ProfileGeneral = () => {
       <Button
         type="submit"
         disabled={isPending}
-        className="bg-[#003933] text-white px-12 py-5 cursor-pointer rounded-full hover:bg-[#002822] transition font-medium flex gap-2 justify-center"
+        className="bg-[#003933] text-white px-12 py-5 cursor-pointer rounded-3xl hover:bg-[#002822] transition font-medium flex gap-2 justify-center"
       >
         {isPending ? "Updating..." : "Update"}
       </Button>

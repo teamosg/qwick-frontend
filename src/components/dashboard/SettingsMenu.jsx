@@ -77,7 +77,7 @@ const SettingsMenu = () => {
       {/* Menu Button */}
       <button
         onClick={toggleDropdown}
-        className="flex items-center gap-2 cursor-pointer text-[#202224] font-semibold hover:text-[#003933] transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50"
+        className="flex items-center gap-2 cursor-pointer text-[#090003] dark:text-white font-semibold transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50"
       >
         <Menu size={20} />
         <span>Menu</span>
