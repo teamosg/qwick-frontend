@@ -1,8 +1,6 @@
-import PostForm from "@/components/dashboard/Home/PostForm";
+import NoPostsState from "@/components/dashboard/Home/NoPostsState";
 import { useState } from "react";
 import Post from "../../components/dashboard/Home/Post";
-import NoPostsState from "@/components/dashboard/Home/NoPostsState";
-import { PostSkeletonList } from "@/components/dashboard/Home/PostSkeleton";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -86,9 +84,9 @@ const Home = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-[#f9fafb] dark:bg-zinc-950 h-full">
+    <div className="w-full border rounded-2xl mx-auto p-4 bg-[#fff] dark:bg-zinc-950 h-full">
       {/* <PostForm onSubmit={handleSubmitPost} /> */}
-      
+
       {/* Show NoPostsState when there are no posts */}
       {posts.length === 0 ? (
         <NoPostsState />

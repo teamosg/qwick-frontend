@@ -1,25 +1,17 @@
-import {
-  BellDot,
-  Compass,
-  Home,
-  LayoutDashboard,
-  LogOut,
-  MessageSquareMore,
-  UserCircle,
-  X,
-} from "lucide-react";
+import logo from "@/assets/logo.png";
+import { X } from "lucide-react";
 import PropTypes from "prop-types";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import SettingsMenu from "./SettingsMenu";
 import { SidebarJoinedCommunity } from "./Sidebar/SidebarJoinedCommunity";
 import { SidebarMyCommunity } from "./Sidebar/SidebarMyCommunity";
-import logo from "@/assets/logo.png";
 
-import HomeSVG from "@/assets/svg/HomeSVG";
+import DashboardSVG from "@/assets/svg/DashboardSVG";
 import DiscoverySVG from "@/assets/svg/DiscoverySVG";
+import HomeSVG from "@/assets/svg/HomeSVG";
 import MessageSVG from "@/assets/svg/MessageSVG";
 import NotificationSVG from "@/assets/svg/NotificationSVG";
-import DashboardSVG from "@/assets/svg/DashboardSVG";
 import ProfileSVG from "@/assets/svg/ProfileSVG";
 
 const NavItem = ({ icon, text, to, onClose }) => {
@@ -44,8 +36,8 @@ const NavItem = ({ icon, text, to, onClose }) => {
                 : "text-gray-500 dark:text-gray-400"
             }`}
           >
-            {React.cloneElement(icon, { 
-              color: isActive || isPending ? "white" : "#202224" 
+            {React.cloneElement(icon, {
+              color: isActive || isPending ? "white" : "#202224",
             })}
           </div>
           <span className="truncate text-[16px]">{text}</span>
@@ -57,7 +49,7 @@ const NavItem = ({ icon, text, to, onClose }) => {
 
 const Sidebar = ({ onClose }) => {
   return (
-    <div className="h-full flex flex-col border-r border-sidebar-border bg-white dark:bg-[#171717] overflow-y-auto  ">
+    <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#171717] overflow-y-auto  ">
       <div className="flex flex-col justify-between h-full">
         <div>
           <div>
@@ -88,8 +80,8 @@ const Sidebar = ({ onClose }) => {
               />
               <NavItem
                 icon={<MessageSVG />}
-                text="Message"
-                to="/message"
+                text="Messages"
+                to="/messages"
                 onClose={onClose}
               />
               <NavItem
@@ -125,11 +117,8 @@ const Sidebar = ({ onClose }) => {
           </div>
         </div>
 
-        <div className="p-4 text-[#202224] font-semibold ">
-          <button className="flex items-center gap-2 cursor-pointer">
-            <LogOut />
-            Logout
-          </button>
+        <div className="p-4">
+          <SettingsMenu />
         </div>
 
         {/* 

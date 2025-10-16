@@ -99,7 +99,7 @@ const router = createBrowserRouter([
         element: <JoinCommunity />,
       },
       {
-        path: "/message",
+        path: "/messages",
         element: <Message />,
       },
       {
