@@ -17,9 +17,13 @@ import {
   Menu,
   Settings,
   X,
+  Loader2,
 } from "lucide-react";
 import { useState } from "react";
 import { FaFileInvoice } from "react-icons/fa";
+
+import toast from "react-hot-toast";
+import { useEditProfile, useProfile } from "@/hooks/auth.hook";
 
 const tabs = [
   {
@@ -74,6 +78,31 @@ const tabs = [
 
 const Profile = () => {
   const [isTabsOpen, setIsTabsOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const { data: profile, isLoading: isProfileLoading } = useProfile();
+  const { mutate: editProfile, isPending: isUploading } = useEditProfile();
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => setPreviewImage(reader.result);
+    reader.readAsDataURL(file);
+
+    // Prepare FormData for upload
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    editProfile(formData);
+  };
+
+  const userName = profile?.name || "User Name";
+  const userAvatar =
+    previewImage ||
+    profile?.avatar ||
+    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg";
 
   return (
     <div className="p-6 min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
@@ -92,13 +121,13 @@ const Profile = () => {
         defaultValue={tabs[0].value}
         className="w-full flex flex-col md:flex-row gap-6 h-auto"
       >
-        {/* Tabs List */}
+        {/* Tabs Sidebar */}
         <div
           className={`${
             isTabsOpen
               ? "translate-x-0 opacity-100"
               : "-translate-x-full opacity-0"
-          } md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
+          }  md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
         >
           {/* Mobile Close Button */}
           <div className="md:hidden flex justify-between items-center p-4 border-b border-gray-200 dark:border-zinc-700">
@@ -113,25 +142,48 @@ const Profile = () => {
             </button>
           </div>
 
-          {/* Tabs List Content */}
+          {/* Profile Avatar + Name */}
           <div className="p-6 md:p-0">
-            <div className="p-4 mb-6">
-              <img
-                alt="Linda smith"
-                class="h-16 w-16 rounded-full object-cover border border-border mb-2"
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
-              ></img>
-              <h4 className="font-semibold text-base text-[#191919] dark:text-white">
-                Linda smith
+            <div className="p-4 relative group text-center">
+              <div className="relative inline-block">
+                <img
+                  alt={userName}
+                  src={userAvatar}
+                  className="h-20 w-20 rounded-full object-cover border border-border transition-all"
+                />
+                <label
+                  htmlFor="profile-upload"
+                  className="absolute inset-0 bg-black/50 text-white text-xs flex items-center justify-center rounded-full opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity"
+                >
+                  {isUploading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Change"
+                  )}
+                </label>
+                <input
+                  id="profile-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageChange}
+                  disabled={isUploading}
+                />
+              </div>
+
+              <h4 className="font-semibold text-base text-[#191919] dark:text-white mt-3">
+                {isProfileLoading ? "Loading..." : userName}
               </h4>
             </div>
+
+            {/* Tabs Menu */}
             <TabsList className="shrink-0 grid grid-cols-1 gap-2 p-0 bg-transparent w-full">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="!w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3  hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
-                  onClick={() => setIsTabsOpen(false)} // close on mobile when tab clicked
+                  className="!w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
+                  onClick={() => setIsTabsOpen(false)}
                 >
                   <tab.icon className="h-5 w-5 me-3" /> {tab.name}
                 </TabsTrigger>

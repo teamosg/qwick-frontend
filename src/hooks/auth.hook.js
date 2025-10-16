@@ -165,6 +165,7 @@ export const useSignIn = () => {
 
 //   return { form, mutate, isPending };
 // };
+
 export const useVerifyOtp = (otpType = "account_verification") => {
   const navigate = useNavigate();
 
@@ -365,7 +366,7 @@ export const useProfile = () => {
     queryKey: ["profile"],
     queryFn: async () => {
       const res = await axiosPrivate.get("/v1/account/profile/");
-      return res.data;
+      return res?.data?.data;
     },
     enabled: isAuthenticated,
   });
@@ -383,12 +384,8 @@ export const useEditProfile = () => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (formData) => {
-      const data = new FormData();
-      if (formData.avatar) {
-        data.append("avatar", formData.avatar);
-      }
-      const res = await axiosPrivate.put("/v1/account/profile/", data, {
+    mutationFn: async (payload) => {
+      const res = await axiosPrivate.put("/v1/account/profile/", payload, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

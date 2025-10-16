@@ -219,11 +219,11 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
           {post.images.length === 1 ? (
             // Single image - responsive width
             <div className="flex justify-center">
-              <div className="w-full sm:w-3/4 md:w-1/2">
+              <div className="w-full">
                 <img
                   src={post.images[0]}
                   alt="Post image"
-                  className="w-full h-48 sm:h-64 object-cover rounded-lg"
+                  className="w-full object-cover rounded-lg"
                 />
               </div>
             </div>

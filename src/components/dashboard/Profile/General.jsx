@@ -1,17 +1,29 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEditProfile, useProfile } from "@/hooks/auth.hook";
+import { useState, useEffect } from "react";
 
 const ProfileGeneral = () => {
+  const { data, isLoading: isProfileLoading } = useProfile();
+  const { mutate: editProfile, isPending } = useEditProfile();
+
   const [formData, setFormData] = useState({
     name: "",
     bio: "",
     username: "",
-    email: "",
     phone: "",
-    countryCode: "us",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  // Populate fields when profile data arrives
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        name: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
+        bio: data.bio || "",
+        username: data.username || "",
+        phone: data.phone_number || "",
+      });
+    }
+  }, [data]);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -20,30 +32,30 @@ const ProfileGeneral = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    try {
-      // TODO: Implement API call here
-      console.log("Form data to submit:", formData);
+    // Split the name field before sending
+    const [first_name = "", last_name = ""] = formData.name.trim().split(" ");
 
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    const payload = {
+      first_name,
+      last_name,
+      bio: formData.bio,
+      username: formData.username,
+      phone_number: formData.phone,
+    };
 
-      // TODO: Handle success response
-      console.log("Profile updated successfully");
-    } catch (error) {
-      // TODO: Handle error response
-      console.error("Error updating profile:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    editProfile(payload);
   };
+
+  if (isProfileLoading) {
+    return <p className="p-6 text-gray-500">Loading profile...</p>;
+  }
 
   return (
     <form onSubmit={handleSubmit} className="p-6 space-y-6">
-      {/* Name Field */}
+      {/* Name */}
       <div className="space-y-2">
         <label htmlFor="name" className="text-sm font-medium text-[#0d0d12]">
           Name
@@ -54,11 +66,11 @@ const ProfileGeneral = () => {
           value={formData.name}
           onChange={(e) => handleInputChange("name", e.target.value)}
           placeholder="Enter your name"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
-      {/* Bio Field */}
+      {/* Bio */}
       <div className="space-y-2">
         <label htmlFor="bio" className="text-sm font-medium text-gray-700">
           Bio
@@ -68,11 +80,11 @@ const ProfileGeneral = () => {
           value={formData.bio}
           onChange={(e) => handleInputChange("bio", e.target.value)}
           placeholder="Tell us about yourself"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-[50px] focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
-      {/* Username Field */}
+      {/* Username */}
       <div className="space-y-2">
         <label htmlFor="username" className="text-sm font-medium text-gray-700">
           Username
@@ -83,77 +95,32 @@ const ProfileGeneral = () => {
           value={formData.username}
           onChange={(e) => handleInputChange("username", e.target.value)}
           placeholder="Enter your username"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
-      {/* Email Field */}
-      <div className="space-y-2">
-        <label htmlFor="email" className="text-sm font-medium text-gray-700">
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          value={formData.email}
-          onChange={(e) => handleInputChange("email", e.target.value)}
-          placeholder="Enter your email"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
-        />
-      </div>
-
-      {/* Phone Number Field */}
-      {/* Phone Number Field */}
+      {/* Phone */}
       <div className="space-y-2">
         <label htmlFor="phone" className="text-sm font-medium text-gray-700">
           Phone Number
         </label>
-        <div className="flex gap-2">
-          {/* <Select
-            value={formData.countryCode}
-            onValueChange={(value) => handleInputChange("countryCode", value)}
-          >
-            <SelectTrigger className="w-24 mt-2 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]">
-              <SelectValue>
-                <div className="flex items-center gap-2">
-                  {formData.countryCode === "us" && "🇺🇸 +1"}
-                  {formData.countryCode === "uk" && "🇬🇧 +44"}
-                  {formData.countryCode === "ca" && "🇨🇦 +1"}
-                </div>
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="us">
-                <div className="flex items-center gap-2">🇺🇸 +1</div>
-              </SelectItem>
-              <SelectItem value="uk">
-                <div className="flex items-center gap-2">🇬🇧 +44</div>
-              </SelectItem>
-              <SelectItem value="ca">
-                <div className="flex items-center gap-2">🇨🇦 +1</div>
-              </SelectItem>
-            </SelectContent>
-          </Select> */}
-
-          <input
-            id="phone"
-            type="tel"
-            value={formData.phone}
-            onChange={(e) => handleInputChange("phone", e.target.value)}
-            placeholder="Enter phone number"
-            className="w-full mt-2 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
-          />
-        </div>
+        <input
+          id="phone"
+          type="tel"
+          value={formData.phone}
+          onChange={(e) => handleInputChange("phone", e.target.value)}
+          placeholder="Enter phone number"
+          className="w-full mt-2 px-8 py-3 bg-white border border-gray-200 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+        />
       </div>
 
-      {/* Update Button */}
+      {/* Submit */}
       <Button
         type="submit"
-        disabled={isLoading}
-        className="w-full  bg-[#003933] dark:bg-[#003933] text-white px-4 py-4 sm:py-6 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2
-        "
+        disabled={isPending}
+        className="bg-[#003933] text-white px-12 py-5 cursor-pointer rounded-full hover:bg-[#002822] transition font-medium flex gap-2 justify-center"
       >
-        {isLoading ? "Updating..." : "Update"}
+        {isPending ? "Updating..." : "Update"}
       </Button>
     </form>
   );
