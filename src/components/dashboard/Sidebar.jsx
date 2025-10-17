@@ -9,7 +9,7 @@ import { SidebarMyCommunity } from "./Sidebar/SidebarMyCommunity";
 
 import DashboardSVG from "@/assets/svg/DashboardSVG";
 import DiscoverySVG from "@/assets/svg/DiscoverySVG";
-import HomeSVG from "@/assets/svg/HomeSVG";
+import Home from "@/assets/svg/Home";
 import MessageSVG from "@/assets/svg/MessageSVG";
 import NotificationSVG from "@/assets/svg/NotificationSVG";
 import ProfileSVG from "@/assets/svg/ProfileSVG";
@@ -28,7 +28,7 @@ const NavItem = ({ icon, text, to, onClose }) => {
       }
     >
       {({ isActive, isPending }) => (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-1.5">
           <div
             className={`flex-shrink-0 ${
               isActive || isPending
@@ -66,12 +66,7 @@ const Sidebar = ({ onClose }) => {
             </div>
 
             <div className="flex-1 px-3 py-2 space-y-1">
-              <NavItem
-                icon={<HomeSVG />}
-                text="Home"
-                to="/"
-                onClose={onClose}
-              />
+              <NavItem icon={<Home />} text="Home" to="/" onClose={onClose} />
               <NavItem
                 icon={<DiscoverySVG />}
                 text="Discover"

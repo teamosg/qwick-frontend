@@ -38,7 +38,7 @@ const Discover = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <h2 class="text-[24px] text-gray-900 dark:text-white font-semibold mb-4">
+      <h2 className="text-[24px] text-gray-900 dark:text-white font-semibold mb-4">
         Campaigns
       </h2>
 

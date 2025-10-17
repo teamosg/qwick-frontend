@@ -7,8 +7,8 @@ const Notifications = () => {
   return (
     <div className="p-6 bg-[#f9fafb] dark:bg-zinc-950 min-h-screen">
       <div className="bg-white dark:bg-zinc-900 p-6 border border-gray-200 dark:border-zinc-700 rounded-xl">
-        <div class="mb-9 inline-block">
-          <h1 class="text-[#191919] dark:text-white text-xl font-semibold">
+        <div className="mb-9 inline-block">
+          <h1 className="text-[#191919] dark:text-white text-xl font-semibold">
             Notifications
           </h1>
         </div>

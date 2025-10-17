@@ -11,7 +11,7 @@ const Payout = () => {
   };
   return (
     <div>
-      <h2 class="text-[24px] text-gray-900 dark:text-white font-semibold mb-3">
+      <h2 className="text-[24px] text-gray-900 dark:text-white font-semibold mb-3">
         Payout
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
