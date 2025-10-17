@@ -43,7 +43,7 @@ function DashboardLayout() {
           onMenuClick={() => setSidebarOpen(true)}
         />
 
-        <main className="flex-1 flex flex-col overflow-auto">
+        <main className="flex-1 flex flex-col overflow-auto p-4">
           <div className="flex-1">
             <Outlet />
           </div>
