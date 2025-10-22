@@ -9,7 +9,7 @@ const Apply = () => {
       <div className="mb-9 inline-block">
         <Link
           to="#"
-          className=" px-4 py-2.5 bg-[#3fa796] rounded-2xl text-white text-[16px] font-light flex gap-1.5 "
+          className="px-4 py-2.5 bg-[#3fa796] rounded-2xl text-white text-[16px] font-light flex gap-1.5 "
         >
           <ArrowLeft />
           Back to rewards

@@ -1,3 +1,4 @@
+import Share from "@/assets/svg/Share";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Copy, Share2 } from "lucide-react";
+import { Copy } from "lucide-react";
 import { useState } from "react";
 
 export function PostShare() {
@@ -32,8 +33,8 @@ export function PostShare() {
     <Dialog>
       <DialogTrigger asChild>
         <button className="flex items-center cursor-pointer px-2 py-1 rounded-md hover:text-[#003933] dark:hover:text-gray-300">
-          <Share2 size={18} />
-          <span>Share</span>
+          <Share />
+          {/* <span>Share</span> */}
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">

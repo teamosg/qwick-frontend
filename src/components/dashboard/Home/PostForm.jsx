@@ -114,7 +114,7 @@ const PostForm = ({ onSubmit }) => {
   }, []);
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-lg shadow p-3 sm:p-4 mb-6">
+    <div className="bg-white dark:bg-zinc-900 rounded-2lg shadow p-3 sm:p-4 mb-6">
       <form onSubmit={handleSubmit}>
         <div className="flex items-start space-x-2 sm:space-x-3">
           <img
