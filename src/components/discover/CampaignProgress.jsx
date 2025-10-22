@@ -32,7 +32,7 @@ export default function CampaignProgress() {
         <div className="bg-black rounded-2xl p-4 shadow-2xl">
           {/* Header */}
           <div className="flex items-start justify-between mb-4">
-            <h2 className="text-white text-xl font-semibold">
+            <h2 className="text-white text-xs font-semibold">
               Progress Indicator
             </h2>
             {/* <button className="text-gray-400 hover:text-white transition-colors">
@@ -41,22 +41,22 @@ export default function CampaignProgress() {
           </div>
 
           {/* Message */}
-          <p className="text-gray-400 text-sm mb-4">{getMessage()}</p>
+          <p className="text-gray-400 text-xs mb-4">{getMessage()}</p>
 
           {/* Progress Stats */}
           <div className="flex items-center gap-4 mb-4">
-            <div className="text-white text-5xl font-bold">{progress}%</div>
+            <div className="text-white text-3xl font-bold">{progress}%</div>
             <div
               className={`px-3 py-1 rounded-full border ${
                 change >= 0
                   ? "border-green-500 text-green-500"
                   : "border-red-500 text-red-500"
-              } text-sm font-medium flex items-center gap-1`}
+              } text-xs font-medium flex items-center gap-1`}
             >
               <span>{change >= 0 ? "↑" : "↓"}</span>
               <span>{Math.abs(change)}%</span>
             </div>
-            <div className="text-gray-400 text-sm">vs. the last period</div>
+            <div className="text-gray-400 text-xs">vs. the last period</div>
           </div>
 
           {/* Progress Bar */}
@@ -64,7 +64,7 @@ export default function CampaignProgress() {
             {Array.from({ length: totalBars }).map((_, index) => (
               <div
                 key={index}
-                className={`flex-1 h-16 rounded-sm transition-all duration-300 bg-[#454545] ${
+                className={`flex-1 h-16 transition-all duration-300 bg-[#454545] ${
                   index < filledBars ? "bg-white" : ""
                 }`}
               />

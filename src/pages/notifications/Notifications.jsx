@@ -15,7 +15,7 @@ const Notifications = () => {
         <div className="flex w-full flex-col gap-6">
           <Tabs defaultValue="all-notifications">
             <div className="flex flex-row justify-between">
-              <TabsList className="bg-transparent border-b border-border rounded-none p-0 mb-8 h-auto w-full justify-start  max-w-xs">
+              <TabsList className="bg-transparent border-b border-border rounded-none p-0 mb-8 h-auto w-full justify-start  max-w-[425px]">
                 <TabsTrigger
                   value="all-notifications"
                   className="bg-transparent shadow-none rounded-none border-0 relative data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 mr-8 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-1 data-[state=active]:after:right-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-primary data-[state=active]:after:content-['']"
@@ -29,6 +29,24 @@ const Notifications = () => {
                   <span>Unread</span>
                   <span className="text-muted-foreground text-sm ml-1">
                     (17)
+                  </span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="mentions"
+                  className="bg-transparent shadow-none rounded-none border-0 relative data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 mr-8 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-1 data-[state=active]:after:right-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-primary data-[state=active]:after:content-['']"
+                >
+                  <span>Mentions</span>
+                  <span className="text-muted-foreground text-sm ml-1">
+                    (6)
+                  </span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="all-activity"
+                  className="bg-transparent shadow-none rounded-none border-0 relative data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 mr-8 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-1 data-[state=active]:after:right-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-primary data-[state=active]:after:content-['']"
+                >
+                  <span>All Activity</span>
+                  <span className="text-muted-foreground text-sm ml-1">
+                    (60)
                   </span>
                 </TabsTrigger>
               </TabsList>
@@ -49,6 +67,12 @@ const Notifications = () => {
               <SingleNotificationItem />
             </TabsContent>
             <TabsContent value="unread">
+              <SingleNotificationItem />
+            </TabsContent>
+            <TabsContent value="mentions">
+              <SingleNotificationItem />
+            </TabsContent>
+            <TabsContent value="all-activity">
               <SingleNotificationItem />
             </TabsContent>
           </Tabs>

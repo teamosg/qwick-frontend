@@ -102,7 +102,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
     <>
       <header
         className={`${
-          isHome && "block sm:hidden"
+          isHome && "block md:hidden"
         } bg-card py-4 px-6 flex items-center justify-between border-b border-border`}
       >
         <div className="flex items-center justify-center space-x-2 md:space-x-4">
