@@ -32,7 +32,7 @@ const JoinCommunity = () => {
 
   return (
     <motion.div
-      className="p-6 bg-[#f9fafb] dark:bg-zinc-950 min-h-screen"
+      className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}

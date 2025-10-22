@@ -38,8 +38,8 @@ function DashboardLayout() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden bg-[#f9fafb] dark:dark:bg-zinc-950 ">
         <Header
-          userName={userData.name}
-          userImage={userData.image}
+          // userName={userData.name}
+          // userImage={userData.image}
           onMenuClick={() => setSidebarOpen(true)}
         />
 

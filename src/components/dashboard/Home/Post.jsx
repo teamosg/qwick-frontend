@@ -1,11 +1,11 @@
 import Comment from "@/assets/svg/Comment";
 import Like from "@/assets/svg/Like";
+import Photo from "@/assets/svg/Photo";
 import Save from "@/assets/svg/Save";
 import EmojiPicker from "emoji-picker-react";
 import {
   Clock,
   Edit,
-  Image as ImageIcon,
   MoreHorizontal,
   Send,
   Smile,
@@ -280,7 +280,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
 
       {/* Post Actions */}
       <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-3 sm:mb-4 font-semibold">
-        <div className="grid grid-cols-2 sm:flex sm:justify-between gap-2 sm:gap-0">
+        <div className="flex justify-between gap-2 sm:gap-0">
           <button
             onClick={handleLike}
             className={`flex sm:items-center sm:justify-center space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base ${
@@ -380,10 +380,10 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 className="text-gray-400 hover:text-primary p-1"
               >
-                <Smile size={16} className="sm:w-[18px] sm:h-[18px]" />
+                <Smile />
               </button>
               <label className="text-gray-400 hover:text-primary p-1 cursor-pointer">
-                <ImageIcon size={16} className="sm:w-[18px] sm:h-[18px]" />
+                <Photo />
                 <input
                   type="file"
                   accept="image/*"

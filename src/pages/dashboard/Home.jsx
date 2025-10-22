@@ -1,9 +1,32 @@
 import NoPostsState from "@/components/dashboard/Home/NoPostsState";
+import PostForm from "@/components/dashboard/Home/PostForm";
 import { useState } from "react";
 import Post from "../../components/dashboard/Home/Post";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      author: "John Doe",
+      authorImage: "https://i.pravatar.cc/150?img=1",
+      time: "2 hours ago",
+      content: "This is a sample post with comments!",
+      images: ["https://picsum.photos/800/400?random=1"],
+      likes: 42,
+      comments: [
+        {
+          user: "Jane Smith",
+          userImage: "https://i.pravatar.cc/150?img=2",
+          text: "Great post! 😊",
+          time: "1 hour ago",
+        },
+      ],
+      shares: 5,
+      isLiked: false,
+      isSaved: false,
+      postType: "public",
+    },
+  ]);
 
   const handleSubmitPost = (newPost) => {
     const post = {
@@ -84,8 +107,8 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full border rounded-2xl mx-auto p-4 bg-[#fff] dark:bg-zinc-950 h-full">
-      {/* <PostForm onSubmit={handleSubmitPost} /> */}
+    <div className="w-full border rounded-2xl mx-auto p-6 bg-[#F5F5F5] dark:bg-zinc-950 h-full max-w-5xl">
+      <PostForm onSubmit={handleSubmitPost} />
 
       {/* Show NoPostsState when there are no posts */}
       {posts.length === 0 ? (

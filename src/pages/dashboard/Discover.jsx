@@ -1,4 +1,5 @@
 import Card from "@/components/dashboard/Card";
+import DiscoverFilter from "@/components/discover/Filter";
 import Pagination from "@/components/discover/Pagination";
 import { motion } from "framer-motion";
 
@@ -33,14 +34,15 @@ const Discover = () => {
 
   return (
     <motion.div
-      className="min-h-screen bg-[#f9fafb] dark:bg-zinc-950 p-6"
+      className="min-h-screen bg-[#f9fafb] dark:bg-zinc-950 "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <h2 className="text-[24px] text-gray-900 dark:text-white font-semibold mb-4">
-        Campaigns
-      </h2>
+      {/* Filters */}
+      <div className="mb-4">
+        <DiscoverFilter />
+      </div>
 
       <motion.div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center"

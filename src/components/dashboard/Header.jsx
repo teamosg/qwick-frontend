@@ -1,8 +1,8 @@
 import { useLogout } from "@/hooks/auth.hook";
-import { Bell, Menu, Search } from "lucide-react";
+import { Menu, Plus, Search } from "lucide-react";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useLocation } from "react-router";
+import { Link, useLocation, useNavigation } from "react-router";
 import { useTheme } from "../shared/ThemeProvider";
 
 const NotificationItem = ({ title, time, isRead }) => (
@@ -21,7 +21,37 @@ NotificationItem.propTypes = {
   time: PropTypes.string.isRequired,
   isRead: PropTypes.bool,
 };
-
+const menuItems = [
+  {
+    path: "/",
+    text: "Home",
+  },
+  {
+    path: "/discover",
+    text: "Discover",
+  },
+  {
+    path: "/discover",
+    text: "Discover",
+  },
+  {
+    path: "/messages",
+    text: "Messages",
+  },
+  {
+    path: "/notifications",
+    text: "Notifications",
+  },
+  {
+    path: "/dashboard",
+    text: "Dashboard",
+  },
+  {
+    path: "/profile",
+    text: "Profile",
+  },
+];
+console.log(menuItems);
 const Header = ({ userName, userImage, onMenuClick }) => {
   const location = useLocation();
   const isHome = location.pathname === "/";
@@ -66,21 +96,32 @@ const Header = ({ userName, userImage, onMenuClick }) => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
+  const router = useNavigation();
+
   return (
     <>
-      {!isHome && (
-        <header className="bg-card py-4 px-6 flex items-center justify-between border-b border-border">
-          <div className="flex items-center space-x-2 md:space-x-4">
-            <button
-              className="lg:hidden p-1 md:p-2 rounded-md hover:bg-accent"
-              onClick={onMenuClick}
-            >
-              <Menu size={22} className="text-foreground" />
-            </button>
-          </div>
+      <header
+        className={`${
+          isHome && "block sm:hidden"
+        } bg-card py-4 px-6 flex items-center justify-between border-b border-border`}
+      >
+        <div className="flex items-center justify-center space-x-2 md:space-x-4">
+          {/* Show menu text name based on the router. map will not work here because it needs to show only one name based on the path */}
+          <button
+            className="lg:hidden p-1 md:p-2 rounded-md hover:bg-accent"
+            onClick={onMenuClick}
+          >
+            <Menu size={22} className="text-foreground" />
+          </button>
+          <h2 className="text-[24px] text-gray-900 dark:text-white font-semibold">
+            {menuItems.find((item) => item.path === location.pathname)?.text}
+          </h2>
 
-          <div className="flex items-center justify-between space-x-0 gap-4 sm:gap-10 sm:space-x-4">
-            {/* <>
+          {/* Show menu name based on the router */}
+        </div>
+
+        <div className="flex items-center justify-between space-x-0 gap-4 sm:gap-10 sm:space-x-4">
+          {/* <>
             {" "}
             <button
               onClick={toggleTheme}
@@ -105,70 +146,79 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             </Link>
           </> */}
 
-            <div className="relative hidden sm:block">
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                <Search className="h-4 w-4 text-primary" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search"
-                className="pr-10 pl-4 py-2 text-primary font-[poppins] text-[14px] font-medium border border-border bg-popover rounded-full focus:ring-2 focus:ring-primary focus:outline-none"
-              />
+          <Link
+            to={`/addcommunity`}
+            type="submit"
+            className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-2.5 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+          >
+            <Plus />
+            Add Community
+          </Link>
+
+          <div className="relative hidden sm:block">
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 text-primary" />
             </div>
+            <input
+              type="text"
+              placeholder="Search"
+              className="pr-10 pl-4 py-2 text-primary font-[poppins] text-[14px] font-medium border border-border bg-popover rounded-full focus:ring-2 focus:ring-primary focus:outline-none"
+            />
+          </div>
 
-            <div className="sm:hidden">
-              <button
-                onClick={() => setShowMobileSearch((prev) => !prev)}
-                className="p-2 rounded-full hover:bg-accent"
-              >
-                <Search className="h-5 w-5 text-muted-foreground" />
-              </button>
-            </div>
+          {/* <div className="sm:hidden">
+            <button
+              onClick={() => setShowMobileSearch((prev) => !prev)}
+              className="p-2 rounded-full hover:bg-accent"
+            >
+              <Search className="h-5 w-5 text-muted-foreground" />
+            </button>
+          </div>
 
-            <div className="relative dropdown-container">
-              <button
-                className="p-2 rounded-full hover:bg-accent relative"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowNotifications(!showNotifications);
-                  setShowProfileMenu(false);
-                  handleClickOutside(setShowNotifications);
-                }}
-              >
-                <Bell className="h-5 w-5 text-muted-foreground" />
-                <span className="absolute top-0 right-0 h-2 w-2 bg-destructive rounded-full" />
-              </button>
+          <div className="relative dropdown-container">
+            <button
+              className="p-2 rounded-full hover:bg-accent relative"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowNotifications(!showNotifications);
+                setShowProfileMenu(false);
+                handleClickOutside(setShowNotifications);
+              }}
+            >
+              <Bell className="h-5 w-5 text-muted-foreground" />
+              <span className="absolute top-0 right-0 h-2 w-2 bg-destructive rounded-full" />
+            </button>
 
-              {showNotifications && (
-                <div className="absolute right-0 mt-2 w-80 bg-popover rounded-lg shadow-lg border border-border z-50">
-                  <div className="p-4 border-b border-border">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
-                      Notifications
-                    </h3>
-                  </div>
-                  <div className="max-h-96 overflow-y-auto">
-                    {notifications.map((notification) => (
-                      <NotificationItem
-                        key={notification.id}
-                        title={notification.title}
-                        time={notification.time}
-                        isRead={notification.isRead}
-                      />
-                    ))}
-                  </div>
-                  <div className="p-4 border-t border-border">
-                    <Link
-                      to="http://localhost:5173/notifications"
-                      className="text-sm text-primary hover:text-primary/80"
-                      onClick={() => setShowNotifications(!showNotifications)}
-                    >
-                      View all notifications
-                    </Link>
-                  </div>
+            {showNotifications && (
+              <div className="absolute right-0 mt-2 w-80 bg-popover rounded-lg shadow-lg border border-border z-50">
+                <div className="p-4 border-b border-border">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
+                    Notifications
+                  </h3>
                 </div>
-              )}
-            </div>
-
+                <div className="max-h-96 overflow-y-auto">
+                  {notifications.map((notification) => (
+                    <NotificationItem
+                      key={notification.id}
+                      title={notification.title}
+                      time={notification.time}
+                      isRead={notification.isRead}
+                    />
+                  ))}
+                </div>
+                <div className="p-4 border-t border-border">
+                  <Link
+                    to="http://localhost:5173/notifications"
+                    className="text-sm text-primary hover:text-primary/80"
+                    onClick={() => setShowNotifications(!showNotifications)}
+                  >
+                    View all notifications
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div> */}
+          {/* 
             <div className="relative dropdown-container">
               <button
                 className="flex items-center space-x-3 cursor-pointer"
@@ -228,10 +278,9 @@ const Header = ({ userName, userImage, onMenuClick }) => {
                   </div>
                 </div>
               )}
-            </div>
-          </div>
-        </header>
-      )}
+            </div> */}
+        </div>
+      </header>
 
       {showMobileSearch && (
         <div className="sm:hidden px-4 pb-2 mt-[-10px]">
