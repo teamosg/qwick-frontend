@@ -1,4 +1,3 @@
-import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 
 export default function CampaignProgress() {
@@ -11,12 +10,12 @@ export default function CampaignProgress() {
   const change = progress - lastPeriodProgress;
 
   // Determine color based on progress
-  const getProgressColor = () => {
-    if (progress >= 70) return "bg-green-500";
-    if (progress >= 50) return "bg-blue-500";
-    if (progress >= 30) return "bg-yellow-500";
-    return "bg-red-500";
-  };
+  // const getProgressColor = () => {
+  //   if (progress >= 70) return "bg-white";
+  //   if (progress >= 50) return "bg-blue-500";
+  //   if (progress >= 30) return "bg-yellow-500";
+  //   return "bg-red-500";
+  // };
 
   const getMessage = () => {
     if (progress >= 80)
@@ -27,25 +26,25 @@ export default function CampaignProgress() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8 flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <div className="w-full max-w-2xl">
         {/* Progress Card */}
-        <div className="bg-black rounded-2xl p-8 shadow-2xl">
+        <div className="bg-black rounded-2xl p-4 shadow-2xl">
           {/* Header */}
           <div className="flex items-start justify-between mb-4">
             <h2 className="text-white text-xl font-semibold">
               Progress Indicator
             </h2>
-            <button className="text-gray-400 hover:text-white transition-colors">
+            {/* <button className="text-gray-400 hover:text-white transition-colors">
               <MoreVertical className="w-5 h-5" />
-            </button>
+            </button> */}
           </div>
 
           {/* Message */}
-          <p className="text-gray-400 text-sm mb-8">{getMessage()}</p>
+          <p className="text-gray-400 text-sm mb-4">{getMessage()}</p>
 
           {/* Progress Stats */}
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-4">
             <div className="text-white text-5xl font-bold">{progress}%</div>
             <div
               className={`px-3 py-1 rounded-full border ${
@@ -65,8 +64,8 @@ export default function CampaignProgress() {
             {Array.from({ length: totalBars }).map((_, index) => (
               <div
                 key={index}
-                className={`flex-1 h-16 rounded-sm transition-all duration-300 ${
-                  index < filledBars ? getProgressColor() : "bg-gray-800"
+                className={`flex-1 h-16 rounded-sm transition-all duration-300 bg-[#454545] ${
+                  index < filledBars ? "bg-white" : ""
                 }`}
               />
             ))}
