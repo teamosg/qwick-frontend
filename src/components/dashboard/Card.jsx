@@ -55,10 +55,10 @@ const Card = ({ progress = 7 }) => {
           <h3 className="font-semibold text-[#090003] dark:text-white text-sm mb-1">
             Destroying 1on1's Clips
           </h3>
-          <p className="text-xs dark:text-zinc-400 mb-3 leading-snug">
+          {/* <p className="text-xs dark:text-zinc-400 mb-3 leading-snug">
             It is a long established fact that a reader will be distracted by
             the readable content of a page when looking...
-          </p>
+          </p> */}
         </motion.div>
 
         {/* Social Media Tags */}
@@ -69,28 +69,25 @@ const Card = ({ progress = 7 }) => {
           transition={{ delay: 0.3, duration: 0.3 }}
         >
           <motion.div
-            className="text-[#666666] text-xs rounded-full gap-1 px-3 py-2 bg-[#FDF2F8] flex flex-row items-center"
+            className="text-[#666666] text-xs rounded-full gap-1 px-2 py-2 bg-[#FDF2F8] flex flex-row items-center"
             whileHover={{ scale: 1.05, backgroundColor: "#FCE7F3" }}
             transition={{ duration: 0.2 }}
           >
             <FaInstagram size={12} />
-            <span>Instagram</span>
           </motion.div>
           <motion.div
-            className="text-[#666666] text-xs rounded-full gap-1 px-3 py-2 bg-[#FDF2F8] flex flex-row items-center"
+            className="text-[#666666] text-xs rounded-full gap-1 px-2 py-2 bg-[#FDF2F8] flex flex-row items-center"
             whileHover={{ scale: 1.05, backgroundColor: "#FCE7F3" }}
             transition={{ duration: 0.2 }}
           >
             <FaFacebook size={12} />
-            <span>Facebook</span>
           </motion.div>
           <motion.div
-            className="text-[#666666] text-xs rounded-full gap-1 px-3 py-2 bg-[#FDF2F8] flex flex-row items-center"
+            className="text-[#666666] text-xs rounded-full gap-1 px-2 py-2 bg-[#FDF2F8] flex flex-row items-center"
             whileHover={{ scale: 1.05, backgroundColor: "#FCE7F3" }}
             transition={{ duration: 0.2 }}
           >
             <FaYoutube size={12} />
-            <span>Youtube</span>
           </motion.div>
         </motion.div>
 
