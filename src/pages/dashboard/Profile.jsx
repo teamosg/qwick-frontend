@@ -69,8 +69,8 @@ const tabs = [
     content: <ProfileMySubmission />,
   },
   {
-    name: "Danger zone",
-    value: "danger-zone",
+    name: "Delete Account",
+    value: "delete-account",
     icon: CircleAlert,
     content: <ProfileDangerZone />,
   },

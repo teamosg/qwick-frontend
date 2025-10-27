@@ -2,6 +2,7 @@ import NoPostsState from "@/components/dashboard/Home/NoPostsState";
 import PostForm from "@/components/dashboard/Home/PostForm";
 import { useState } from "react";
 import Post from "../../components/dashboard/Home/Post";
+import notImplemented from "@/dummyMessages/notImplemented";
 
 const Home = () => {
   const [posts, setPosts] = useState([
@@ -62,6 +63,7 @@ const Home = () => {
   };
 
   const handleSave = (postId) => {
+    notImplemented();
     setPosts(
       posts.map((post) => {
         if (post.id === postId) {
