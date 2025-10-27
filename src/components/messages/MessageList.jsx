@@ -1,5 +1,6 @@
 import { ChevronDown, List, Pin, Search } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const MessageList = ({ onSelectChat, selectedChatId }) => {
   const [sortBy, setSortBy] = useState("Newest");
@@ -151,11 +152,10 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="appearance-none bg-transparent text-sm text-gray-600 dark:text-gray-300 pr-6 focus:outline-none"
+              className="appearance-none px- bg-transparent text-sm text-gray-600 dark:text-gray-300 pr-6 focus:outline-none"
             >
               <option value="Newest">Newest</option>
               <option value="Oldest">Oldest</option>
-              <option value="Unread">Unread</option>
             </select>
             <ChevronDown className="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
           </div>
@@ -164,7 +164,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
 
       {/* Search */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-        <div className="relative">
+        <div className="relative mb-3">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
@@ -173,6 +173,37 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
+        </div>
+
+        {/* Unread / Requests / Groups badges */}
+        <div className="flex items-center gap-2 mt-2 text-sm">
+          <button
+            onClick={() =>
+              toast.error("This feature hasn't been implemented yet")
+            }
+            className="cursor-pointer flex items-center gap-1 px-2.5 border py-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800   font-medium"
+          >
+            <span className="text-red-400">●</span> Unread{" "}
+            <span className="text-gray-400">2</span>
+          </button>
+
+          <button
+            onClick={() =>
+              toast.error("This feature hasn't been implemented yet")
+            }
+            className="cursor-pointer px-3 py-1 border  rounded-full  font-medium hover:bg-gray-100 dark:hover:bg-gray-800  transition"
+          >
+            Requests
+          </button>
+
+          <button
+            onClick={() =>
+              toast.error("This feature hasn't been implemented yet")
+            }
+            className="cursor-pointer px-3 py-1 border  rounded-full  font-medium hover:bg-gray-100 dark:hover:bg-gray-800  transition"
+          >
+            Groups
+          </button>
         </div>
       </div>
 
