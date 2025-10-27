@@ -1,7 +1,7 @@
 import { ChevronDown, List, Pin, Search } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-
+import MessageOptions from "../MessagesComponents/MessageSelect/MessageOptions";
 const MessageList = ({ onSelectChat, selectedChatId }) => {
   const [sortBy, setSortBy] = useState("Newest");
   const [searchQuery, setSearchQuery] = useState("");
@@ -128,12 +128,16 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
           <p className="text-xs text-gray-600 dark:text-gray-300 truncate">
             {chat.lastMessage}
           </p>
-          {chat.unreadCount > 0 && (
-            <div className="flex-shrink-0">
-              <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full">
-                {chat.unreadCount}
-              </span>
-            </div>
+          {selectedChatId === chat.id ? (
+            <MessageOptions avatar={chat?.avatar} />
+          ) : (
+            chat.unreadCount > 0 && (
+              <div className="flex-shrink-0">
+                <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full">
+                  {chat.unreadCount}
+                </span>
+              </div>
+            )
           )}
         </div>
       </div>
@@ -176,7 +180,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
         </div>
 
         {/* Unread / Requests / Groups badges */}
-        <div className="flex items-center gap-2 mt-2 text-sm">
+        <div className="flex items-center gap-2 mt-2 text-xs">
           <button
             onClick={() =>
               toast.error("This feature hasn't been implemented yet")
@@ -202,7 +206,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
             }
             className="cursor-pointer px-3 py-1 border  rounded-full  font-medium hover:bg-gray-100 dark:hover:bg-gray-800  transition"
           >
-            Groups
+            Groups <span className="text-gray-400">2</span>
           </button>
         </div>
       </div>
