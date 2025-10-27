@@ -11,8 +11,7 @@ import toast from "react-hot-toast";
 
 function MessageOptions({ avatar }) {
   // single handler for all items
-  const handleItemClick = (label) => {
-    // toast.success("Clicked:", label);
+  const handleItemClick = () => {
     toast.error("This feature hasn't been implemented yet!")
   };
 
@@ -22,7 +21,7 @@ function MessageOptions({ avatar }) {
         <Ellipsis />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent align="start" className="dark:bg-gray-800">
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={() => handleItemClick("Mark as unread")}>
             <CheckCircle />
@@ -45,7 +44,7 @@ function MessageOptions({ avatar }) {
             Add to group
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="text-red-600 hover:text-red-600"
+            className="text-red-600 hover:text-red-600 font-bold"
             onClick={() => handleItemClick("Block User")}
           >
             <Ban color="red" className="rotate-90" />
@@ -65,7 +64,7 @@ function MessageOptions({ avatar }) {
             Open in new tab
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="text-red-600 hover:text-red-600"
+            className="text-red-600 hover:text-red-600 font-bold"
             onClick={() => handleItemClick("Close chat")}
           >
             <CircleX color="red" />
