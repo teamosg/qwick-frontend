@@ -13,8 +13,10 @@ import Home from "@/assets/svg/Home";
 import MessageSVG from "@/assets/svg/MessageSVG";
 import NotificationSVG from "@/assets/svg/NotificationSVG";
 import ProfileSVG from "@/assets/svg/ProfileSVG";
+import { useTheme } from "../shared/ThemeProvider";
 
 const NavItem = ({ icon, text, to, onClose }) => {
+  const { theme } = useTheme();
   return (
     <NavLink
       to={to}
@@ -37,7 +39,7 @@ const NavItem = ({ icon, text, to, onClose }) => {
             }`}
           >
             {React.cloneElement(icon, {
-              color: isActive || isPending ? "white" : "#202224",
+              color: isActive || isPending ? "white" : theme === 'light' ? "#202224" : "white",
             })}
           </div>
           <span className="truncate text-[16px]">{text}</span>
