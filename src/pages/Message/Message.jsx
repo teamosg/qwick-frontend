@@ -4,7 +4,7 @@ import ChatHeader from "../../components/messages/ChatHeader";
 import MessageList from "../../components/messages/MessageList";
 
 const Message = () => {
-  const [selectedChat, setSelectedChat] = useState(null);
+  const [selectedChat, setSelectedChat] = useState({});
 
   const handleSelectChat = (chat) => {
     setSelectedChat(chat);
