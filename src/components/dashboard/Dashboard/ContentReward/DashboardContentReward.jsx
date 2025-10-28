@@ -60,7 +60,6 @@ const DashboardContentReward = () => {
 
     setRewards((prev) => [...prev, newReward]);
     setHasContentRewards(true);
-    setShowForm(false);
 
     // You can also send this data to your API here
     console.log("New reward created:", newReward);
@@ -85,6 +84,7 @@ const DashboardContentReward = () => {
         <ContentRewardForm
           onSubmit={handleFormSubmit}
           onCancel={handleFormCancel}
+          setShowForm={setShowForm}
         />
       ) : hasContentRewards ? (
         <div>

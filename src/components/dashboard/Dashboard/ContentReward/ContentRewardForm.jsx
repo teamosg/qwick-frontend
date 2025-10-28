@@ -1,4 +1,12 @@
-import { Upload, HelpCircle } from "lucide-react";
+import { Upload, HelpCircle, DollarSign } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { useState } from "react";
 import { Button } from "../../../ui/button";
 import {
@@ -6,9 +14,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-// Adjust the import path to where shadcn's popover is in your codebase.
+import PaymentSetDialog from "./PaymentSetDialog";
 
 const CampaignForm = ({
+  setShowForm,
   initialData,
   onSubmit,
   onCancel,
@@ -31,6 +40,7 @@ const CampaignForm = ({
   });
 
   const [errors, setErrors] = useState({});
+  const [showPaymentsModal, setShowPaymentsModal] = useState(false);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -89,6 +99,7 @@ const CampaignForm = ({
     } else {
       console.log("Form submitted:", formData);
     }
+    setShowPaymentsModal(true);
   };
 
   const handleCancel = () => {
@@ -445,6 +456,13 @@ const CampaignForm = ({
           </Button>
         </div>
       </form>
+
+      {/* dialog  */}
+      <PaymentSetDialog
+        showPaymentsModal={showPaymentsModal}
+        setShowForm={setShowForm}
+        setShowPaymentsModal={setShowPaymentsModal}
+      />
     </div>
   );
 };
