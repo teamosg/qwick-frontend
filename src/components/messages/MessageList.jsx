@@ -1,10 +1,13 @@
-import { ChevronDown, List, Pin, Search } from "lucide-react";
+import { ChevronDown, List, Pin, Search, X } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import MessageOptions from "../MessagesComponents/MessageSelect/MessageOptions";
+import { MessageSquare, MessagesSquare } from "lucide-react";
+
 const MessageList = ({ onSelectChat, selectedChatId }) => {
   const [sortBy, setSortBy] = useState("Newest");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showRequestsOnly, setShowRequestsOnly] = useState(false);
 
   // Sample data for chatted people
   const pinnedChats = [
@@ -94,6 +97,29 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
     },
   ];
 
+  const requestsChats = [
+    {
+      id: 10,
+      name: "Emma Johnson",
+      avatar: "https://i.pravatar.cc/40?img=10",
+      lastMessage: "Hello, I'm having an issue with my recent order...",
+      time: "07:00 AM",
+      unreadCount: 1,
+      isOnline: true,
+      type: 'request'
+    },
+    {
+      id: 11,
+      name: "Michael Brown",
+      avatar: "https://i.pravatar.cc/40?img=11",
+      lastMessage: "Hello, I'm having an issue with my recent order...",
+      time: "07:00 AM",
+      unreadCount: 1,
+      isOnline: false,
+      type: 'request'
+    },
+  ];
+
   const ChatItem = ({ chat }) => (
     <div
       onClick={() => onSelectChat(chat)}
@@ -156,7 +182,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="appearance-none px- bg-transparent text-sm text-gray-600 dark:text-gray-300 pr-6 focus:outline-none"
+              className="appearance-none bg-transparent text-sm text-gray-600 dark:text-gray-300 pr-6 focus:outline-none"
             >
               <option value="Newest">Newest</option>
               <option value="Oldest">Oldest</option>
@@ -185,26 +211,35 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
             onClick={() =>
               toast.error("This feature hasn't been implemented yet")
             }
-            className="cursor-pointer flex items-center gap-1 px-2.5 border py-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800   font-medium"
+            className="cursor-pointer flex items-center gap-1 px-2.5 border py-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 font-medium transition-colors"
           >
             <span className="text-red-400">●</span> Unread{" "}
             <span className="text-gray-400">2</span>
           </button>
 
           <button
-            onClick={() =>
-              toast.error("This feature hasn't been implemented yet")
-            }
-            className="cursor-pointer px-3 py-1 border  rounded-full  font-medium hover:bg-gray-100 dark:hover:bg-gray-800  transition"
+            onClick={() => setShowRequestsOnly(!showRequestsOnly)}
+            className={`cursor-pointer px-3 py-1 border flex items-center gap-1.5 rounded-full font-medium transition-all duration-300 ${
+              showRequestsOnly
+                ? "bg-[#003933] text-white border-[#003933]"
+                : "hover:bg-gray-100 dark:hover:bg-gray-800"
+            }`}
           >
             Requests
+            <span className="transition-transform duration-200">
+              {showRequestsOnly ? (
+                <X className="w-3.5 h-3.5" />
+              ) : (
+                <span className="text-gray-400">{requestsChats?.length}</span>
+              )}
+            </span>
           </button>
 
           <button
             onClick={() =>
               toast.error("This feature hasn't been implemented yet")
             }
-            className="cursor-pointer px-3 py-1 border  rounded-full  font-medium hover:bg-gray-100 dark:hover:bg-gray-800  transition"
+            className="cursor-pointer px-3 py-1 border rounded-full font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             Groups <span className="text-gray-400">2</span>
           </button>
@@ -213,35 +248,70 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
 
       {/* Chat List */}
       <div className="flex-1 overflow-y-auto">
-        {/* Pinned Section */}
-        <div className="p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Pin className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Pinned
-            </h3>
+        {showRequestsOnly ? (
+          /* Only Requests Chats Section */
+          <div className="p-4 animate-fadeIn">
+            <div className="flex items-center gap-2 mb-3">
+              <MessagesSquare className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Chat Requests
+              </h3>
+            </div>
+            <div className="space-y-1">
+              {requestsChats.map((chat) => (
+                <ChatItem key={chat.id} chat={chat} />
+              ))}
+            </div>
           </div>
-          <div className="space-y-1">
-            {pinnedChats.map((chat) => (
-              <ChatItem key={chat.id} chat={chat} />
-            ))}
-          </div>
-        </div>
+        ) : (
+          /* All Sections */
+          <div className="animate-fadeIn">
+            {/* Pinned Section */}
+            <div className="p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Pin className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Pinned
+                </h3>
+              </div>
+              <div className="space-y-1">
+                {pinnedChats.map((chat) => (
+                  <ChatItem key={chat.id} chat={chat} />
+                ))}
+              </div>
+            </div>
 
-        {/* All Conversations Section */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-2 mb-3">
-            <List className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              All Conversations
-            </h3>
+            {/* All Conversations Section */}
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-2 mb-3">
+                <List className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  All Conversations
+                </h3>
+              </div>
+              <div className="space-y-1">
+                {allChats.map((chat) => (
+                  <ChatItem key={chat.id} chat={chat} />
+                ))}
+              </div>
+            </div>
+
+            {/* Requests Chats Section */}
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-2 mb-3">
+                <MessagesSquare className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Chat Requests
+                </h3>
+              </div>
+              <div className="space-y-1">
+                {requestsChats.map((chat) => (
+                  <ChatItem key={chat.id} chat={chat} />
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="space-y-1">
-            {allChats.map((chat) => (
-              <ChatItem key={chat.id} chat={chat} />
-            ))}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
