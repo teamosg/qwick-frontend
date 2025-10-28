@@ -1,12 +1,7 @@
-import { Upload, HelpCircle, DollarSign } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
+import { Upload, HelpCircle, DollarSign, CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "../../../ui/button";
 import {
@@ -37,6 +32,8 @@ const CampaignForm = ({
     platforms: initialData?.platforms || [],
     availableContent: initialData?.availableContent || "",
     contentRequirement: initialData?.contentRequirement || "",
+    startDate: initialData?.startDate || undefined,
+    endDate: initialData?.endDate || undefined,
   });
 
   const [errors, setErrors] = useState({});
@@ -436,6 +433,110 @@ const CampaignForm = ({
             rows={4}
             className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
           />
+        </div>
+
+        {/* Campaign Duration */}
+        <div className="space-y-3">
+          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
+            Campaign duration*
+            <Popover>
+              <PopoverTrigger asChild>
+                <button type="button" tabIndex={-1}>
+                  <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-72 text-sm">
+                Set the start and end dates for your campaign. The campaign will
+                only be active during this period.
+              </PopoverContent>
+            </Popover>
+          </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Start Date */}
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                Start date
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
+                      !formData.startDate && "text-gray-500 dark:text-gray-400"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.startDate ? (
+                      format(formData.startDate, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={formData.startDate}
+                    onSelect={(date) => handleInputChange("startDate", date)}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            {/* End Date */}
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                End date
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
+                      !formData.endDate && "text-gray-500 dark:text-gray-400"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.endDate ? (
+                      format(formData.endDate, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={formData.endDate}
+                    onSelect={(date) => handleInputChange("endDate", date)}
+                    disabled={(date) =>
+                      formData.startDate ? date < formData.startDate : false
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+          </div>
+
+          {/* Duration Display */}
+          {formData.startDate && formData.endDate && (
+            <div className="mt-3 p-4 bg-gradient-to-br from-[#003933]/5 to-[#003933]/10 dark:from-[#003933]/10 dark:to-[#003933]/20 border border-[#003933]/20 dark:border-[#003933]/30 rounded-lg">
+              <p className="text-sm text-[#003933] dark:text-[#00b89f] font-semibold flex items-center gap-2">
+                <CalendarIcon className="w-4 h-4" />
+                Campaign duration:{" "}
+                {Math.ceil(
+                  (new Date(formData.endDate) - new Date(formData.startDate)) /
+                    (1000 * 60 * 60 * 24)
+                )}{" "}
+                days
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Form Actions */}
