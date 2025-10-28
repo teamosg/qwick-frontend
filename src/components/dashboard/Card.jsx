@@ -35,7 +35,7 @@ const Card = ({ progress = 7 }) => {
             />
             <div>
               <p className="text-sm font-medium text-[#191919] dark:text-white mb-1.5">
-                Content Rewards
+                Content Payouts
               </p>
               <p className="text-xs text-gray-600 dark:text-zinc-400">
                 Destroying Clips
