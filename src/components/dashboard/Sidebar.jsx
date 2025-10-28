@@ -55,7 +55,7 @@ const Sidebar = ({ onClose }) => {
           <div>
             <div className="p-6 flex items-center justify-between">
               <Link to="/" className="flex items-center gap-2 md:gap-2.5">
-                <img src={logo} alt="logo" className="w-[135px] h-[40px]" />
+                <img src={logo} alt="logo" className="w-[100px]" />
               </Link>
               <button
                 onClick={onClose}
