@@ -22,8 +22,9 @@ import {
 import { useState } from "react";
 import { FaFileInvoice } from "react-icons/fa";
 
-import toast from "react-hot-toast";
 import { useEditProfile, useProfile } from "@/hooks/auth.hook";
+import { Bookmark } from "lucide-react";
+import SavedPosts from "@/components/dashboard/Profile/SavedPosts";
 
 const tabs = [
   {
@@ -69,8 +70,14 @@ const tabs = [
     content: <ProfileMySubmission />,
   },
   {
-    name: "Danger zone",
-    value: "danger-zone",
+    name: "Saved Post",
+    value: "saved-post",
+    icon: Bookmark,
+    content: <SavedPosts />,
+  },
+  {
+    name: "Delete Account",
+    value: "delete-account",
     icon: CircleAlert,
     content: <ProfileDangerZone />,
   },
@@ -177,12 +184,12 @@ const Profile = () => {
             </div>
 
             {/* Tabs Menu */}
-            <TabsList className="shrink-0 grid grid-cols-1 gap-2 p-0 bg-transparent w-full">
+            <TabsList className="shrink-0 grid grid-cols-1 gap-2 h-full p-0 bg-transparent w-full">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="!w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
+                  className="cursor-pointer !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
                   onClick={() => setIsTabsOpen(false)}
                 >
                   <tab.icon className="h-5 w-5 me-3" /> {tab.name}

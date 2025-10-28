@@ -60,6 +60,7 @@ const Discover = () => {
               transition: { duration: 0.2 },
             }}
             whileTap={{ scale: 0.98 }}
+            className="w-full"
           >
             <Card progress={7} />
           </motion.div>

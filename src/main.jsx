@@ -20,7 +20,7 @@ createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <RouterProvider router={router} />
-        <Toaster />
+        <Toaster position="bottom-right" />
       </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>

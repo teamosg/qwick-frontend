@@ -2,6 +2,7 @@ import NoPostsState from "@/components/dashboard/Home/NoPostsState";
 import PostForm from "@/components/dashboard/Home/PostForm";
 import { useState } from "react";
 import Post from "../../components/dashboard/Home/Post";
+import notImplemented from "@/dummyMessages/notImplemented";
 
 const Home = () => {
   const [posts, setPosts] = useState([
@@ -62,6 +63,7 @@ const Home = () => {
   };
 
   const handleSave = (postId) => {
+    notImplemented();
     setPosts(
       posts.map((post) => {
         if (post.id === postId) {
@@ -107,7 +109,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full border rounded-2xl mx-auto p-6 bg-[#F5F5F5] dark:bg-zinc-950 h-full max-w-5xl">
+    <div className="w-full border rounded-2xl mx-auto p-6 bg-[#F5F5F5] c h-full max-w-5xl">
       <PostForm onSubmit={handleSubmitPost} />
 
       {/* Show NoPostsState when there are no posts */}
