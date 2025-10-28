@@ -66,7 +66,7 @@ const ProfileGeneral = () => {
           value={formData.name}
           onChange={(e) => handleInputChange("name", e.target.value)}
           placeholder="Enter your name"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
@@ -76,11 +76,12 @@ const ProfileGeneral = () => {
           Bio
         </label>
         <textarea
+        rows={4}
           id="bio"
           value={formData.bio}
           onChange={(e) => handleInputChange("bio", e.target.value)}
           placeholder="Tell us about yourself"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 max-h-60 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
@@ -95,7 +96,7 @@ const ProfileGeneral = () => {
           value={formData.username}
           onChange={(e) => handleInputChange("username", e.target.value)}
           placeholder="Enter your username"
-          className="w-full mt-2 pl-8 px-3 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
@@ -110,7 +111,7 @@ const ProfileGeneral = () => {
           value={formData.phone}
           onChange={(e) => handleInputChange("phone", e.target.value)}
           placeholder="Enter phone number"
-          className="w-full mt-2 px-8 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
