@@ -17,10 +17,10 @@ const DashboardContentRewardBlank = ({ onCreateReward }) => {
         <div>
           <div className="overflow-hidden p-10">
             <h2 className="text-2xl font-bold dark:text-white mb-3.5">
-              No active Content Rewards
+              No active Content Payouts
             </h2>
             <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-              You don't have any active content rewards. Create one to start
+              You don't have any active content payouts. Create one to start
               paying out users
             </p>
           </div>
@@ -30,7 +30,7 @@ const DashboardContentRewardBlank = ({ onCreateReward }) => {
               type="button"
               className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer"
             >
-              Create content rewards
+              Create content payouts
             </button>
           </div>
         </div>
