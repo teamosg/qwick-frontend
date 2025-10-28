@@ -50,12 +50,51 @@ const menuItems = [
     path: "/profile",
     text: "Profile",
   },
+  {
+    path: "/profile",
+    text: "Profile",
+  },
+  {
+    path: "/profile",
+    text: "Profile",
+  },
+  {
+    path: "/profile",
+    text: "Profile",
+  },
+  {
+    path: "/dashboard/content-payout",
+    text: "Content Payout",
+  },
+  {
+    path: "/dashboard/users",
+    text: "Users",
+  },
+  {
+    path: "/dashboard/wait-list",
+    text: "Wait List",
+  },
+  {
+    path: "/dashboard/payments",
+    text: "Payments",
+  },
+  {
+    path: "/dashboard/payout",
+    text: "Payout",
+  },
+  {
+    path: "/dashboard/automated-message",
+    text: "Automated Message",
+  },
+  {
+    path: "/dashboard/dashboard-settings",
+    text: "Dashboard Settings",
+  },
 ];
 console.log(menuItems);
 const Header = ({ userName, userImage, onMenuClick }) => {
   const location = useLocation();
   const isHome = location.pathname === "/";
-  console.log(location.pathname);
 
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
