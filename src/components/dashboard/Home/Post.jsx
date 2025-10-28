@@ -372,7 +372,7 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
               placeholder="Write a comment..."
-              className="w-full bg-gray-100 dark:bg-gray-700 rounded-full py-2 px-3 sm:px-4 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary pr-16 sm:pr-24 text-sm sm:text-base"
+              className="w-full bg-gray-100 dark:bg-gray-700 rounded-lg py-2 px-3 sm:px-4 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary pr-16 sm:pr-24 text-sm sm:text-base"
             />
             <div className="absolute right-1 sm:right-2 top-1/2 transform -translate-y-1/2 flex space-x-1">
               <button
