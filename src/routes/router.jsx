@@ -147,7 +147,7 @@ const router = createBrowserRouter([
             element: <DashboardContentReward />,
           },
           {
-            path: "content-reward",
+            path: "content-payout",
             element: <DashboardContentReward />,
           },
           {

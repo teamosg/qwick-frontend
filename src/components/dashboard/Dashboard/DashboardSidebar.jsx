@@ -23,8 +23,8 @@ import DashboardSwitcher from "./DashboardSwitcher";
 // Menu items.
 const items = [
   {
-    title: "Content Reward",
-    url: "content-reward",
+    title: "Content Payout",
+    url: "content-payout",
   },
   {
     title: "Users",

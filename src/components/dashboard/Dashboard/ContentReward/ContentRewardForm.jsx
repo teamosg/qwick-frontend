@@ -1,8 +1,18 @@
-import { Upload } from "lucide-react";
+import { Upload, HelpCircle, DollarSign, CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "../../../ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import PaymentSetDialog from "./PaymentSetDialog";
 
 const CampaignForm = ({
+  setShowForm,
   initialData,
   onSubmit,
   onCancel,
@@ -22,9 +32,12 @@ const CampaignForm = ({
     platforms: initialData?.platforms || [],
     availableContent: initialData?.availableContent || "",
     contentRequirement: initialData?.contentRequirement || "",
+    startDate: initialData?.startDate || undefined,
+    endDate: initialData?.endDate || undefined,
   });
 
   const [errors, setErrors] = useState({});
+  const [showPaymentsModal, setShowPaymentsModal] = useState(false);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -83,6 +96,7 @@ const CampaignForm = ({
     } else {
       console.log("Form submitted:", formData);
     }
+    setShowPaymentsModal(true);
   };
 
   const handleCancel = () => {
@@ -140,7 +154,7 @@ const CampaignForm = ({
                     onClick={() =>
                       document.getElementById("thumbnail-upload").click()
                     }
-                    className="text-sm font-medium text-black dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex gap-3 px-5 py-2 bg-white rounded-full"
+                    className="text-sm font-medium text-black dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex gap-3 px-5 py-2 bg-white rounded-lg"
                   >
                     <Upload className="w-5 h-5 text-black dark:text-gray-400" />
                     Upload thumbnail
@@ -168,7 +182,7 @@ const CampaignForm = ({
             value={formData.campaignName}
             onChange={(e) => handleInputChange("campaignName", e.target.value)}
             placeholder="Enter campaign"
-            className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+            className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
           />
         </div>
 
@@ -181,7 +195,7 @@ const CampaignForm = ({
             <select
               value={formData.type}
               onChange={(e) => handleInputChange("type", e.target.value)}
-              className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             >
               <option value="">UGC</option>
               <option value="UGC">UGC</option>
@@ -203,7 +217,7 @@ const CampaignForm = ({
                 handleInputChange("personalBrand", e.target.value)
               }
               placeholder="Personal brand"
-              className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -223,13 +237,13 @@ const CampaignForm = ({
                   handleInputChange("campaignBudget", e.target.value)
                 }
                 placeholder="10000"
-                className="w-full px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
               />
             </div>
             <select
               value={formData.currency}
               onChange={(e) => handleInputChange("currency", e.target.value)}
-              className="w-full sm:w-20 px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             >
               <option value="USD">USD</option>
               <option value="EUR">EUR</option>
@@ -252,7 +266,7 @@ const CampaignForm = ({
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
               placeholder="3"
-              className="w-full pl-8 px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -260,8 +274,19 @@ const CampaignForm = ({
         {/* Min and Max payout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
+            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
               Minimum payout
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button type="button" tabIndex={-1}>
+                    <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="w-72 text-sm">
+                  If enabled, users must reach this minimum amount before
+                  becoming eligible for payout.
+                </PopoverContent>
+              </Popover>
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -272,14 +297,25 @@ const CampaignForm = ({
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
                 placeholder="3"
-                className="w-full pl-8 px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full pl-8 px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
+            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
               Maximum payout
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button type="button" tabIndex={-1}>
+                    <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="w-72 text-sm">
+                  If enabled, users cannot earn more than this specified amount
+                  for each submission.
+                </PopoverContent>
+              </Popover>
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -290,7 +326,7 @@ const CampaignForm = ({
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
                 placeholder="100"
-                className="w-full pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
               />
             </div>
           </div>
@@ -298,8 +334,19 @@ const CampaignForm = ({
 
         {/* Flat fee bonus */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
+          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
             Flat fee bonus
+            <Popover>
+              <PopoverTrigger asChild>
+                <button type="button" tabIndex={-1}>
+                  <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-72 text-sm">
+                This is a fixed bonus amount per submission, which will be paid
+                once the submission is approved.
+              </PopoverContent>
+            </Popover>
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -312,7 +359,7 @@ const CampaignForm = ({
                 handleInputChange("flatFeeBonus", e.target.value)
               }
               placeholder="10"
-              className="w-full pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -326,7 +373,7 @@ const CampaignForm = ({
             {["Facebook", "Instagram", "Youtube", "Tiktok"].map((platform) => (
               <label
                 key={platform}
-                className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-full bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 <input
                   type="checkbox"
@@ -350,7 +397,8 @@ const CampaignForm = ({
             Available content
           </label>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            We recommended you add guides and raw footage here.
+            We suggest adding your guides, raw footage, and other materials for
+            creators to edit with here via a Google Drive link
           </p>
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -363,7 +411,7 @@ const CampaignForm = ({
                 handleInputChange("availableContent", e.target.value)
               }
               placeholder="3"
-              className="w-full pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -374,7 +422,7 @@ const CampaignForm = ({
             Content requirement
           </label>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            Add content guidelines for user to follow.
+            We recommend including content guidelines for users to follow.
           </p>
           <textarea
             value={formData.contentRequirement}
@@ -387,11 +435,115 @@ const CampaignForm = ({
           />
         </div>
 
+        {/* Campaign Duration */}
+        <div className="space-y-3">
+          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
+            Campaign duration*
+            <Popover>
+              <PopoverTrigger asChild>
+                <button type="button" tabIndex={-1}>
+                  <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-72 text-sm">
+                Set the start and end dates for your campaign. The campaign will
+                only be active during this period.
+              </PopoverContent>
+            </Popover>
+          </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Start Date */}
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                Start date
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
+                      !formData.startDate && "text-gray-500 dark:text-gray-400"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.startDate ? (
+                      format(formData.startDate, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={formData.startDate}
+                    onSelect={(date) => handleInputChange("startDate", date)}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            {/* End Date */}
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                End date
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
+                      !formData.endDate && "text-gray-500 dark:text-gray-400"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.endDate ? (
+                      format(formData.endDate, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={formData.endDate}
+                    onSelect={(date) => handleInputChange("endDate", date)}
+                    disabled={(date) =>
+                      formData.startDate ? date < formData.startDate : false
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+          </div>
+
+          {/* Duration Display */}
+          {formData.startDate && formData.endDate && (
+            <div className="mt-3 p-4 bg-gradient-to-br from-[#003933]/5 to-[#003933]/10 dark:from-[#003933]/10 dark:to-[#003933]/20 border border-[#003933]/20 dark:border-[#003933]/30 rounded-lg">
+              <p className="text-sm text-[#003933] dark:text-[#00b89f] font-semibold flex items-center gap-2">
+                <CalendarIcon className="w-4 h-4" />
+                Campaign duration:{" "}
+                {Math.ceil(
+                  (new Date(formData.endDate) - new Date(formData.startDate)) /
+                    (1000 * 60 * 60 * 24)
+                )}{" "}
+                days
+              </p>
+            </div>
+          )}
+        </div>
+
         {/* Form Actions */}
         <div className="flex flex-col sm:flex-row gap-4 pt-4">
           <Button
             type="submit"
-            className="bg-[#003933] dark:bg-[#003933] text-white hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium px-6 py-4 rounded-full"
+            className="bg-[#003933] dark:bg-[#003933] text-white hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium px-6 py-4 rounded-lg"
           >
             {isEditMode ? "Update Campaign" : "Create Campaign"}
           </Button>
@@ -399,12 +551,19 @@ const CampaignForm = ({
             type="button"
             variant="outline"
             onClick={handleCancel}
-            className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 px-6 py-4 rounded-full"
+            className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 px-6 py-4 rounded-lg"
           >
             Cancel
           </Button>
         </div>
       </form>
+
+      {/* dialog  */}
+      <PaymentSetDialog
+        showPaymentsModal={showPaymentsModal}
+        setShowForm={setShowForm}
+        setShowPaymentsModal={setShowPaymentsModal}
+      />
     </div>
   );
 };

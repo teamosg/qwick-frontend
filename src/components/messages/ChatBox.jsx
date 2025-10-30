@@ -1,8 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Loader } from "lucide-react";
+import { Loader, CheckCircle, XCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { FiImage } from "react-icons/fi";
 import { LuFile, LuX } from "react-icons/lu";
+import toast from "react-hot-toast";
+import notImplemented from "@/dummyMessages/notImplemented";
 
 const ChatBox = ({ selectedChat }) => {
   const [messages, setMessages] = useState([]);
@@ -11,10 +13,13 @@ const ChatBox = ({ selectedChat }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [totalAttachments, setTotalAttachments] = useState(0);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
+  const [isRequestAccepted, setIsRequestAccepted] = useState(false);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
+
+  const { type: messageType } = selectedChat;
 
   // Sample messages for Emma Johnson (matching the image description)
   const sampleMessages = {
@@ -76,6 +81,32 @@ const ChatBox = ({ selectedChat }) => {
         isRead: true,
       },
     ],
+    10: [
+      {
+        id: 1,
+        text: 'Hello, I\'m having an issue with my recent order. It says "Processing" for the past three days. Can you help me check the status?',
+        sender: "other",
+        senderProfile: {
+          name: "Emma Johnson",
+          avatar: "https://i.pravatar.cc/40?img=10",
+        },
+        timestamp: "07:00 AM",
+        isRead: true,
+      },
+    ],
+    11: [
+      {
+        id: 1,
+        text: 'Hello, I\'m having an issue with my recent order. It says "Processing" for the past three days. Can you help me check the status?',
+        sender: "other",
+        senderProfile: {
+          name: "Michael Brown",
+          avatar: "https://i.pravatar.cc/40?img=11",
+        },
+        timestamp: "07:00 AM",
+        isRead: true,
+      },
+    ],
   };
 
   const scrollToBottom = () => {
@@ -86,6 +117,7 @@ const ChatBox = ({ selectedChat }) => {
     if (selectedChat) {
       setMessages(sampleMessages[selectedChat.id] || []);
       setShouldScrollToBottom(true);
+      setIsRequestAccepted(false); // Reset on chat change
     }
   }, [selectedChat]);
 
@@ -95,6 +127,21 @@ const ChatBox = ({ selectedChat }) => {
       setShouldScrollToBottom(false);
     }
   }, [messages, shouldScrollToBottom]);
+
+  const handleAcceptRequest = () => {
+    toast.success(`Message request from ${selectedChat.name} accepted!`);
+    setIsRequestAccepted(true);
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 300);
+  };
+
+  const handleDeleteRequest = () => {
+    // Do nothing as per requirement
+    notImplemented();
+  };
 
   const handleSendMessage = () => {
     if (newMessage.trim() === "" && attachments.length === 0) return;
@@ -207,6 +254,8 @@ const ChatBox = ({ selectedChat }) => {
     );
   }
 
+  const showRequestAcceptance = messageType === "request" && !isRequestAccepted;
+
   return (
     <div className="flex-1 flex flex-col bg-gray-50 dark:bg-gray-800 max-h-full">
       {/* Messages Area */}
@@ -245,7 +294,6 @@ const ChatBox = ({ selectedChat }) => {
                         card message
                       </div>
                     )}
-
                     {/* File attachments in message */}
                     {message.attachments && message.attachments.length > 0 && (
                       <div className="mb-2">
@@ -334,167 +382,247 @@ const ChatBox = ({ selectedChat }) => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Message Input */}
-      <div className="p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-        {/* Attachments preview */}
-        {(attachments.length || isUploading) && (
-          <div className="mb-3 flex flex-wrap gap-2">
-            {isUploading &&
-              Array.from({ length: totalAttachments }).map((_, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-50 dark:bg-gray-800 p-2 rounded-md border border-gray-200 dark:border-gray-700 flex items-center gap-2"
-                >
-                  <Loader className="animate-spin" size={16} />
-                  <span className="text-sm">Uploading...</span>
-                </div>
-              ))}
-
-            {attachments.map((file) =>
-              file.type.startsWith("image/") ? (
-                <div key={file.id} className="relative group">
-                  <img
-                    src={file.url}
-                    alt={file.name}
-                    className="w-16 h-12 object-cover border border-gray-200 dark:border-gray-700 rounded-lg"
-                  />
-                  <button
-                    onClick={() => handleRemoveAttachment(file.id)}
-                    className="absolute -top-1 -right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <LuX size={12} />
-                  </button>
-                </div>
-              ) : (
-                <div
-                  key={file.id}
-                  className="pl-2 pr-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center gap-2 group relative"
-                >
-                  <LuFile className="text-gray-600 dark:text-gray-400" />
-                  <div>
-                    <p className="text-sm max-w-xs truncate">{file.name}</p>
-                    <p className="text-xs text-gray-500">
-                      {formatFileSize(file.size)}
-                    </p>
+      {/* Message Input or Request Acceptance */}
+      <AnimatePresence mode="wait">
+        {showRequestAcceptance ? (
+          /* Request Acceptance Section */
+          <motion.div
+            key="request-acceptance"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="p-6 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+          >
+            <div className="max-w-2xl mx-auto">
+              {/* Header */}
+              <div className="text-center mb-6">
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center border-2 border-blue-200 dark:border-blue-800">
+                    <img
+                      src={selectedChat.avatar}
+                      alt={selectedChat.name}
+                      className="w-14 h-14 rounded-full object-cover"
+                    />
                   </div>
-                  <button
-                    onClick={() => handleRemoveAttachment(file.id)}
-                    className="p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <LuX size={14} />
-                  </button>
                 </div>
-              )
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                  Accept message from {selectedChat.name}?
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  {selectedChat.name} wants to send you a message. You can
+                  accept or delete this request.
+                </p>
+              </div>
+
+              {/* Info Box */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-700"
+              >
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  📬 By accepting, you'll be able to chat with{" "}
+                  {selectedChat.name} and they'll know you've seen their
+                  message.
+                </p>
+              </motion.div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleDeleteRequest}
+                  className="flex-1 px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 font-semibold transition-colors flex items-center justify-center gap-2"
+                >
+                  <XCircle className="w-5 h-5" />
+                  Delete Request
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleAcceptRequest}
+                  className="flex-1 px-6 py-3 bg-[#003933] hover:bg-[#002822] text-white rounded-lg font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                >
+                  <CheckCircle className="w-5 h-5" />
+                  Accept Request
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        ) : (
+          /* Regular Message Input */
+          <motion.div
+            key="message-input"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            className="p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+          >
+            {/* Attachments preview */}
+            {(attachments.length > 0 || isUploading) && (
+              <div className="mb-3 flex flex-wrap gap-2">
+                {isUploading &&
+                  Array.from({ length: totalAttachments }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="bg-gray-50 dark:bg-gray-800 p-2 rounded-md border border-gray-200 dark:border-gray-700 flex items-center gap-2"
+                    >
+                      <Loader className="animate-spin" size={16} />
+                      <span className="text-sm">Uploading...</span>
+                    </div>
+                  ))}
+
+                {attachments.map((file) =>
+                  file.type.startsWith("image/") ? (
+                    <div key={file.id} className="relative group">
+                      <img
+                        src={file.url}
+                        alt={file.name}
+                        className="w-16 h-12 object-cover border border-gray-200 dark:border-gray-700 rounded-lg"
+                      />
+                      <button
+                        onClick={() => handleRemoveAttachment(file.id)}
+                        className="absolute -top-1 -right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <LuX size={12} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      key={file.id}
+                      className="pl-2 pr-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center gap-2 group relative"
+                    >
+                      <LuFile className="text-gray-600 dark:text-gray-400" />
+                      <div>
+                        <p className="text-sm max-w-xs truncate">{file.name}</p>
+                        <p className="text-xs text-gray-500">
+                          {formatFileSize(file.size)}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleRemoveAttachment(file.id)}
+                        className="p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <LuX size={14} />
+                      </button>
+                    </div>
+                  )
+                )}
+              </div>
             )}
-          </div>
+
+            <div className="flex gap-2">
+              <input
+                ref={inputRef}
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Write a message..."
+                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+
+              {/* Hidden file input */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileUpload}
+                className="hidden"
+                multiple
+              />
+
+              {/* File attachment button */}
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={handleAttachmentClick}
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                disabled={isUploading}
+              >
+                <FiImage className="w-5 h-5" />
+              </motion.button>
+
+              {/* Link button */}
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                  />
+                </svg>
+              </motion.button>
+
+              {/* Emoji button */}
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </motion.button>
+
+              {/* Send button */}
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={handleSendMessage}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+                <span className="text-sm font-medium">Send</span>
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                  />
+                </svg>
+              </motion.button>
+            </div>
+          </motion.div>
         )}
-
-        <div className="flex gap-2">
-          <input
-            ref={inputRef}
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Write a message..."
-            className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-
-          {/* Hidden file input */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileUpload}
-            className="hidden"
-            multiple
-          />
-
-          {/* File attachment button */}
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={handleAttachmentClick}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-            disabled={isUploading}
-          >
-            <FiImage className="w-5 h-5" />
-          </motion.button>
-
-          {/* Link button */}
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-              />
-            </svg>
-          </motion.button>
-
-          {/* Emoji button */}
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </motion.button>
-
-          {/* Send button */}
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={handleSendMessage}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
-            <span className="text-sm font-medium">Send</span>
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-              />
-            </svg>
-          </motion.button>
-        </div>
-      </div>
+      </AnimatePresence>
     </div>
   );
 };
