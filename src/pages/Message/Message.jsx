@@ -4,7 +4,15 @@ import ChatHeader from "../../components/messages/ChatHeader";
 import MessageList from "../../components/messages/MessageList";
 
 const Message = () => {
-  const [selectedChat, setSelectedChat] = useState({});
+  const [selectedChat, setSelectedChat] = useState({
+    id: 1,
+    name: "Emma Johnson",
+    avatar: "https://i.pravatar.cc/40?img=1",
+    lastMessage: "Hello, I'm having an issue with my recent order...",
+    time: "07:00 AM",
+    unreadCount: 2,
+    isOnline: true,
+  });
 
   const handleSelectChat = (chat) => {
     setSelectedChat(chat);
