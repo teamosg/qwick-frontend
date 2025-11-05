@@ -89,7 +89,6 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-
       {
         path: "/discover",
         element: <Discover />,

@@ -6,7 +6,7 @@ const CreateGroupModal = ({ isOpen, onClose, onCreateGroup }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  // Suggested users data
+  // Suggested users data 
   const suggestedUsers = [
     {
       id: 101,

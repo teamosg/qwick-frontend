@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router";
 import CampaignProgress from "../discover/CampaignProgress";
+import ProgressStatus from "../discover/ProgressStatus";
 
 const Card = ({ progress = 7 }) => {
   const progressWidth = `${progress}%`;
@@ -110,7 +111,10 @@ const Card = ({ progress = 7 }) => {
               transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
             />
           </div> */}
-          <CampaignProgress />
+          {/* <CampaignProgress /> */}
+          <div className="my-2">
+            <ProgressStatus progress={55} />
+          </div>
         </motion.div>
 
         {/* Compensation & Button */}

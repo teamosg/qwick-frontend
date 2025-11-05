@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../shared/ThemeProvider";
+import { Link } from "react-router";
 
 const SettingsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,13 +33,23 @@ const SettingsMenu = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-const menuItems = [
-  { type: "button", icon: Users, label: "FAQ" },
-  { type: "button", icon: HelpCircle, label: "Need help?" },
-  { type: "button", icon: MessageSquare, label: "Submit feedback" },
-  { type: "button", icon: Shield, label: "Privacy Policy" },
-  { type: "button", icon: FileText, label: "Terms and Conditions" },
-];
+  const menuItems = [
+    // { type: "button", icon: Users, label: "FAQ", link: '/feedback' },
+    {
+      type: "button",
+      icon: HelpCircle,
+      label: "Need help?",
+      link: "/need-help",
+    },
+    {
+      type: "button",
+      icon: MessageSquare,
+      label: "Submit feedback",
+      link: "/feedback",
+    },
+    // { type: "button", icon: Shield, label: "Privacy Policy", link: '/privacy-policy' },
+    // { type: "button", icon: FileText, label: "Terms and Conditions", link: '/terms-conditions' },
+  ];
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -97,18 +108,17 @@ const menuItems = [
             {/* Menu Items */}
             <div className="py-1">
               {menuItems.map((item, index) => (
-                <button
-                  key={index}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
-                >
-                  <item.icon
-                    size={18}
-                    className="text-gray-600 dark:text-gray-300"
-                  />
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                    {item.label}
-                  </span>
-                </button>
+                <Link to={item?.link} key={index}>
+                  <button className="cursor-pointer w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
+                    <item.icon
+                      size={18}
+                      className="text-gray-600 dark:text-gray-300"
+                    />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                      {item.label}
+                    </span>
+                  </button>
+                </Link>
               ))}
             </div>
           </motion.div>
