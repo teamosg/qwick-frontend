@@ -1,5 +1,8 @@
 import { Link } from "react-router";
 import ContentRewardNav from "./ContentRewardNav";
+import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
+import { X } from "lucide-react";
 
 const submissions = [
   {
@@ -96,7 +99,7 @@ const ContentRewardMySubmission = () => {
                         to={"#"}
                         className="text-[#15803D] bg-[#F0FDF4]  rounded-full px-3 py-1 text-xs "
                       >
-                        Update
+                        Write a feedback
                       </Link>
                     </div>
                   </div>
@@ -105,6 +108,30 @@ const ContentRewardMySubmission = () => {
                   <p className="text-xs leading-relaxed dark:text-zinc-400">
                     {submission.content}
                   </p>
+
+                  <div className="space-x-6">
+                    {/* accept  */}
+                    <Button
+                      variant="ghost"
+                      className={
+                        "!px-0 hover:underline-none cursor-pointer hover:bg-white text-[#15803D] hover:text-[#15803D] text-xs font-medium"
+                      }
+                    >
+                      <Check />
+                      Accept
+                    </Button>
+
+                    {/* reject  */}
+                    <Button
+                      variant="ghost"
+                      className={
+                        "!px-0 hover:underline-none hover:bg-white cursor-pointer text-[#DC2626] hover:text-[#DC2626] text-xs font-medium"
+                      }
+                    >
+                      <X />
+                      Reject
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
