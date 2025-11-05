@@ -1,3 +1,5 @@
+"use client";
+
 import {
   flexRender,
   getCoreRowModel,
@@ -29,41 +31,50 @@ export function DataTable({
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-auto">
       {/* Scrollable container */}
       <div
-        className="overflow-y-auto overflow-x-auto border rounded-md"
+        className="overflow-y-auto border rounded-md border-gray-200 dark:border-gray-700"
         style={{ maxHeight }}
       >
-        <Table>
-          <TableHeader className="sticky top-0 bg-white z-10">
+        <Table className="min-w-full text-sm">
+          <TableHeader className="sticky top-0 bg-white dark:bg-gray-900 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead
+                    key={header.id}
+                    className="text-gray-800 dark:text-gray-200 font-semibold"
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className={`${rowColored ? "even:bg-[#EFEFEF]" : ""}`}
+                  className={`${
+                    rowColored
+                      ? "even:bg-gray-50 dark:even:bg-gray-800"
+                      : "hover:bg-gray-50 dark:hover:bg-gray-800"
+                  }`}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      className="text-gray-800 dark:text-gray-100"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -76,7 +87,7 @@ export function DataTable({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center text-gray-500 dark:text-gray-400"
                 >
                   No results.
                 </TableCell>
