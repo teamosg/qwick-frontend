@@ -59,6 +59,12 @@ const ContentRewardMySubmission = () => {
   return (
     <div>
       <ContentRewardNav />
+
+      {/* post number */}
+      <div className="mb-4">
+        <p className="border-b border-gray-400 max-w-max">Total 10</p>
+      </div>
+
       <div className="space-y-4 sm:space-y-6">
         {submissions.map((submission) => (
           <div

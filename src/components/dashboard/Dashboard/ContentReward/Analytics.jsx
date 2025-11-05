@@ -1,6 +1,7 @@
 import { ArrowUpRight, ShoppingCart, Undo2 } from "lucide-react";
 import { AnalyticsChart } from "./AnalyticsChart";
 import ContentRewardNav from "./ContentRewardNav";
+import ContentRewardsTable from "./ContentRewardsTable";
 
 const Analytics = () => {
   return (
@@ -101,6 +102,10 @@ const Analytics = () => {
       </Card> */}
       </div>
       <AnalyticsChart />
+
+      <div className="mt-10">
+        <ContentRewardsTable />
+      </div>
     </div>
   );
 };
