@@ -492,7 +492,7 @@ export const useDeleteAccount = () => {
         localStorage.removeItem("refresh");
         localStorage.removeItem("user");
         queryClient.clear();
-        navigate("/signin");
+        navigate("/sign-in");
       } else {
         toast.error(data?.message || "Failed to delete account");
       }

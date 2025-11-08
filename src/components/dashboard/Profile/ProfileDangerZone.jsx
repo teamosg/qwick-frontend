@@ -15,13 +15,17 @@ import {
 import { AlertTriangle } from "lucide-react";
 import notImplemented from "@/dummyMessages/notImplemented";
 import { useState } from "react";
-import { useLogout } from "@/hooks/auth.hook";
+import { useDeleteAccount, useLogout } from "@/hooks/auth.hook";
 
 const ProfileDangerZone = () => {
-  const [isDeleting, setIsDeleting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const user = localStorage.getItem("user");
+  console.log(user);
+
   const { mutate: logOut, isPending } = useLogout();
+  const { mutate: deleteAccount, isPending: isDeletingPending } =
+    useDeleteAccount();
 
   const handleSignOut = () => {
     logOut();
@@ -29,19 +33,15 @@ const ProfileDangerZone = () => {
 
   const handleDeleteAccount = async (e) => {
     e.preventDefault(); // Prevent default dialog close behavior
-    setIsDeleting(true);
-
     try {
-      // Add your delete account logic here
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulated API call
-      notImplemented();
+      deleteAccount({
+        email: "",
+      });
 
       // Close dialog after successful deletion
       setIsDialogOpen(false);
     } catch (error) {
       console.error("Error deleting account:", error);
-    } finally {
-      setIsDeleting(false);
     }
   };
 
@@ -102,17 +102,17 @@ const ProfileDangerZone = () => {
 
           <AlertDialogFooter className="flex-col sm:flex-row gap-3">
             <AlertDialogCancel
-              disabled={isDeleting}
+              disabled={isDeletingPending}
               className="w-full sm:w-auto border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancel
             </AlertDialogCancel>
             <Button
               onClick={handleDeleteAccount}
-              disabled={isDeleting}
+              disabled={isDeletingPending}
               className="w-full sm:w-auto bg-[#DF1C41] hover:bg-[#c01838] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isDeleting ? "Deleting..." : "Delete account"}
+              {isDeletingPending ? "Deleting..." : "Delete account"}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
