@@ -39,7 +39,6 @@ const VerifyAccount = () => {
   const location = useLocation();
   const email =
     location.state?.email || localStorage.getItem("signup_email") || "";
-  const otpCode = location.state?.otp || localStorage.getItem("otp") || "";
   const handleSubmit = (e) => {
     e.preventDefault();
     const code = otp.join("");
@@ -141,7 +140,7 @@ const VerifyAccount = () => {
               VERIFY YOUR ACCOUNT
             </h2>
             <p className="dark:text-gray-400 text-center font-[Inter] text-[15px] md:text-[16px] not-italic font-normal leading-[140%]">
-              Check your email, we are sending the verification code {otpCode}
+              Check your email, we are sending the verification code
             </p>
           </div>
 
