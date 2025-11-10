@@ -2,12 +2,20 @@ import { Info, MoreVertical } from "lucide-react";
 import { useState } from "react";
 import ChatInfoSidebar from "./ChatInfoSidebar";
 
+/**
+ * ChatHeader displays chat info for the selected conversation,
+ * and provides sidebar/info toggle actions. Updates color only for dark mode.
+ */
 const ChatHeader = ({ selectedChat }) => {
+  // State to control showing chat info sidebar
   const [showInfoSidebar, setShowInfoSidebar] = useState(false);
 
+  // Placeholder when no chat is selected
   if (!selectedChat) {
     return (
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+      <div
+        className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717]"
+      >
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
           Select a conversation
         </h2>
@@ -15,9 +23,13 @@ const ChatHeader = ({ selectedChat }) => {
     );
   }
 
+  // Main chat header showing participant info, status, and action buttons
   return (
     <>
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+      <div
+        className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717]"
+      >
+        {/* Avatar, Name and Status */}
         <div className="flex items-center gap-3">
           <div className="relative">
             <img
@@ -26,7 +38,8 @@ const ChatHeader = ({ selectedChat }) => {
               className="w-10 h-10 rounded-full object-cover"
             />
             {selectedChat.isOnline && (
-              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
+              // Online indicator w/ custom dark border
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
             )}
           </div>
           <div>
@@ -39,19 +52,25 @@ const ChatHeader = ({ selectedChat }) => {
           </div>
         </div>
 
+        {/* Action buttons: Info and More menu */}
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowInfoSidebar(true)}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#222] rounded-lg transition-colors"
+            aria-label="View chat info"
           >
             <Info className="w-5 h-5" />
           </button>
-          <button className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+          <button
+            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#222] rounded-lg transition-colors"
+            aria-label="More options"
+          >
             <MoreVertical className="w-5 h-5" />
           </button>
         </div>
       </div>
 
+      {/* Chat info sidebar (conditioned on state) */}
       <ChatInfoSidebar
         isOpen={showInfoSidebar}
         onClose={() => setShowInfoSidebar(false)}

@@ -113,7 +113,7 @@ const JoinCommunity = () => {
           >
             <Link
               to={`/`}
-              className="inline-block max-w-sm w-full text-[#003933] hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition mb-4 border border-[#003933] hover:text-white"
+              className="inline-block max-w-sm w-full text-[#003933] dark:text-white hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition mb-4 border border-[#003933] hover:text-white"
             >
               Join to WaitList
             </Link>

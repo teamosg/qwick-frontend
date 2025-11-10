@@ -168,7 +168,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
       className={`flex items-center gap-3 p-3 cursor-pointer transition-colors ${
         selectedChatId === chat.id
           ? "bg-gray-100 dark:bg-gray-800"
-          : "hover:bg-gray-50 dark:hover:bg-gray-900"
+          : "hover:bg-gray-50 dark:hover:bg-gray-800"
       }`}
     >
       <div className="relative">
@@ -178,10 +178,9 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
           className="w-10 h-10 rounded-full object-cover"
         />
         {chat.isOnline && (
-          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
+          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
         )}
       </div>
-
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between">
           <h3 className="font-medium text-sm text-gray-900 dark:text-white truncate">
@@ -191,7 +190,6 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
             {chat.time}
           </span>
         </div>
-
         <div className="flex items-center justify-between mt-1">
           <p className="text-xs text-gray-600 dark:text-gray-300 truncate">
             {chat.lastMessage}
@@ -213,9 +211,9 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
   );
 
   return (
-    <div className="w-80 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 flex flex-col h-full max-h-full">
+    <div className="w-80 border-r border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717] flex flex-col h-full max-h-full">
       {/* Header */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
             Messages
@@ -233,9 +231,8 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
           </div>
         </div>
       </div>
-
-      {/* Search */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+      {/* Search and badge section */}
+      <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
         <div className="relative mb-3 flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -244,38 +241,37 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
               placeholder="Search messages..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-[#282828] rounded-lg bg-gray-50 dark:bg-[#101010] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <button
             onClick={() => setShowNewMessageSidebar(true)}
-            className=" cursor-pointer p-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="cursor-pointer p-2 border border-gray-300 dark:border-[#282828] rounded-lg hover:bg-gray-100 dark:hover:bg-[#1b1b1b] transition-colors"
           >
             <MessageSquarePlus className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           </button>
         </div>
-
-        {/* Unread / Requests / Groups badges */}
+        {/* Badges */}
         <div className="flex items-center gap-2 mt-2 text-xs">
           <button
             onClick={() =>
               toast.error("This feature hasn't been implemented yet")
             }
-            className="cursor-pointer flex items-center gap-1 px-2 border py-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 font-medium transition-colors"
+            className="cursor-pointer flex items-center gap-1 px-2 border py-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#222] font-medium transition-colors"
           >
             <span className="text-red-400">●</span> Unread{" "}
             <span className="text-gray-400">2</span>
           </button>
-
           <button
             onClick={() => setShowRequestsOnly(!showRequestsOnly)}
             className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${
               showRequestsOnly
                 ? "bg-[#003933] text-white border-[#003933]"
-                : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                : "hover:bg-gray-100 dark:hover:bg-[#222]"
             }`}
           >
-            <span className="text-red-[#003933]">●</span> Requests
+            <span className="text-[#003933] dark:text-[#41d8a8]">●</span>{" "}
+            Requests
             <span className="transition-transform duration-200">
               {showRequestsOnly ? (
                 <X className="w-3.5 h-3.5" />
@@ -284,12 +280,11 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
               )}
             </span>
           </button>
-
           <button
             onClick={() =>
               toast.error("This feature hasn't been implemented yet")
             }
-            className="cursor-pointer px-2 py-1 border rounded-full font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="cursor-pointer px-2 py-1 border rounded-full font-medium hover:bg-gray-100 dark:hover:bg-[#222] transition-colors"
           >
             Groups <span className="text-gray-400">2</span>
           </button>

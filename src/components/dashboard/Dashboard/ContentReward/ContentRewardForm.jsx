@@ -108,7 +108,7 @@ const CampaignForm = ({
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 dark:bg-gray-900 min-h-screen">
+    <div className="max-w-3xl mx-auto p-6 dark:bg-[#1E1E1E] min-h-screen">
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Upload Thumbnail */}
         <div className="space-y-3">
@@ -125,7 +125,7 @@ const CampaignForm = ({
                   onClick={() =>
                     document.getElementById("thumbnail-upload").click()
                   }
-                  className="px-4 py-2 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  className="px-4 py-2 text-sm bg-gray-100 dark:bg-[#2E2E2E] text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2E2E2E] transition-colors"
                 >
                   Change Image
                 </button>
@@ -182,7 +182,7 @@ const CampaignForm = ({
             value={formData.campaignName}
             onChange={(e) => handleInputChange("campaignName", e.target.value)}
             placeholder="Enter campaign"
-            className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
           />
         </div>
 
@@ -195,7 +195,7 @@ const CampaignForm = ({
             <select
               value={formData.type}
               onChange={(e) => handleInputChange("type", e.target.value)}
-              className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             >
               <option value="">UGC</option>
               <option value="UGC">UGC</option>
@@ -217,7 +217,7 @@ const CampaignForm = ({
                 handleInputChange("personalBrand", e.target.value)
               }
               placeholder="Personal brand"
-              className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -237,13 +237,13 @@ const CampaignForm = ({
                   handleInputChange("campaignBudget", e.target.value)
                 }
                 placeholder="10000"
-                className="w-full px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full px-3 py-3  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
               />
             </div>
             <select
               value={formData.currency}
               onChange={(e) => handleInputChange("currency", e.target.value)}
-              className="px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="px-3 py-3  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             >
               <option value="USD">USD</option>
               <option value="EUR">EUR</option>
@@ -266,7 +266,7 @@ const CampaignForm = ({
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
               placeholder="3"
-              className="w-full pl-8 px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -297,7 +297,7 @@ const CampaignForm = ({
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
                 placeholder="3"
-                className="w-full pl-8 px-3 py-3  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full pl-8 px-3 py-3  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
               />
             </div>
           </div>
@@ -326,7 +326,7 @@ const CampaignForm = ({
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
                 placeholder="100"
-                className="w-full pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full pl-8 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
               />
             </div>
           </div>
@@ -359,7 +359,7 @@ const CampaignForm = ({
                 handleInputChange("flatFeeBonus", e.target.value)
               }
               placeholder="10"
-              className="w-full pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -373,7 +373,7 @@ const CampaignForm = ({
             {["Facebook", "Instagram", "Youtube", "Tiktok"].map((platform) => (
               <label
                 key={platform}
-                className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-[#2E2E2E] hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 <input
                   type="checkbox"
@@ -411,7 +411,7 @@ const CampaignForm = ({
                 handleInputChange("availableContent", e.target.value)
               }
               placeholder="3"
-              className="w-full pl-8 px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -431,7 +431,7 @@ const CampaignForm = ({
             }
             placeholder="Enter campaign"
             rows={4}
-            className="w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
           />
         </div>
 
@@ -463,7 +463,7 @@ const CampaignForm = ({
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
+                      "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
                       !formData.startDate && "text-gray-500 dark:text-gray-400"
                     )}
                   >
@@ -496,7 +496,7 @@ const CampaignForm = ({
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
+                      "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
                       !formData.endDate && "text-gray-500 dark:text-gray-400"
                     )}
                   >

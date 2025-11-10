@@ -85,7 +85,7 @@ const ProfileMySubmission = () => {
         {submissions.map((submission) => (
           <Card
             key={submission.id}
-            className="overflow-hidden shadow-sm border border-gray-200 "
+            className="overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
           >
             <CardContent className="p-4">
               <div className="flex flex-col sm:flex-row">
@@ -107,10 +107,10 @@ const ProfileMySubmission = () => {
                         <img src="/image.png" alt="" />
                       </div>
                       <div>
-                        <div className="font-medium">
+                        <div className="font-medium text-[#15161E] dark:text-white">
                           {submission.user.name}
                         </div>
-                        <div className="text-xs ">{submission.user.handle}</div>
+                        <div className="text-xs text-[#AAAAAA] dark:text-white">{submission.user.handle}</div>
                       </div>
                     </div>
 
@@ -118,7 +118,7 @@ const ProfileMySubmission = () => {
                       {getStatusBadge(submission.status)}
                       <Link
                         to={"#"}
-                        className="text-[#15803D] bg-[#F0FDF4] border border-[#15803D] rounded-full px-3 py-1 text-xs "
+                        className="text-[#15803D] bg-[#F0FDF4] dark:bg-[#15803D] dark:text-white border border-[#15803D] rounded-full px-3 py-1 text-xs "
                       >
                         Update
                       </Link>
@@ -126,7 +126,7 @@ const ProfileMySubmission = () => {
                   </div>
 
                   {/* Content Description */}
-                  <p className="text-xs leading-relaxed">
+                  <p className="text-xs leading-relaxed text-[#666666] dark:text-white">
                     {submission.content}
                   </p>
                 </div>

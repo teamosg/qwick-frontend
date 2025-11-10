@@ -50,14 +50,14 @@ const ProfileGeneral = () => {
   };
 
   if (isProfileLoading) {
-    return <p className="p-6 text-gray-500">Loading profile...</p>;
+    return <p className="p-6 text-gray-500 dark:text-white">Loading profile...</p>;
   }
 
   return (
     <form onSubmit={handleSubmit} className="p-6 space-y-6">
       {/* Name */}
       <div className="space-y-2">
-        <label htmlFor="name" className="text-sm font-medium text-[#0d0d12]">
+        <label htmlFor="name" className="text-sm font-medium text-[#0d0d12] dark:text-white">
           Name
         </label>
         <input
@@ -66,13 +66,13 @@ const ProfileGeneral = () => {
           value={formData.name}
           onChange={(e) => handleInputChange("name", e.target.value)}
           placeholder="Enter your name"
-          className="w-full mt-2 px-3 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
       {/* Bio */}
       <div className="space-y-2">
-        <label htmlFor="bio" className="text-sm font-medium text-gray-700">
+        <label htmlFor="bio" className="text-sm font-medium text-[#0d0d12] dark:text-white">
           Bio
         </label>
         <textarea
@@ -81,13 +81,13 @@ const ProfileGeneral = () => {
           value={formData.bio}
           onChange={(e) => handleInputChange("bio", e.target.value)}
           placeholder="Tell us about yourself"
-          className="w-full mt-2 px-3 py-3 max-h-60 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 max-h-60 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
       {/* Username */}
       <div className="space-y-2">
-        <label htmlFor="username" className="text-sm font-medium text-gray-700">
+        <label htmlFor="username" className="text-sm font-medium text-[#0d0d12] dark:text-white">
           Username
         </label>
         <input
@@ -96,13 +96,13 @@ const ProfileGeneral = () => {
           value={formData.username}
           onChange={(e) => handleInputChange("username", e.target.value)}
           placeholder="Enter your username"
-          className="w-full mt-2 px-3 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
       {/* Phone */}
       <div className="space-y-2">
-        <label htmlFor="phone" className="text-sm font-medium text-gray-700">
+        <label htmlFor="phone" className="text-sm font-medium text-[#0d0d12] dark:text-white">
           Phone Number
         </label>
         <input
@@ -111,7 +111,7 @@ const ProfileGeneral = () => {
           value={formData.phone}
           onChange={(e) => handleInputChange("phone", e.target.value)}
           placeholder="Enter phone number"
-          className="w-full mt-2 px-3 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>
 
@@ -119,7 +119,7 @@ const ProfileGeneral = () => {
       <Button
         type="submit"
         disabled={isPending}
-        className="bg-[#003933] text-white px-12 py-5 cursor-pointer rounded-lg hover:bg-[#002822] transition font-medium flex gap-2 justify-center"
+        className="bg-[#003933] text-white dark:bg-[#002822] dark:text-white px-12 py-5 cursor-pointer rounded-lg hover:bg-[#002822] transition font-medium flex gap-2 justify-center"
       >
         {isPending ? "Updating..." : "Update"}
       </Button>

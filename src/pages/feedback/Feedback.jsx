@@ -89,7 +89,7 @@ const Feedback = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#121212] py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Overall Rating Summary */}
         <OverallRatingSummary
@@ -103,7 +103,7 @@ const Feedback = () => {
 
         {/* Reviews List */}
         <div className="mt-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Read all reviews
           </h2>
           <ReviewList reviews={currentReviews} />

@@ -119,22 +119,22 @@ const PayoutData = () => {
             {users.map((user, index) => (
               <div
                 key={index}
-                className="bg-white border rounded-lg p-4 shadow-sm"
+                className="bg-[#fff] dark:bg-[#25324B] border rounded-lg p-4 shadow-sm"
               >
                 <div className="flex justify-between items-start mb-2">
-                  <div className="font-semibold text-[#25324B]">
+                  <div className="font-semibold text-[#25324B] dark:text-[#fff]">
                     {user.name}
                   </div>
                 </div>
-                <div className="text-sm text-[#25324B] p-1">{user.email}</div>
-                <div className="text-sm text-[#25324B]  p-1">
+                <div className="text-sm text-[#25324B] dark:text-[#fff] p-1">{user.email}</div>
+                <div className="text-sm text-[#25324B] dark:text-[#fff]  p-1">
                   {" "}
                   {getStatusBadge(user.status)}
                 </div>
-                <div className="font-semibold text-[#25324B]  p-1">
+                <div className="font-semibold text-[#25324B] dark:text-[#fff]  p-1">
                   {user.contact}
                 </div>
-                <div className="font-semibold text-[#25324B]  p-1">
+                <div className="font-semibold text-[#25324B] dark:text-[#fff] p-1">
                   {user.total_amount}
                 </div>
               </div>
@@ -146,7 +146,7 @@ const PayoutData = () => {
             <div className="p-1">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="bg-[#f5f5f5] text-gray-900 border-black rounded-full">
+                  <TableRow className="bg-[#f5f5f5] dark:bg-[#25324B] text-gray-900 dark:text-[#fff] border-black rounded-full">
                     <TableHead className="font-medium py-4 px-6">
                       Name
                     </TableHead>
@@ -171,21 +171,21 @@ const PayoutData = () => {
                   {users.map((user, index) => (
                     <TableRow
                       key={index}
-                      className="border-none hover:bg-white"
+                      className="border-none hover:bg-[#f5f5f5] dark:hover:bg-[#25324B]"
                     >
-                      <TableCell className="py-4 px-6 font-medium text-gray-900">
+                      <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
                         {user.name}
                       </TableCell>
-                      <TableCell className="py-4 px-6 text-gray-600">
+                      <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
                         {user.email}
                       </TableCell>
-                      <TableCell className="py-4 px-6 font-semibold text-gray-900">
+                      <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
                         {getStatusBadge(user.status)}
                       </TableCell>
-                      <TableCell className="py-4 px-6">
+                      <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
                         $ {user.total_amount}
                       </TableCell>
-                      <TableCell className="py-4 px-6">
+                      <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
                         {user.contact}
                       </TableCell>
                       <TableCell className="py-4 px-6 flex gap-2">

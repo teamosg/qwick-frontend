@@ -3,10 +3,15 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 
+/**
+ * GroupChatInfo shows group details including members, notifications toggle,
+ * and actions like rename, add user, leave, and remove member.
+ * Dark mode colors updated for consistency.
+ */
 const GroupChatInfo = ({ selectedChat, onClose }) => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
-  // Sample members data
+  // Sample group members list
   const members = [
     {
       id: 1,
@@ -28,6 +33,7 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
     },
   ];
 
+  // Placeholder handlers for future features
   const handleRename = () => {
     toast.success("Rename feature coming soon!");
   };
@@ -45,12 +51,13 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Header with avatar and close button */}
-      <div className="relative p-6 border-b border-gray-200 dark:border-gray-700">
+    <div className="flex flex-col h-full bg-white dark:bg-[#171717] text-gray-900 dark:text-white">
+      {/* Header with close button and group avatar + name */}
+      <div className="relative p-6 border-b border-gray-200 dark:border-[#282828]">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+          className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-[#282828] rounded-lg transition-colors"
+          aria-label="Close group info"
         >
           <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
         </button>
@@ -63,17 +70,16 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
               className="w-20 h-20 rounded-full object-cover"
             />
           </div>
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white text-center">
-            {selectedChat.name}
-          </h2>
+          <h2 className="text-lg font-semibold text-center">{selectedChat.name}</h2>
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="grid grid-cols-3 gap-3 p-4 border-b border-gray-200 dark:border-gray-700">
+      {/* Action Buttons: Rename, Add User, Leave */}
+      <div className="grid grid-cols-3 gap-3 p-4 border-b border-gray-200 dark:border-[#282828]">
         <button
           onClick={handleRename}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+          aria-label="Rename group"
         >
           <Edit2 className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
@@ -83,7 +89,8 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
 
         <button
           onClick={handleAddUser}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+          aria-label="Add user to group"
         >
           <UserPlus className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
@@ -93,7 +100,8 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
 
         <button
           onClick={handleLeave}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+          aria-label="Leave group"
         >
           <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
           <span className="text-xs font-medium text-red-700 dark:text-red-300">
@@ -103,7 +111,7 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
       </div>
 
       {/* Notifications Toggle */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {notificationsEnabled ? (
@@ -122,6 +130,8 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
                 ? "bg-blue-600"
                 : "bg-gray-300 dark:bg-gray-600"
             }`}
+            aria-pressed={notificationsEnabled}
+            aria-label="Toggle notifications"
           >
             <motion.span
               layout
@@ -143,7 +153,7 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
             {members.map((member, index) => (
               <div
                 key={member.id}
-                className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <img
@@ -166,6 +176,7 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
                   <button
                     onClick={() => handleRemoveMember(member.name)}
                     className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                    aria-label={`Remove ${member.name}`}
                   >
                     Remove
                   </button>

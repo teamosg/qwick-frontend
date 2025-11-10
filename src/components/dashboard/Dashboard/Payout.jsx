@@ -15,7 +15,7 @@ const Payout = () => {
         Payout
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
-        <div className="p-5 shadow bg-white rounded-xl">
+        <div className="p-5 shadow bg-white dark:bg-[#2E2E2E] rounded-xl">
           <div className="w-10 h-10 rounded-full bg-[#1BC285] flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
@@ -26,7 +26,7 @@ const Payout = () => {
             Total Balance
           </p>
         </div>
-        <div className="p-5 shadow bg-white rounded-xl">
+        <div className="p-5 shadow bg-white dark:bg-[#2E2E2E] rounded-xl">
           <div className="w-10 h-10 rounded-full bg-red-400 flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
@@ -37,7 +37,7 @@ const Payout = () => {
             Total Withdrawal
           </p>
         </div>{" "}
-        <div className="p-5 shadow bg-white rounded-xl">
+        <div className="p-5 shadow bg-white dark:bg-[#2E2E2E] rounded-xl">
           <div className="w-10 h-10 rounded-full bg-red-400 flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
@@ -48,7 +48,7 @@ const Payout = () => {
             Total Transfer
           </p>
         </div>{" "}
-        <div className="p-5 shadow bg-white rounded-xl">
+        <div className="p-5 shadow bg-white dark:bg-[#2E2E2E] rounded-xl">
           <div className="w-10 h-10 rounded-full bg-[#1BC285] flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
@@ -75,7 +75,7 @@ const Payout = () => {
         {activeTab === "payment-method" && (
           <div className="space-y-4">
             {/* Stripe Setup Card */}
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
+            <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   {/* Stripe Logo */}
@@ -85,7 +85,7 @@ const Payout = () => {
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-[#fff]">
                       Setup Stripe
                     </h3>
                   </div>
@@ -109,12 +109,12 @@ const Payout = () => {
             </div>
 
             {/* senangPay Setup Card */}
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
+            <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   {/* senangPay Logo */}
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <span className="text-green-700 font-semibold text-xs">
+                    <span className="text-green-700 dark:text-[#fff] font-semibold text-xs">
                       <div className="text-center">
                         <div>senang</div>
                         <div className="text-xs">Pay</div>
@@ -122,12 +122,12 @@ const Payout = () => {
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-[#fff]">
                       Setup senangPay
                     </h3>
                   </div>
                 </div>
-                <div className="text-gray-400">
+                <div className="text-gray-400 dark:text-[#fff]">
                   <svg
                     className="w-5 h-5"
                     fill="none"
