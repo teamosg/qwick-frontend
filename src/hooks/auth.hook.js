@@ -84,7 +84,7 @@ export const useSignIn = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (credentials) => {
-      const res = await axiosPublic.post("/account/login/", credentials);
+      const res = await axiosPublic.post("/v1/account/login/", credentials);
       return res.data;
     },
     onSuccess: (data) => {
