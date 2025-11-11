@@ -2,6 +2,7 @@ import { useTheme } from "@/components/shared/ThemeProvider";
 import { Link } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useForgotPassword } from "../../hooks/auth.hook.js";
+import toast from "react-hot-toast";
 
 const ForgotPassword = () => {
   const { theme, setTheme } = useTheme();
@@ -10,10 +11,6 @@ const ForgotPassword = () => {
   // Use the new auth hook
   const { form, mutate, isPending } = useForgotPassword();
   const { register, handleSubmit, formState: { errors } } = form;
-
-  const toggleDarkMode = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   const onSubmit = (data) => {
     mutate(data);

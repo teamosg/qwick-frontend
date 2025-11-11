@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,30 +15,33 @@ import {
 import { AlertTriangle } from "lucide-react";
 import notImplemented from "@/dummyMessages/notImplemented";
 import { useState } from "react";
+import { useDeleteAccount, useLogout } from "@/hooks/auth.hook";
 
 const ProfileDangerZone = () => {
-  const [isDeleting, setIsDeleting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const user = localStorage.getItem("user");
+  console.log(user);
+
+  const { mutate: logOut, isPending } = useLogout();
+  const { mutate: deleteAccount, isPending: isDeletingPending } =
+    useDeleteAccount();
+
   const handleSignOut = () => {
-    notImplemented();
+    logOut();
   };
 
   const handleDeleteAccount = async (e) => {
     e.preventDefault(); // Prevent default dialog close behavior
-    setIsDeleting(true);
-    
     try {
-      // Add your delete account logic here
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulated API call
-      notImplemented();
-      
+      deleteAccount({
+        email: "",
+      });
+
       // Close dialog after successful deletion
       setIsDialogOpen(false);
     } catch (error) {
       console.error("Error deleting account:", error);
-    } finally {
-      setIsDeleting(false);
     }
   };
 
@@ -47,10 +50,11 @@ const ProfileDangerZone = () => {
       {/* Sign Out Button */}
       <Button
         onClick={handleSignOut}
+        disabled={isPending}
         variant="ghost"
-        className="cursor-pointer hover:text-white hover:bg-[#003933] transition-all duration-300 ease-in-out w-full block p-4.5 rounded-full active:scale-98 text-[#003933] text-[16px] border border-[#003933] bg-none sm:flex items-center justify-center"
+        className="cursor-pointer hover:text-white hover:bg-[#003933] transition-all duration-300 ease-in-out w-full block p-4.5 rounded-full active:scale-98 text-[#003933] dark:text-white text-[16px] border border-[#003933] bg-none sm:flex items-center justify-center"
       >
-        Sign out
+        {isPending ? "Signing out..." : "Sign out"}
       </Button>
 
       {/* Delete Account with Confirmation Modal */}
@@ -67,7 +71,10 @@ const ProfileDangerZone = () => {
           {/* Warning Icon Header */}
           <div className="flex justify-center mb-4 pt-2">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30">
-              <AlertTriangle className="w-8 h-8 text-[#DF1C41]" strokeWidth={2.5} />
+              <AlertTriangle
+                className="w-8 h-8 text-[#DF1C41]"
+                strokeWidth={2.5}
+              />
             </div>
           </div>
 
@@ -94,18 +101,18 @@ const ProfileDangerZone = () => {
           </div>
 
           <AlertDialogFooter className="flex-col sm:flex-row gap-3">
-            <AlertDialogCancel 
-              disabled={isDeleting}
+            <AlertDialogCancel
+              disabled={isDeletingPending}
               className="w-full sm:w-auto border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancel
             </AlertDialogCancel>
             <Button
               onClick={handleDeleteAccount}
-              disabled={isDeleting}
+              disabled={isDeletingPending}
               className="w-full sm:w-auto bg-[#DF1C41] hover:bg-[#c01838] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isDeleting ? "Deleting..." : "Delete account"}
+              {isDeletingPending ? "Deleting..." : "Delete account"}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

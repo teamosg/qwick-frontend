@@ -109,16 +109,16 @@ const ProfileBalanceData = () => {
     <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       <Tabs defaultValue="withdraw" className="w-full">
         {/* Tab Navigation */}
-        <TabsList className="grid w-full grid-cols-2 max-w-[200px] h-auto p-1 bg-gray-100 rounded-lg">
+        <TabsList className="grid w-full grid-cols-2 max-w-[200px] h-auto p-1 bg-gray-100 dark:bg-[#2E2E2E] rounded-lg">
           <TabsTrigger
             value="withdraw"
-            className="text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md py-2"
+            className="text-sm font-medium text-[#717171] dark:text-white data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md py-2"
           >
             Withdraw
           </TabsTrigger>
           <TabsTrigger
             value="deposit"
-            className="text-sm font-medium text-[#717171] data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-black rounded-md py-2"
+            className="text-sm font-medium text-[#717171] dark:text-white data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-black rounded-md py-2"
           >
             Deposit
           </TabsTrigger>
@@ -131,16 +131,16 @@ const ProfileBalanceData = () => {
             {transactions.map((transaction, index) => (
               <div
                 key={index}
-                className="bg-white border rounded-lg p-4 shadow-sm"
+                className="bg-white dark:bg-[#2E2E2E] border rounded-lg p-4 shadow-sm"
               >
                 <div className="flex justify-between items-start mb-2">
-                  <div className="font-semibold text-[#25324B]">
+                  <div className="font-semibold text-[#25324B] dark:text-white">
                     {transaction.name}
                   </div>
                   {getStatusBadge(transaction.status, transaction.statusType)}
                 </div>
-                <div className="text-sm text-[#25324B]">{transaction.date}</div>
-                <div className="font-semibold text-[#25324B]">
+                <div className="text-sm text-[#25324B] dark:text-white">{transaction.date}</div>
+                <div className="font-semibold text-[#25324B] dark:text-white">
                   {transaction.amount}
                 </div>
               </div>
@@ -153,36 +153,36 @@ const ProfileBalanceData = () => {
               <Table>
                 <TableHeader className="">
                   <TableRow className="border border-black rounded-full">
-                    <TableHead className="text-[#717171] font-medium py-4 px-6">
+                    <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
                       Name
                     </TableHead>
-                    <TableHead className="text-[#717171] font-medium py-4 px-6">
+                    <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
                       Date
                     </TableHead>
-                    <TableHead className="text-[#717171] font-medium py-4 px-6">
+                    <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
                       Amount
                     </TableHead>
-                    <TableHead className="text-[#717171] font-medium py-4 px-6">
+                    <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
                       Status
                     </TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="bg-white rounded-xl">
+                <TableBody className="bg-white dark:bg-[#2E2E2E] rounded-xl">
                   {transactions.map((transaction, index) => (
                     <TableRow
                       key={index}
-                      className="border-none hover:bg-gray-50"
+                      className="border-none hover:bg-gray-50 dark:hover:bg-[#364152]"
                     >
-                      <TableCell className="py-4 px-6 font-medium text-gray-900">
+                      <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
                         {transaction.name}
                       </TableCell>
-                      <TableCell className="py-4 px-6 text-gray-600">
+                      <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
                         {transaction.date}
                       </TableCell>
-                      <TableCell className="py-4 px-6 font-semibold text-gray-900">
+                      <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                         {transaction.amount}
                       </TableCell>
-                      <TableCell className="py-4 px-6">
+                      <TableCell className="py-4 px-6 dark:text-white">
                         {getStatusBadge(
                           transaction.status,
                           transaction.statusType

@@ -8,46 +8,46 @@ const Analytics = () => {
     <div>
       <ContentRewardNav />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div className="shadow p-4 rounded-lg bg-white">
+        <div className="shadow p-4 rounded-lg bg-white dark:bg-[#2E2E2E]">
           <div className="flex flex-col gap-3 p-6">
             <h3 className="flex items-center gap-2">
               <span className="bg-[#003933] w-8 h-8 rounded-full  flex items-center justify-center">
                 <ShoppingCart className="text-white" size={18} />
               </span>
-              <span className="text-[#858D9D] font-semibold text-sm">
+              <span className="text-[#858D9D] font-semibold text-sm dark:text-[#fff]">
                 New users
               </span>
             </h3>
 
-            <h2 className="text-[#090003] text-2xl font-semibold">3</h2>
+            <h2 className="text-[#090003] text-2xl font-semibold dark:text-[#fff]">3</h2>
             <div className="flex items-center gap-2">
               <span className="flex items-center border-r">
-                <span className="text-sm font-semibold text-primary">24%</span>
+                <span className="text-sm font-semibold text-primary dark:text-[#fff]">24%</span>
                 <ArrowUpRight />
               </span>
-              <h3 className="text-[#858D9D] text-sm">From last week</h3>
+              <h3 className="text-[#858D9D] text-sm dark:text-[#fff]">From last week</h3>
             </div>
           </div>
         </div>
 
-        <div className="shadow p-4 rounded-lg bg-white">
+        <div className="shadow p-4 rounded-lg bg-white dark:bg-[#2E2E2E]">
           <div className="flex flex-col gap-3 p-6">
             <h3 className="flex items-center gap-2">
               <span className="bg-[#ec3131] w-8 h-8 rounded-full  flex items-center justify-center">
                 <Undo2 className="text-white" size={18} />
               </span>
-              <span className="text-[#858D9D] font-semibold text-sm">
+              <span className="text-[#858D9D] font-semibold text-sm dark:text-[#fff]">
                 Total views
               </span>
             </h3>
 
-            <h2 className="text-[#090003] text-2xl font-semibold">1.2M</h2>
+            <h2 className="text-[#090003] text-2xl font-semibold dark:text-[#fff]">1.2M</h2>
             <div className="flex items-center gap-2">
               <span className="flex items-center border-r">
                 <span className="text-sm font-semibold text-primary">24%</span>
                 <ArrowUpRight />
               </span>
-              <h3 className="text-[#858D9D] text-sm">From last week</h3>
+              <h3 className="text-[#858D9D] text-sm dark:text-[#fff]">From last week</h3>
             </div>
           </div>
         </div>

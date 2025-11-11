@@ -4,7 +4,7 @@ const PaymentMethod = () => {
   return (
     <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       {/* Two-factor authentication section */}
-      <div className="text-center text-[#717171] text-sm sm:text-[16px] mb-4 sm:mb-4.5 py-6 sm:py-10 w-full shadow rounded-[16px] sm:rounded-[24px] bg-white">
+      <div className="text-center text-[#717171] dark:text-white text-sm sm:text-[16px] mb-4 sm:mb-4.5 py-6 sm:py-10 w-full shadow rounded-[16px] sm:rounded-[24px] bg-white dark:bg-[#2E2E2E]">
         <p>No payment method found</p>
       </div>
 

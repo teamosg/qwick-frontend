@@ -5,7 +5,7 @@ const ProfileBalance = () => {
   return (
     <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       {/* Two-factor authentication section */}
-      <div className="p-6 text-left text-[#717171] text-sm mb-4 sm:mb-4.5 w-full shadow rounded-[16px] sm:rounded-[24px] bg-white">
+      <div className="p-6 text-left text-[#717171] dark:text-white text-sm mb-4 sm:mb-4.5 w-full shadow rounded-[16px] sm:rounded-[24px] bg-white dark:bg-[#2E2E2E]">
         <p>Total Balance</p>
         <h3 className="py-3 text-[20px] text-[#090003] dark:text-white">
           $0.00

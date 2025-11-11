@@ -103,7 +103,7 @@ const ContentRewardMySubmission = () => {
                     <div className="flex items-center gap-2">
                       <Link
                         to={"#"}
-                        className="text-[#15803D] bg-[#F0FDF4]  rounded-full px-3 py-1 text-xs "
+                        className="text-[#15803D] bg-[#F0FDF4] dark:bg-[#15803D] dark:text-[#F0FDF4] rounded-full px-3 py-1 text-xs "
                       >
                         Write a feedback
                       </Link>

@@ -159,19 +159,19 @@ const WaitListData = () => {
             {users.map((user, index) => (
               <div
                 key={index}
-                className="bg-white border rounded-lg p-4 shadow-sm"
+                className="bg-white border rounded-lg p-4 shadow-sm dark:bg-[#2E2E2E] dark:border-[#444] dark:text-[#fff]"
               >
                 <div className="flex justify-between items-start mb-2">
-                  <div className="font-semibold text-[#25324B]">
+                  <div className="font-semibold text-[#25324B] dark:text-[#fff]">
                     {user.name}
                   </div>
                 </div>
-                <div className="text-sm text-[#25324B]">{user.email}</div>
-                <div className="text-sm text-[#25324B]">{user.status}</div>
-                <div className="font-semibold text-[#25324B]">
+                <div className="text-sm text-[#25324B] dark:text-[#fff]">{user.email}</div>
+                <div className="text-sm text-[#25324B] dark:text-[#fff]">{user.status}</div>
+                <div className="font-semibold text-[#25324B] dark:text-[#fff]">
                   {user.contact}
                 </div>
-                <div className="font-semibold text-[#25324B]">
+                <div className="font-semibold text-[#25324B] dark:text-[#fff]">
                   {user.joined_at}
                 </div>
               </div>
@@ -183,23 +183,23 @@ const WaitListData = () => {
             <div className="p-1">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="bg-[#f5f5f5] text-gray-900 border-black rounded-full">
-                    <TableHead className="font-medium py-4 px-6">
+                  <TableRow className="bg-[#f5f5f5] text-gray-900 dark:bg-[#2E2E2E] dark:text-[#fff] border-black rounded-full">
+                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
                       Name
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6">
+                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
                       Email
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6">
+                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
                       Status
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6">
+                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
                       Contact
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6">
+                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
                       Joined At
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6">
+                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
                       Actions
                     </TableHead>
                   </TableRow>
@@ -208,21 +208,21 @@ const WaitListData = () => {
                   {users.map((user, index) => (
                     <TableRow
                       key={index}
-                      className="border-none hover:bg-white"
+                      className="border-none hover:bg-white dark:hover:bg-[#2E2E2E]"
                     >
-                      <TableCell className="py-4 px-6 font-medium text-gray-900">
+                      <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
                         {user.name}
                       </TableCell>
-                      <TableCell className="py-4 px-6 text-gray-600">
+                      <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
                         {user.email}
                       </TableCell>
-                      <TableCell className="py-4 px-6 font-semibold text-gray-900">
+                      <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
                         {getStatusBadge(user.status)}
                       </TableCell>
-                      <TableCell className="py-4 px-6">
+                      <TableCell className="py-4 px-6 dark:text-[#fff]">
                         {user.contact}
                       </TableCell>
-                      <TableCell className="py-4 px-6">
+                      <TableCell className="py-4 px-6 dark:text-[#fff]">
                         {user.joined_at}
                       </TableCell>
                       <TableCell className="py-4 px-6 flex gap-2">

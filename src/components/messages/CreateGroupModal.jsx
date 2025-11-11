@@ -2,70 +2,43 @@ import { X, Search, ArrowLeft, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
+/**
+ * CreateGroupModal allows searching and selecting users to create a group chat.
+ * Dark mode colors updated for visual coherence.
+ */
 const CreateGroupModal = ({ isOpen, onClose, onCreateGroup }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  // Suggested users data 
+  // Suggested users data
   const suggestedUsers = [
-    {
-      id: 101,
-      name: "Sarah Wilson",
-      avatar: "https://i.pravatar.cc/40?img=20",
-      username: "@sarahw",
-      isOnline: true,
-    },
-    {
-      id: 102,
-      name: "David Chen",
-      avatar: "https://i.pravatar.cc/40?img=21",
-      username: "@davidc",
-      isOnline: false,
-    },
-    {
-      id: 103,
-      name: "Maria Garcia",
-      avatar: "https://i.pravatar.cc/40?img=22",
-      username: "@mariag",
-      isOnline: true,
-    },
-    {
-      id: 104,
-      name: "James Park",
-      avatar: "https://i.pravatar.cc/40?img=23",
-      username: "@jamespark",
-      isOnline: true,
-    },
-    {
-      id: 105,
-      name: "Emily Brown",
-      avatar: "https://i.pravatar.cc/40?img=24",
-      username: "@emilyb",
-      isOnline: false,
-    },
+    { id: 101, name: "Sarah Wilson", avatar: "https://i.pravatar.cc/40?img=20", username: "@sarahw", isOnline: true },
+    { id: 102, name: "David Chen", avatar: "https://i.pravatar.cc/40?img=21", username: "@davidc", isOnline: false },
+    { id: 103, name: "Maria Garcia", avatar: "https://i.pravatar.cc/40?img=22", username: "@mariag", isOnline: true },
+    { id: 104, name: "James Park", avatar: "https://i.pravatar.cc/40?img=23", username: "@jamespark", isOnline: true },
+    { id: 105, name: "Emily Brown", avatar: "https://i.pravatar.cc/40?img=24", username: "@emilyb", isOnline: false },
   ];
 
+  // Filter users by search (name or username)
   const filteredUsers = suggestedUsers.filter(
     (user) =>
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.username.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Toggle selecting or deselecting a user by id
   const toggleUserSelection = (userId) => {
     setSelectedUsers((prev) =>
-      prev.includes(userId)
-        ? prev.filter((id) => id !== userId)
-        : [...prev, userId]
+      prev.includes(userId) ? prev.filter((id) => id !== userId) : [...prev, userId]
     );
   };
 
+  // Create group callback with selected users' data
   const handleCreateGroup = () => {
     if (selectedUsers.length === 0) return;
-
     const selectedUsersData = suggestedUsers.filter((user) =>
       selectedUsers.includes(user.id)
     );
-
     onCreateGroup(selectedUsersData);
     setSelectedUsers([]);
     setSearchQuery("");
@@ -84,7 +57,7 @@ const CreateGroupModal = ({ isOpen, onClose, onCreateGroup }) => {
             className="fixed inset-0 bg-black/50 z-50"
           />
 
-          {/* Modal */}
+          {/* Modal panel */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -93,12 +66,13 @@ const CreateGroupModal = ({ isOpen, onClose, onCreateGroup }) => {
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md max-h-[600px] flex flex-col">
+            <div className="bg-white dark:bg-[#171717] rounded-2xl shadow-2xl w-full max-w-md max-h-[600px] flex flex-col">
               {/* Header */}
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center gap-3">
+              <div className="p-4 border-b border-gray-200 dark:border-[#282828] flex items-center gap-3">
                 <button
                   onClick={onClose}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-[#282828] rounded-lg transition-colors"
+                  aria-label="Back"
                 >
                   <ArrowLeft className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                 </button>
@@ -107,14 +81,15 @@ const CreateGroupModal = ({ isOpen, onClose, onCreateGroup }) => {
                 </h2>
                 <button
                   onClick={onClose}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-[#282828] rounded-lg transition-colors"
+                  aria-label="Close"
                 >
                   <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                 </button>
               </div>
 
               {/* Search Bar */}
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+              <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
@@ -122,7 +97,7 @@ const CreateGroupModal = ({ isOpen, onClose, onCreateGroup }) => {
                     placeholder="Search users..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-[#282828] rounded-lg bg-gray-50 dark:bg-[#232323] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
 
@@ -157,8 +132,9 @@ const CreateGroupModal = ({ isOpen, onClose, onCreateGroup }) => {
                         className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors ${
                           isSelected
                             ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
-                            : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                            : "hover:bg-gray-100 dark:hover:bg-[#282828]"
                         }`}
+                        aria-pressed={isSelected}
                       >
                         <div className="relative">
                           <img
@@ -167,7 +143,7 @@ const CreateGroupModal = ({ isOpen, onClose, onCreateGroup }) => {
                             className="w-10 h-10 rounded-full object-cover"
                           />
                           {user.isOnline && (
-                            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
+                            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
                           )}
                         </div>
                         <div className="flex-1 text-left">
@@ -193,8 +169,8 @@ const CreateGroupModal = ({ isOpen, onClose, onCreateGroup }) => {
                 </div>
               </div>
 
-              {/* Create Button */}
-              <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+              {/* Create Group Button */}
+              <div className="p-4 border-t border-gray-200 dark:border-[#282828]">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

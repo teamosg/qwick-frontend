@@ -75,10 +75,10 @@ const DashboardContentReward = () => {
       <ContentRewardNav />
 
       {/* Debug State */}
-      <div className="mb-4 p-2 bg-yellow-100 dark:bg-yellow-900 rounded text-sm">
+      {/* <div className="mb-4 p-2 bg-yellow-100 dark:bg-yellow-900 rounded text-sm">
         Debug: showForm={showForm.toString()}, hasContentRewards=
         {hasContentRewards.toString()}
-      </div>
+      </div> */}
 
       {showForm ? (
         <ContentRewardForm

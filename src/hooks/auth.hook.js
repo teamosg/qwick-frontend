@@ -91,7 +91,9 @@ export const useSignIn = () => {
       if (data?.status) {
         toast.success(data?.message || "Sign in successfully");
         const token = data?.access;
+        const refresh = data?.refresh;
         localStorage.setItem("token", token);
+        localStorage.setItem("refresh", refresh);
         const user = data?.data;
         localStorage.setItem("user", JSON.stringify(user));
 
@@ -222,14 +224,8 @@ export const useLogout = () => {
       toast.success("Logged out successfully");
       navigate("/sign-in");
     },
-    onError: (error) => {
-      // Even if logout fails on server, clear local tokens
-      localStorage.removeItem("token");
-      localStorage.removeItem("refresh");
-      localStorage.removeItem("user");
-      queryClient.clear();
-      toast.success("Logged out successfully");
-      navigate("/sign-in");
+    onError: () => {
+      toast.error("logout unsuccessful");
     },
   });
 
@@ -496,7 +492,7 @@ export const useDeleteAccount = () => {
         localStorage.removeItem("refresh");
         localStorage.removeItem("user");
         queryClient.clear();
-        navigate("/signin");
+        navigate("/sign-in");
       } else {
         toast.error(data?.message || "Failed to delete account");
       }

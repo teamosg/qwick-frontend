@@ -24,7 +24,7 @@ const ConnectedAccounts = () => {
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
-      <div className="text-center text-[#717171] text-[16px] mb-8 py-10 px-4 w-full shadow rounded-[24px] ">
+      <div className="text-center text-[#717171] dark:text-white text-[16px] mb-8 py-10 px-4 w-full shadow rounded-[24px] ">
         <p> No Accounts connected yet</p>
       </div>
 
@@ -40,15 +40,15 @@ const ConnectedAccounts = () => {
             <Button
               key={account.name}
               variant="outline"
-              className="flex items-center justify-between w-full p-4 h-12 rounded-full border-gray-300 hover:border-gray-400 hover:bg-gray-50"
+              className="flex items-center justify-between w-full p-4 h-12 rounded-full border-gray-300 dark:border-[#364152] dark:hover:border-[#404b5a] hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
             >
               <div className="flex items-center gap-3">
-                <account.icon className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-700 font-medium">
+                <account.icon className="h-5 w-5 text-gray-600 dark:text-white" />
+                <span className="text-gray-700 dark:text-white font-medium">
                   {account.name}
                 </span>
               </div>
-              <Plus className="h-4 w-4 text-gray-600" />
+              <Plus className="h-4 w-4 text-gray-600 dark:text-white" />
             </Button>
           ))}
         </div>

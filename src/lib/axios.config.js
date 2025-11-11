@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base URL from Postman collection: https://qwick.softvencealpha.com/api
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://qwick.softvencealpha.com/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://0a19d2b1e24c.ngrok-free.app/api";
 
 const axiosPublic = axios.create({
   baseURL: API_BASE_URL,
@@ -25,6 +25,7 @@ axiosPrivate.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem("token");
     config.headers.Authorization = `Bearer ${token}`;
+    // config.headers.Authorization = `${token}`;
     return config;
   },
   function (error) {

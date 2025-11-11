@@ -71,11 +71,11 @@ const ProfileBillingHistory = () => {
 
       {/* Search Bar */}
       <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-white" />
         <Input
           type="text"
           placeholder="Search"
-          className="pl-10 pr-4 py-2 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="pl-10 pr-4 py-2 w-full rounded-lg border-gray-300 dark:bg-[#2E2E2E] dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
       </div>
 
@@ -84,7 +84,7 @@ const ProfileBillingHistory = () => {
         {transactions.map((transaction) => (
           <div
             key={transaction.id}
-            className="flex items-center justify-between p-3 sm:p-4 bg-[#f5f5f5] hover:bg-gray-50 rounded-lg transition-colors"
+            className="flex items-center justify-between p-3 sm:p-4 bg-[#f5f5f5] dark:bg-[#2E2E2E] hover:bg-gray-50 rounded-lg transition-colors"
           >
             {/* Left side - Avatar and Details */}
             <div className="flex items-center gap-4 flex-1">
@@ -97,10 +97,10 @@ const ProfileBillingHistory = () => {
               </div>
 
               <div className="flex-1 min-w-0">
-                <div className="font-medium text-[#717171] text-base">
+                <div className="font-medium text-[#717171] dark:text-white text-base">
                   {transaction.name}
                 </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-[#AAAAAA] mt-1">
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-[#AAAAAA] dark:text-white mt-1">
                   <span>{transaction.amount}</span>
                   <span>{transaction.time}</span>
                 </div>

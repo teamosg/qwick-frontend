@@ -56,7 +56,7 @@ const ContentRewardDetailsEdit = () => {
       {/* Tabs Navigation */}
       <ContentRewardNav />
       <div className="p-6 text-[#717171]">
-        <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl bg-white">
+        <div className="dark:text-white dark:bg-[#1E1E1E] p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl bg-white">
           <div className="mb-6">
             <img
               src="/confirm-apply.png"
@@ -149,7 +149,7 @@ const ContentRewardDetailsEdit = () => {
       {/* Form Modal */}
       {showFormModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-zinc-800 rounded-2xl w-full max-w-4xl mx-auto relative overflow-y-auto max-h-[90vh]">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl w-full max-w-4xl mx-auto relative overflow-y-auto max-h-[90vh]">
             {/* Close Button */}
             <button
               onClick={handleCloseFormModal}
