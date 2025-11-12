@@ -1,144 +1,134 @@
 import { motion } from "framer-motion";
-import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaYoutube, FaRegEye } from "react-icons/fa";
 import { Link } from "react-router";
 import CampaignProgress from "../discover/CampaignProgress";
 import ProgressStatus from "../discover/ProgressStatus";
 
-const Card = ({ progress = 7 }) => {
-  const progressWidth = `${progress}%`;
+const cardContent = {
+  profile: {
+    avatar: "https://i.pravatar.cc/36",
+    name: "Content Payout",
+    meta: "Destroying Clips",
+  },
+  type: "Article",
+  views: 5600,
+  timeAgo: "48m",
+  title: "Destroying 1on1's Clips",
+  socials: [
+    { name: "Instagram", icon: FaInstagram },
+    { name: "Facebook", icon: FaFacebook },
+    { name: "YouTube", icon: FaYoutube },
+  ],
+  progress: Math.floor(Math.random() * 100),
+  compensation: {
+    label: "Compensation",
+    details: "$1 per 1k views",
+  },
+  link: "/join-community",
+  cta: "Apply",
+};
+
+const Card = ({ content = cardContent }) => {
+  const {
+    profile,
+    type,
+    views,
+    timeAgo,
+    title,
+    socials,
+    progress,
+    compensation,
+    link,
+    cta,
+  } = content;
 
   return (
-    <Link to="/join-community" className="block w-full">
+    <Link to={link} className="block w-full h-full focus:outline-none group">
       <motion.div
-        className="bg-white dark:bg-zinc-900 rounded-xl p-4 w-full dark:border-zinc-700 transition-colors"
-        initial={{ opacity: 0, scale: 0.9 }}
+        className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-zinc-700 shadow-sm w-full transition-colors p-5 sm:p-6 flex flex-col gap-5 h-full"
+        initial={{ opacity: 0, scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
         whileHover={{
-          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
-          transition: { duration: 0.2 },
+          boxShadow: "0 8px 36px 0 rgba(0,0,0,.08)",
+          scale: 1.01,
+          transition: { duration: 0.17 },
         }}
       >
         {/* Header */}
-        <motion.div
-          className="flex items-start justify-between"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
-        >
-          <div className="flex items-center justify-between gap-3 mb-3">
-            <motion.img
-              src="https://i.pravatar.cc/36"
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center gap-4">
+            <img
+              src={profile.avatar}
               alt="Profile"
-              className="w-9 h-9 rounded-full"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.2 }}
+              className="w-10 h-10 rounded-full object-cover border border-gray-200 dark:border-zinc-700"
             />
             <div>
-              <p className="text-sm font-medium text-[#191919] dark:text-white mb-1.5">
-                Content Payouts
+              <p className="text-base font-semibold text-[#090003] dark:text-white mb-1">
+                {profile.name}
               </p>
               <p className="text-xs text-gray-600 dark:text-zinc-400">
-                Destroying Clips
+                {profile.meta}
               </p>
             </div>
           </div>
+          {/* Views & Post Type */}
+          <div className="flex flex-col items-end gap-1 min-w-[75px] sm:min-w-[90px]">
+            <div className="flex items-center gap-2">
+              <span className="inline-block text-xs uppercase font-semibold tracking-wide text-gray-500 dark:text-emerald-300 bg-gray-100 dark:bg-zinc-800 rounded-md px-2 py-1">
+                {type}
+              </span>
+            </div>
+            <div className="flex items-center gap-1 text-xs text-gray-400 dark:text-zinc-400 mt-0.5">
+              <FaRegEye className="mr-1" />
+              <span>
+                {views >= 1000 ? `${(views / 1000).toFixed(1)}k` : views}
+              </span>
+            </div>
+            <div className="text-[#003933] text-xs dark:text-zinc-400 mt-1">
+              {timeAgo}
+            </div>
+          </div>
+        </div>
 
-          <div className="text-[#003933] text-xs dark:text-zinc-400">48m</div>
-        </motion.div>
-
-        {/* Title and Description */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
-        >
-          <h3 className="font-semibold text-[#090003] dark:text-white text-sm mb-1">
-            Destroying 1on1's Clips
-          </h3>
-          {/* <p className="text-xs dark:text-zinc-400 mb-3 leading-snug">
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking...
-          </p> */}
-        </motion.div>
+        {/* Title */}
+        <h3 className="font-semibold text-[#090003] dark:text-white text-base sm:text-lg mb-1 leading-tight">
+          {title}
+        </h3>
 
         {/* Social Media Tags */}
-        <motion.div
-          className="flex flex-row gap-2 my-3"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.3 }}
-        >
-          <motion.div
-            className="text-[#666666] text-xs rounded-full gap-1 px-2 py-2 bg-[#FDF2F8] flex flex-row items-center"
-            whileHover={{ scale: 1.05, backgroundColor: "#FCE7F3" }}
-            transition={{ duration: 0.2 }}
-          >
-            <FaInstagram size={12} />
-          </motion.div>
-          <motion.div
-            className="text-[#666666] text-xs rounded-full gap-1 px-2 py-2 bg-[#FDF2F8] flex flex-row items-center"
-            whileHover={{ scale: 1.05, backgroundColor: "#FCE7F3" }}
-            transition={{ duration: 0.2 }}
-          >
-            <FaFacebook size={12} />
-          </motion.div>
-          <motion.div
-            className="text-[#666666] text-xs rounded-full gap-1 px-2 py-2 bg-[#FDF2F8] flex flex-row items-center"
-            whileHover={{ scale: 1.05, backgroundColor: "#FCE7F3" }}
-            transition={{ duration: 0.2 }}
-          >
-            <FaYoutube size={12} />
-          </motion.div>
-        </motion.div>
+        <div className="flex flex-row gap-2 mb-1">
+          {socials.map(({ icon: Icon, name }, idx) => (
+            <span
+              key={name}
+              className="text-[#666666] text-xs rounded-full gap-1 px-2 py-2 bg-[#FDF2F8] flex flex-row items-center"
+            >
+              <Icon size={14} />
+            </span>
+          ))}
+        </div>
 
         {/* Progress Bar */}
-        <motion.div
-          className="mb-3"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.3 }}
-        >
-          {/* <div className="flex justify-between text-xs text-[#717171] dark:text-zinc-400 mb-1">
-            <span>Progress</span>
-            <span>{progress}%</span>
-          </div>
-          <div className="h-1.5 bg-[#E2E2E2] dark:bg-zinc-700 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-[#003933] dark:bg-[#48c4b5] rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: progressWidth }}
-              transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-            />
-          </div> */}
-          {/* <CampaignProgress /> */}
-          <div className="my-2">
-            <ProgressStatus progress={55} />
-          </div>
-        </motion.div>
+        <div>
+          <ProgressStatus progress={progress} />
+        </div>
 
         {/* Compensation & Button */}
-        <motion.div
-          className="flex items-center justify-between text-xs dark:text-zinc-400"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.3 }}
-        >
+        <div className="flex items-end justify-between gap-6 mt-auto pt-4 border-t border-gray-100 dark:border-zinc-800">
           <div>
-            <p className="font-semibold text-[#090003] dark:text-white">
-              Compensation
+            <p className="font-semibold text-[#090003] dark:text-white text-xs mb-1">
+              {compensation.label}
             </p>
-            <p>$1 per 1k views</p>
+            <p className="text-sm text-gray-700 dark:text-zinc-300">
+              {compensation.details}
+            </p>
           </div>
-          {/* <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              to="/join-community"
-              className="bg-[#003933] hover:bg-[#002822]  text-white text-sm font-semibold py-3 px-5 rounded-full transition duration-300"
-            >
-              Apply
-            </Link>
-          </motion.div> */}
-        </motion.div>
+          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }}>
+            <span className="inline-block bg-[#003933] dark:bg-emerald-600 hover:bg-[#002822] hover:dark:bg-emerald-700 text-white text-xs font-semibold py-2 px-5 rounded-full transition-colors cursor-pointer shadow-sm">
+              {cta}
+            </span>
+          </motion.div>
+        </div>
       </motion.div>
     </Link>
   );
