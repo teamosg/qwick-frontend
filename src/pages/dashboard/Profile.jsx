@@ -90,7 +90,6 @@ const Profile = () => {
   const { data: profile, isLoading: isProfileLoading } = useProfile();
   const { mutate: editProfile, isPending: isUploading } = useEditProfile();
 
-  console.log(profile);
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
