@@ -361,6 +361,7 @@ export const useProfile = () => {
     queryFn: async () => {
       const res = await axiosPrivate.get("/v1/account/profile/");
       const user = res?.data?.data;
+      user.avatar = "https://darrenchua.softvencealpha.com" + user.avatar;
       localStorage.setItem("user", JSON.stringify(user));
       return user;
     },

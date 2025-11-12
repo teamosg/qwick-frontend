@@ -111,7 +111,7 @@ const Profile = () => {
   const userAvatar =
     previewImage ||
     profile?.avatar ||
-    "/media/avatars/login2_2VTF5Ce.jpg";
+    "https://darrenchua.softvencealpha.com/media/avatars/avatar.jpg";
 
   return (
     <div className="p-6 min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
