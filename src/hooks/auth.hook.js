@@ -94,8 +94,6 @@ export const useSignIn = () => {
         const refresh = data?.refresh;
         localStorage.setItem("token", token);
         localStorage.setItem("refresh", refresh);
-        const user = data?.data;
-        localStorage.setItem("user", JSON.stringify(user));
 
         if (redirectUrl) {
           navigate(redirectUrl);
@@ -362,7 +360,9 @@ export const useProfile = () => {
     queryKey: ["profile"],
     queryFn: async () => {
       const res = await axiosPrivate.get("/v1/account/profile/");
-      return res?.data?.data;
+      const user = res?.data?.data;
+      localStorage.setItem("user", JSON.stringify(user));
+      return user;
     },
     enabled: isAuthenticated,
   });
