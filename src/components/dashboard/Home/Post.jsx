@@ -245,86 +245,51 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       )}
 
       {/* Post Stats */}
-      <div className="text-xs sm:text-sm flex flex-col sm:flex-row sm:justify-between dark:text-gray-400 mb-3 sm:mb-4 font-semibold space-y-2 sm:space-y-0">
-        <div className="flex justify-center sm:justify-start">
-          <div className="*:border-background flex -space-x-1 sm:-space-x-2 *:border-2">
-            {/* {recentLikers.slice(0, 4).map((liker) => (
-              <span
-                key={liker.id}
-                data-slot="avatar"
-                className="relative flex shrink-0 overflow-hidden rounded-full size-6 sm:size-8"
-              >
-                <img
-                  alt={`${liker.name} avatar`}
-                  src={liker.avatar}
-                  className="w-full h-full object-cover"
-                />
-              </span>
-            ))} */}
-            {likeCount > 4 && (
-              <span
-                data-slot="avatar"
-                className="relative flex items-center justify-center text-white shrink-0 overflow-hidden rounded-full size-6 sm:size-8 bg-[#4e5d78] text-xs p-5"
-              >
-                +{likeCount - 4}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="flex justify-center sm:justify-end gap-4 sm:gap-7 text-[#959eae]">
-          {/* <span>{likeCount} Likes</span> */}
-          <span>{post.comments.length} Comments</span>
-          <span>{post.shares} Shares</span>
-        </div>
-      </div>
-
-      {/* Post Actions */}
-      <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-3 sm:mb-4 font-semibold">
+      <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-3 sm:mb-4 font-semibold bg-white dark:bg-zinc-900">
         <div className="flex justify-between gap-2 sm:gap-0">
+          {/* Like Button */}
           <button
             onClick={handleLike}
-            className={`flex sm:items-center sm:justify-center space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base ${
-              isLiked
-                ? "text-[#003933]"
-                : "text-gray-500 hover:text-[#003933] dark:hover:text-gray-300"
-            }`}
+            className={`flex sm:items-center sm:justify-center space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors
+        ${
+          isLiked
+            ? "text-[#003933] dark:text-emerald-400"
+            : "text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300"
+        }`}
+            aria-label={isLiked ? "Liked" : "Like"}
           >
-            <Like
-              color={isLiked ? "#003933" : "currentColor"}
-              isLiked={isLiked}
-            />
-            {/* <span className="hidden sm:inline">
-              {isLiked ? "Liked" : "Like"}
-            </span> */}
+            <Like isLiked={isLiked} />
             <span className="sm:hidden">{isLiked ? "Liked" : "Like"}</span>
           </button>
 
+          {/* Comment Button */}
           <button
             onClick={() =>
               document.getElementById(`comment-${post.id}`).focus()
             }
-            className="flex cursor-pointer sm:items-center sm:justify-center space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md hover:text-[#003933] dark:hover:text-gray-300 text-sm sm:text-base"
+            className="flex cursor-pointer sm:items-center sm:justify-center space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md text-sm sm:text-base text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300 transition-colors"
+            aria-label="Comment"
           >
             <Comment />
-            {/* <span className="hidden sm:inline">Comment</span> */}
-            {/* <span className="sm:hidden">Comment</span> */}
           </button>
 
+          {/* Share Button/Component */}
           <div className="sm:col-span-1">
             <PostShare />
           </div>
 
+          {/* Save Button */}
           <button
             onClick={() => onSave(post.id)}
-            className={`flex sm:items-center sm:justify-center px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base ${
-              post.isSaved
-                ? "text-[#003933]"
-                : "text-gray-500 hover:text-[#003933] dark:hover:text-gray-300"
-            }`}
+            className={`flex sm:items-center sm:justify-center px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors
+        ${
+          post.isSaved
+            ? "text-[#003933] dark:text-emerald-400"
+            : "text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300"
+        }`}
+            aria-label={post.isSaved ? "Saved" : "Save"}
           >
             <Save />
-            {/* <span className="hidden sm:inline">Save</span>
-            <span className="sm:hidden">Save</span> */}
           </button>
         </div>
       </div>

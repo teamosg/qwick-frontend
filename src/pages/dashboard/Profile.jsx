@@ -90,6 +90,7 @@ const Profile = () => {
   const { data: profile, isLoading: isProfileLoading } = useProfile();
   const { mutate: editProfile, isPending: isUploading } = useEditProfile();
 
+
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -105,11 +106,11 @@ const Profile = () => {
     editProfile(formData);
   };
 
-  const userName = profile?.name || "User Name";
+  const userName = profile?.first_name || "User Name";
   const userAvatar =
     previewImage ||
     profile?.avatar ||
-    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg";
+    "https://darrenchua.softvencealpha.com/media/avatars/avatar.jpg";
 
   return (
     <div className="p-6 min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
