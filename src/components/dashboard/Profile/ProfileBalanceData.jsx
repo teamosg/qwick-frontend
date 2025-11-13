@@ -1,5 +1,73 @@
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useWithdrawTransactions } from "@/hooks/payment.hook";
+
+// const transactions = [
+//   {
+//     name: "Nazmul Hasan",
+//     date: "20 May 2020",
+//     amount: "$5.6",
+//     status: "Paid",
+//     statusType: "paid",
+//   },
+//   {
+//     name: "Nazmul Hasan",
+//     date: "20 May 2020",
+//     amount: "$5.6",
+//     status: "Pending",
+//     statusType: "pending",
+//   },
+//   {
+//     name: "Nazmul Hasan",
+//     date: "20 May 2020",
+//     amount: "$5.6",
+//     status: "Paid",
+//     statusType: "paid",
+//   },
+//   {
+//     name: "Nazmul Hasan",
+//     date: "20 May 2020",
+//     amount: "$5.6",
+//     status: "Paid",
+//     statusType: "paid",
+//   },
+//   {
+//     name: "Nazmul Hasan",
+//     date: "20 May 2020",
+//     amount: "$5.6",
+//     status: "Cancel",
+//     statusType: "cancel",
+//   },
+//   {
+//     name: "Nazmul Hasan",
+//     date: "20 May 2020",
+//     amount: "$5.6",
+//     status: "Paid",
+//     statusType: "paid",
+//   },
+//   {
+//     name: "Nazmul Hasan",
+//     date: "20 May 2020",
+//     amount: "$5.6",
+//     status: "Paid",
+//     statusType: "paid",
+//   },
+//   {
+//     name: "Nazmul Hasan",
+//     date: "20 May 2020",
+//     amount: "$5.6",
+//     status: "Paid",
+//     statusType: "paid",
+//   },
+//   {
+//     name: "Nazmul Hasan",
+//     date: "20 May 2020",
+//     amount: "$5.6",
+//     status: "Paid",
+//     statusType: "paid",
+//   },
+// ];
+
 // Table components (inline implementation)
 const Table = ({ children, className = "" }) => (
   <div className={`w-full ${className}`}>
@@ -22,71 +90,7 @@ const TableCell = ({ children, className = "" }) => (
 );
 
 const ProfileBalanceData = () => {
-  const transactions = [
-    {
-      name: "Nazmul Hasan",
-      date: "20 May 2020",
-      amount: "$5.6",
-      status: "Paid",
-      statusType: "paid",
-    },
-    {
-      name: "Nazmul Hasan",
-      date: "20 May 2020",
-      amount: "$5.6",
-      status: "Pending",
-      statusType: "pending",
-    },
-    {
-      name: "Nazmul Hasan",
-      date: "20 May 2020",
-      amount: "$5.6",
-      status: "Paid",
-      statusType: "paid",
-    },
-    {
-      name: "Nazmul Hasan",
-      date: "20 May 2020",
-      amount: "$5.6",
-      status: "Paid",
-      statusType: "paid",
-    },
-    {
-      name: "Nazmul Hasan",
-      date: "20 May 2020",
-      amount: "$5.6",
-      status: "Cancel",
-      statusType: "cancel",
-    },
-    {
-      name: "Nazmul Hasan",
-      date: "20 May 2020",
-      amount: "$5.6",
-      status: "Paid",
-      statusType: "paid",
-    },
-    {
-      name: "Nazmul Hasan",
-      date: "20 May 2020",
-      amount: "$5.6",
-      status: "Paid",
-      statusType: "paid",
-    },
-    {
-      name: "Nazmul Hasan",
-      date: "20 May 2020",
-      amount: "$5.6",
-      status: "Paid",
-      statusType: "paid",
-    },
-    {
-      name: "Nazmul Hasan",
-      date: "20 May 2020",
-      amount: "$5.6",
-      status: "Paid",
-      statusType: "paid",
-    },
-  ];
+  const { data: transactions, isLoading, isError } = useWithdrawTransactions();
 
   const getStatusBadge = (status, statusType) => {
     const variants = {
@@ -128,7 +132,7 @@ const ProfileBalanceData = () => {
         <TabsContent value="withdraw" className="mt-6">
           {/* Mobile Card View */}
           <div className="block sm:hidden space-y-3">
-            {transactions.map((transaction, index) => (
+            {transactions?.map((transaction, index) => (
               <div
                 key={index}
                 className="bg-white dark:bg-[#2E2E2E] border rounded-lg p-4 shadow-sm"
@@ -139,12 +143,19 @@ const ProfileBalanceData = () => {
                   </div>
                   {getStatusBadge(transaction.status, transaction.statusType)}
                 </div>
-                <div className="text-sm text-[#25324B] dark:text-white">{transaction.date}</div>
+                <div className="text-sm text-[#25324B] dark:text-white">
+                  {transaction.date}
+                </div>
                 <div className="font-semibold text-[#25324B] dark:text-white">
                   {transaction.amount}
                 </div>
               </div>
             ))}
+            {!transactions?.length && (
+              <div className="text-center py-8 text-[#717171]">
+                No withdraw transactions found
+              </div>
+            )}
           </div>
 
           {/* Desktop Table View */}
@@ -152,7 +163,7 @@ const ProfileBalanceData = () => {
             <div className=" p-1">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="border border-black rounded-full">
+                  <TableRow className="border rounded-full">
                     <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
                       Name
                     </TableHead>
@@ -168,7 +179,7 @@ const ProfileBalanceData = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody className="bg-white dark:bg-[#2E2E2E] rounded-xl">
-                  {transactions.map((transaction, index) => (
+                  {transactions?.map((transaction, index) => (
                     <TableRow
                       key={index}
                       className="border-none hover:bg-gray-50 dark:hover:bg-[#364152]"
@@ -192,6 +203,11 @@ const ProfileBalanceData = () => {
                   ))}
                 </TableBody>
               </Table>
+              {!transactions?.length && (
+                <div className="text-center w-full  py-8 text-[#717171]">
+                  No withdraw transactions found
+                </div>
+              )}
             </div>
           </div>
         </TabsContent>
