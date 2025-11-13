@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import { axiosPrivate } from "../lib/axios.config.js";
+import { toast } from "sonner";
 
 /**
  * ================================
@@ -36,7 +36,7 @@ export const useWithdrawTransactions = () => {
         throw new Error(message);
       }
     },
-    enabled: !!localStorage.getItem("token"), // Only if logged in
+    // enabled: !!localStorage.getItem("token"), // Only if logged in
     staleTime: 1000 * 60 * 2, // cache for 2 mins
   });
 };

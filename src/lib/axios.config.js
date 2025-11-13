@@ -1,7 +1,10 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 // Base URL from Postman collection: https://qwick.softvencealpha.com/api
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://darrenchua.softvencealpha.com/api";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://darrenchua.softvencealpha.com/api";
 
 const axiosPublic = axios.create({
   baseURL: API_BASE_URL,
@@ -29,6 +32,22 @@ axiosPrivate.interceptors.request.use(
     return config;
   },
   function (error) {
+    return Promise.reject(error);
+  }
+);
+
+axiosPrivate.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    // window.location.href = "/sign-in";
+    if (error.response.status === 401) {
+      toast.error("Session expired. Please sign in again.");
+      localStorage.removeItem("token");
+      window.location.href = "/sign-in";
+    }
+
     return Promise.reject(error);
   }
 );
