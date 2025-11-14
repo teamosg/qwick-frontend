@@ -63,3 +63,25 @@ export const useWithdrawTransactions = () => {
     staleTime: 1000 * 60 * 2, // cache for 2 mins
   });
 };
+
+
+export const useGetDepositTransactions = () => {
+  return useQuery({
+    queryKey: ["depositTransactions"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/payment/deposit/");
+        return res?.data?.data || [];
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error.message ||
+          "Failed to fetch deposit transactions";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    staleTime: 1000 * 60 * 2, // cache for 2 mins
+  });
+};

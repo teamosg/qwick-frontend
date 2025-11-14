@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import WithdrawList from "./components/WithdrawList";
+import DepositList from "./components/DepositList";
 
 const ProfileBalanceData = () => {
   return (
@@ -28,9 +29,7 @@ const ProfileBalanceData = () => {
 
         {/* Deposit Tab Content */}
         <TabsContent value="deposit" className="mt-6">
-          <div className="text-center py-8 text-[#717171]">
-            No deposit transactions found
-          </div>
+          <DepositList />
         </TabsContent>
       </Tabs>
     </div>
