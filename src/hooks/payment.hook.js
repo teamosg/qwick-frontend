@@ -19,6 +19,29 @@ import { toast } from "sonner";
  * Endpoint: GET /v1/payment/withdraw/
  * Response: { status: 200, success: true, data: [] }
  */
+
+// get wallet balance
+export const useGetWalletBalance = () => {
+  return useQuery({
+    queryKey: ["walletBalance"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/payment/wallet/");
+        return res?.data?.data;
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error.message ||
+          "Failed to fetch wallet balance";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    staleTime: 1000 * 60 * 2, // cache for 2 mins
+  });
+};
+
 export const useWithdrawTransactions = () => {
   return useQuery({
     queryKey: ["withdrawTransactions"],
