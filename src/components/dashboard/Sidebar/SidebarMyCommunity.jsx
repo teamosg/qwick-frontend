@@ -7,11 +7,22 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useGetCommunityList } from "@/hooks/community.hook";
+import { SidebarMyCommunitySkeleton } from "./skeletons/SidebarMyCommunitySkeleton";
 
 const tags = Array.from({ length: 3 }).map(
   (_, i, a) => `Profile ${a.length - i}`
 );
 export function SidebarMyCommunity({ onClose }) {
+  const {
+    data: communityList,
+    isLoading: isLoadingCommunityList,
+    isError: isErrorCommunityList,
+  } = useGetCommunityList();
+
+  console.log(communityList);
+  if (isLoadingCommunityList) return <SidebarMyCommunitySkeleton />;
+
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
@@ -21,8 +32,8 @@ export function SidebarMyCommunity({ onClose }) {
         <AccordionContent>
           <ScrollArea className="h-40 max-h-40 ">
             <div className="p-4">
-              {tags.map((tag) => (
-                <React.Fragment key={tag}>
+              {communityList.map((community) => (
+                <React.Fragment key={community.name}>
                   <div className="text-sm  mb-3">
                     <button
                       onClick={onClose}
@@ -33,7 +44,7 @@ export function SidebarMyCommunity({ onClose }) {
                         alt=""
                         className="rounded-full inline mr-2 object-cover h-8 w-8"
                       />
-                      {tag}
+                      {community.name.slice(0, 15)}...
                     </button>
                   </div>
                 </React.Fragment>
