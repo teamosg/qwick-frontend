@@ -19,6 +19,8 @@ import { useState } from "react";
 import { Link } from "react-router";
 import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
+import { useGetCommunityList } from "@/hooks/community.hook";
+import { useEffect } from "react";
 
 // Menu items.
 const items = [
@@ -56,6 +58,23 @@ const items = [
 export function DashboardSidebarContent() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
+
+  const {
+    data: communityList,
+    isLoading: isLoadingCommunityList,
+    isError: isErrorCommunityList,
+  } = useGetCommunityList();
+
+  useEffect(() => {
+    if (
+      communityList?.length &&
+      !isLoadingCommunityList &&
+      !isErrorCommunityList
+    ) {
+      setSelectedCommunity(communityList[0]);
+    }
+  }, [communityList, isLoadingCommunityList, isErrorCommunityList]);
 
   const handleImageUpload = (imageFile) => {
     // Convert the uploaded image to a preview URL
@@ -76,11 +95,13 @@ export function DashboardSidebarContent() {
     setIsImageModalOpen(true);
   };
 
+  const bg = selectedCommunity?.banner_image || "/communityBG.png";
+
   return (
     <>
       <Sidebar className="sticky md:left-64 left-0">
         <SidebarHeader
-          className="p-0 bg-[url(https://placehold.co/400x250)] bg-center bg-cover bg-no-repeat h-[135px] relative"
+          className={`p-0 bg-[url(${bg})] bg-center bg-cover bg-no-repeat h-[135px] relative`}
           style={
             uploadedImage?.previewUrl
               ? { backgroundImage: `url(${uploadedImage.previewUrl})` }
@@ -118,7 +139,13 @@ export function DashboardSidebarContent() {
               </div>
             </div>
           </div> */}
-          <DashboardSwitcher />
+          <DashboardSwitcher
+            data={communityList}
+            isLoading={isLoadingCommunityList}
+            isError={isErrorCommunityList}
+            selectedCommunity={selectedCommunity}
+            setSelectedCommunity={setSelectedCommunity}
+          />
         </SidebarHeader>
 
         <SidebarContent>

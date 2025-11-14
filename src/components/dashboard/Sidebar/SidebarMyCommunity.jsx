@@ -21,7 +21,8 @@ export function SidebarMyCommunity({ onClose }) {
   } = useGetCommunityList();
 
   console.log(communityList);
-  if (isLoadingCommunityList) return <SidebarMyCommunitySkeleton />;
+  if (isLoadingCommunityList || isErrorCommunityList)
+    return <SidebarMyCommunitySkeleton />;
 
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
