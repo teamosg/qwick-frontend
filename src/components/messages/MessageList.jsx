@@ -5,6 +5,10 @@ import MessageOptions from "../MessagesComponents/MessageSelect/MessageOptions";
 import { MessageSquarePlus, MessagesSquare } from "lucide-react";
 import NewMessageSidebar from "./NewMessageSidebar";
 import CreateGroupModal from "./CreateGroupModal";
+import { useGetConversationList } from "@/hooks/conversatins.hook";
+import MessageListSkeleton from "./skeletonns/MessageListSkeleton";
+import ChatItem from "./skeletonns/ChatItem";
+import { allChats, pinnedChats, requestsChats } from "@/dummyData/chat";
 
 const MessageList = ({ onSelectChat, selectedChatId }) => {
   const [sortBy, setSortBy] = useState("Newest");
@@ -13,116 +17,11 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
   const [showNewMessageSidebar, setShowNewMessageSidebar] = useState(false);
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
 
-  // Sample data for chatted people
-  const pinnedChats = [
-    {
-      id: 1,
-      name: "Emma Johnson",
-      avatar: "https://i.pravatar.cc/40?img=1",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 2,
-      isOnline: true,
-    },
-    {
-      id: 2,
-      name: "Michael Brown",
-      avatar: "https://i.pravatar.cc/40?img=2",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 2,
-      isOnline: false,
-    },
-  ];
-
-  const allChats = [
-    {
-      id: 3,
-      name: "Sophia Davis",
-      avatar: "https://i.pravatar.cc/40?img=3",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 2,
-      isOnline: true,
-    },
-    {
-      id: 4,
-      name: "James Wilson",
-      avatar: "https://i.pravatar.cc/40?img=4",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 2,
-      isOnline: false,
-    },
-    {
-      id: 5,
-      name: "Olivia Martinez",
-      avatar: "https://i.pravatar.cc/40?img=5",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 2,
-      isOnline: true,
-    },
-    {
-      id: 6,
-      name: "William Anderson",
-      avatar: "https://i.pravatar.cc/40?img=6",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 2,
-      isOnline: false,
-    },
-    {
-      id: 7,
-      name: "Isabella Taylor",
-      avatar: "https://i.pravatar.cc/40?img=7",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 2,
-      isOnline: true,
-    },
-    {
-      id: 8,
-      name: "Ethan Thompson",
-      avatar: "https://i.pravatar.cc/40?img=8",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 2,
-      isOnline: false,
-    },
-    {
-      id: 9,
-      name: "Mia Jackson",
-      avatar: "https://i.pravatar.cc/40?img=9",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 2,
-      isOnline: true,
-    },
-  ];
-
-  const requestsChats = [
-    {
-      id: 10,
-      name: "Emma Johnson",
-      avatar: "https://i.pravatar.cc/40?img=10",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 1,
-      isOnline: true,
-      type: "request",
-    },
-    {
-      id: 11,
-      name: "Michael Brown",
-      avatar: "https://i.pravatar.cc/40?img=11",
-      lastMessage: "Hello, I'm having an issue with my recent order...",
-      time: "07:00 AM",
-      unreadCount: 1,
-      isOnline: false,
-      type: "request",
-    },
-  ];
+  const {
+    data: conversationList,
+    isLoading: isConversationLoading,
+    isError: isConversationError,
+  } = useGetConversationList();
 
   const handleUserSelect = (user) => {
     // Create new chat with user
@@ -162,53 +61,8 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
     setShowNewMessageSidebar(false);
   };
 
-  const ChatItem = ({ chat }) => (
-    <div
-      onClick={() => onSelectChat(chat)}
-      className={`flex items-center gap-3 p-3 cursor-pointer transition-colors ${
-        selectedChatId === chat.id
-          ? "bg-gray-100 dark:bg-gray-800"
-          : "hover:bg-gray-50 dark:hover:bg-gray-800"
-      }`}
-    >
-      <div className="relative">
-        <img
-          src={chat.avatar}
-          alt={chat.name}
-          className="w-10 h-10 rounded-full object-cover"
-        />
-        {chat.isOnline && (
-          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
-        )}
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center justify-between">
-          <h3 className="font-medium text-sm text-gray-900 dark:text-white truncate">
-            {chat.name}
-          </h3>
-          <span className="text-xs text-gray-500 dark:text-gray-400">
-            {chat.time}
-          </span>
-        </div>
-        <div className="flex items-center justify-between mt-1">
-          <p className="text-xs text-gray-600 dark:text-gray-300 truncate">
-            {chat.lastMessage}
-          </p>
-          {selectedChatId === chat.id ? (
-            <MessageOptions avatar={chat?.avatar} />
-          ) : (
-            chat.unreadCount > 0 && (
-              <div className="flex-shrink-0">
-                <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full">
-                  {chat.unreadCount}
-                </span>
-              </div>
-            )
-          )}
-        </div>
-      </div>
-    </div>
-  );
+  // skeleton
+  if (isConversationLoading) return <MessageListSkeleton />;
 
   return (
     <div className="w-80 border-r border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717] flex flex-col h-full max-h-full">
@@ -304,7 +158,12 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
             </div>
             <div className="space-y-1">
               {requestsChats.map((chat) => (
-                <ChatItem key={chat.id} chat={chat} />
+                <ChatItem
+                  key={chat.id}
+                  chat={chat}
+                  onSelectChat={onSelectChat}
+                  selectedChatId={selectedChatId}
+                />
               ))}
             </div>
           </div>
@@ -321,7 +180,12 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
               </div>
               <div className="space-y-1">
                 {pinnedChats.map((chat) => (
-                  <ChatItem key={chat.id} chat={chat} />
+                  <ChatItem
+                    key={chat.id}
+                    chat={chat}
+                    onSelectChat={onSelectChat}
+                    selectedChatId={selectedChatId}
+                  />
                 ))}
               </div>
             </div>
@@ -336,7 +200,12 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
               </div>
               <div className="space-y-1">
                 {allChats.map((chat) => (
-                  <ChatItem key={chat.id} chat={chat} />
+                  <ChatItem
+                    key={chat.id}
+                    chat={chat}
+                    onSelectChat={onSelectChat}
+                    selectedChatId={selectedChatId}
+                  />
                 ))}
               </div>
             </div>
@@ -351,7 +220,12 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
               </div>
               <div className="space-y-1">
                 {requestsChats.map((chat) => (
-                  <ChatItem key={chat.id} chat={chat} />
+                  <ChatItem
+                    key={chat.id}
+                    chat={chat}
+                    onSelectChat={onSelectChat}
+                    selectedChatId={selectedChatId}
+                  />
                 ))}
               </div>
             </div>
