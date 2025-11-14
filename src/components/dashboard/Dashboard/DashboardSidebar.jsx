@@ -19,7 +19,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
-import { useGetCommunityList } from "@/hooks/community.hook";
+import { useEditCommunity, useGetCommunityList } from "@/hooks/community.hook";
 import { useEffect } from "react";
 
 // Menu items.
@@ -57,7 +57,6 @@ const items = [
 // Main sidebar content component
 export function DashboardSidebarContent() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState(null);
   const [selectedCommunity, setSelectedCommunity] = useState(null);
 
   const {
@@ -65,6 +64,8 @@ export function DashboardSidebarContent() {
     isLoading: isLoadingCommunityList,
     isError: isErrorCommunityList,
   } = useGetCommunityList();
+
+  const { mutate: editCommunity } = useEditCommunity();
 
   useEffect(() => {
     if (
@@ -77,18 +78,16 @@ export function DashboardSidebarContent() {
   }, [communityList, isLoadingCommunityList, isErrorCommunityList]);
 
   const handleImageUpload = (imageFile) => {
-    // Convert the uploaded image to a preview URL
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setUploadedImage({
-        file: imageFile,
-        previewUrl: e.target.result,
-      });
-    };
-    reader.readAsDataURL(imageFile);
+    if (!imageFile) return;
 
-    // Close the modal after successful upload
-    setIsImageModalOpen(false);
+    const formData = new FormData();
+    formData.append("banner_image", imageFile);
+    console.log(imageFile);
+
+    editCommunity({
+      communityUsername: selectedCommunity.username,
+      payload: formData,
+    });
   };
 
   const openImageModal = () => {
@@ -101,12 +100,8 @@ export function DashboardSidebarContent() {
     <>
       <Sidebar className="sticky md:left-64 left-0">
         <SidebarHeader
-          className={`p-0 bg-[url(${bg})] bg-center bg-cover bg-no-repeat h-[135px] relative`}
-          style={
-            uploadedImage?.previewUrl
-              ? { backgroundImage: `url(${uploadedImage.previewUrl})` }
-              : {}
-          }
+          className="p-0 bg-center bg-cover bg-no-repeat h-[135px] relative"
+          style={{ backgroundImage: `url(${bg})` }}
         >
           <div className="absolute inset-0 bg-black/30"></div>
 
