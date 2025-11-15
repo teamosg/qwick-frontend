@@ -22,3 +22,26 @@ export const useGetConversationList = () => {
     staleTime: 1000 * 60 * 10, // cache for 10 mins
   });
 };
+
+export const useGetRequestConversationList = () => {
+  return useQuery({
+    queryKey: ["requestConversationList"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          "/v1/account/message-requests/"
+        );
+        return res?.data?.data || [];
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error.message ||
+          "Failed to fetch request conversation list";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    staleTime: 1000 * 60 * 10, // cache for 10 mins
+  });
+};

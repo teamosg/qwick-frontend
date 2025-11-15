@@ -1,14 +1,15 @@
-import { ChevronDown, List, Pin, Search, X } from "lucide-react";
+import { ChevronDown, Search, X } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import MessageOptions from "../MessagesComponents/MessageSelect/MessageOptions";
-import { MessageSquarePlus, MessagesSquare } from "lucide-react";
+import { MessageSquarePlus } from "lucide-react";
 import NewMessageSidebar from "./NewMessageSidebar";
 import CreateGroupModal from "./CreateGroupModal";
-import { useGetConversationList } from "@/hooks/conversatins.hook";
+import {
+  useGetConversationList,
+  useGetRequestConversationList,
+} from "@/hooks/conversatins.hook";
 import MessageListSkeleton from "./skeletonns/MessageListSkeleton";
-import ChatItem from "./skeletonns/ChatItem";
-import { allChats, pinnedChats, requestsChats } from "@/dummyData/chat";
+import { requestsChats } from "@/dummyData/chat";
 import ChatList from "./ChatList";
 import { FetchErrorAlert } from "../Alerts/FetchErrorAlerts";
 
@@ -24,6 +25,14 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
     isLoading: isConversationLoading,
     isError: isConversationError,
   } = useGetConversationList();
+
+  const {
+    data: requestConversationList,
+    // isLoading: isRequestConversationLoading,
+    // isError: isRequestConversationError,
+  } = useGetRequestConversationList();
+
+  console.log(requestConversationList);
 
   const pinnedConversation = conversationList?.filter((chat) => chat.pinned);
   const regularConversation = conversationList?.filter((chat) => !chat.pinned);
@@ -159,7 +168,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
       ) : (
         <ChatList
           showRequestsOnly={showRequestsOnly}
-          requestsChats={requestsChats}
+          requestsChats={requestConversationList}
           onSelectChat={onSelectChat}
           selectedChatId={selectedChatId}
           pinnedConversation={pinnedConversation}
