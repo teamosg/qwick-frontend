@@ -5,7 +5,6 @@ import DirectChatInfo from "./DirectChatInfo";
 
 const ChatInfoSidebar = ({ isOpen, onClose, selectedChat }) => {
   if (!selectedChat) return null;
-
   const isGroupChat = selectedChat.type === "group";
 
   return (

@@ -2,6 +2,7 @@ import { X, Phone, Video, Mail, Bell, BellOff, UserX } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 /**
  * DirectChatInfo displays details of a direct chat user,
@@ -10,15 +11,7 @@ import toast from "react-hot-toast";
  */
 const DirectChatInfo = ({ selectedChat, onClose }) => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-
-  // Placeholder handlers for features
-  const handleCall = () => {
-    toast.success("Voice call feature coming soon!");
-  };
-
-  const handleVideoCall = () => {
-    toast.success("Video call feature coming soon!");
-  };
+  const { avatar, username, last_message_at } = selectedChat;
 
   const handleBlock = () => {
     toast.error("Block user feature coming soon!");
@@ -38,16 +31,17 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
 
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
-            <img
-              src={selectedChat.avatar}
-              alt={selectedChat.name}
-              className="w-20 h-20 rounded-full object-cover"
-            />
+            <Avatar className="w-20 h-20 rounded-full object-cover">
+              <AvatarImage src={avatar} alt={username} />
+              <AvatarFallback>{username.split("")[0]}</AvatarFallback>
+            </Avatar>
             {selectedChat.isOnline && (
               <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
             )}
           </div>
-          <h2 className="text-lg font-semibold text-center">{selectedChat.name}</h2>
+          <h2 className="text-lg font-semibold text-center">
+            {username}
+          </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {selectedChat.isOnline ? "Active now" : "Offline"}
           </p>

@@ -1,6 +1,7 @@
 import { Info, MoreVertical } from "lucide-react";
 import { useState } from "react";
 import ChatInfoSidebar from "./ChatInfoSidebar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 /**
  * ChatHeader displays chat info for the selected conversation,
@@ -13,9 +14,7 @@ const ChatHeader = ({ selectedChat }) => {
   // Placeholder when no chat is selected
   if (!selectedChat) {
     return (
-      <div
-        className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717]"
-      >
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717]">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
           Select a conversation
         </h2>
@@ -23,32 +22,31 @@ const ChatHeader = ({ selectedChat }) => {
     );
   }
 
+  const { avatar, username } = selectedChat;
+
   // Main chat header showing participant info, status, and action buttons
   return (
     <>
-      <div
-        className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717]"
-      >
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717]">
         {/* Avatar, Name and Status */}
         <div className="flex items-center gap-3">
           <div className="relative">
-            <img
-              src={selectedChat.avatar}
-              alt={selectedChat.name}
-              className="w-10 h-10 rounded-full object-cover"
-            />
-            {selectedChat.isOnline && (
+            <Avatar className="w-10 h-10 rounded-full object-cover">
+              <AvatarImage src={avatar} alt={username} />
+              <AvatarFallback>{username.split("")[0]}</AvatarFallback>
+            </Avatar>
+            {/* {selectedChat.isOnline && (
               // Online indicator w/ custom dark border
               <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
-            )}
+            )} */}
           </div>
           <div>
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-              {selectedChat.name}
+              {username}
             </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            {/* <p className="text-sm text-gray-500 dark:text-gray-400">
               {selectedChat.isOnline ? "Online" : "Offline"}
-            </p>
+            </p> */}
           </div>
         </div>
 
