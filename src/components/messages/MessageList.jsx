@@ -9,6 +9,8 @@ import { useGetConversationList } from "@/hooks/conversatins.hook";
 import MessageListSkeleton from "./skeletonns/MessageListSkeleton";
 import ChatItem from "./skeletonns/ChatItem";
 import { allChats, pinnedChats, requestsChats } from "@/dummyData/chat";
+import ChatList from "./ChatList";
+import { FetchErrorAlert } from "../Alerts/FetchErrorAlerts";
 
 const MessageList = ({ onSelectChat, selectedChatId }) => {
   const [sortBy, setSortBy] = useState("Newest");
@@ -22,6 +24,9 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
     isLoading: isConversationLoading,
     isError: isConversationError,
   } = useGetConversationList();
+
+  const pinnedConversation = conversationList?.filter((chat) => chat.pinned);
+  const regularConversation = conversationList?.filter((chat) => !chat.pinned);
 
   const handleUserSelect = (user) => {
     // Create new chat with user
@@ -62,7 +67,8 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
   };
 
   // skeleton
-  if (isConversationLoading) return <MessageListSkeleton />;
+  if (isConversationLoading || isConversationError)
+    return <MessageListSkeleton />;
 
   return (
     <div className="w-80 border-r border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717] flex flex-col h-full max-h-full">
@@ -146,92 +152,20 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
       </div>
 
       {/* Chat List */}
-      <div className="flex-1 overflow-y-auto">
-        {showRequestsOnly ? (
-          /* Only Requests Chats Section */
-          <div className="p-4 animate-fadeIn">
-            <div className="flex items-center gap-2 mb-3">
-              <MessagesSquare className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Chat Requests
-              </h3>
-            </div>
-            <div className="space-y-1">
-              {requestsChats.map((chat) => (
-                <ChatItem
-                  key={chat.id}
-                  chat={chat}
-                  onSelectChat={onSelectChat}
-                  selectedChatId={selectedChatId}
-                />
-              ))}
-            </div>
-          </div>
-        ) : (
-          /* All Sections */
-          <div className="animate-fadeIn">
-            {/* Pinned Section */}
-            <div className="p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Pin className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Pinned
-                </h3>
-              </div>
-              <div className="space-y-1">
-                {pinnedChats.map((chat) => (
-                  <ChatItem
-                    key={chat.id}
-                    chat={chat}
-                    onSelectChat={onSelectChat}
-                    selectedChatId={selectedChatId}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* All Conversations Section */}
-            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-2 mb-3">
-                <List className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  All Conversations
-                </h3>
-              </div>
-              <div className="space-y-1">
-                {allChats.map((chat) => (
-                  <ChatItem
-                    key={chat.id}
-                    chat={chat}
-                    onSelectChat={onSelectChat}
-                    selectedChatId={selectedChatId}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Requests Chats Section */}
-            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-2 mb-3">
-                <MessagesSquare className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Chat Requests
-                </h3>
-              </div>
-              <div className="space-y-1">
-                {requestsChats.map((chat) => (
-                  <ChatItem
-                    key={chat.id}
-                    chat={chat}
-                    onSelectChat={onSelectChat}
-                    selectedChatId={selectedChatId}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      {isConversationError ? (
+        <div className="p-4">
+          <FetchErrorAlert />
+        </div>
+      ) : (
+        <ChatList
+          showRequestsOnly={showRequestsOnly}
+          requestsChats={requestsChats}
+          onSelectChat={onSelectChat}
+          selectedChatId={selectedChatId}
+          pinnedConversation={pinnedConversation}
+          regularConversation={regularConversation}
+        />
+      )}
 
       <NewMessageSidebar
         isOpen={showNewMessageSidebar}
