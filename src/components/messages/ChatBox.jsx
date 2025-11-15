@@ -6,7 +6,6 @@ import { LuFile, LuX } from "react-icons/lu";
 import toast from "react-hot-toast";
 import notImplemented from "@/dummyMessages/notImplemented";
 
-
 /**
  * ChatBox controls message sending, request state, attachments, and input UI.
  * All dark mode colors are updated for consistency with your site's palette.
@@ -25,9 +24,6 @@ const ChatBox = ({ selectedChat }) => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
-
-  // Read message type from selected chat
-  const { type: messageType } = selectedChat;
 
   // Demo messages data
 
@@ -167,8 +163,14 @@ const ChatBox = ({ selectedChat }) => {
         id: newId,
         text: newMessage,
         sender: "me",
-        senderProfile: { name: "You", avatar: "https://i.pravatar.cc/40?img=10" },
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        senderProfile: {
+          name: "You",
+          avatar: "https://i.pravatar.cc/40?img=10",
+        },
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
         attachments: [...attachments],
       },
     ]);
@@ -208,7 +210,9 @@ const ChatBox = ({ selectedChat }) => {
 
   // Remove an attachment by id
   const handleRemoveAttachment = (attachmentId) => {
-    setAttachments(attachments.filter((attachment) => attachment.id !== attachmentId));
+    setAttachments(
+      attachments.filter((attachment) => attachment.id !== attachmentId)
+    );
   };
   const handleAttachmentClick = () => {
     fileInputRef.current?.click();
@@ -227,7 +231,12 @@ const ChatBox = ({ selectedChat }) => {
       <div className="flex-1 flex items-center justify-center bg-gray-50 dark:bg-[#171717]">
         <div className="text-center">
           <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 dark:bg-[#282828] rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-8 h-8 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -247,6 +256,8 @@ const ChatBox = ({ selectedChat }) => {
     );
   }
 
+  // Read message type from selected chat
+  const { type: messageType } = selectedChat;
   // Display request acceptance UI if needed
   const showRequestAcceptance = messageType === "request" && !isRequestAccepted;
 
@@ -263,7 +274,9 @@ const ChatBox = ({ selectedChat }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.3 }}
-              className={`mb-4 flex ${message.sender === "me" ? "justify-end" : "justify-start"}`}
+              className={`mb-4 flex ${
+                message.sender === "me" ? "justify-end" : "justify-start"
+              }`}
             >
               <div className="relative max-w-md flex items-center gap-3">
                 {message.sender === "other" && (
@@ -295,10 +308,11 @@ const ChatBox = ({ selectedChat }) => {
                             className="flex items-center p-2 mb-2 bg-white dark:bg-[#282828] rounded-md border border-gray-200 dark:border-[#282828]"
                           >
                             <div className="p-2 bg-gray-100 dark:bg-[#171717] rounded-md">
-                              {attachment.type.includes("image/")
-                                ? <FiImage size={16} />
-                                : <LuFile size={16} />
-                              }
+                              {attachment.type.includes("image/") ? (
+                                <FiImage size={16} />
+                              ) : (
+                                <LuFile size={16} />
+                              )}
                             </div>
                             <div className="ml-2 flex-1 max-w-[330px]">
                               <span className="text-xs break-words font-medium">
@@ -315,19 +329,29 @@ const ChatBox = ({ selectedChat }) => {
                     {message.text}
                   </div>
                   <div
-                    className={`${message.sender === "me" ? "text-right" : "text-left"} mt-1 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1`}
+                    className={`${
+                      message.sender === "me" ? "text-right" : "text-left"
+                    } mt-1 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1`}
                   >
                     <span>{message.timestamp}</span>
                     {message.isRead && (
                       <div className="flex items-center">
-                        <svg className="w-3 h-3 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                        <svg
+                          className="w-3 h-3 text-blue-500"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
                           <path
                             fillRule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                             clipRule="evenodd"
                           />
                         </svg>
-                        <svg className="w-3 h-3 text-blue-500 -ml-1" fill="currentColor" viewBox="0 0 20 20">
+                        <svg
+                          className="w-3 h-3 text-blue-500 -ml-1"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
                           <path
                             fillRule="evenodd"
                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"

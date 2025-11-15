@@ -3,16 +3,18 @@ import ChatBox from "../../components/messages/ChatBox";
 import ChatHeader from "../../components/messages/ChatHeader";
 import MessageList from "../../components/messages/MessageList";
 
+// const dummyConversation = {
+//   id: 1,
+//   name: "Emma Johnson",
+//   avatar: "https://i.pravatar.cc/40?img=1",
+//   lastMessage: "Hello, I'm having an issue with my recent order...",
+//   time: "07:00 AM",
+//   unreadCount: 2,
+//   isOnline: true,
+// };
+
 const Message = () => {
-  const [selectedChat, setSelectedChat] = useState({
-    id: 1,
-    name: "Emma Johnson",
-    avatar: "https://i.pravatar.cc/40?img=1",
-    lastMessage: "Hello, I'm having an issue with my recent order...",
-    time: "07:00 AM",
-    unreadCount: 2,
-    isOnline: true,
-  });
+  const [selectedChat, setSelectedChat] = useState(null);
 
   const handleSelectChat = (chat) => {
     setSelectedChat(chat);
