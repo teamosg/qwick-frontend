@@ -7,7 +7,7 @@ import CreateGroupModal from "./CreateGroupModal";
 import {
   useGetConversationList,
   useGetRequestConversationList,
-} from "@/hooks/conversatins.hook";
+} from "@/hooks/conversations.hook";
 import MessageListSkeleton from "./skeletonns/MessageListSkeleton";
 import { requestsChats } from "@/dummyData/chat";
 import ChatList from "./ChatList";
