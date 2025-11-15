@@ -20,7 +20,6 @@ export function SidebarMyCommunity({ onClose }) {
     isError: isErrorCommunityList,
   } = useGetCommunityList();
 
-  console.log(communityList);
   if (isLoadingCommunityList || isErrorCommunityList)
     return <SidebarMyCommunitySkeleton />;
 
@@ -34,7 +33,7 @@ export function SidebarMyCommunity({ onClose }) {
           <ScrollArea className="h-40 max-h-40 ">
             <div className="p-4">
               {communityList.map((community) => (
-                <React.Fragment key={community.name}>
+                <React.Fragment key={community?.business_name}>
                   <div className="text-sm  mb-3">
                     <button
                       onClick={onClose}
@@ -45,7 +44,7 @@ export function SidebarMyCommunity({ onClose }) {
                         alt=""
                         className="rounded-full inline mr-2 object-cover h-8 w-8"
                       />
-                      {community.name.slice(0, 15)}...
+                      {community?.business_name?.slice(0, 15)}...
                     </button>
                   </div>
                 </React.Fragment>
