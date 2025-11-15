@@ -48,7 +48,7 @@ export const usePinConversation = () => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async ({conversationId}) => {
+    mutationFn: async ({ conversationId }) => {
       try {
         const res = await axiosPrivate.post(
           `/v1/account/pin/${conversationId}/`
@@ -78,6 +78,47 @@ export const usePinConversation = () => {
         error?.response?.data?.error ||
         error.message ||
         "Failed to pin conversation";
+      toast.error(message);
+    },
+  });
+
+  return { mutate, isPending };
+};
+
+export const useUnpinConversation = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({ conversationId }) => {
+      try {
+        const res = await axiosPrivate.delete(
+          `/v1/account/pin/${conversationId}/`
+        );
+        return res?.data;
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error.message ||
+          "Failed to un-pin conversation";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success("Conversation un-pinned successfully");
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+      } else {
+        toast.error("Failed to un-pin conversation");
+      }
+    },
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error.message ||
+        "Failed to un-pin conversation";
       toast.error(message);
     },
   });

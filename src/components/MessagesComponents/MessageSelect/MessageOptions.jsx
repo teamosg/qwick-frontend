@@ -18,14 +18,13 @@ import {
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PinOff } from "lucide-react";
-import { usePinConversation } from "@/hooks/conversations.hook";
+import { usePinConversation, useUnpinConversation } from "@/hooks/conversations.hook";
 
 function MessageOptions({ chat }) {
-  const { mutate: pinConversation, isPending: isPinPending } =
-    usePinConversation();
   const { avatar, username, pinned, user_id } = chat;
+  const { mutate: pinConversation } = usePinConversation();
+  const { mutate: unpinConversation } = useUnpinConversation();
 
-  console.log(chat);
   // single handler for all items
   const handleItemClick = () => {
     toast.error("This feature hasn't been implemented yet!");
@@ -33,6 +32,12 @@ function MessageOptions({ chat }) {
 
   const handlePinConversation = () => {
     pinConversation({
+      conversationId: user_id,
+    });
+  };
+
+  const handleUnpinConversation = () => {
+    unpinConversation({
       conversationId: user_id,
     });
   };
@@ -78,7 +83,7 @@ function MessageOptions({ chat }) {
 
         <DropdownMenuGroup>
           {pinned ? (
-            <DropdownMenuItem onClick={() => handleItemClick("Pin")}>
+            <DropdownMenuItem onClick={() => handleUnpinConversation()}>
               <PinOff className="rotate-45" />
               Unpin
             </DropdownMenuItem>
