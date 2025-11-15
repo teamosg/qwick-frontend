@@ -6,13 +6,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UserPlus, Pin, CircleX, ExternalLink, Ban, CheckCircle, Ellipsis } from "lucide-react";
+import {
+  UserPlus,
+  Pin,
+  CircleX,
+  ExternalLink,
+  Ban,
+  CheckCircle,
+  Ellipsis,
+} from "lucide-react";
 import toast from "react-hot-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PinOff } from "lucide-react";
 
-function MessageOptions({ avatar }) {
+function MessageOptions({ chat }) {
+  const { avatar, username, pinned } = chat;
+  console.log(chat);
   // single handler for all items
   const handleItemClick = () => {
-    toast.error("This feature hasn't been implemented yet!")
+    toast.error("This feature hasn't been implemented yet!");
   };
 
   return (
@@ -33,10 +45,10 @@ function MessageOptions({ avatar }) {
 
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={() => handleItemClick("Profile")}>
-            <img
-              src={avatar}
-              className="w-[18px] h-[18px] rounded-full object-cover"
-            />
+            <Avatar className={"w-[18px] h-[18px] rounded-full object-cover"}>
+              <AvatarImage src={avatar} alt={username} />
+              <AvatarFallback>{username.split("")[0]}</AvatarFallback>
+            </Avatar>
             Profile
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => handleItemClick("Add to group")}>
@@ -55,10 +67,17 @@ function MessageOptions({ avatar }) {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => handleItemClick("Pin")}>
-            <Pin className="rotate-45" />
-            Pin
-          </DropdownMenuItem>
+          {pinned ? (
+            <DropdownMenuItem onClick={() => handleItemClick("Pin")}>
+              <PinOff className="rotate-45" />
+              Unpin
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem onClick={() => handleItemClick("Pin")}>
+              <Pin className="rotate-45" />
+              Pin
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem onClick={() => handleItemClick("Open in new tab")}>
             <ExternalLink />
             Open in new tab

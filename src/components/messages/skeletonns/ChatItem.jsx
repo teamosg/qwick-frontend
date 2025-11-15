@@ -1,4 +1,5 @@
 import MessageOptions from "@/components/MessagesComponents/MessageSelect/MessageOptions";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ChatItem = ({ chat, onSelectChat, selectedChatId }) => {
   const { username, avatar, last_message, last_message_at, unread_count } =
@@ -23,11 +24,10 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId }) => {
       }`}
     >
       <div className="relative">
-        <img
-          src={avatar || "https://i.pravatar.cc/40?img=10"}
-          alt={username}
-          className="w-10 h-10 rounded-full object-cover"
-        />
+        <Avatar className="w-10 h-10 rounded-full object-cover">
+          <AvatarImage src={avatar} alt={username} />
+          <AvatarFallback>{username.split("")[0]}</AvatarFallback>
+        </Avatar>
         {chat?.isOnline && (
           <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
         )}
@@ -47,6 +47,7 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId }) => {
           </p>
           {selectedChatId === chat.user_id ? (
             <MessageOptions
+              chat={chat}
               avatar={avatar || "https://i.pravatar.cc/40?img=10"}
             />
           ) : (
