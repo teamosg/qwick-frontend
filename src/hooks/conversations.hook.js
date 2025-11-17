@@ -149,3 +149,53 @@ export const useGetConversationDetails = ({ conversationId }) => {
     staleTime: 1000 * 60 * 10,
   });
 };
+
+export const useConversationRequestAction = () => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({ action, conversationId }) => {
+      const payload = { action };
+
+      try {
+        const res = await axiosPrivate.patch(
+          `/v1/account/message-requests/${conversationId}/`,
+          payload
+        );
+        return res?.data;
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error.message ||
+          "Failed to un-pin conversation";
+
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message);
+        queryClient.invalidateQueries({
+          queryKey: [
+            "requestConversationList",
+            "conversationList",
+            "conversationDetails",
+          ],
+        });
+      } else {
+        toast.error(data?.message || "Failed to action conversation request");
+      }
+    },
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error.message ||
+        "Failed to update profile";
+      toast.error(message);
+    },
+  });
+  return { mutate, isPending };
+};

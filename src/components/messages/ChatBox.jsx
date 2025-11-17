@@ -5,7 +5,10 @@ import { FiImage } from "react-icons/fi";
 import { LuFile, LuX } from "react-icons/lu";
 import toast from "react-hot-toast";
 import notImplemented from "@/dummyMessages/notImplemented";
-import { useGetConversationDetails } from "@/hooks/conversations.hook";
+import {
+  useConversationRequestAction,
+  useGetConversationDetails,
+} from "@/hooks/conversations.hook";
 import ConversationDetailsSkeleton from "./skeletonns/ConversationDetailsSkeleton";
 import { useProfile } from "@/hooks/auth.hook";
 import AvatarUser from "../ui/AvatarUser";
@@ -29,13 +32,17 @@ const ChatBox = ({ selectedChat }) => {
     isError: isUserError,
   } = useProfile();
 
+  const { mutate: mutateRequestAction } = useConversationRequestAction();
+
   // Refs for scroll and inputs
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
 
+  const conversationId = selectedChat?.id;
+  const isMessageRequest = selectedChat?.requested_at;
   const sender_id = selectedChat?.user_id || selectedChat?.sender_id;
-  const sender_userName =
+  const sender_username =
     selectedChat?.username || selectedChat?.sender_username;
   const sender_avatar = selectedChat?.avatar;
   const {
@@ -45,9 +52,6 @@ const ChatBox = ({ selectedChat }) => {
   } = useGetConversationDetails({
     conversationId: sender_id,
   });
-
-  console.log(conversationDetails);
-  console.log(user);
 
   // Animation: scroll to latest message
   const scrollToBottom = () => {
@@ -73,11 +77,10 @@ const ChatBox = ({ selectedChat }) => {
 
   // Handle acceptance of a message request (request type chat)
   const handleAcceptRequest = () => {
-    toast.success(`Message request from ${selectedChat.name} accepted!`);
-    setIsRequestAccepted(true);
-    setTimeout(() => {
-      if (inputRef.current) inputRef.current.focus();
-    }, 300);
+    mutateRequestAction({
+      conversationId,
+      action: "accept",
+    });
   };
 
   // Do nothing on delete request as per requirements
@@ -197,7 +200,7 @@ const ChatBox = ({ selectedChat }) => {
                   {message?.sender_id === sender_id && (
                     <AvatarUser
                       src={sender_avatar}
-                      alt={sender_userName}
+                      alt={sender_username}
                       className="w-8 h-8"
                     />
                   )}
@@ -290,7 +293,7 @@ const ChatBox = ({ selectedChat }) => {
 
       {/* Message Input or Request Acceptance */}
       <AnimatePresence mode="wait">
-        {showRequestAcceptance ? (
+        {isMessageRequest ? (
           // Request Acceptance Section (dark mode colors)
           <motion.div
             key="request-acceptance"
@@ -305,19 +308,19 @@ const ChatBox = ({ selectedChat }) => {
               <div className="text-center mb-6">
                 <div className="flex justify-center mb-4">
                   <div className="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center border-2 border-blue-200 dark:border-blue-800">
-                    <img
-                      src={selectedChat.avatar}
-                      alt={selectedChat.name}
-                      className="w-14 h-14 rounded-full object-cover"
+                    <AvatarUser
+                      src={sender_avatar}
+                      alt={sender_username}
+                      className={"w-14 h-14 "}
                     />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                  Accept message from {selectedChat.name}?
+                  Accept message from {sender_username}?
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {selectedChat.name} wants to send you a message. You can
-                  accept or delete this request.
+                  {sender_username} wants to send you a message. You can accept
+                  or delete this request.
                 </p>
               </div>
               {/* Info Box */}
