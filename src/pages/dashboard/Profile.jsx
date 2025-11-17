@@ -25,6 +25,7 @@ import { FaFileInvoice } from "react-icons/fa";
 import { useEditProfile, useProfile } from "@/hooks/auth.hook";
 import { Bookmark } from "lucide-react";
 import SavedPosts from "@/components/dashboard/Profile/SavedPosts";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const tabs = [
   {
@@ -85,19 +86,13 @@ const tabs = [
 
 const Profile = () => {
   const [isTabsOpen, setIsTabsOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null);
 
   const { data: profile, isLoading: isProfileLoading } = useProfile();
   const { mutate: editProfile, isPending: isUploading } = useEditProfile();
 
-
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => setPreviewImage(reader.result);
-    reader.readAsDataURL(file);
 
     // Prepare FormData for upload
     const formData = new FormData();
@@ -107,10 +102,7 @@ const Profile = () => {
   };
 
   const userName = profile?.first_name || "User Name";
-  const userAvatar =
-    previewImage ||
-    profile?.avatar ||
-    "https://darrenchua.softvencealpha.com/media/avatars/avatar.jpg";
+  const userAvatar = profile?.avatar;
 
   return (
     <div className="p-6 min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
@@ -154,11 +146,11 @@ const Profile = () => {
           <div className="p-6 md:p-0">
             <div className="p-4 relative group text-center">
               <div className="relative inline-block">
-                <img
-                  alt={userName}
-                  src={userAvatar}
-                  className="h-20 w-20 rounded-full object-cover border border-border transition-all"
-                />
+                <Avatar className="h-20 w-20 rounded-full object-cover border border-border transition-all">
+                  <AvatarImage src={userAvatar} alt={userName} />
+                  <AvatarFallback>{userName.split("")[0]}</AvatarFallback>
+                </Avatar>
+
                 <label
                   htmlFor="profile-upload"
                   className="absolute inset-0 bg-black/50 text-white text-xs flex items-center justify-center rounded-full opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity"
