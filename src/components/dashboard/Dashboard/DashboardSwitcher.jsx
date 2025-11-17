@@ -17,6 +17,8 @@ export default function DashboardSwitcher({
 }) {
   if (isLoadingCommunityList || !selectedCommunity) return <p>loading ...</p>;
 
+  console.log(selectedCommunity);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="z-40 flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg text-white focus-visible:outline-none">
@@ -31,7 +33,7 @@ export default function DashboardSwitcher({
         </Avatar>
         <div className="text-start flex flex-col gap-1 leading-none">
           <span className="text-base leading-none font-semibold truncate max-w-[17ch]">
-            {selectedCommunity?.name.slice(0, 14)}...
+            {selectedCommunity?.business_name?.slice(0, 14)}...
           </span>
           <span className="text-xs truncate max-w-[20ch]">
             @{selectedCommunity?.username}
