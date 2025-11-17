@@ -6,7 +6,6 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId }) => {
   const username = chat?.sender_username || chat?.username;
   const user_id = chat?.sender_id || chat?.user_id;
 
-  console.log(username);
   const date = new Date(last_message_at);
   const options = {
     hour: "2-digit",

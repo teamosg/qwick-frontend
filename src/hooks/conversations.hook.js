@@ -19,7 +19,7 @@ export const useGetConversationList = () => {
         throw new Error(message);
       }
     },
-    staleTime: 1000 * 60 * 10, // cache for 10 mins
+    staleTime: 1000 * 60 * 10,
   });
 };
 
@@ -40,7 +40,7 @@ export const useGetRequestConversationList = () => {
         throw new Error(message);
       }
     },
-    staleTime: 1000 * 60 * 10, // cache for 10 mins
+    staleTime: 1000 * 60 * 10,
   });
 };
 
@@ -124,4 +124,28 @@ export const useUnpinConversation = () => {
   });
 
   return { mutate, isPending };
+};
+
+export const useGetConversationDetails = ({ conversationId }) => {
+  return useQuery({
+    queryKey: ["conversationDetails", conversationId],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/account/conversations/dm/${conversationId}/`
+        );
+        return res?.data?.data || [];
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error?.message ||
+          "Failed to fetch conversation details";
+
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    staleTime: 1000 * 60 * 10,
+  });
 };
