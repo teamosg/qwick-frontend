@@ -6,8 +6,9 @@ import { LuFile, LuX } from "react-icons/lu";
 import toast from "react-hot-toast";
 import notImplemented from "@/dummyMessages/notImplemented";
 import { useGetConversationDetails } from "@/hooks/conversations.hook";
-import SelectConversationMessage from "./EmptyChatBox";
 import ConversationDetailsSkeleton from "./skeletonns/ConversationDetailsSkeleton";
+import { useProfile } from "@/hooks/auth.hook";
+import AvatarUser from "../ui/AvatarUser";
 
 /**
  * ChatBox controls message sending, request state, attachments, and input UI.
@@ -22,108 +23,31 @@ const ChatBox = ({ selectedChat }) => {
   const [totalAttachments, setTotalAttachments] = useState(0);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [isRequestAccepted, setIsRequestAccepted] = useState(false);
+  const {
+    data: user,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useProfile();
 
   // Refs for scroll and inputs
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  const userId = selectedChat?.user_id || selectedChat?.sender_id;
+  const sender_id = selectedChat?.user_id || selectedChat?.sender_id;
+  const sender_userName =
+    selectedChat?.username || selectedChat?.sender_username;
+  const sender_avatar = selectedChat?.avatar;
   const {
     data: conversationDetails,
     isLoading: isConversationLoading,
     isError: isConversationError,
   } = useGetConversationDetails({
-    conversationId: userId,
+    conversationId: sender_id,
   });
 
-  // Sample messages for Emma Johnson (matching the image description)
-  const sampleMessages = {
-    1: [
-      {
-        id: 1,
-        text: 'Hello, I\'m having an issue with my recent order. It says "Processing" for the past three days. Can you help me check the status?',
-        sender: "other",
-        senderProfile: {
-          name: "Emma Johnson",
-          avatar: "https://i.pravatar.cc/40?img=1",
-        },
-        timestamp: "07:00 AM",
-        isRead: true,
-      },
-      {
-        id: 2,
-        text: "Hi Emma, thank you for reaching out! Let me check the status of your order for you. Could you please share your order number?",
-        sender: "me",
-        senderProfile: {
-          name: "You",
-          avatar: "https://i.pravatar.cc/40?img=10",
-        },
-        timestamp: "07:10 AM",
-        isRead: true,
-        isCard: true,
-      },
-      {
-        id: 3,
-        text: "Sure, it's #12345.",
-        sender: "other",
-        senderProfile: {
-          name: "Emma Johnson",
-          avatar: "https://i.pravatar.cc/40?img=1",
-        },
-        timestamp: "07:20 AM",
-        isRead: true,
-      },
-      {
-        id: 4,
-        text: "Thank you! I see that your order is currently being processed by our warehouse team. It should be shipped within the next 24 hours.",
-        sender: "me",
-        senderProfile: {
-          name: "You",
-          avatar: "https://i.pravatar.cc/40?img=10",
-        },
-        timestamp: "07:30 AM",
-        isRead: true,
-      },
-      {
-        id: 5,
-        text: "That's great, thank you for the quick update!",
-        sender: "other",
-        senderProfile: {
-          name: "Emma Johnson",
-          avatar: "https://i.pravatar.cc/40?img=1",
-        },
-        timestamp: "07:30 AM",
-        isRead: true,
-      },
-    ],
-    10: [
-      {
-        id: 1,
-        text: 'Hello, I\'m having an issue with my recent order. It says "Processing" for the past three days. Can you help me check the status?',
-        sender: "other",
-        senderProfile: {
-          name: "Emma Johnson",
-          avatar: "https://i.pravatar.cc/40?img=10",
-        },
-        timestamp: "07:00 AM",
-        isRead: true,
-      },
-    ],
-    11: [
-      {
-        id: 1,
-        text: 'Hello, I\'m having an issue with my recent order. It says "Processing" for the past three days. Can you help me check the status?',
-        sender: "other",
-        senderProfile: {
-          name: "Michael Brown",
-          avatar: "https://i.pravatar.cc/40?img=11",
-        },
-        timestamp: "07:00 AM",
-        isRead: true,
-      },
-    ],
-  };
+  console.log(conversationDetails);
+  console.log(user);
 
   // Animation: scroll to latest message
   const scrollToBottom = () => {
@@ -133,11 +57,11 @@ const ChatBox = ({ selectedChat }) => {
   // Load messages whenever chat changes
   useEffect(() => {
     if (selectedChat) {
-      setMessages(sampleMessages[selectedChat.id] || []);
+      setMessages(conversationDetails || []);
       setShouldScrollToBottom(true);
       setIsRequestAccepted(false);
     }
-  }, [selectedChat]);
+  }, [selectedChat, conversationDetails]);
 
   // Scroll on messages update if flagged
   useEffect(() => {
@@ -145,7 +69,7 @@ const ChatBox = ({ selectedChat }) => {
       scrollToBottom();
       setShouldScrollToBottom(false);
     }
-  }, [messages, shouldScrollToBottom]);
+  }, [conversationDetails, shouldScrollToBottom]);
 
   // Handle acceptance of a message request (request type chat)
   const handleAcceptRequest = () => {
@@ -240,7 +164,12 @@ const ChatBox = ({ selectedChat }) => {
   // Display request acceptance UI if needed
   const showRequestAcceptance = messageType === "request" && !isRequestAccepted;
 
-  if (isConversationLoading || isConversationError)
+  if (
+    isConversationLoading ||
+    isConversationError ||
+    isUserLoading ||
+    isUserError
+  )
     return <ConversationDetailsSkeleton />;
 
   return (
@@ -249,119 +178,112 @@ const ChatBox = ({ selectedChat }) => {
       <div className="flex-1 p-4 overflow-y-auto">
         {/* Message bubbles, colors updated for dark mode */}
         <AnimatePresence>
-          {messages.map((message) => (
-            <motion.div
-              key={message.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.3 }}
-              className={`mb-4 flex ${
-                message.sender === "me" ? "justify-end" : "justify-start"
-              }`}
-            >
-              <div className="relative max-w-md flex items-center gap-3">
-                {message.sender === "other" && (
-                  <img
-                    src={message.senderProfile?.avatar}
-                    alt={message.senderProfile?.name}
-                    className="w-8 h-8 rounded-full"
-                  />
-                )}
-                <div>
-                  <div
-                    className={`py-3 px-4 rounded-2xl text-sm ${
-                      message.sender === "me"
-                        ? "bg-blue-500 text-white"
-                        : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
-                    } ${message.isCard ? "border border-blue-300" : ""}`}
-                  >
-                    {message.isCard && (
-                      <div className="text-xs text-blue-200 mb-1">
-                        card message
-                      </div>
-                    )}
-                    {/* File attachments in message */}
-                    {message.attachments && message.attachments.length > 0 && (
-                      <div className="mb-2">
-                        {message.attachments.map((attachment) => (
-                          <div
-                            key={attachment.id}
-                            className="flex items-center p-2 mb-2 bg-white dark:bg-[#282828] rounded-md border border-gray-200 dark:border-[#282828]"
-                          >
-                            <div className="p-2 bg-gray-100 dark:bg-[#171717] rounded-md">
-                              {attachment.type.includes("image/") ? (
-                                <FiImage size={16} />
-                              ) : (
-                                <LuFile size={16} />
-                              )}
-                            </div>
-                            <div className="ml-2 flex-1 max-w-[330px]">
-                              <span className="text-xs break-words font-medium">
-                                {attachment.name}
-                              </span>
-                              <p className="text-xs text-gray-500">
-                                {formatFileSize(attachment.size)}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    {message.text}
-                  </div>
-                  <div
-                    className={`${
-                      message.sender === "me" ? "text-right" : "text-left"
-                    } mt-1 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1`}
-                  >
-                    <span>{message.timestamp}</span>
-                    {message.isRead && (
-                      <div className="flex items-center">
-                        <svg
-                          className="w-3 h-3 text-blue-500"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        <svg
-                          className="w-3 h-3 text-blue-500 -ml-1"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                {message.sender === "me" && (
-                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-[#282828] flex items-center justify-center">
-                    <svg
-                      className="w-4 h-4 text-gray-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
+          {messages.map((message) => {
+            console.log(message);
+            return (
+              <motion.div
+                key={message.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.3 }}
+                className={`mb-4 flex ${
+                  message?.sender_id === sender_id
+                    ? "justify-start"
+                    : "justify-end"
+                }`}
+              >
+                <div className="relative max-w-md flex items-center gap-3">
+                  {message?.sender_id === sender_id && (
+                    <AvatarUser
+                      src={sender_avatar}
+                      alt={sender_userName}
+                      className="w-8 h-8"
+                    />
+                  )}
+                  <div>
+                    <div
+                      className={`py-3 px-4 rounded-2xl text-sm ${
+                        message.sender_id !== sender_id
+                          ? "bg-blue-500 text-white"
+                          : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
+                      } ${message.isCard ? "border border-blue-300" : ""}`}
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                      {/* File attachments in message */}
+                      {message.attachments &&
+                        message.attachments.length > 0 && (
+                          <div className="mb-2">
+                            {message.attachments.map((attachment) => (
+                              <div
+                                key={attachment.id}
+                                className="flex items-center p-2 mb-2 bg-white dark:bg-[#282828] rounded-md border border-gray-200 dark:border-[#282828]"
+                              >
+                                <div className="p-2 bg-gray-100 dark:bg-[#171717] rounded-md">
+                                  {attachment.type.includes("image/") ? (
+                                    <FiImage size={16} />
+                                  ) : (
+                                    <LuFile size={16} />
+                                  )}
+                                </div>
+                                <div className="ml-2 flex-1 max-w-[330px]">
+                                  <span className="text-xs break-words font-medium">
+                                    {attachment.name}
+                                  </span>
+                                  <p className="text-xs text-gray-500">
+                                    {formatFileSize(attachment.size)}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      {message.content}
+                    </div>
+                    <div
+                      className={`${
+                        message.sender === "me" ? "text-right" : "text-left"
+                      } mt-1 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1`}
+                    >
+                      <span>{message.timestamp}</span>
+                      {message.isRead && (
+                        <div className="flex items-center">
+                          <svg
+                            className="w-3 h-3 text-blue-500"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <svg
+                            className="w-3 h-3 text-blue-500 -ml-1"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                )}
-              </div>
-            </motion.div>
-          ))}
+                  {message.sender_id !== sender_id && (
+                    <AvatarUser
+                      src={user?.avatar}
+                      alt={user?.first_name}
+                      className="w-8 h-8"
+                    />
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
         <div ref={messagesEndRef} />
       </div>
