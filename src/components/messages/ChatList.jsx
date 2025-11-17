@@ -10,6 +10,7 @@ const ChatList = ({
   pinnedConversation,
   regularConversation,
 }) => {
+  console.log(requestsChats);
   return (
     <div className="flex-1 overflow-y-auto">
       {showRequestsOnly ? (

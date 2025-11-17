@@ -26,13 +26,13 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
     isError: isConversationError,
   } = useGetConversationList();
 
-  // const {
-  //   data: requestConversationList,
-  //   // isLoading: isRequestConversationLoading,
-  //   // isError: isRequestConversationError,
-  // } = useGetRequestConversationList();
+  const {
+    data: requestConversationList,
+    isLoading: isRequestConversationLoading,
+    isError: isRequestConversationError,
+  } = useGetRequestConversationList();
 
-  // console.log(requestConversationList);
+  console.log(requestConversationList);
 
   const pinnedConversation = conversationList?.filter((chat) => chat.pinned);
   const regularConversation = conversationList?.filter((chat) => !chat.pinned);
@@ -76,7 +76,12 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
   };
 
   // skeleton
-  if (isConversationLoading || isConversationError)
+  if (
+    isConversationLoading ||
+    isRequestConversationLoading ||
+    isConversationError ||
+    isRequestConversationError
+  )
     return <MessageListSkeleton />;
 
   return (
@@ -168,8 +173,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
       ) : (
         <ChatList
           showRequestsOnly={showRequestsOnly}
-          // requestsChats={requestConversationList}
-          requestsChats={[]}
+          requestsChats={requestConversationList}
           onSelectChat={onSelectChat}
           selectedChatId={selectedChatId}
           pinnedConversation={pinnedConversation}

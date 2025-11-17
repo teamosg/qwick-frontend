@@ -2,9 +2,11 @@ import MessageOptions from "@/components/MessagesComponents/MessageSelect/Messag
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ChatItem = ({ chat, onSelectChat, selectedChatId }) => {
-  const { username, avatar, last_message, last_message_at, unread_count } =
-    chat;
+  const { avatar, last_message, last_message_at, unread_count } = chat;
+  const username = chat?.sender_username || chat?.username;
+  const user_id = chat?.sender_id || chat?.user_id;
 
+  console.log(username);
   const date = new Date(last_message_at);
   const options = {
     hour: "2-digit",
@@ -18,7 +20,7 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId }) => {
     <div
       onClick={() => onSelectChat(chat)}
       className={`flex items-center gap-3 p-3 cursor-pointer transition-colors ${
-        selectedChatId === chat.user_id
+        selectedChatId === user_id
           ? "bg-gray-100 dark:bg-gray-800"
           : "hover:bg-gray-50 dark:hover:bg-gray-800"
       }`}
@@ -45,7 +47,7 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId }) => {
           <p className="text-xs text-gray-600 dark:text-gray-300 truncate">
             {last_message}
           </p>
-          {selectedChatId === chat.user_id ? (
+          {selectedChatId === user_id ? (
             <MessageOptions
               chat={chat}
               avatar={avatar || "https://i.pravatar.cc/40?img=10"}
