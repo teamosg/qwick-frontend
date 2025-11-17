@@ -11,7 +11,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
  */
 const DirectChatInfo = ({ selectedChat, onClose }) => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const { avatar, username, last_message_at } = selectedChat;
+  const { avatar } = selectedChat;
+  const username = selectedChat?.sender_username || selectedChat?.username;
 
   const handleBlock = () => {
     toast.error("Block user feature coming soon!");
@@ -39,9 +40,7 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
               <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
             )}
           </div>
-          <h2 className="text-lg font-semibold text-center">
-            {username}
-          </h2>
+          <h2 className="text-lg font-semibold text-center">{username}</h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {selectedChat.isOnline ? "Active now" : "Offline"}
           </p>
