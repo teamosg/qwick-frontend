@@ -42,10 +42,13 @@ axiosPrivate.interceptors.response.use(
   },
   function (error) {
     // window.location.href = "/sign-in";
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       toast.error("Session expired. Please sign in again.");
       localStorage.removeItem("token");
-      window.location.href = "/sign-in";
+
+      setTimeout(() => {
+        window.location.href = "/sign-in";
+      }, [1500]);
     }
 
     return Promise.reject(error);
