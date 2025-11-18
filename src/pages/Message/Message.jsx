@@ -24,7 +24,7 @@ const Message = () => {
       <div className="flex-1 flex flex-col">
         <ChatHeader selectedChat={selectedChat} />
         {selectedChat ? (
-          <ChatBox selectedChat={selectedChat} />
+          <ChatBox selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
         ) : (
           <EmptyChatBox />
         )}

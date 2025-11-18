@@ -3,7 +3,6 @@ import { Loader, CheckCircle, XCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { FiImage } from "react-icons/fi";
 import { LuFile, LuX } from "react-icons/lu";
-import notImplemented from "@/dummyMessages/notImplemented";
 import {
   useConversationRequestAction,
   useGetConversationDetails,
@@ -16,7 +15,7 @@ import AvatarUser from "../ui/AvatarUser";
  * ChatBox controls message sending, request state, attachments, and input UI.
  * All dark mode colors are updated for consistency with your site's palette.
  */
-const ChatBox = ({ selectedChat }) => {
+const ChatBox = ({ selectedChat, setSelectedChat }) => {
   // State management for chat features
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -87,8 +86,16 @@ const ChatBox = ({ selectedChat }) => {
   };
 
   // Do nothing on delete request as per requirements
-  const handleDeleteRequest = () => {
-    notImplemented();
+  const handleDeleteRequest = async () => {
+    const res = await mutateRequestAction({
+      conversationId,
+      action: "decline",
+    });
+
+    if (res.success) {
+      setIsMessageRequest(false);
+      setSelectedChat(null);
+    }
   };
 
   // Send text or file message, reset input on send
