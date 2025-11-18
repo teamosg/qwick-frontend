@@ -127,6 +127,7 @@ export const useUnpinConversation = () => {
 };
 
 export const useGetConversationDetails = ({ conversationId }) => {
+  const queryClient = useQueryClient();
   return useQuery({
     queryKey: ["conversationDetails", conversationId],
     queryFn: async () => {
@@ -134,6 +135,7 @@ export const useGetConversationDetails = ({ conversationId }) => {
         const res = await axiosPrivate.get(
           `/v1/account/conversations/dm/${conversationId}/`
         );
+        queryClient.invalidateQueries(["conversationList"]);
         return res?.data?.data || [];
       } catch (error) {
         const message =
