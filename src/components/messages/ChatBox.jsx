@@ -3,7 +3,6 @@ import { Loader, CheckCircle, XCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { FiImage } from "react-icons/fi";
 import { LuFile, LuX } from "react-icons/lu";
-import toast from "react-hot-toast";
 import notImplemented from "@/dummyMessages/notImplemented";
 import {
   useConversationRequestAction,
@@ -25,14 +24,16 @@ const ChatBox = ({ selectedChat }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [totalAttachments, setTotalAttachments] = useState(0);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
-  const [isRequestAccepted, setIsRequestAccepted] = useState(false);
+  const [isMessageRequest, setIsMessageRequest] = useState(
+    selectedChat?.requested_at
+  );
   const {
     data: user,
     isLoading: isUserLoading,
     isError: isUserError,
   } = useProfile();
 
-  const { mutate: mutateRequestAction } = useConversationRequestAction();
+  const { mutateAsync: mutateRequestAction } = useConversationRequestAction();
 
   // Refs for scroll and inputs
   const messagesEndRef = useRef(null);
@@ -40,7 +41,6 @@ const ChatBox = ({ selectedChat }) => {
   const fileInputRef = useRef(null);
 
   const conversationId = selectedChat?.id;
-  const isMessageRequest = selectedChat?.requested_at;
   const sender_id = selectedChat?.user_id || selectedChat?.sender_id;
   const sender_username =
     selectedChat?.username || selectedChat?.sender_username;
@@ -63,7 +63,6 @@ const ChatBox = ({ selectedChat }) => {
     if (selectedChat) {
       setMessages(conversationDetails || []);
       setShouldScrollToBottom(true);
-      setIsRequestAccepted(false);
     }
   }, [selectedChat, conversationDetails]);
 
@@ -76,11 +75,15 @@ const ChatBox = ({ selectedChat }) => {
   }, [conversationDetails, shouldScrollToBottom]);
 
   // Handle acceptance of a message request (request type chat)
-  const handleAcceptRequest = () => {
-    mutateRequestAction({
+  const handleAcceptRequest = async () => {
+    const res = await mutateRequestAction({
       conversationId,
       action: "accept",
     });
+
+    if (res.success) {
+      setIsMessageRequest(false);
+    }
   };
 
   // Do nothing on delete request as per requirements
@@ -98,13 +101,12 @@ const ChatBox = ({ selectedChat }) => {
       ...messages,
       {
         id: newId,
-        text: newMessage,
-        sender: "me",
-        senderProfile: {
-          name: "You",
-          avatar: "https://i.pravatar.cc/40?img=10",
-        },
-        timestamp: new Date().toLocaleTimeString([], {
+        // sender_id: 18,
+        // sender_username: "yo5",
+        // recipient_id: 15,
+        // recipient_username: "yo",
+        content: newMessage,
+        created_at: new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
         }),
@@ -162,11 +164,6 @@ const ChatBox = ({ selectedChat }) => {
     else return (bytes / 1048576).toFixed(1) + " MB";
   };
 
-  // Read message type from selected chat
-  const { type: messageType } = selectedChat;
-  // Display request acceptance UI if needed
-  const showRequestAcceptance = messageType === "request" && !isRequestAccepted;
-
   if (
     isConversationLoading ||
     isConversationError ||
@@ -182,13 +179,11 @@ const ChatBox = ({ selectedChat }) => {
         {/* Message bubbles, colors updated for dark mode */}
         <AnimatePresence>
           {messages.map((message) => {
-            console.log(message);
             return (
               <motion.div
                 key={message.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.3 }}
                 className={`mb-4 flex ${
                   message?.sender_id === sender_id
@@ -299,7 +294,6 @@ const ChatBox = ({ selectedChat }) => {
             key="request-acceptance"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="p-6 bg-white dark:bg-[#171717] border-t border-gray-200 dark:border-[#282828]"
           >
@@ -365,7 +359,6 @@ const ChatBox = ({ selectedChat }) => {
             key="message-input"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
             className="p-4 bg-white dark:bg-[#171717] border-t border-gray-200 dark:border-[#282828]"
           >

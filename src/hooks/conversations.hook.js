@@ -152,7 +152,7 @@ export const useGetConversationDetails = ({ conversationId }) => {
 
 export const useConversationRequestAction = () => {
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: async ({ action, conversationId }) => {
       const payload = { action };
 
@@ -177,13 +177,9 @@ export const useConversationRequestAction = () => {
     onSuccess: (data) => {
       if (data?.success) {
         toast.success(data?.message);
-        queryClient.invalidateQueries({
-          queryKey: [
-            "requestConversationList",
-            "conversationList",
-            "conversationDetails",
-          ],
-        });
+        queryClient.invalidateQueries("requestConversationList");
+        queryClient.invalidateQueries("conversationList");
+        queryClient.invalidateQueries("conversationDetails");
       } else {
         toast.error(data?.message || "Failed to action conversation request");
       }
@@ -197,5 +193,5 @@ export const useConversationRequestAction = () => {
       toast.error(message);
     },
   });
-  return { mutate, isPending };
+  return { mutateAsync, isPending };
 };
