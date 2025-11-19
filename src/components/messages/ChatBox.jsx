@@ -8,7 +8,6 @@ import ConversationActionBox from "./ConversationActionBox";
 const ChatBox = ({ selectedChat, setSelectedChat }) => {
   // State management for chat features
   const [messages, setMessages] = useState([]);
-  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
 
   // sender information
   const sender_id = selectedChat?.user_id || selectedChat?.sender_id;
@@ -16,6 +15,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     selectedChat?.username || selectedChat?.sender_username;
   const sender_avatar = selectedChat?.avatar;
   const sender = { sender_avatar, sender_id, sender_username };
+
   // fetch information
   const {
     data: user,
@@ -32,27 +32,14 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     conversationId: sender_id,
   });
 
-  // Animation: scroll to latest message
-  const messagesEndRef = useRef(null);
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   // Load messages whenever chat changes
   useEffect(() => {
     if (selectedChat) {
       setMessages(conversationDetails || []);
-      setShouldScrollToBottom(true);
     }
   }, [selectedChat, conversationDetails]);
 
-  // Scroll on messages update if flagged
-  useEffect(() => {
-    if (shouldScrollToBottom) {
-      scrollToBottom();
-      setShouldScrollToBottom(false);
-    }
-  }, [conversationDetails, shouldScrollToBottom]);
 
   // skeleton
   if (
@@ -73,7 +60,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
           sender={sender}
           user={user}
         />
-        <div ref={messagesEndRef} />
+        {/* <div ref={messagesEndRef} /> */}
       </div>
 
       {/* Message Input or Request Acceptance */}
@@ -82,7 +69,6 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
         setSelectedChat={setSelectedChat}
         messages={messages}
         setMessages={setMessages}
-        setShouldScrollToBottom={setShouldScrollToBottom}
         sender={sender}
       />
     </div>

@@ -13,7 +13,6 @@ const ConversationActionBox = ({
   setSelectedChat,
   messages,
   setMessages,
-  setShouldScrollToBottom,
   sender,
 }) => {
   const [newMessage, setNewMessage] = useState("");
@@ -91,7 +90,6 @@ const ConversationActionBox = ({
     ]);
     setNewMessage("");
     setAttachments([]);
-    setShouldScrollToBottom(true);
     if (inputRef.current) inputRef.current.focus();
   };
 
