@@ -18,12 +18,17 @@ import {
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PinOff } from "lucide-react";
-import { usePinConversation, useUnpinConversation } from "@/hooks/conversations.hook";
+import {
+  useBlockUser,
+  usePinConversation,
+  useUnpinConversation,
+} from "@/hooks/conversations.hook";
 
 function MessageOptions({ chat }) {
   const { avatar, username, pinned, user_id } = chat;
   const { mutate: pinConversation } = usePinConversation();
   const { mutate: unpinConversation } = useUnpinConversation();
+  const { mutate: blockUser } = useBlockUser();
 
   // single handler for all items
   const handleItemClick = () => {
@@ -39,6 +44,12 @@ function MessageOptions({ chat }) {
   const handleUnpinConversation = () => {
     unpinConversation({
       conversationId: user_id,
+    });
+  };
+
+  const handleBlockUser = () => {
+    blockUser({
+      userId: user_id,
     });
   };
 
@@ -72,7 +83,7 @@ function MessageOptions({ chat }) {
           </DropdownMenuItem>
           <DropdownMenuItem
             className="text-red-600 hover:text-red-600 font-bold"
-            onClick={() => handleItemClick("Block User")}
+            onClick={() => handleBlockUser()}
           >
             <Ban color="red" className="rotate-90" />
             Block User

@@ -195,3 +195,42 @@ export const useConversationRequestAction = () => {
   });
   return { mutateAsync, isPending };
 };
+
+
+
+
+export const useBlockUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ userId }) => {
+      try {
+        const res = await axiosPrivate.post(`/v1/account/block/${userId}/`);
+        return res?.data;
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error?.message ||
+          "Failed to block user";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success("User blocked successfully");
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+      } else {
+        toast.error("Failed to block user");
+      }
+    },
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error?.message ||
+        "Failed to block user";
+      toast.error(message);
+    },
+  });
+};
