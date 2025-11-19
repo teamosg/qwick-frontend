@@ -126,13 +126,13 @@ export const useUnpinConversation = () => {
   return { mutate, isPending };
 };
 
-export const useGetConversationDetails = ({ conversationId }) => {
+export const useGetConversationDetails = ({ type, conversationId }) => {
   return useQuery({
     queryKey: ["conversationDetails", conversationId],
     queryFn: async () => {
       try {
         const res = await axiosPrivate.get(
-          `/v1/account/conversations/dm/${conversationId}/`
+          `/v1/account/conversations/${type}/${conversationId}/`
         );
         return res?.data?.data || [];
       } catch (error) {

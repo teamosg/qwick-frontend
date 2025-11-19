@@ -5,7 +5,7 @@ import { useProfile } from "@/hooks/auth.hook";
 import ChatConversationContainer from "./ChatConversationContainer";
 import ConversationActionBox from "./ConversationActionBox";
 
-const ChatBox = ({ selectedChat, setSelectedChat }) => {
+const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
   // State management for chat features
   const [messages, setMessages] = useState([]);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
@@ -28,8 +28,8 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     isLoading: isConversationLoading,
     isError: isConversationError,
   } = useGetConversationDetails({
-    type: "dm",
-    conversationId: sender_id,
+    type: "group",
+    conversationId: selectedChat?.group_id,
   });
 
   // Animation: scroll to latest message
@@ -89,4 +89,4 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
   );
 };
 
-export default ChatBox;
+export default GroupChatBox;

@@ -3,7 +3,7 @@ import ChatBox from "../../components/messages/ChatBox";
 import ChatHeader from "../../components/messages/ChatHeader";
 import MessageList from "../../components/messages/MessageList";
 import EmptyChatBox from "@/components/messages/EmptyChatBox";
-
+import GroupChatBox from "@/components/messages/GroupChatBox";
 
 const Message = () => {
   const [selectedChat, setSelectedChat] = useState(null);
@@ -24,7 +24,17 @@ const Message = () => {
       <div className="flex-1 flex flex-col">
         <ChatHeader selectedChat={selectedChat} />
         {selectedChat ? (
-          <ChatBox selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
+          selectedChat?.type === "group" ? (
+            <GroupChatBox
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+            />
+          ) : (
+            <ChatBox
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+            />
+          )
         ) : (
           <EmptyChatBox />
         )}

@@ -23,7 +23,7 @@ const ChatHeader = ({ selectedChat }) => {
   }
 
   const { avatar } = selectedChat;
-  const username = selectedChat?.sender_username || selectedChat?.username;
+  const username = selectedChat?.sender_username || selectedChat?.username || selectedChat?.group_name;
 
   // Main chat header showing participant info, status, and action buttons
   return (
