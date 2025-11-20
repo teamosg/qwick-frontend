@@ -4,10 +4,14 @@ import ConversationDetailsSkeleton from "./skeletonns/ConversationDetailsSkeleto
 import { useProfile } from "@/hooks/auth.hook";
 import ChatConversationContainer from "./ChatConversationContainer";
 import ConversationActionBox from "./ConversationActionBox";
+import { ZodNullable } from "zod/v3";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ChatBox = ({ selectedChat, setSelectedChat }) => {
   // State management for chat features
   const [messages, setMessages] = useState([]);
+  const ws = useRef(ZodNullable);
+  const queryClient = useQueryClient();
 
   // sender information
   const sender_id = selectedChat?.user_id || selectedChat?.sender_id;
@@ -22,6 +26,8 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     isLoading: isUserLoading,
     isError: isUserError,
   } = useProfile();
+  const token = localStorage.getItem("token");
+
   // conversation details
   const {
     data: conversationDetails,
@@ -32,14 +38,49 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     conversationId: sender_id,
   });
 
+  const handleNewMessages = (data) => {
+    if (!data?.message) return;
+
+    // const receivedMessage = {
+    //   ...data.message,
+    //   sender_id,
+    //   sender_username,
+    // };
+    // setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+    queryClient.invalidateQueries({
+      queryKey: ["conversationDetails"],
+    });
+    queryClient.invalidateQueries({
+      queryKey: ["conversationList"],
+    });
+  };
 
   // Load messages whenever chat changes
   useEffect(() => {
-    if (selectedChat) {
+    if (sender_username) {
       setMessages(conversationDetails || []);
-    }
-  }, [selectedChat, conversationDetails]);
+      ws.current = new WebSocket(
+        `wss://darrenchua.softvencealpha.com/ws/chat/${sender_username}/?token=${token}`
+      );
 
+      ws.current.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        handleNewMessages(data);
+      };
+
+      // ws.current.onopen = () => {
+      //   console.log("connected to ws");
+      // };
+
+      // ws.current.onclose = () => {
+      //   console.log("disconnected from ws");
+      // };
+
+      return () => {
+        ws.current.close();
+      };
+    }
+  }, [sender_username, conversationDetails, token]);
 
   // skeleton
   if (

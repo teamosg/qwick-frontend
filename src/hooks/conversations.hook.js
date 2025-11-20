@@ -177,9 +177,9 @@ export const useConversationRequestAction = () => {
     onSuccess: (data) => {
       if (data?.success) {
         toast.success(data?.message);
-        queryClient.invalidateQueries("requestConversationList");
-        queryClient.invalidateQueries("conversationList");
-        queryClient.invalidateQueries("conversationDetails");
+        queryClient.invalidateQueries({queryKey: ["requestConversationList"],});
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+        queryClient.invalidateQueries({ queryKey: ["conversationDetails"] });
       } else {
         toast.error(data?.message || "Failed to action conversation request");
       }
@@ -195,9 +195,6 @@ export const useConversationRequestAction = () => {
   });
   return { mutateAsync, isPending };
 };
-
-
-
 
 export const useBlockUser = () => {
   const queryClient = useQueryClient();

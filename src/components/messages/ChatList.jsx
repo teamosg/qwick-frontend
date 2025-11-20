@@ -24,7 +24,7 @@ const ChatList = ({
           <div className="space-y-1">
             {requestsChats.map((chat) => (
               <ChatItem
-                key={chat.user_id || chat.sender_id}
+                key={chat.user_id || chat.sender_id || `group_${chat.group_id}`}
                 chat={chat}
                 onSelectChat={onSelectChat}
                 selectedChatId={selectedChatId}
@@ -46,7 +46,9 @@ const ChatList = ({
             <div className="space-y-1">
               {pinnedConversation.map((chat) => (
                 <ChatItem
-                  key={chat.user_id || chat.sender_id}
+                  key={
+                    chat.user_id || chat.sender_id || `group_${chat.group_id}`
+                  }
                   chat={chat}
                   onSelectChat={onSelectChat}
                   selectedChatId={selectedChatId}
@@ -66,7 +68,9 @@ const ChatList = ({
             <div className="space-y-1">
               {regularConversation.map((chat) => (
                 <ChatItem
-                  key={chat.user_id || chat.sender_id}
+                  key={
+                    chat.user_id || chat.sender_id || `group_${chat.group_id}`
+                  }
                   chat={chat}
                   onSelectChat={onSelectChat}
                   selectedChatId={selectedChatId}
@@ -86,7 +90,9 @@ const ChatList = ({
             <div className="space-y-1">
               {requestsChats.map((chat) => (
                 <ChatItem
-                  key={chat.user_id || chat.sender_id}
+                  key={
+                    chat.user_id || chat.sender_id || `group_${chat.group_id}`
+                  }
                   chat={chat}
                   onSelectChat={onSelectChat}
                   selectedChatId={selectedChatId}
