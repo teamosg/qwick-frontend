@@ -37,26 +37,29 @@ const ChatList = ({
         /* All Sections */
         <div className="animate-fadeIn">
           {/* Pinned Section */}
-          <div className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Pin className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Pinned
-              </h3>
+          {
+            pinnedConversation?.length > 0 &&
+            <div className="p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Pin className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Pinned
+                </h3>
+              </div>
+              <div className="space-y-1">
+                {pinnedConversation?.map((chat) => (
+                  <ChatItem
+                    key={
+                      chat.user_id || chat.sender_id || `group_${chat.group_id}`
+                    }
+                    chat={chat}
+                    onSelectChat={onSelectChat}
+                    selectedChatId={selectedChatId}
+                  />
+                ))}
+              </div>
             </div>
-            <div className="space-y-1">
-              {pinnedConversation?.map((chat) => (
-                <ChatItem
-                  key={
-                    chat.user_id || chat.sender_id || `group_${chat.group_id}`
-                  }
-                  chat={chat}
-                  onSelectChat={onSelectChat}
-                  selectedChatId={selectedChatId}
-                />
-              ))}
-            </div>
-          </div>
+          }
 
           {/* All Conversations Section */}
           <div className="p-4 border-t border-gray-200 dark:border-gray-700">
@@ -81,28 +84,31 @@ const ChatList = ({
           </div>
 
           {/* Requests Chats Section */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex items-center gap-2 mb-3">
-              <MessagesSquare className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Chat Requests
-              </h3>
+          {
+            requestsChats?.length > 0 &&
+            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-2 mb-3">
+                <MessagesSquare className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Chat Requests
+                </h3>
+              </div>
+              <div className="space-y-1">
+                {
+                  !showUnreadOnly &&
+                  requestsChats?.map((chat) => (
+                    <ChatItem
+                      key={
+                        chat.user_id || chat.sender_id || `group_${chat.group_id}`
+                      }
+                      chat={chat}
+                      onSelectChat={onSelectChat}
+                      selectedChatId={selectedChatId}
+                    />
+                  ))}
+              </div>
             </div>
-            <div className="space-y-1">
-              {
-                !showUnreadOnly &&
-                requestsChats?.map((chat) => (
-                  <ChatItem
-                    key={
-                      chat.user_id || chat.sender_id || `group_${chat.group_id}`
-                    }
-                    chat={chat}
-                    onSelectChat={onSelectChat}
-                    selectedChatId={selectedChatId}
-                  />
-                ))}
-            </div>
-          </div>
+          }
         </div>
       )}
     </div>

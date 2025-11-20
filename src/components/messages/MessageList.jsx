@@ -144,7 +144,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
         {/* Badges */}
         <div className="flex items-center gap-2 mt-2 text-xs">
           {/* unread filter button  */}
-          {!showRequestsOnly && unreadConversations?.length > 0 && (
+          {!showRequestsOnly && (
             <button
               onClick={() => setShowUnreadOnly(!showUnreadOnly)}
               className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${showUnreadOnly
@@ -158,7 +158,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
                 {showUnreadOnly ? (
                   <X className="w-3.5 h-3.5" />
                 ) : (
-                  <span className="text-gray-400">{unreadConversations.length}</span>
+                  <span className="text-gray-400">{unreadConversations?.length || 0}</span>
                 )}
               </span>
             </button>
@@ -168,8 +168,8 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
 
           {/* requests filter button  */}
           {
-            !showUnreadOnly && requestConversationList?.length
-            && <button
+            !showUnreadOnly &&
+            <button
               onClick={() => setShowRequestsOnly(!showRequestsOnly)}
               className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${showRequestsOnly
                 ? "bg-[#003933] text-white border-[#003933]"
@@ -182,7 +182,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
                 {showRequestsOnly ? (
                   <X className="w-3.5 h-3.5" />
                 ) : (
-                  <span className="text-gray-400">{requestConversationList?.length}</span>
+                  <span className="text-gray-400">{requestConversationList?.length || 0}</span>
                 )}
               </span>
             </button>
