@@ -70,26 +70,6 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
     setShowNewMessageSidebar(false);
   };
 
-  const handleCreateGroup = (selectedUsers) => {
-    // Create new group chat
-    const groupChat = {
-      id: Date.now(),
-      name: `Group with ${selectedUsers
-        .map((u) => u.name.split(" ")[0])
-        .join(", ")}`,
-      avatar: selectedUsers[0]?.avatar,
-      lastMessage: "Group created",
-      time: "Now",
-      unreadCount: 0,
-      isOnline: true,
-      type: "group",
-      members: selectedUsers,
-    };
-
-    onSelectChat(groupChat);
-    setShowCreateGroupModal(false);
-    setShowNewMessageSidebar(false);
-  };
 
   // skeleton
   if (
@@ -219,6 +199,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
 
       <NewMessageSidebar
         isOpen={showNewMessageSidebar}
+        fetchedConversationList={fetchedConversationList}
         onClose={() => setShowNewMessageSidebar(false)}
         onUserSelect={handleUserSelect}
         onCreateGroup={() => {
@@ -229,8 +210,9 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
 
       <CreateGroupModal
         isOpen={showCreateGroupModal}
+        fetchedConversationList={fetchedConversationList}
         onClose={() => setShowCreateGroupModal(false)}
-        onCreateGroup={handleCreateGroup}
+        onSelectChat={onSelectChat}
       />
     </div>
   );

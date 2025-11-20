@@ -177,7 +177,9 @@ export const useConversationRequestAction = () => {
     onSuccess: (data) => {
       if (data?.success) {
         toast.success(data?.message);
-        queryClient.invalidateQueries({queryKey: ["requestConversationList"],});
+        queryClient.invalidateQueries({
+          queryKey: ["requestConversationList"],
+        });
         queryClient.invalidateQueries({ queryKey: ["conversationList"] });
         queryClient.invalidateQueries({ queryKey: ["conversationDetails"] });
       } else {
@@ -228,6 +230,46 @@ export const useBlockUser = () => {
         error?.message ||
         "Failed to block user";
       toast.error(message);
+    },
+  });
+};
+
+export const useCreateConversationGroup = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ name, members }) => {
+      try {
+        const res = await axiosPrivate.post("/v1/account/groups/create/", {
+          name,
+          members,
+        });
+        return res?.data;
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error?.message ||
+          "Failed to create conversation group";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success("Conversation group created successfully");
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+      } else {
+        toast.error(data?.message || "Failed to create conversation group");
+      }
+    },
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error?.message ||
+        "Failed to create conversation group";
+
+      throw new Error(message);
     },
   });
 };

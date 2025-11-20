@@ -1,29 +1,19 @@
 import { X, Search, Users } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import AvatarUser from "../ui/AvatarUser";
 
-/**
- * NewMessageSidebar allows searching users to start new chats,
- * creating group chats, and suggested user selections.
- * Dark mode colors are updated for coherence.
- */
-const NewMessageSidebar = ({ isOpen, onClose, onUserSelect, onCreateGroup }) => {
+
+const NewMessageSidebar = ({ fetchedConversationList, isOpen, onClose, onUserSelect, onCreateGroup }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Suggested users sample data
-  const suggestedUsers = [
-    { id: 101, name: "Sarah Wilson", avatar: "https://i.pravatar.cc/40?img=20", username: "@sarahw", isOnline: true },
-    { id: 102, name: "David Chen", avatar: "https://i.pravatar.cc/40?img=21", username: "@davidc", isOnline: false },
-    { id: 103, name: "Maria Garcia", avatar: "https://i.pravatar.cc/40?img=22", username: "@mariag", isOnline: true },
-    { id: 104, name: "James Park", avatar: "https://i.pravatar.cc/40?img=23", username: "@jamespark", isOnline: true },
-    { id: 105, name: "Emily Brown", avatar: "https://i.pravatar.cc/40?img=24", username: "@emilyb", isOnline: false },
-  ];
+  const suggestedUsers = fetchedConversationList?.filter(conversation => conversation?.type === 'dm') || []
 
   // Filter users based on search input (name or username)
   const filteredUsers = suggestedUsers.filter(
     user =>
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.username.toLowerCase().includes(searchQuery.toLowerCase())
+      // user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user?.username?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -94,25 +84,25 @@ const NewMessageSidebar = ({ isOpen, onClose, onUserSelect, onCreateGroup }) => 
                 <div className="space-y-1">
                   {filteredUsers.map(user => (
                     <motion.button
-                      key={user.id}
+                      key={user?.user_id}
                       whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.99 }}
                       onClick={() => onUserSelect(user)}
                       className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
                     >
                       <div className="relative">
-                        <img
-                          src={user.avatar}
-                          alt={user.name}
+                        <AvatarUser
+                          src={user?.avatar}
+                          alt={user?.username}
                           className="w-10 h-10 rounded-full object-cover"
                         />
-                        {user.isOnline && (
+                        {user?.isOnline && (
                           <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
                         )}
                       </div>
                       <div className="flex-1 text-left">
-                        <h4 className="font-medium text-sm text-gray-900 dark:text-white">{user.name}</h4>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{user.username}</p>
+                        <h4 className="font-medium text-sm text-gray-900 dark:text-white">{user?.username}</h4>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">@{user?.username}</p>
                       </div>
                     </motion.button>
                   ))}
