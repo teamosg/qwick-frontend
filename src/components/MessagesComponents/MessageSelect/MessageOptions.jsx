@@ -25,10 +25,13 @@ import {
 } from "@/hooks/conversations.hook";
 
 function MessageOptions({ chat }) {
-  const { avatar, username, pinned, user_id } = chat;
+  const { avatar, username, pinned, user_id, type, group_id, group_name } = chat;
   const { mutate: pinConversation } = usePinConversation();
   const { mutate: unpinConversation } = useUnpinConversation();
   const { mutate: blockUser } = useBlockUser();
+
+  console.log(chat);
+  const conversationName = type === "dm" ? username : group_name;
 
   // single handler for all items
   const handleItemClick = () => {
@@ -37,19 +40,19 @@ function MessageOptions({ chat }) {
 
   const handlePinConversation = () => {
     pinConversation({
-      conversationId: user_id,
+      conversationId: user_id ?? group_id,
     });
   };
 
   const handleUnpinConversation = () => {
     unpinConversation({
-      conversationId: user_id,
+      conversationId: user_id ?? group_id,
     });
   };
 
   const handleBlockUser = () => {
     blockUser({
-      userId: user_id,
+      userId: user_id ?? group_id,
     });
   };
 
@@ -70,24 +73,29 @@ function MessageOptions({ chat }) {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => handleItemClick("Profile")}>
-            <Avatar className={"w-[18px] h-[18px] rounded-full object-cover"}>
-              <AvatarImage src={avatar} alt={username} />
-              <AvatarFallback>{username.split("")[0]}</AvatarFallback>
-            </Avatar>
-            Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleItemClick("Add to group")}>
-            <UserPlus />
-            Add to group
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="text-red-600 hover:text-red-600 font-bold"
-            onClick={() => handleBlockUser()}
-          >
-            <Ban color="red" className="rotate-90" />
-            Block User
-          </DropdownMenuItem>
+          {
+            type === 'dm' &&
+            <>
+              <DropdownMenuItem onClick={() => handleItemClick("Profile")}>
+                <Avatar className={"w-[18px] h-[18px] rounded-full object-cover"}>
+                  <AvatarImage src={avatar} alt={conversationName} />
+                  <AvatarFallback>{conversationName.split("")[0]}</AvatarFallback>
+                </Avatar>
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleItemClick("Add to group")}>
+                <UserPlus />
+                Add to group
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="text-red-600 hover:text-red-600 font-bold"
+                onClick={() => handleBlockUser()}
+              >
+                <Ban color="red" className="rotate-90" />
+                Block User
+              </DropdownMenuItem>
+            </>
+          }
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
@@ -104,10 +112,10 @@ function MessageOptions({ chat }) {
               Pin
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem onClick={() => handleItemClick("Open in new tab")}>
+          {/* <DropdownMenuItem onClick={() => handleItemClick("Open in new tab")}>
             <ExternalLink />
             Open in new tab
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem
             className="text-red-600 hover:text-red-600 font-bold"
             onClick={() => handleItemClick("Close chat")}

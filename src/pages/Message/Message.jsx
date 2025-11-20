@@ -21,7 +21,7 @@ const Message = () => {
       {/* Left Sidebar - Message List */}
       <MessageList
         onSelectChat={handleSelectChat}
-        selectedChatId={selectedChat?.user_id}
+        selectedChatId={selectedChat?.user_id || selectedChat?.group_id}
       />
 
       {/* Right Side - Chat Area */}
