@@ -14,18 +14,17 @@ const ConversationActionBox = ({
   messages,
   setMessages,
   sender,
+  handleSendMessage: hs,
 }) => {
   const [newMessage, setNewMessage] = useState("");
   const [attachments, setAttachments] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [totalAttachments, setTotalAttachments] = useState(0);
-
-  console.log(selectedChat);
+  
 
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
   const isMessageRequest = selectedChat?.requested_at
-
 
 
   // Remove an attachment by id
@@ -91,6 +90,7 @@ const ConversationActionBox = ({
     setNewMessage("");
     setAttachments([]);
     if (inputRef.current) inputRef.current.focus();
+    hs({ content: newMessage })
   };
 
   return (

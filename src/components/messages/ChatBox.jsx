@@ -6,6 +6,7 @@ import ChatConversationContainer from "./ChatConversationContainer";
 import ConversationActionBox from "./ConversationActionBox";
 import { ZodNullable } from "zod/v3";
 import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const ChatBox = ({ selectedChat, setSelectedChat }) => {
   // State management for chat features
@@ -19,7 +20,6 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     selectedChat?.username || selectedChat?.sender_username;
   const sender_avatar = selectedChat?.avatar;
   const sender = { sender_avatar, sender_id, sender_username };
-
   // fetch information
   const {
     data: user,
@@ -41,19 +41,32 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
   const handleNewMessages = (data) => {
     if (!data?.message) return;
 
+    //! do not use the below set function 
     // const receivedMessage = {
     //   ...data.message,
     //   sender_id,
     //   sender_username,
     // };
     // setMessages((prevMessages) => [...prevMessages, receivedMessage]);
-    queryClient.invalidateQueries({
-      queryKey: ["conversationDetails"],
-    });
+
     queryClient.invalidateQueries({
       queryKey: ["conversationList"],
     });
+
+    queryClient.invalidateQueries({
+      queryKey: ["conversationDetails"],
+    });
   };
+
+  const handleSendMessage = ({ content }) => {
+    if (!content || !ws.current || ws.current.readyState !== WebSocket.OPEN) {
+      toast.error("Network error, Please try again latter")
+      return
+    }
+    ws.current.send(
+      JSON.stringify({ content })
+    )
+  }
 
   // Load messages whenever chat changes
   useEffect(() => {
@@ -111,6 +124,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
         messages={messages}
         setMessages={setMessages}
         sender={sender}
+        handleSendMessage={handleSendMessage}
       />
     </div>
   );
