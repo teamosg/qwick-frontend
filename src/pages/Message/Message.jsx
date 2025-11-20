@@ -4,11 +4,15 @@ import ChatHeader from "../../components/messages/ChatHeader";
 import MessageList from "../../components/messages/MessageList";
 import EmptyChatBox from "@/components/messages/EmptyChatBox";
 import GroupChatBox from "@/components/messages/GroupChatBox";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Message = () => {
+  const queryClient = useQueryClient()
   const [selectedChat, setSelectedChat] = useState(null);
 
   const handleSelectChat = (chat) => {
+    queryClient.invalidateQueries({ queryKey: ["conversationList"] })
+    queryClient.invalidateQueries({ queryKey: ["requestConversationList"] })
     setSelectedChat(chat);
   };
 
