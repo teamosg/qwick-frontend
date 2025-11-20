@@ -1,6 +1,5 @@
 import { ChevronDown, Search, X } from "lucide-react";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { MessageSquarePlus } from "lucide-react";
 import NewMessageSidebar from "./NewMessageSidebar";
 import CreateGroupModal from "./CreateGroupModal";
@@ -9,19 +8,25 @@ import {
   useGetRequestConversationList,
 } from "@/hooks/conversations.hook";
 import MessageListSkeleton from "./skeletonns/MessageListSkeleton";
-import { requestsChats } from "@/dummyData/chat";
 import ChatList from "./ChatList";
 import { FetchErrorAlert } from "../Alerts/FetchErrorAlerts";
+import { useEffect } from "react";
+
 
 const MessageList = ({ onSelectChat, selectedChatId }) => {
   const [sortBy, setSortBy] = useState("Newest");
   const [searchQuery, setSearchQuery] = useState("");
   const [showRequestsOnly, setShowRequestsOnly] = useState(false);
+  const [showUnreadOnly, setShowUnreadOnly] = useState(false);
   const [showNewMessageSidebar, setShowNewMessageSidebar] = useState(false);
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
+  const [conversationList, setConversationList] = useState([]);
+
+  const pinnedConversation = conversationList?.filter((chat) => chat.pinned) || []
+  const regularConversation = conversationList?.filter((chat) => !chat.pinned) || []
 
   const {
-    data: conversationList,
+    data: fetchedConversationList,
     isLoading: isConversationLoading,
     isError: isConversationError,
   } = useGetConversationList();
@@ -32,10 +37,21 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
     isError: isRequestConversationError,
   } = useGetRequestConversationList();
 
-  console.log(requestConversationList);
+  const unreadConversations = conversationList?.filter(conversation => conversation?.unread_count)
 
-  const pinnedConversation = conversationList?.filter((chat) => chat.pinned);
-  const regularConversation = conversationList?.filter((chat) => !chat.pinned);
+  useEffect(() => {
+    if (fetchedConversationList) {
+      setConversationList(fetchedConversationList);
+    }
+  }, [fetchedConversationList]);
+
+  useEffect(() => {
+    if (showUnreadOnly) {
+      setConversationList(unreadConversations)
+      return
+    }
+    setConversationList(fetchedConversationList)
+  }, [showUnreadOnly, unreadConversations, fetchedConversationList])
 
   const handleUserSelect = (user) => {
     // Create new chat with user
@@ -127,41 +143,60 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
         </div>
         {/* Badges */}
         <div className="flex items-center gap-2 mt-2 text-xs">
-          <button
-            onClick={() =>
-              toast.error("This feature hasn't been implemented yet")
-            }
-            className="cursor-pointer flex items-center gap-1 px-2 border py-1 rounded-full hover:bg-gray-100 dark:hover:bg-[#222] font-medium transition-colors"
-          >
-            <span className="text-red-400">●</span> Unread{" "}
-            <span className="text-gray-400">2</span>
-          </button>
-          <button
-            onClick={() => setShowRequestsOnly(!showRequestsOnly)}
-            className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${
-              showRequestsOnly
+          {/* unread filter button  */}
+          {!showRequestsOnly && unreadConversations?.length > 0 && (
+            <button
+              onClick={() => setShowUnreadOnly(!showUnreadOnly)}
+              className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${showUnreadOnly
                 ? "bg-[#003933] text-white border-[#003933]"
                 : "hover:bg-gray-100 dark:hover:bg-[#222]"
-            }`}
-          >
-            <span className="text-[#003933] dark:text-[#41d8a8]">●</span>{" "}
-            Requests
-            <span className="transition-transform duration-200">
-              {showRequestsOnly ? (
-                <X className="w-3.5 h-3.5" />
-              ) : (
-                <span className="text-gray-400">{requestsChats?.length}</span>
-              )}
-            </span>
-          </button>
-          <button
+                }`}
+            >
+              <span className="text-red-400">●</span>
+              Unread
+              <span className="transition-transform duration-200">
+                {showUnreadOnly ? (
+                  <X className="w-3.5 h-3.5" />
+                ) : (
+                  <span className="text-gray-400">{unreadConversations.length}</span>
+                )}
+              </span>
+            </button>
+          )}
+
+
+
+          {/* requests filter button  */}
+          {
+            !showUnreadOnly && requestConversationList?.length
+            && <button
+              onClick={() => setShowRequestsOnly(!showRequestsOnly)}
+              className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${showRequestsOnly
+                ? "bg-[#003933] text-white border-[#003933]"
+                : "hover:bg-gray-100 dark:hover:bg-[#222]"
+                }`}
+            >
+              <span className="text-[#003933] dark:text-[#41d8a8]">●</span>{" "}
+              Requests
+              <span className="transition-transform duration-200">
+                {showRequestsOnly ? (
+                  <X className="w-3.5 h-3.5" />
+                ) : (
+                  <span className="text-gray-400">{requestConversationList?.length}</span>
+                )}
+              </span>
+            </button>
+          }
+
+          {/* groups filter button  */}
+          {/* <button
             onClick={() =>
               toast.error("This feature hasn't been implemented yet")
             }
             className="cursor-pointer px-2 py-1 border rounded-full font-medium hover:bg-gray-100 dark:hover:bg-[#222] transition-colors"
           >
             Groups <span className="text-gray-400">2</span>
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -172,6 +207,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
         </div>
       ) : (
         <ChatList
+          showUnreadOnly={showUnreadOnly}
           showRequestsOnly={showRequestsOnly}
           requestsChats={requestConversationList}
           onSelectChat={onSelectChat}

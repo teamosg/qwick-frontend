@@ -9,6 +9,7 @@ const ChatList = ({
   selectedChatId,
   pinnedConversation,
   regularConversation,
+  showUnreadOnly,
 }) => {
   return (
     <div className="flex-1 overflow-y-auto">
@@ -22,7 +23,7 @@ const ChatList = ({
             </h3>
           </div>
           <div className="space-y-1">
-            {requestsChats.map((chat) => (
+            {requestsChats?.map((chat) => (
               <ChatItem
                 key={chat.user_id || chat.sender_id || `group_${chat.group_id}`}
                 chat={chat}
@@ -44,7 +45,7 @@ const ChatList = ({
               </h3>
             </div>
             <div className="space-y-1">
-              {pinnedConversation.map((chat) => (
+              {pinnedConversation?.map((chat) => (
                 <ChatItem
                   key={
                     chat.user_id || chat.sender_id || `group_${chat.group_id}`
@@ -66,7 +67,7 @@ const ChatList = ({
               </h3>
             </div>
             <div className="space-y-1">
-              {regularConversation.map((chat) => (
+              {regularConversation?.map((chat) => (
                 <ChatItem
                   key={
                     chat.user_id || chat.sender_id || `group_${chat.group_id}`
@@ -88,16 +89,18 @@ const ChatList = ({
               </h3>
             </div>
             <div className="space-y-1">
-              {requestsChats.map((chat) => (
-                <ChatItem
-                  key={
-                    chat.user_id || chat.sender_id || `group_${chat.group_id}`
-                  }
-                  chat={chat}
-                  onSelectChat={onSelectChat}
-                  selectedChatId={selectedChatId}
-                />
-              ))}
+              {
+                !showUnreadOnly &&
+                requestsChats?.map((chat) => (
+                  <ChatItem
+                    key={
+                      chat.user_id || chat.sender_id || `group_${chat.group_id}`
+                    }
+                    chat={chat}
+                    onSelectChat={onSelectChat}
+                    selectedChatId={selectedChatId}
+                  />
+                ))}
             </div>
           </div>
         </div>
