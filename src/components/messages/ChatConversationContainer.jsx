@@ -16,7 +16,7 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
   // Animation: scroll to latest message
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView();
   };
 
   // Load messages whenever chat changes
