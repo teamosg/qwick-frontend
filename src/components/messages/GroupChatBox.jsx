@@ -77,14 +77,15 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
       </div>
 
       {/* Message Input or Request Acceptance */}
-      <ConversationActionBox
+      {/* <ConversationActionBox
         selectedChat={selectedChat}
         setSelectedChat={setSelectedChat}
         messages={messages}
         setMessages={setMessages}
         setShouldScrollToBottom={setShouldScrollToBottom}
         sender={sender}
-      />
+      /> */}
+      <p className="border p-4">API on progress for messaging</p>
     </div>
   );
 };
