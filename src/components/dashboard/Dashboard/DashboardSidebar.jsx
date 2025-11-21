@@ -21,6 +21,7 @@ import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
 import { useEditCommunity, useGetCommunityList } from "@/hooks/community.hook";
 import { useEffect } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 // Menu items.
 const items = [
@@ -65,7 +66,7 @@ export function DashboardSidebarContent() {
     isError: isErrorCommunityList,
   } = useGetCommunityList();
 
-  const { mutate: editCommunity } = useEditCommunity();
+  const { mutate: editCommunity, isPending } = useEditCommunity();
 
   useEffect(() => {
     if (
@@ -108,11 +109,16 @@ export function DashboardSidebarContent() {
           {/* Image Upload Button */}
           <div className="absolute bottom-2 right-2">
             <button
+              disabled={isPending}
               onClick={openImageModal}
               className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
               title="Edit banner"
             >
-              <PencilIcon size={16} className="text-white" />
+              {
+                isPending
+                  ? <Spinner className={'text-white'} />
+                  : <PencilIcon size={16} className="text-white" />
+              }
             </button>
           </div>
 
