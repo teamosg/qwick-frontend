@@ -1,21 +1,25 @@
+import { useCreateCommunity } from "@/hooks/community.hook";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function AddCommunityForm({
   formData,
-  updateFormData,
-  errors,
-  isSubmitting,
-  onNext,
+  setFormData,
+  formStatus,
+  setFormStatus
 }) {
-  const [selectedCountry, setSelectedCountry] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { errors } = formStatus;
+  const { mutate: createCommunity, isPending, isSuccess } = useCreateCommunity()
+  const navigate = useNavigate()
 
   const countries = [
-    "United States",
+    "UnitedState",
     "Canada",
-    "United Kingdom",
+    "UnitedKingdom",
     "Germany",
     "France",
     "Australia",
@@ -35,29 +39,45 @@ export default function AddCommunityForm({
     "Belgium",
   ];
 
-  // Sync local state with form data
+  const valiDateForm = () => {
+    if (!formData?.business_name || !formData?.country) {
+      setFormStatus({
+        ...formStatus,
+        errors: {
+          business_name: !formData?.business_name ? "Business name is required" : "",
+          country: !formData?.country ? "Country is required" : ""
+        }
+      })
+      return false
+    } else {
+      return true
+    }
+  }
+
+
   useEffect(() => {
-    if (formData?.step3?.country) {
-      setSelectedCountry(formData.step3.country);
+    if (formData?.business_name || formData?.country) {
+      setFormStatus({
+        ...formStatus,
+        errors: {
+          business_name: formData?.business_name ? "" : formStatus?.errors?.business_name,
+          country: formData?.country ? "" : formStatus?.errors?.country
+        }
+      })
     }
-  }, [formData?.step3?.country]);
+  }, [formData])
 
-  const handleCountrySelect = (country) => {
-    setSelectedCountry(country);
-    updateFormData("step3", "country", country);
-    setIsDropdownOpen(false);
-  };
 
-  const handleBusinessNameChange = (e) => {
-    updateFormData("step3", "businessName", e.target.value);
-  };
+  const handleSubmitForm = (e) => {
+    e.preventDefault()
+    if (!valiDateForm()) return
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (onNext) {
-      await onNext();
-    }
-  };
+    createCommunity(formData, {
+      onSuccess: data => {
+        if (data?.data) navigate('/dashboard')
+      }
+    })
+  }
 
   return (
     <motion.div
@@ -66,7 +86,7 @@ export default function AddCommunityForm({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <form className="space-y-6" onSubmit={handleSubmit}>
+      <form className="space-y-6" onSubmit={handleSubmitForm}>
         {/* Business Name Field */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -82,22 +102,21 @@ export default function AddCommunityForm({
           <input
             id="businessName"
             type="text"
-            value={formData?.step3?.businessName || ""}
-            onChange={handleBusinessNameChange}
+            value={formData?.business_name || ""}
+            onChange={(e) => setFormData({ ...formData, business_name: e.target.value })}
             placeholder="Write here..."
-            className={`w-full px-4 py-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-sm transition-colors duration-200  dark:text-white ${
-              errors?.businessName
-                ? "border-red-500 focus:ring-red-500"
-                : "border-gray-200"
-            }`}
+            className={`w-full px-4 py-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-sm transition-colors duration-200  dark:text-white ${errors?.businessName
+              ? "border-red-500 focus:ring-red-500"
+              : "border-gray-200"
+              }`}
           />
-          {errors?.businessName && (
+          {errors?.business_name && (
             <motion.p
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-1 text-sm text-red-500"
             >
-              {errors.businessName}
+              {errors.business_name}
             </motion.p>
           )}
         </motion.div>
@@ -119,21 +138,19 @@ export default function AddCommunityForm({
             <button
               type="button"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className={`w-full px-4 py-3 border dark:text-white rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-left text-sm flex items-center justify-between transition-colors duration-200 ${
-                errors?.country
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-200"
-              }`}
+              className={`w-full px-4 py-3 border dark:text-white rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-left text-sm flex items-center justify-between transition-colors duration-200 ${errors?.country
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-200"
+                }`}
             >
               <span
-                className={selectedCountry ? "text-gray-900" : "text-gray-400"}
+                className={formData?.country ? "text-gray-900" : "text-gray-400"}
               >
-                {selectedCountry || "Select"}
+                {formData?.country || "Select"}
               </span>
               <ChevronDown
-                className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
-                  isDropdownOpen ? "transform rotate-180" : ""
-                }`}
+                className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isDropdownOpen ? "transform rotate-180" : ""
+                  }`}
               />
             </button>
 
@@ -151,14 +168,16 @@ export default function AddCommunityForm({
                     <motion.button
                       key={country}
                       type="button"
-                      onClick={() => handleCountrySelect(country)}
+                      onClick={() => {
+                        setFormData({ ...formData, country })
+                        setIsDropdownOpen(false)
+                      }}
                       className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.02 }}
-                      whileHover={{ backgroundColor: "#f3f4f6" }}
                     >
-                      {country}
+                      {country.split(/(?=[A-Z])/).join(" ")}
                     </motion.button>
                   ))}
                 </motion.div>
@@ -183,13 +202,12 @@ export default function AddCommunityForm({
         >
           <button
             type="submit"
-            disabled={isSubmitting}
-            className={`w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer ${
-              isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            disabled={isPending}
+            className={`w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer ${isPending ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             data-discover="true"
           >
-            {isSubmitting ? (
+            {isPending ? (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
