@@ -88,3 +88,26 @@ export const useEditCommunity = () => {
 
   return { mutate, isPending };
 };
+
+
+export const useJoinCommunity = () => {
+  return useMutation({
+    mutationFn: async ({ communityUsername }) => {
+      const res = await axiosPrivate.post(
+        `/v1/communities/${communityUsername}/join/`
+      );
+      return res.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Community joined successfully!");
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to join community" })
+      }
+    },
+
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to join community" })
+    },
+  });
+}
