@@ -111,3 +111,31 @@ export const useJoinCommunity = () => {
     },
   });
 }
+
+
+
+
+export const useGetCommunityUsers = (communityUsername) => {
+  return useQuery({
+    queryKey: ["communityUsers", communityUsername],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/communities/pythondjangoolovers/members/`
+
+        );
+        return res?.data || [];
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch community members"
+        });
+      }
+    },
+    enabled: !!communityUsername,
+    staleTime: 1000 * 60 * 2,
+  });
+};
+
+

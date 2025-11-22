@@ -22,6 +22,7 @@ import DashboardSwitcher from "./DashboardSwitcher";
 import { useEditCommunity, useGetCommunityList } from "@/hooks/community.hook";
 import { useEffect } from "react";
 import { Spinner } from "@/components/ui/spinner";
+import { useJoinedCommunityStore } from "@/store/communityStore";
 
 // Menu items.
 const items = [
@@ -58,8 +59,9 @@ const items = [
 // Main sidebar content component
 export function DashboardSidebarContent() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const { selectedJoinedCommunity, setSelectedJoinedCommunity } = useJoinedCommunityStore();
 
+  
   const {
     data: communityList,
     isLoading: isLoadingCommunityList,
@@ -74,7 +76,7 @@ export function DashboardSidebarContent() {
       !isLoadingCommunityList &&
       !isErrorCommunityList
     ) {
-      setSelectedCommunity(communityList[0]);
+      setSelectedJoinedCommunity(communityList[0]);
     }
   }, [communityList, isLoadingCommunityList, isErrorCommunityList]);
 
@@ -86,7 +88,7 @@ export function DashboardSidebarContent() {
     console.log(imageFile);
 
     editCommunity({
-      communityUsername: selectedCommunity.username,
+      communityUsername: selectedJoinedCommunity.username,
       payload: formData,
     });
   };
@@ -95,7 +97,7 @@ export function DashboardSidebarContent() {
     setIsImageModalOpen(true);
   };
 
-  const bg = selectedCommunity?.banner_image || "/communityBG.png";
+  const bg = selectedJoinedCommunity?.banner_image || "/communityBG.png";
 
   return (
     <>
@@ -144,8 +146,8 @@ export function DashboardSidebarContent() {
             data={communityList}
             isLoading={isLoadingCommunityList}
             isError={isErrorCommunityList}
-            selectedCommunity={selectedCommunity}
-            setSelectedCommunity={setSelectedCommunity}
+            selectedCommunity={selectedJoinedCommunity}
+            setSelectedCommunity={setSelectedJoinedCommunity}
           />
         </SidebarHeader>
 
