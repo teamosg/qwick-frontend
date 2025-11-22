@@ -14,6 +14,7 @@ import MessageSVG from "@/assets/svg/MessageSVG";
 import NotificationSVG from "@/assets/svg/NotificationSVG";
 import ProfileSVG from "@/assets/svg/ProfileSVG";
 import { useTheme } from "../shared/ThemeProvider";
+import { Megaphone } from "lucide-react";
 
 const NavItem = ({ icon, text, to, onClose }) => {
   const { theme } = useTheme();
@@ -71,6 +72,7 @@ const Sidebar = ({ onClose }) => {
               {[
                 { icon: <Home />, text: "Home", to: "/" },
                 { icon: <DiscoverySVG />, text: "Discover", to: "/discover" },
+                { icon: <Megaphone />, text: "Announcement", to: "/announcement" },
                 { icon: <MessageSVG />, text: "Messages", to: "/messages" },
                 {
                   icon: <NotificationSVG />,
