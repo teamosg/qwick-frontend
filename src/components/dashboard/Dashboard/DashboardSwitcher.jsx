@@ -7,6 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Spinner } from "@/components/ui/spinner";
 import { ArrowDown, Check } from "lucide-react";
 
 export default function DashboardSwitcher({
@@ -15,7 +16,7 @@ export default function DashboardSwitcher({
   setSelectedCommunity,
   selectedCommunity,
 }) {
-  if (isLoadingCommunityList || !selectedCommunity) return <p>loading ...</p>;
+  if (isLoadingCommunityList || !selectedCommunity) return <div className="w-full h-full flex items-center justify-center"><Spinner className={'text-white'} /></div>;
 
   console.log(selectedCommunity);
 
@@ -31,7 +32,7 @@ export default function DashboardSwitcher({
             />
           </AvatarFallback>
         </Avatar>
-        <div className="text-start flex flex-col gap-1 leading-none">
+        <div className="text-start flex flex-col gap-1 leading-none w-full">
           <span className="text-base leading-none font-semibold truncate max-w-[17ch]">
             {selectedCommunity?.business_name?.slice(0, 14)}...
           </span>
@@ -41,7 +42,7 @@ export default function DashboardSwitcher({
         </div>
         <ArrowDown />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-52" align="start">
+      <DropdownMenuContent  align="start">
         <DropdownMenuLabel>Communities</DropdownMenuLabel>
         {communityList.map((community) => (
           <DropdownMenuItem
@@ -61,10 +62,10 @@ export default function DashboardSwitcher({
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span>{community.name}</span>
-                {/* <span className="text-xs text-muted-foreground">
+                <span>{community.business_name?.slice(0, 20)}...</span>
+                <span className="text-xs text-muted-foreground">
                   @{community.username}
-                </span> */}
+                </span>
               </div>
             </div>
             {selectedCommunity.id === community.id && (
