@@ -42,7 +42,7 @@ export default function DashboardSwitcher({
         </div>
         <ArrowDown />
       </DropdownMenuTrigger>
-      <DropdownMenuContent  align="start">
+      <DropdownMenuContent align="start">
         <DropdownMenuLabel>Communities</DropdownMenuLabel>
         {communityList.map((community) => (
           <DropdownMenuItem

@@ -12,6 +12,7 @@ import { SidebarMyCommunitySkeleton } from "./skeletons/SidebarMyCommunitySkelet
 
 
 export function SidebarMyCommunity({ onClose }) {
+  // const { setSelectedJoinedCommunity } = useJoinedCommunityStore();
   const {
     data: communityList,
     isLoading: isLoadingCommunityList,
@@ -45,7 +46,8 @@ export function SidebarMyCommunity({ onClose }) {
                         alt=""
                         className="rounded-full inline mr-2 object-cover h-8 w-8"
                       />
-                      {community?.business_name?.slice(0, 15)}...
+                      {community?.business_name?.slice(0, 15)}
+                      {community?.business_name?.length > 1 ? "..." : ""}
                     </button>
                   </div>
                 </React.Fragment>

@@ -24,6 +24,7 @@ export const useCreateCommunity = () => {
       if (data?.status) {
         toast.success(data?.message || "Community created successfully!");
         queryClient.invalidateQueries({ queryKey: ["communityList"] });
+        queryClient.invalidateQueries({ queryKey: ["myCommunityList"] });
       } else {
         toast.error(data?.message || "Failed to create community");
       }
@@ -136,7 +137,7 @@ export const useGetCommunityUsers = (communityUsername) => {
     queryFn: async () => {
       try {
         const res = await axiosPrivate.get(
-          `/v1/communities/pythondjangoolovers/members/`
+          `/v1/communities/${communityUsername}/members/`
 
         );
         return res?.data || [];

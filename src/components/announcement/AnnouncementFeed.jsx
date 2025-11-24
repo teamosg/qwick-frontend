@@ -93,6 +93,8 @@ const AnnouncementFeed = () => {
       setPostText("");
       setSelectedImages([]);
       setImagePreviewUrls([]);
+
+      console.log(newPost);
     }
   };
 

@@ -20,7 +20,6 @@ import { Link } from "react-router";
 import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
 import { useEditCommunity, useGetMyCommunityList } from "@/hooks/community.hook";
-import { useEffect } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { useJoinedCommunityStore } from "@/store/communityStore";
 
@@ -59,26 +58,17 @@ const items = [
 // Main sidebar content component
 export function DashboardSidebarContent() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const { mutate: editCommunity, isPending } = useEditCommunity();
+  
   const { selectedJoinedCommunity, setSelectedJoinedCommunity } = useJoinedCommunityStore();
   const {
     data: communityList,
     isLoading: isLoadingMyCommunityList,
     isError: isErrorMyCommunityList,
   } = useGetMyCommunityList();
-  const { mutate: editCommunity, isPending } = useEditCommunity();
 
   const myCommunityList = communityList?.created_communities
 
-
-  useEffect(() => {
-    if (
-      myCommunityList?.length &&
-      !isLoadingMyCommunityList &&
-      !isErrorMyCommunityList
-    ) {
-      setSelectedJoinedCommunity(myCommunityList[0]);
-    }
-  }, [myCommunityList, isLoadingMyCommunityList, isErrorMyCommunityList]);
 
   const handleImageUpload = (imageFile) => {
     if (!imageFile) return;
@@ -97,6 +87,7 @@ export function DashboardSidebarContent() {
   };
 
   const bg = selectedJoinedCommunity?.banner_image || "/communityBG.png";
+
 
   return (
     <>
