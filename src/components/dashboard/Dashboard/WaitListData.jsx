@@ -4,6 +4,8 @@ import { useGetCommunityUsers } from "@/hooks/community.hook";
 import { useJoinedCommunityStore } from "@/store/communityStore";
 import { EllipsisVertical, Link2 } from "lucide-react";
 import WaitListSkeleton from "./skeletons/WaitListSkeleton";
+import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
+import { NoDataAlert } from "@/components/Alerts/NoDataAlert";
 // Table components (inline implementation)
 const Table = ({ children, className = "" }) => (
   <div className={`w-full ${className}`}>
@@ -28,9 +30,9 @@ const TableCell = ({ children, className = "" }) => (
 const WaitListData = () => {
 
   const { selectedJoinedCommunity } = useJoinedCommunityStore();
-  const { data, isLoading } = useGetCommunityUsers(selectedJoinedCommunity?.username)
+  const { data, isLoading, isError } = useGetCommunityUsers(selectedJoinedCommunity?.username)
 
-  const waitingUsers = data?.pending_requests
+  const waitingUsers = data?.pending_requests || [];
 
 
   const getStatusBadge = (status = 'waiting') => {
@@ -53,91 +55,87 @@ const WaitListData = () => {
 
   return (
     <div className="p-o">
-      <Tabs defaultValue="withdraw" className="w-full">
-        {/* Withdraw Tab Content */}
-        <TabsContent value="withdraw" className="p-0">
-          {/* Mobile Card View */}
-          <div className="block sm:hidden space-y-3">
-            {waitingUsers?.map((user, index) => (
-              <div
-                key={index}
-                className="bg-white border rounded-lg p-4 shadow-sm dark:bg-[#2E2E2E] dark:border-[#444] dark:text-[#fff]"
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="font-semibold text-[#25324B] dark:text-[#fff]">
-                    {user?.username}
-                  </div>
-                </div>
-                <div className="text-sm text-[#25324B] dark:text-[#fff]">{user?.email}</div>
-                <div className="text-sm text-[#25324B] dark:text-[#fff]">{user?.status}</div>
-                <div className="font-semibold text-[#25324B] dark:text-[#fff]">
-                  {user?.email}
-                </div>
-                <div className="font-semibold text-[#25324B] dark:text-[#fff]">
-                  {user?.joined_at}
-                </div>
+      {/* Mobile Card View */}
+      <div className="block sm:hidden space-y-3">
+        {waitingUsers?.map((user, index) => (
+          <div
+            key={index}
+            className="bg-white border rounded-lg p-4 shadow-sm dark:bg-[#2E2E2E] dark:border-[#444] dark:text-[#fff]"
+          >
+            <div className="flex justify-between items-start mb-2">
+              <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+                {user?.username}
               </div>
-            ))}
-          </div>
-
-          {/* Desktop Table View */}
-          <div className="hidden sm:block">
-            <div className="p-1">
-              <Table>
-                <TableHeader className="">
-                  <TableRow className="bg-[#f5f5f5] text-gray-900 dark:bg-[#2E2E2E] dark:text-[#fff] border-black rounded-full">
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
-                      Name
-                    </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
-                      Email
-                    </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
-                      Status
-                    </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
-                      Actions
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody className="rounded-xl">
-                  {waitingUsers?.map((user, index) => (
-                    <TableRow
-                      key={index}
-                      className="border-none hover:bg-white dark:hover:bg-[#2E2E2E]"
-                    >
-                      <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
-                        {user?.username}
-                      </TableCell>
-                      <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
-                        {user?.email}
-                      </TableCell>
-                      <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
-                        {getStatusBadge(user?.status)}
-                      </TableCell>
-                      <TableCell className="py-4 px-6 flex gap-2">
-                        <button className="cursor-pointer">
-                          <EllipsisVertical />
-                        </button>
-                        <button className="cursor-pointer">
-                          <Link2 />
-                        </button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+            </div>
+            <div className="text-sm text-[#25324B] dark:text-[#fff]">{user?.email}</div>
+            <div className="text-sm text-[#25324B] dark:text-[#fff]">{user?.status}</div>
+            <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+              {user?.email}
+            </div>
+            <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+              {user?.joined_at}
             </div>
           </div>
-        </TabsContent>
+        ))}
+      </div>
 
-        {/* Deposit Tab Content */}
-        <TabsContent value="deposit" className="mt-6">
-          <div className="text-center py-8 text-[#717171]">
-            No deposit transactions found
-          </div>
-        </TabsContent>
-      </Tabs>
+      {/* Desktop Table View */}
+      <div className="hidden sm:block">
+        <div className="p-1">
+          <Table>
+            <TableHeader className="">
+              <TableRow className="bg-[#f5f5f5] text-gray-900 dark:bg-[#2E2E2E] dark:text-[#fff] border-black rounded-full">
+                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  Name
+                </TableHead>
+                <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
+                  Email
+                </TableHead>
+                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  Status
+                </TableHead>
+                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  Actions
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className="rounded-xl">
+              {waitingUsers?.map((user, index) => (
+                <TableRow
+                  key={index}
+                  className="border-none hover:bg-white dark:hover:bg-[#2E2E2E]"
+                >
+                  <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
+                    {user?.username}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                    {user?.email}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
+                    {getStatusBadge(user?.status)}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 flex gap-2">
+                    <button className="cursor-pointer">
+                      <EllipsisVertical />
+                    </button>
+                    <button className="cursor-pointer">
+                      <Link2 />
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      {
+        waitingUsers?.length === 0 && <NoDataAlert />
+      }
+
+      {
+        isError && <FetchErrorAlert />
+      }
     </div>
   );
 };
