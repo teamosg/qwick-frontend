@@ -31,9 +31,9 @@ export function SidebarMyCommunity({ onClose }) {
           My Community
         </AccordionTrigger>
         <AccordionContent>
-          <ScrollArea className="h-40 max-h-40 ">
+          <ScrollArea className="max-h-40 ">
             <div className="p-4">
-              {myCommunityList.map((community) => (
+              {myCommunityList?.map((community) => (
                 <React.Fragment key={community?.business_name}>
                   <div className="text-sm  mb-3">
                     <button
