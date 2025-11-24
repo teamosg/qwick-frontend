@@ -163,3 +163,27 @@ export const useApproveCommunityUser = (communityUsername) => {
     },
   });
 }
+
+
+export const useManageCommunityUserRole = (communityUsername) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ userId, action }) => {
+      const res = await axiosPrivate.post(
+        `/v1/communities/${communityUsername}/${action}/${userId}/`);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || `User role changed successfully!`);
+        queryClient.invalidateQueries({ queryKey: ["communityUsers", communityUsername] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: `Failed to change user role` })
+      }
+    },
+
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to change user role" })
+    },
+  });
+}

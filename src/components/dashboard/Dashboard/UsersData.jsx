@@ -2,10 +2,13 @@ import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
 import { NoDataAlert } from "@/components/Alerts/NoDataAlert";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { useGetCommunityUsers } from "@/hooks/community.hook";
+import { useGetCommunityUsers, useManageCommunityUserRole } from "@/hooks/community.hook";
 import { useJoinedCommunityStore } from "@/store/communityStore";
 import { EllipsisVertical, Link2 } from "lucide-react";
 import WaitListSkeleton from "./skeletons/WaitListSkeleton";
+import CommunityUsersActions from "./ActionComponents/CommunityUsersActions";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 // Table components (inline implementation)
 const Table = ({ children, className = "" }) => (
   <div className={`w-full ${className}`}>
@@ -50,7 +53,22 @@ const UsersData = () => {
 
   const { selectedJoinedCommunity } = useJoinedCommunityStore();
   const { data, isLoading, isError } = useGetCommunityUsers(selectedJoinedCommunity?.username)
+  const { mutate: changeRole, isPending: isChangingRole } = useManageCommunityUserRole(selectedJoinedCommunity?.username)
+  const [userOnAction, setUserOnAction] = useState(null)
+
   const activeUsers = data?.members || [];
+
+  const handleApproveToModerator = (userId) => {
+    setUserOnAction(userId);
+    changeRole({ userId, action: "promote" })
+  }
+
+  const handleDemoteToUser = (userId) => {
+    setUserOnAction(userId);
+    changeRole({ userId, action: "demote" })
+  }
+
+  console.log(activeUsers);
 
 
   if (isLoading) return <WaitListSkeleton />
@@ -117,12 +135,18 @@ const UsersData = () => {
                     {getStatusBadge(user?.status)}
                   </TableCell>
                   <TableCell className="py-4 px-6 flex gap-2">
-                    <button className="cursor-pointer">
-                      <EllipsisVertical />
-                    </button>
-                    <button className="cursor-pointer">
-                      <Link2 />
-                    </button>
+                    {
+                      isChangingRole && userOnAction === user?.id
+                        ? (
+                          <Spinner />
+                        )
+                        : (
+                          <CommunityUsersActions
+                            onApprove={() => handleApproveToModerator(user?.id)}
+                            onDemote={() => handleDemoteToUser(user?.id)}
+                          />
+                        )
+                    }
                   </TableCell>
                 </TableRow>
               ))}
