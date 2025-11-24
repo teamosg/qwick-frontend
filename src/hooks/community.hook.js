@@ -54,6 +54,21 @@ export const useGetCommunityList = () => {
 };
 
 
+export const useGetMyCommunityList = () => {
+  return useQuery({
+    queryKey: ["myCommunityList"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/me/communities/");
+        return res?.data?.data || [];
+      } catch (error) {
+        handleApiError({ error, throwError: true, errorMessage: "Failed to fetch my community list" })
+      }
+    },
+    staleTime: 1000 * 60 * 2, // cache for 2 mins
+  });
+};
+
 
 
 export const useEditCommunity = () => {

@@ -7,21 +7,22 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useGetCommunityList } from "@/hooks/community.hook";
+import { useGetMyCommunityList } from "@/hooks/community.hook";
 import { SidebarMyCommunitySkeleton } from "./skeletons/SidebarMyCommunitySkeleton";
 
-const tags = Array.from({ length: 3 }).map(
-  (_, i, a) => `Profile ${a.length - i}`
-);
+
 export function SidebarMyCommunity({ onClose }) {
   const {
     data: communityList,
     isLoading: isLoadingCommunityList,
     isError: isErrorCommunityList,
-  } = useGetCommunityList();
+  } = useGetMyCommunityList();
+
+  const myCommunityList = communityList?.created_communities
 
   if (isLoadingCommunityList || isErrorCommunityList)
     return <SidebarMyCommunitySkeleton />;
+
 
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
@@ -32,7 +33,7 @@ export function SidebarMyCommunity({ onClose }) {
         <AccordionContent>
           <ScrollArea className="h-40 max-h-40 ">
             <div className="p-4">
-              {communityList.map((community) => (
+              {myCommunityList.map((community) => (
                 <React.Fragment key={community?.business_name}>
                   <div className="text-sm  mb-3">
                     <button

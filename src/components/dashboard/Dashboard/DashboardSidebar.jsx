@@ -19,7 +19,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
-import { useEditCommunity, useGetCommunityList } from "@/hooks/community.hook";
+import { useEditCommunity, useGetMyCommunityList } from "@/hooks/community.hook";
 import { useEffect } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { useJoinedCommunityStore } from "@/store/communityStore";
@@ -60,32 +60,31 @@ const items = [
 export function DashboardSidebarContent() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const { selectedJoinedCommunity, setSelectedJoinedCommunity } = useJoinedCommunityStore();
-
-  
   const {
     data: communityList,
-    isLoading: isLoadingCommunityList,
-    isError: isErrorCommunityList,
-  } = useGetCommunityList();
-
+    isLoading: isLoadingMyCommunityList,
+    isError: isErrorMyCommunityList,
+  } = useGetMyCommunityList();
   const { mutate: editCommunity, isPending } = useEditCommunity();
+
+  const myCommunityList = communityList?.created_communities
+
 
   useEffect(() => {
     if (
-      communityList?.length &&
-      !isLoadingCommunityList &&
-      !isErrorCommunityList
+      myCommunityList?.length &&
+      !isLoadingMyCommunityList &&
+      !isErrorMyCommunityList
     ) {
-      setSelectedJoinedCommunity(communityList[0]);
+      setSelectedJoinedCommunity(myCommunityList[0]);
     }
-  }, [communityList, isLoadingCommunityList, isErrorCommunityList]);
+  }, [myCommunityList, isLoadingMyCommunityList, isErrorMyCommunityList]);
 
   const handleImageUpload = (imageFile) => {
     if (!imageFile) return;
 
     const formData = new FormData();
     formData.append("banner_image", imageFile);
-    console.log(imageFile);
 
     editCommunity({
       communityUsername: selectedJoinedCommunity.username,
@@ -143,9 +142,9 @@ export function DashboardSidebarContent() {
             </div>
           </div> */}
           <DashboardSwitcher
-            data={communityList}
-            isLoading={isLoadingCommunityList}
-            isError={isErrorCommunityList}
+            data={myCommunityList}
+            isLoading={isLoadingMyCommunityList}
+            isError={isErrorMyCommunityList}
             selectedCommunity={selectedJoinedCommunity}
             setSelectedCommunity={setSelectedJoinedCommunity}
           />
