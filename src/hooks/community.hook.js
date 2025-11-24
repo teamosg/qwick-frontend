@@ -69,7 +69,7 @@ export const useEditCommunity = () => {
           },
         }
       );
-      return res.data;
+      return res?.data;
     },
 
     onSuccess: (data) => {
@@ -96,7 +96,7 @@ export const useJoinCommunity = () => {
       const res = await axiosPrivate.post(
         `/v1/communities/${communityUsername}/join/`
       );
-      return res.data;
+      return res?.data;
     },
     onSuccess: (data) => {
       if (data?.status) {
@@ -139,3 +139,27 @@ export const useGetCommunityUsers = (communityUsername) => {
 };
 
 
+
+export const useApproveCommunityUser = (communityUsername) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ userId, action }) => {
+      const payload = { action }
+      const res = await axiosPrivate.post(
+        `/v1/communities/${communityUsername}/handle-member/${userId}/`, payload);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "User approved successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityUsers", communityUsername] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to approve user" })
+      }
+    },
+
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to approve user" })
+    },
+  });
+}

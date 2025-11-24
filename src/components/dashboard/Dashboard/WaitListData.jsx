@@ -1,11 +1,12 @@
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { useGetCommunityUsers } from "@/hooks/community.hook";
+import { useApproveCommunityUser, useGetCommunityUsers } from "@/hooks/community.hook";
 import { useJoinedCommunityStore } from "@/store/communityStore";
-import { EllipsisVertical, Link2 } from "lucide-react";
 import WaitListSkeleton from "./skeletons/WaitListSkeleton";
 import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
 import { NoDataAlert } from "@/components/Alerts/NoDataAlert";
+import { WaitingListActions } from "./ActionComponents/WaitingListActions";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 // Table components (inline implementation)
 const Table = ({ children, className = "" }) => (
   <div className={`w-full ${className}`}>
@@ -27,29 +28,49 @@ const TableCell = ({ children, className = "" }) => (
   <td className={className}>{children}</td>
 );
 
+const getStatusBadge = (status = 'waiting') => {
+  const variants = {
+    waiting: "bg-[#f1e0c6] text-[#c2821b] border-yellow-200",
+  };
+
+  return (
+    <Badge
+      variant="outline"
+      className={`${variants[status.toLowerCase()]
+        } rounded-full px-3 py-1 text-xs font-medium`}
+    >
+      {status}
+    </Badge>
+  );
+};
+
+
+
 const WaitListData = () => {
 
   const { selectedJoinedCommunity } = useJoinedCommunityStore();
   const { data, isLoading, isError } = useGetCommunityUsers(selectedJoinedCommunity?.username)
+  const { mutate: approveUser, isPending: isApproving } = useApproveCommunityUser(selectedJoinedCommunity?.username)
+  const [userOnAction, setUserOnAction] = useState(null)
 
   const waitingUsers = data?.pending_requests || [];
 
+  function handleApprove(id) {
+    setUserOnAction(id)
+    approveUser({
+      userId: id,
+      action: "approve",
+    })
+  }
 
-  const getStatusBadge = (status = 'waiting') => {
-    const variants = {
-      waiting: "bg-[#f1e0c6] text-[#c2821b] border-yellow-200",
-    };
+  function handleReject(id) {
+    setUserOnAction(id)
+    approveUser({
+      userId: id,
+      action: "reject",
+    })
+  }
 
-    return (
-      <Badge
-        variant="outline"
-        className={`${variants[status.toLowerCase()]
-          } rounded-full px-3 py-1 text-xs font-medium`}
-      >
-        {status}
-      </Badge>
-    );
-  };
 
   if (isLoading) return <WaitListSkeleton />
 
@@ -115,12 +136,18 @@ const WaitListData = () => {
                     {getStatusBadge(user?.status)}
                   </TableCell>
                   <TableCell className="py-4 px-6 flex gap-2">
-                    <button className="cursor-pointer">
-                      <EllipsisVertical />
-                    </button>
-                    <button className="cursor-pointer">
-                      <Link2 />
-                    </button>
+                    {
+                      isApproving && userOnAction === user?.user_id
+                        ? (
+                          <Spinner />
+                        )
+                        : (
+                          <WaitingListActions
+                            onApprove={() => handleApprove(user?.user_id)}
+                            onReject={() => handleReject(user?.user_id)}
+                          />
+                        )
+                    }
                   </TableCell>
                 </TableRow>
               ))}
