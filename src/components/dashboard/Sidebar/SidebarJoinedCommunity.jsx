@@ -27,7 +27,7 @@ export function SidebarJoinedCommunity({ onClose }) {
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
-        <AccordionTrigger className="text-[#090003] font-semibold text-base hover:no-underline dark:text-white">
+        <AccordionTrigger className="text-[#090003] dark:text-white font-semibold text-base hover:no-underline">
           Joined Community
         </AccordionTrigger>
         <AccordionContent>

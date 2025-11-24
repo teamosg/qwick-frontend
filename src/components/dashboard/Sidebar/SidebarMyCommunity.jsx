@@ -31,7 +31,7 @@ export function SidebarMyCommunity({ onClose }) {
           My Community
         </AccordionTrigger>
         <AccordionContent>
-          <ScrollArea className="max-h-40 ">
+          <ScrollArea className="max-h-40 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <div className="p-4">
               {myCommunityList?.map((community) => (
                 <React.Fragment key={community?.business_name}>
