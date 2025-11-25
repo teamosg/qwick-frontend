@@ -51,14 +51,29 @@ const NavItem = ({ icon, text, to, onClose }) => {
 };
 
 const Sidebar = ({ onClose }) => {
+  const { setMyCommunityList } = useCommunityStore()
   const {
     data: communityList,
     isLoading: isLoadingCommunityList,
     isError: isErrorCommunityList,
   } = useGetMyCommunityList();
 
+
   const createdCommunityList = communityList?.created_communities || []
   const joinedCommunityList = communityList?.joined_communities || []
+
+  useEffect(() => {
+    useCommunityStore.setState({
+      isLoadingCommunityList,
+      isErrorCommunityList,
+    })
+  }, [isLoadingCommunityList, isErrorCommunityList])
+
+  
+  useEffect(() => {
+    const myCommunityList = [...createdCommunityList, ...joinedCommunityList]
+    setMyCommunityList(myCommunityList)
+  }, [communityList])
 
 
   return (
