@@ -203,3 +203,29 @@ export const useManageCommunityUserRole = (communityUsername) => {
     },
   });
 }
+
+
+
+export const useDeleteCommunity = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ communityUsername }) => {
+      const res = await axiosPrivate.delete(
+        `/v1/communities/${communityUsername}/`
+      );
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Community deleted successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityList"] });
+        queryClient.invalidateQueries({ queryKey: ["myCommunityList"] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to delete community" })
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to delete community" })
+    },
+  });
+}
