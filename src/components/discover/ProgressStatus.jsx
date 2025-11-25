@@ -17,11 +17,11 @@ const ProgressStatus = ({ progress = 0 }) => {
         return (
           <div
             key={index}
-            className="relative  h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
+            className="relative  h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden"
           >
             {(isFilled || isPartial) && (
               <div
-                className="absolute top-0 left-0 h-full bg-[#003933] dark:bg-[#48c4b5] transition-all duration-300"
+                className="absolute top-0 left-0 h-full hover:bg-[#002822] bg-[#003933] transition-all duration-300"
                 style={{
                   width: isFilled ? "100%" : `${partialFill * 100}%`,
                 }}

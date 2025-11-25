@@ -75,7 +75,7 @@ const Card = ({ content = cardContent }) => {
           {/* Views & Post Type */}
           <div className="flex flex-col items-end gap-1 min-w-[75px] sm:min-w-[90px]">
             <div className="flex items-center gap-2">
-              <span className="inline-block text-xs uppercase font-semibold tracking-wide text-gray-500 dark:text-emerald-300 bg-gray-100 dark:bg-zinc-800 rounded-md px-2 py-1">
+              <span className="inline-block text-xs uppercase font-semibold tracking-wide dark:text-white text-[#003933] bg-gray-100 dark:bg-zinc-800 rounded-md px-2 py-1">
                 {type}
               </span>
             </div>
@@ -101,9 +101,9 @@ const Card = ({ content = cardContent }) => {
           {socials.map(({ icon: Icon, name }, idx) => (
             <span
               key={name}
-              className="text-[#666666] text-xs rounded-full gap-1 px-2 py-2 bg-[#FDF2F8] flex flex-row items-center"
+              className="text-[#666666] text-xs rounded-full gap-1 px-2 py-2 bg-[rgba(0,57,51)] dark:bg-[rgba(0,57,51,0.5)] flex flex-row items-center"
             >
-              <Icon size={14} />
+              <Icon size={14} className="text-white" />
             </span>
           ))}
         </div>
@@ -124,7 +124,7 @@ const Card = ({ content = cardContent }) => {
             </p>
           </div>
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }}>
-            <span className="inline-block bg-[#003933] dark:bg-emerald-600 hover:bg-[#002822] hover:dark:bg-emerald-700 text-white text-xs font-semibold py-2 px-5 rounded-full transition-colors cursor-pointer shadow-sm">
+            <span className="inline-block  hover:bg-[#002822] bg-[#003933] hover:dark:bg-emerald-700 text-white text-xs font-semibold py-2 px-5 rounded-full transition-colors cursor-pointer shadow-sm">
               {cta}
             </span>
           </motion.div>
