@@ -47,7 +47,7 @@ export function SidebarMyCommunity({ onClose }) {
                         className="rounded-full inline mr-2 object-cover h-8 w-8"
                       />
                       {community?.business_name?.slice(0, 15)}
-                      {community?.business_name?.length > 1 ? "..." : ""}
+                      {community?.business_name?.length > 15 ? "..." : ""}
                     </button>
                   </div>
                 </React.Fragment>

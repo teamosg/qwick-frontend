@@ -34,7 +34,8 @@ export default function DashboardSwitcher({
         </Avatar>
         <div className="text-start flex flex-col gap-1 leading-none w-full">
           <span className="text-base leading-none font-semibold truncate max-w-[17ch]">
-            {selectedCommunity?.business_name?.slice(0, 14)}...
+            {selectedCommunity?.business_name?.slice(0, 15)}
+            {selectedCommunity?.business_name?.length > 15 ? "..." : ""}
           </span>
           <span className="text-xs truncate max-w-[20ch]">
             @{selectedCommunity?.username}
@@ -61,8 +62,11 @@ export default function DashboardSwitcher({
                   />
                 </AvatarFallback>
               </Avatar>
-              <div className="flex flex-col">
-                <span>{community.business_name?.slice(0, 20)}...</span>
+              <div className="flex flex-col min-w-40">
+                <span>
+                  {community?.business_name?.slice(0, 15)}
+                  {community?.business_name?.length > 15 ? "..." : ""}
+                </span>
                 <span className="text-xs text-muted-foreground">
                   @{community.username}
                 </span>
