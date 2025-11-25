@@ -129,7 +129,7 @@ const PostForm = ({ onSubmit }) => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="What's on your mind?"
-              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-gray-700 dark:text-gray-300 rounded-lg p-2 sm:p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-primary resize-none text-sm sm:text-base"
+              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-[#2E2E2E] dark:text-gray-300 rounded-lg p-2 sm:p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-primary resize-none text-sm sm:text-base"
               rows={3}
             />
 
@@ -175,7 +175,7 @@ const PostForm = ({ onSubmit }) => {
                   <button
                     type="button"
                     onClick={triggerFileInput}
-                    className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E]  transition-colors"
                   >
                     <ImageIcon size={18} className="sm:w-5 sm:h-5" />
                   </button>
@@ -189,14 +189,14 @@ const PostForm = ({ onSubmit }) => {
                   />
                   <button
                     type="button"
-                    className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E]  transition-colors"
                   >
                     <Paperclip size={18} className="sm:w-5 sm:h-5" />
                   </button>
                   <button
                     type="button"
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors emoji-button"
+                    className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E]  transition-colors emoji-button"
                   >
                     <Smile size={18} className="sm:w-5 sm:h-5" />
                   </button>
@@ -211,7 +211,7 @@ const PostForm = ({ onSubmit }) => {
                       onClick={() =>
                         setShowCommunityDropdown(!showCommunityDropdown)
                       }
-                      className="flex items-center dark:text-gray-300 space-x-1 text-xs sm:text-sm bg-gray-100 dark:bg-gray-700 rounded-full px-2 sm:px-3 py-1 w-full sm:w-auto justify-center sm:justify-start"
+                      className="flex items-center dark:text-gray-300 space-x-1 text-xs sm:text-sm bg-gray-100 dark:bg-[#2E2E2E]  rounded-full px-2 sm:px-3 py-1 w-full sm:w-auto justify-center sm:justify-start"
                     >
                       <span className="dark:text-gray-300 truncate">
                         {selectedCommunity}
@@ -236,8 +236,8 @@ const PostForm = ({ onSubmit }) => {
                               }}
                               className={`w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${
                                 selectedCommunity === community
-                                  ? "bg-gray-100 dark:bg-gray-700 text-primary"
-                                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                                  ? "bg-gray-100 dark:bg-[#2E2E2E]  text-primary"
+                                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E] "
                               }`}
                             >
                               {community}
@@ -253,7 +253,7 @@ const PostForm = ({ onSubmit }) => {
                     <button
                       type="button"
                       onClick={() => setShowTagDropdown(!showTagDropdown)}
-                      className="flex items-center space-x-1 text-xs sm:text-sm dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-full px-2 sm:px-3 py-1 w-full sm:w-auto justify-center sm:justify-start"
+                      className="flex items-center space-x-1 text-xs sm:text-sm dark:text-gray-300 bg-gray-100 dark:bg-[#2E2E2E]  rounded-full px-2 sm:px-3 py-1 w-full sm:w-auto justify-center sm:justify-start"
                     >
                       <span className="dark:text-gray-300 truncate">
                         {selectedTag}
@@ -277,8 +277,8 @@ const PostForm = ({ onSubmit }) => {
                               }}
                               className={`w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${
                                 selectedTag === tag
-                                  ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-gray-300"
-                                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                                  ? "bg-gray-100 dark:bg-[#2E2E2E]  text-primary dark:text-gray-300"
+                                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E] "
                               }`}
                             >
                               {tag}
@@ -297,7 +297,7 @@ const PostForm = ({ onSubmit }) => {
                 className={`px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors ${
                   content.trim() || imagePreviewUrls.length > 0
                     ? "bg-[#003933] text-white cursor-pointer hover:bg-[#002a26]"
-                    : "bg-[#003933] dark:bg-gray-700 text-white cursor-not-allowed opacity-50"
+                    : "bg-[#003933] dark:bg-[#2E2E2E]  text-white cursor-not-allowed opacity-50"
                 }`}
               >
                 Post

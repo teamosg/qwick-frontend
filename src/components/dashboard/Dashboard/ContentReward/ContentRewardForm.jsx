@@ -154,7 +154,7 @@ const CampaignForm = ({
                     onClick={() =>
                       document.getElementById("thumbnail-upload").click()
                     }
-                    className="text-sm font-medium text-black dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex gap-3 px-5 py-2 bg-white rounded-lg"
+                    className="dark:bg-[#2E2E2E]  text-sm font-medium text-black dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex gap-3 px-5 py-2 bg-white rounded-lg"
                   >
                     <Upload className="w-5 h-5 text-black dark:text-gray-400" />
                     Upload thumbnail
@@ -531,7 +531,7 @@ const CampaignForm = ({
                 Campaign duration:{" "}
                 {Math.ceil(
                   (new Date(formData.endDate) - new Date(formData.startDate)) /
-                    (1000 * 60 * 60 * 24)
+                  (1000 * 60 * 60 * 24)
                 )}{" "}
                 days
               </p>
