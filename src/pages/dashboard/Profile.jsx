@@ -26,6 +26,7 @@ import { useEditProfile, useProfile } from "@/hooks/auth.hook";
 import { Bookmark } from "lucide-react";
 import SavedPosts from "@/components/dashboard/Profile/SavedPosts";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Save from "@/assets/svg/Save";
 
 const tabs = [
   {
@@ -73,7 +74,7 @@ const tabs = [
   {
     name: "Saved Post",
     value: "saved-post",
-    icon: Bookmark,
+    icon: Save,
     content: <SavedPosts />,
   },
   {
@@ -123,11 +124,10 @@ const Profile = () => {
       >
         {/* Tabs Sidebar */}
         <div
-          className={`${
-            isTabsOpen
+          className={`${isTabsOpen
               ? "translate-x-0 opacity-100"
               : "-translate-x-full opacity-0"
-          }  md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
+            }  md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
         >
           {/* Mobile Close Button */}
           <div className="md:hidden flex justify-between items-center p-4 border-b border-gray-200 dark:border-zinc-700">
@@ -185,7 +185,7 @@ const Profile = () => {
                   className="cursor-pointer !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
                   onClick={() => setIsTabsOpen(false)}
                 >
-                  <tab.icon className="h-5 w-5 me-3" /> {tab.name}
+                  <tab.icon /> {tab.name}
                 </TabsTrigger>
               ))}
             </TabsList>
