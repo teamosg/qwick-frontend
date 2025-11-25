@@ -9,7 +9,6 @@ import { axiosPublic, axiosPrivate } from "../lib/axios.config.js";
 import {
   signUpSchema,
   signInSchema,
-  verifyOtpSchema,
   changePasswordSchema,
   forgotPasswordSchema,
   resetPasswordSchema,

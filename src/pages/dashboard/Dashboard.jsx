@@ -19,7 +19,6 @@ const Dashboard = () => {
 
 
   useEffect(() => {
-    console.log(myCommunityList);
     if (
       myCommunityList?.length &&
       !isLoadingMyCommunityList &&
