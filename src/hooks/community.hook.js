@@ -92,6 +92,7 @@ export const useEditCommunity = () => {
       if (data?.status) {
         toast.success(data?.message || "Community updated successfully!");
         queryClient.invalidateQueries({ queryKey: ["communityList"] });
+        queryClient.invalidateQueries({ queryKey: ["myCommunityList"] });
       } else {
         handleApiError({ error: data?.message, errorMessage: "Failed to update community" })
       }
