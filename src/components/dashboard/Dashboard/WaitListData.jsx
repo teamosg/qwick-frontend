@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { useApproveCommunityUser, useGetCommunityUsers } from "@/hooks/community.hook";
-import { useJoinedCommunityStore } from "@/store/communityStore";
+import { useCommunityStore } from "@/store/communityStore";
 import WaitListSkeleton from "./skeletons/WaitListSkeleton";
 import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
 import { NoDataAlert } from "@/components/Alerts/NoDataAlert";
@@ -48,9 +48,9 @@ const getStatusBadge = (status = 'waiting') => {
 
 const WaitListData = () => {
 
-  const { selectedJoinedCommunity } = useJoinedCommunityStore();
-  const { data, isLoading, isError } = useGetCommunityUsers(selectedJoinedCommunity?.username)
-  const { mutate: approveUser, isPending: isApproving } = useApproveCommunityUser(selectedJoinedCommunity?.username)
+  const { selectedBrandCommunity } = useCommunityStore();
+  const { data, isLoading, isError } = useGetCommunityUsers(selectedBrandCommunity?.username)
+  const { mutate: approveUser, isPending: isApproving } = useApproveCommunityUser(selectedBrandCommunity?.username)
   const [userOnAction, setUserOnAction] = useState(null)
 
   const waitingUsers = data?.pending_requests || [];

@@ -3,12 +3,12 @@ import NoCommunityDashboardPage from "@/components/dashboard/Dashboard/EmptyPage
 import DashboardSkeleton from "@/components/dashboard/Dashboard/skeletons/DashboardSkeleton";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useGetMyCommunityList } from "@/hooks/community.hook";
-import { useJoinedCommunityStore } from "@/store/communityStore";
+import { useCommunityStore } from "@/store/communityStore";
 import { useEffect } from "react";
 import { Outlet } from "react-router";
 
 const Dashboard = () => {
-  const { selectedJoinedCommunity, setSelectedJoinedCommunity } = useJoinedCommunityStore((state) => state);
+  const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore((state) => state);
   const {
     data: communityList,
     isLoading: isLoadingMyCommunityList,
@@ -24,9 +24,9 @@ const Dashboard = () => {
       !isLoadingMyCommunityList &&
       !isErrorMyCommunityList
     ) {
-      setSelectedJoinedCommunity(myCommunityList[0]);
+      setSelectedBrandCommunity(myCommunityList[0]);
     } else {
-      setSelectedJoinedCommunity(null);
+      setSelectedBrandCommunity(null);
     }
   }, [myCommunityList, isLoadingMyCommunityList, isErrorMyCommunityList]);
 
@@ -37,7 +37,7 @@ const Dashboard = () => {
   }
 
 
-  if (!selectedJoinedCommunity) {
+  if (!selectedBrandCommunity) {
     return <NoCommunityDashboardPage />;
   }
 

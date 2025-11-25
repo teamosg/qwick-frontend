@@ -3,7 +3,7 @@ import { NoDataAlert } from "@/components/Alerts/NoDataAlert";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useGetCommunityUsers, useManageCommunityUserRole } from "@/hooks/community.hook";
-import { useJoinedCommunityStore } from "@/store/communityStore";
+import { useCommunityStore } from "@/store/communityStore";
 import { EllipsisVertical, Link2 } from "lucide-react";
 import WaitListSkeleton from "./skeletons/WaitListSkeleton";
 import CommunityUsersActions from "./ActionComponents/CommunityUsersActions";
@@ -51,9 +51,9 @@ const getStatusBadge = (status = 'active') => {
 
 const UsersData = () => {
 
-  const { selectedJoinedCommunity } = useJoinedCommunityStore();
-  const { data, isLoading, isError } = useGetCommunityUsers(selectedJoinedCommunity?.username)
-  const { mutate: changeRole, isPending: isChangingRole } = useManageCommunityUserRole(selectedJoinedCommunity?.username)
+  const { selectedBrandCommunity } = useCommunityStore();
+  const { data, isLoading, isError } = useGetCommunityUsers(selectedBrandCommunity?.username)
+  const { mutate: changeRole, isPending: isChangingRole } = useManageCommunityUserRole(selectedBrandCommunity?.username)
   const [userOnAction, setUserOnAction] = useState(null)
 
   const activeUsers = data?.members || [];

@@ -4,14 +4,13 @@ import ConversationDetailsSkeleton from "./skeletonns/ConversationDetailsSkeleto
 import { useProfile } from "@/hooks/auth.hook";
 import ChatConversationContainer from "./ChatConversationContainer";
 import ConversationActionBox from "./ConversationActionBox";
-import { ZodNullable } from "zod/v3";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 const ChatBox = ({ selectedChat, setSelectedChat }) => {
   // State management for chat features
   const [messages, setMessages] = useState([]);
-  const ws = useRef(ZodNullable);
+  const ws = useRef();
   const queryClient = useQueryClient();
 
   // sender information

@@ -7,18 +7,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useGetMyCommunityList } from "@/hooks/community.hook";
 import { SidebarMyCommunitySkeleton } from "./skeletons/SidebarMyCommunitySkeleton";
 
 
-export function SidebarJoinedCommunity({ onClose }) {
-  const {
-    data: communityList,
-    isLoading: isLoadingCommunityList,
-    isError: isErrorCommunityList,
-  } = useGetMyCommunityList();
-
-  const joinedCommunityList = communityList?.joined_communities
+export function SidebarJoinedCommunity({ onClose, joinedCommunityList, isLoadingCommunityList, isErrorCommunityList }) {
 
   if (isLoadingCommunityList || isErrorCommunityList)
     return <SidebarMyCommunitySkeleton />;

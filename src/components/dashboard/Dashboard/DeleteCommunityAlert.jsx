@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { AlertTriangle, ChevronRight, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { useJoinedCommunityStore } from "@/store/communityStore";
+import { useCommunityStore } from "@/store/communityStore";
 import { useDeleteCommunity } from "@/hooks/community.hook";
 import { useNavigate } from "react-router";
 
@@ -23,8 +23,8 @@ const DeleteCommunityAlert = () => {
     const navigate = useNavigate()
     const { mutate: deleteCommunity, isPending: isDeletingPending } = useDeleteCommunity();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const { selectedJoinedCommunity } = useJoinedCommunityStore()
-    const communityUsername = selectedJoinedCommunity?.username;
+    const { selectedBrandCommunity } = useCommunityStore()
+    const communityUsername = selectedBrandCommunity?.username;
 
     const handleDeleteCommunity = async (e) => {
         e.preventDefault();

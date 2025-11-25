@@ -1,7 +1,7 @@
 import logo from "@/assets/logo.png";
 import { X } from "lucide-react";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import SettingsMenu from "./SettingsMenu";
 import { SidebarJoinedCommunity } from "./Sidebar/SidebarJoinedCommunity";
@@ -15,6 +15,8 @@ import NotificationSVG from "@/assets/svg/NotificationSVG";
 import ProfileSVG from "@/assets/svg/ProfileSVG";
 import { useTheme } from "../shared/ThemeProvider";
 import { Megaphone } from "lucide-react";
+import { useGetMyCommunityList } from "@/hooks/community.hook";
+import { useCommunityStore } from "@/store/communityStore";
 
 const NavItem = ({ icon, text, to, onClose }) => {
   const { theme } = useTheme();
@@ -23,21 +25,19 @@ const NavItem = ({ icon, text, to, onClose }) => {
       to={to}
       onClick={onClose}
       className={({ isActive, isPending }) =>
-        `flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative navmenu" ${
-          isActive || isPending
-            ? "bg-[#003933] text-white shadow-sm before:absolute before:-left-3 before:top-0 before:w-1 before:h-full before:bg-[#003933] before:rounded-tr-2xl before:rounded-br-2xl "
-            : "text-[#202224] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
+        `flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative navmenu" ${isActive || isPending
+          ? "bg-[#003933] text-white shadow-sm before:absolute before:-left-3 before:top-0 before:w-1 before:h-full before:bg-[#003933] before:rounded-tr-2xl before:rounded-br-2xl "
+          : "text-[#202224] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
         }`
       }
     >
       {({ isActive, isPending }) => (
         <div className="flex items-center justify-center gap-1.5">
           <div
-            className={`flex-shrink-0 ${
-              isActive || isPending
-                ? "text-white"
-                : "text-gray-500 dark:text-gray-400"
-            }`}
+            className={`flex-shrink-0 ${isActive || isPending
+              ? "text-white"
+              : "text-gray-500 dark:text-gray-400"
+              }`}
           >
             {React.cloneElement(icon, {
               color: isActive || isPending ? "white" : theme === 'light' ? "#202224" : "white",
@@ -51,6 +51,16 @@ const NavItem = ({ icon, text, to, onClose }) => {
 };
 
 const Sidebar = ({ onClose }) => {
+  const {
+    data: communityList,
+    isLoading: isLoadingCommunityList,
+    isError: isErrorCommunityList,
+  } = useGetMyCommunityList();
+
+  const createdCommunityList = communityList?.created_communities || []
+  const joinedCommunityList = communityList?.joined_communities || []
+
+
   return (
     <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#171717] overflow-y-auto  ">
       <div className="flex flex-col justify-between h-full">
@@ -96,12 +106,23 @@ const Sidebar = ({ onClose }) => {
           {/* Search Community */}
           <div className="px-4 border-t border-sidebar-border">
             {/* <SidebarSearchCommunity /> */}
-            <SidebarMyCommunity onClose={onClose} />
+            <SidebarMyCommunity
+              onClose={onClose}
+              createdCommunityList={createdCommunityList}
+              isLoadingCommunityList={isLoadingCommunityList}
+              isErrorCommunityList={isErrorCommunityList}
+            />
           </div>
 
           <div className="px-4 border-t border-sidebar-border">
             {/* <SidebarSearchCommunity /> */}
-            <SidebarJoinedCommunity onClose={onClose} />
+            <SidebarJoinedCommunity
+              onClose={onClose}
+              joinedCommunityList={joinedCommunityList}
+              isLoadingCommunityList={isLoadingCommunityList}
+              isErrorCommunityList={isErrorCommunityList}
+
+            />
           </div>
         </div>
 

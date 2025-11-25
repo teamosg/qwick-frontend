@@ -1,15 +1,21 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export const useJoinedCommunityStore = create(
+export const useCommunityStore = create(
     persist(
         (set) => ({
-            selectedJoinedCommunity: null,
-            setSelectedJoinedCommunity: community => set({ selectedJoinedCommunity: community })
+            selectedBrandCommunity: null,
+            setSelectedBrandCommunity: community => set({ selectedBrandCommunity: community }),
+
+            selectedCreatorCommunity: null,
+            setSelectedCreatorCommunity: community => set({ selectedCreatorCommunity: community }),
+
+            myCommunityList: [],
+            setMyCommunityList: communityList => set({ myCommunityList: communityList }),
         })
     ),
     {
-        name: "selectedJoinedCommunity",
+        name: "selectedBrandCommunity",
         // getStorage: () => localStorage,
     }
 )

@@ -21,7 +21,7 @@ import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
 import { useEditCommunity, useGetMyCommunityList } from "@/hooks/community.hook";
 import { Spinner } from "@/components/ui/spinner";
-import { useJoinedCommunityStore } from "@/store/communityStore";
+import { useCommunityStore } from "@/store/communityStore";
 
 // Menu items.
 const items = [
@@ -60,7 +60,7 @@ export function DashboardSidebarContent() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const { mutate: editCommunity, isPending } = useEditCommunity();
   
-  const { selectedJoinedCommunity, setSelectedJoinedCommunity } = useJoinedCommunityStore();
+  const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore();
   const {
     data: communityList,
     isLoading: isLoadingMyCommunityList,
@@ -77,7 +77,7 @@ export function DashboardSidebarContent() {
     formData.append("banner_image", imageFile);
 
     editCommunity({
-      communityUsername: selectedJoinedCommunity.username,
+      communityUsername: selectedBrandCommunity.username,
       payload: formData,
     });
   };
@@ -86,7 +86,7 @@ export function DashboardSidebarContent() {
     setIsImageModalOpen(true);
   };
 
-  const bg = selectedJoinedCommunity?.banner_image || "/communityBG.png";
+  const bg = selectedBrandCommunity?.banner_image || "/communityBG.png";
 
 
   return (
@@ -136,8 +136,8 @@ export function DashboardSidebarContent() {
             data={myCommunityList}
             isLoading={isLoadingMyCommunityList}
             isError={isErrorMyCommunityList}
-            selectedCommunity={selectedJoinedCommunity}
-            setSelectedCommunity={setSelectedJoinedCommunity}
+            selectedCommunity={selectedBrandCommunity}
+            setSelectedCommunity={setSelectedBrandCommunity}
           />
         </SidebarHeader>
 
