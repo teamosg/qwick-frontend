@@ -107,6 +107,9 @@ const CampaignForm = ({
     }
   };
 
+  const date = new Date()
+  console.log(date);
+
   return (
     <div className="max-w-3xl mx-auto p-6 dark:bg-[#1E1E1E] min-h-screen">
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -480,6 +483,15 @@ const CampaignForm = ({
                     mode="single"
                     selected={formData.startDate}
                     onSelect={(date) => handleInputChange("startDate", date)}
+                    disabled={(date) => {
+                      const today = new Date()
+                      today.setHours(0, 0, 0, 0)
+
+                      const d = new Date(date)
+                      date.setHours(0, 0, 0, 0)
+
+                      return d < today
+                    }}
                     initialFocus
                   />
                 </PopoverContent>
@@ -513,9 +525,19 @@ const CampaignForm = ({
                     mode="single"
                     selected={formData.endDate}
                     onSelect={(date) => handleInputChange("endDate", date)}
-                    disabled={(date) =>
-                      formData.startDate ? date < formData.startDate : false
-                    }
+                    disabled={(date) => {
+                      const selectedDate = formData.startDate
+                      const startDate = new Date(selectedDate)
+                      startDate.setHours(0, 0, 0, 0)
+
+                      const endDate = new Date(selectedDate)
+                      endDate.setDate(startDate.getDate() + 30)
+                      endDate.setHours(0, 0, 0, 0)
+
+                      return selectedDate
+                        ? date < endDate
+                        : true
+                    }}
                     initialFocus
                   />
                 </PopoverContent>
