@@ -1,3 +1,4 @@
+import LegalSvg from "@/assets/svg/LegalSvg";
 import { Bell, ChevronRight } from "lucide-react";
 import { Link } from "react-router";
 
@@ -25,7 +26,7 @@ const DashboardSettings = () => {
           className="flex items-center justify-between bg-white dark:bg-[#2E2E2E] rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
         >
           <div className="flex items-center justify-center gap-3">
-            <Bell />
+            <LegalSvg />
             <h3 className="text-[#003933] dark:text-white text-[20px] font-semibold ">Legal</h3>
           </div>
           <ChevronRight />
