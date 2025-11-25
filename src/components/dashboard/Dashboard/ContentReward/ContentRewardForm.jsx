@@ -335,7 +335,7 @@ const CampaignForm = ({
         {/* Flat fee bonus */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-            Flat fee bonus
+            Flat fee bonus (optional)
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
@@ -438,7 +438,7 @@ const CampaignForm = ({
         {/* Campaign Duration */}
         <div className="space-y-3">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-            Campaign duration*
+            Campaign duration* (Min 30days)
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
