@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router";
 
 const AnnouncementPostForm = ({
+  isPosting,
   postText,
   setPostText,
   imagePreviewUrls,
   setImagePreviewUrls,
-  selectedImages,
   setSelectedImages,
   fileInputRef,
   handleImageUpload,
@@ -52,7 +52,6 @@ const AnnouncementPostForm = ({
 
   const handleEmojiClick = (emojiData) => {
     setPostText((prev) => prev + emojiData.emoji);
-    setShowEmojiPicker(false);
   };
 
   const triggerFileInput = () => {
@@ -103,8 +102,8 @@ const AnnouncementPostForm = ({
               value={postText}
               onChange={(e) => setPostText(e.target.value)}
               placeholder="What's on your mind?"
-              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-[#2E2E2E]  rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-              rows={3}
+              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-[#2E2E2E]  rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-[#003933] resize-none"
+              rows={5}
             />
 
             {/* Image Preview */}
@@ -116,7 +115,7 @@ const AnnouncementPostForm = ({
                       <img
                         src={url}
                         alt={`Preview ${index + 1}`}
-                        className="rounded-lg max-h-60 object-cover w-full"
+                        className="rounded-lg max-h-40 object-cover w-full"
                       />
                       <button
                         type="button"
@@ -149,12 +148,12 @@ const AnnouncementPostForm = ({
                   className="hidden"
                   onChange={handleImageUpload}
                 />
-                <button
+                {/* <button
                   type="button"
                   className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E] "
                 >
                   <Paperclip size={20} />
-                </button>
+                </button> */}
                 <button
                   type="button"
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -165,14 +164,13 @@ const AnnouncementPostForm = ({
               </div>
               <button
                 type="submit"
-                disabled={!postText.trim() && imagePreviewUrls.length === 0}
-                className={`px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors ${
-                  postText.trim() || imagePreviewUrls.length > 0
-                    ? "bg-[#003933] text-white cursor-pointer hover:bg-[#002a26]"
-                    : "bg-[#003933] dark:bg-[#2E2E2E]  text-white cursor-not-allowed opacity-50"
-                }`}
+                disabled={isPosting || (!postText.trim() && imagePreviewUrls.length === 0)}
+                className={`px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors 
+                  bg-[#003933] text-white cursor-pointer hover:bg-[#002a26]
+                  disabled:bg-[#003933] disabled:dark:bg-[#2E2E2E]  disabled:text-white disabled:cursor-not-allowed disabled:opacity-50
+                  `}
               >
-                Post
+                {isPosting ? "Posting..." : "Post"}
               </button>
             </div>
 

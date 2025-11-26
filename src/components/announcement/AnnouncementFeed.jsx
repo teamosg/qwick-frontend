@@ -3,58 +3,27 @@ import { useRef, useState } from "react";
 import AnnouncementPostForm from "./AnnounceMentPostForm";
 import FeedSinglePost from "./FeedSinglePost";
 import { useCommunityStore } from "@/store/communityStore";
-import { useGetAnnouncementsList } from "@/hooks/announcement.hook";
+import { useCreateAnnouncements, useGetAnnouncementsList } from "@/hooks/announcement.hook";
 import FeedSinglePostSkeleton from "../skeletons/FeedSinglePostSkeleton";
+import NoAnnouncementsYet from "../Alerts/NoAnnouncementsYet";
+import toast from "react-hot-toast";
 
 const AnnouncementFeed = () => {
+  const { selectedCreatorCommunity } = useCommunityStore()
+
   const [postText, setPostText] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const fileInputRef = useRef(null);
 
-  const { selectedCreatorCommunity } = useCommunityStore()
-  console.log(selectedCreatorCommunity);
 
   const communityUsername = selectedCreatorCommunity?.username;
-
   const { data: announcementsList, isLoading: isLoadingAnnouncements } = useGetAnnouncementsList(communityUsername);
+  const canPost = selectedCreatorCommunity?.can_edit
 
-  console.log(announcementsList);
 
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      author: "Adam Smith",
-      avatar: "http://placehold.co/120x120",
-      content:
-        "Social media website template. Love that idea — I think journaling could really help me stay motivated. Appreciate the tip, Sam!",
-      link: "https://whop.com/joined/oddsjam/announcements-x5RfvG6BHgs9rP/app/",
-      images: [
-        "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&h=300&fit=crop",
-        "https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&h=300&fit=crop",
-      ],
-      timestamp: "43m",
-      likes: 2,
-      comments: 2,
-      isLiked: false,
-    },
-    {
-      id: 2,
-      author: "Adam Smith",
-      avatar: "http://placehold.co/120x120",
-      content:
-        "Social media website template. Love that idea — I think journaling could really help me stay motivated. Appreciate the tip, Sam!",
-      link: "https://whop.com/joined/oddsjam/announcements-x5RfvG6BHgs9rP/app/",
-      images: [
-        "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&h=300&fit=crop",
-        "https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=400&h=300&fit=crop",
-      ],
-      timestamp: "43m",
-      likes: 2,
-      comments: 2,
-      isLiked: false,
-    },
-  ]);
+  const { mutate: createAnnouncement, isPending: isCreatingAnnouncement } = useCreateAnnouncements(communityUsername)
+
 
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
@@ -64,7 +33,7 @@ const AnnouncementFeed = () => {
 
     // Limit to 4 images
     if (selectedImages.length + imageFiles.length > 4) {
-      alert("Maximum 4 images allowed");
+      toast.error("Maximum 4 images allowed");
       return;
     }
 
@@ -89,30 +58,22 @@ const AnnouncementFeed = () => {
 
 
   const handlePostSubmit = () => {
-    if (postText.trim() || imagePreviewUrls.length > 0) {
-      const newPost = {
-        id: Date.now(),
-        author: "You",
-        avatar:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
-        content: postText,
-        link: "",
-        images: imagePreviewUrls,
-        timestamp: "Just now",
-        likes: 0,
-        comments: 0,
-        isLiked: false,
-      };
+    if (postText.trim() || selectedImages.length > 0) {
 
-      setPosts([newPost, ...posts]);
-      setPostText("");
-      setSelectedImages([]);
-      setImagePreviewUrls([]);
+      const formData = new FormData()
+      formData.append("content", postText)
+      selectedImages?.forEach(file => formData.append("files", file))
 
-      console.log(newPost);
+      console.log(formData);
+      createAnnouncement(formData, {
+        onSuccess: () => {
+          setPostText("");
+          setSelectedImages([]);
+          setImagePreviewUrls([])
+        }
+      })
     }
   };
-
 
 
 
@@ -159,6 +120,12 @@ const AnnouncementFeed = () => {
     )
   }
 
+  if (!announcementsList?.length) {
+    return (
+      <NoAnnouncementsYet owner={canPost} />
+    )
+  }
+
   return (
     <motion.div
       className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen"
@@ -175,18 +142,23 @@ const AnnouncementFeed = () => {
         Announcement
       </motion.h2>
 
-      <AnnouncementPostForm
-        postText={postText}
-        setPostText={setPostText}
-        imagePreviewUrls={imagePreviewUrls}
-        setImagePreviewUrls={setImagePreviewUrls}
-        selectedImages={selectedImages}
-        setSelectedImages={setSelectedImages}
-        fileInputRef={fileInputRef}
-        handleImageUpload={handleImageUpload}
-        removeImage={removeImage}
-        handlePostSubmit={handlePostSubmit}
-      />
+      {
+        !!canPost && (
+          <AnnouncementPostForm
+            isPosting={isCreatingAnnouncement}
+            postText={postText}
+            setPostText={setPostText}
+            imagePreviewUrls={imagePreviewUrls}
+            setImagePreviewUrls={setImagePreviewUrls}
+            selectedImages={selectedImages}
+            setSelectedImages={setSelectedImages}
+            fileInputRef={fileInputRef}
+            handleImageUpload={handleImageUpload}
+            removeImage={removeImage}
+            handlePostSubmit={handlePostSubmit}
+          />
+        )
+      }
 
       {/* Render posts dynamically */}
       <motion.div
