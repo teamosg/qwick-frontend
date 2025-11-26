@@ -10,6 +10,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import PaymentSetDialog from "./PaymentSetDialog";
+import { ChevronDown } from "lucide-react";
 
 const CampaignForm = ({
   setShowForm,
@@ -22,7 +23,7 @@ const CampaignForm = ({
     thumbnailPreview: initialData?.thumbnailPreview || null,
     campaignName: initialData?.campaignName || "",
     type: initialData?.type || "",
-    personalBrand: initialData?.personalBrand || "",
+    category: initialData?.category || "",
     campaignBudget: initialData?.campaignBudget || "",
     currency: initialData?.currency || "USD",
     rewardRate: initialData?.rewardRate || "",
@@ -185,7 +186,7 @@ const CampaignForm = ({
             value={formData.campaignName}
             onChange={(e) => handleInputChange("campaignName", e.target.value)}
             placeholder="Enter campaign"
-            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none dark:text-white placeholder:text-[#697586]"
           />
         </div>
 
@@ -195,33 +196,57 @@ const CampaignForm = ({
             <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
               Type*
             </label>
-            <select
-              value={formData.type}
-              onChange={(e) => handleInputChange("type", e.target.value)}
-              className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
-            >
-              <option value="">UGC</option>
-              <option value="UGC">UGC</option>
-              <option value="Sponsored">Sponsored</option>
-              <option value="Review">Review</option>
-              <option value="Tutorial">Tutorial</option>
-              <option value="Unboxing">Unboxing</option>
-            </select>
+            <div className="relative w-full">
+              <select
+                value={formData.type}
+                onChange={(e) => handleInputChange("type", e.target.value)}
+                className="w-full px-3 py-3 pr-10 bg-white dark:text-white dark:bg-[#2E2E2E] 
+               border border-gray-200 dark:border-gray-700 rounded-lg
+               focus:ring-2 focus:ring-[#364152] focus:border-transparent
+               transition-all outline-none appearance-none"
+              >
+                <option value="">UGC</option>
+                <option value="UGC">UGC</option>
+                <option value="Sponsored">Sponsored</option>
+                <option value="Review">Review</option>
+                <option value="Tutorial">Tutorial</option>
+                <option value="Unboxing">Unboxing</option>
+              </select>
+
+              {/* Custom arrow */}
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                <ChevronDown />
+              </div>
+            </div>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-              Personal brand*
+              Category
             </label>
-            <input
-              type="text"
-              value={formData.personalBrand}
-              onChange={(e) =>
-                handleInputChange("personalBrand", e.target.value)
-              }
-              placeholder="Personal brand"
-              className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
-            />
+            <div className="relative w-full">
+              <select
+                value={formData.category}
+                onChange={(e) => handleInputChange("category", e.target.value)}
+                className="w-full px-3 py-3 pr-10 bg-white dark:text-white dark:bg-[#2E2E2E]
+               border border-gray-200 dark:border-gray-700 rounded-lg
+               focus:ring-2 focus:ring-[#364152] focus:border-transparent
+               transition-all outline-none appearance-none"
+              >
+                <option value="Personal brand">Personal brand</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Products">Products</option>
+                <option value="Music">Music</option>
+                <option value="Logo">Logo</option>
+                <option value="Other">Other</option>
+              </select>
+
+              {/* Custom dropdown icon */}
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                <ChevronDown />
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -240,18 +265,29 @@ const CampaignForm = ({
                   handleInputChange("campaignBudget", e.target.value)
                 }
                 placeholder="10000"
-                className="w-full px-3 py-3  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
               />
             </div>
-            <select
-              value={formData.currency}
-              onChange={(e) => handleInputChange("currency", e.target.value)}
-              className="px-3 py-3  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
-            >
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="GBP">GBP</option>
-            </select>
+            <div className="relative">
+              <select
+                value={formData.currency}
+                onChange={(e) => handleInputChange("currency", e.target.value)}
+                className="px-3 py-3 pr-10 bg-white dark:text-white dark:bg-[#2E2E2E]
+               border border-gray-200 dark:border-gray-700 rounded-lg
+               focus:ring-2 focus:ring-[#364152] focus:border-transparent
+               transition-all outline-none appearance-none"
+              >
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+              </select>
+
+              {/* Custom dropdown icon */}
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                <ChevronDown />
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -269,7 +305,7 @@ const CampaignForm = ({
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
               placeholder="3"
-              className="w-full pl-8 px-3 py-3  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -300,7 +336,7 @@ const CampaignForm = ({
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
                 placeholder="3"
-                className="w-full pl-8 px-3 py-3  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
               />
             </div>
           </div>
@@ -329,7 +365,7 @@ const CampaignForm = ({
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
                 placeholder="100"
-                className="w-full pl-8 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
               />
             </div>
           </div>
@@ -362,7 +398,7 @@ const CampaignForm = ({
                 handleInputChange("flatFeeBonus", e.target.value)
               }
               placeholder="10"
-              className="w-full pl-8 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -414,7 +450,7 @@ const CampaignForm = ({
                 handleInputChange("availableContent", e.target.value)
               }
               placeholder="3"
-              className="w-full pl-8 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
             />
           </div>
         </div>
@@ -434,7 +470,7 @@ const CampaignForm = ({
             }
             placeholder="Enter campaign"
             rows={4}
-            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+            className="w-full px-3 dark:text-white  py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
           />
         </div>
 
