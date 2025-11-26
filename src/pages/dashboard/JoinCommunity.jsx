@@ -38,7 +38,7 @@ const JoinCommunity = () => {
   };
 
   const handleJoinCommunity = () => {
-    joinCommunity({ communityUsername: 'pythondjangoolovers' })
+    joinCommunity({ communityUsername: 'nice' })
   }
 
   return (

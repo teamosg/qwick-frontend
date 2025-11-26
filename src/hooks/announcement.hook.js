@@ -55,3 +55,32 @@ export const useCreateAnnouncements = (communityUsername) => {
         }
     })
 }
+
+
+
+export const useLikeAnnouncement = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (id) => {
+            const res = await axiosPrivate.post(`/v1/announcements/${id}/like/`);
+            return res?.data;
+        },
+        onSuccess: data => {
+            if (data?.status) {
+                toast.success(data?.message || "Announcement liked successfully!");
+                queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+            } else {
+                handleApiError({
+                    error: data,
+                    errorMessage: "Failed to like announcement"
+                })
+            }
+        },
+        onError: data => {
+            handleApiError({
+                error: data,
+                errorMessage: "Failed to like announcement"
+            })
+        }
+    })
+}
