@@ -17,6 +17,7 @@ import { useTheme } from "../shared/ThemeProvider";
 import { Megaphone } from "lucide-react";
 import { useGetMyCommunityList } from "@/hooks/community.hook";
 import { useCommunityStore } from "@/store/communityStore";
+import Logo from "../Logo/Logo";
 
 const NavItem = ({ icon, text, to, onClose }) => {
   const { theme } = useTheme();
@@ -69,7 +70,7 @@ const Sidebar = ({ onClose }) => {
     })
   }, [isLoadingCommunityList, isErrorCommunityList])
 
-  
+
   useEffect(() => {
     const myCommunityList = [...createdCommunityList, ...joinedCommunityList]
     setMyCommunityList(myCommunityList)
@@ -82,9 +83,7 @@ const Sidebar = ({ onClose }) => {
         <div>
           <div>
             <div className="p-6 flex items-center justify-between">
-              <Link to="/" className="flex items-center gap-2 md:gap-2.5">
-                <img src={logo} alt="logo" className="w-[100px]" />
-              </Link>
+              <Logo />
               <button
                 onClick={onClose}
                 className="lg:hidden p-2 rounded-md hover:bg-accent"
