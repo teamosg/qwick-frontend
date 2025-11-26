@@ -31,7 +31,7 @@ export function SidebarJoinedCommunity({ onClose, joinedCommunityList, isLoading
                   <div className="text-sm  mb-3">
                     <button
                       onClick={onClose}
-                      className="flex items-center gap-2 cursor-pointer transition duration-300 hover:text-[#17173c]"
+                      className="flex items-center gap-2 dark:text-white cursor-pointer transition duration-300 hover:text-[#17173c]"
                     >
                       <AvatarUser
                         src={community?.avatar}
