@@ -5,18 +5,47 @@ import { AnnouncementSidebar } from "../../components/announcement/AnnouncementS
 import { useCommunityStore } from "@/store/communityStore";
 import DashboardSkeleton from "@/components/dashboard/Dashboard/skeletons/DashboardSkeleton";
 import NoAnnouncementDashboardPage from "@/components/dashboard/Dashboard/EmptyPages/NoAnnoouncementDashboardPage";
+import { useEffect } from "react";
+
 
 const Announcement = () => {
+  const {
+    isLoadingCommunityList,
+    myCommunityList,
+    selectedCreatorCommunity,
+    setSelectedCreatorCommunity
+  } = useCommunityStore()
 
-  const { isLoadingCommunityList, myCommunityList } = useCommunityStore()
 
-  console.log(myCommunityList);
+  const selectedCreatorCommunityExist = myCommunityList?.find(
+    community => community.id === selectedCreatorCommunity?.id
+  )
+
+
+  useEffect(() => {
+    if (!myCommunityList?.length) return
+
+
+    if (selectedCreatorCommunityExist) {
+      setSelectedCreatorCommunity(selectedCreatorCommunityExist)
+    } else {
+      if (myCommunityList?.length && !isLoadingCommunityList) {
+        setSelectedCreatorCommunity(myCommunityList[0])
+      } else {
+        setSelectedCreatorCommunity(null)
+      }
+    }
+  }, [myCommunityList])
+
+
+
 
   if (isLoadingCommunityList) {
     return <DashboardSkeleton />
   }
 
 
+  
   if (!myCommunityList?.length) {
     return <NoAnnouncementDashboardPage />;
   }

@@ -14,21 +14,34 @@ const Dashboard = () => {
     isLoading: isLoadingMyCommunityList,
     isError: isErrorMyCommunityList,
   } = useGetMyCommunityList();
+  const createdCommunityList = communityList?.created_communities
 
-  const myCommunityList = communityList?.created_communities
+
+  
+  const selectedBrandCommunityExist = createdCommunityList?.find(
+    (community) => community?.id === selectedBrandCommunity?.id
+  );
+
 
 
   useEffect(() => {
-    if (
-      myCommunityList?.length &&
-      !isLoadingMyCommunityList &&
-      !isErrorMyCommunityList
-    ) {
-      setSelectedBrandCommunity(myCommunityList[0]);
+    if (!createdCommunityList?.length) return
+
+
+    if (selectedBrandCommunityExist) {
+      setSelectedBrandCommunity(selectedBrandCommunityExist);
     } else {
-      setSelectedBrandCommunity(null);
+      if (
+        createdCommunityList?.length &&
+        !isLoadingMyCommunityList &&
+        !isErrorMyCommunityList
+      ) {
+        setSelectedBrandCommunity(createdCommunityList[0]);
+      } else {
+        setSelectedBrandCommunity(null);
+      }
     }
-  }, [myCommunityList, isLoadingMyCommunityList, isErrorMyCommunityList]);
+  }, [createdCommunityList]);
 
 
 

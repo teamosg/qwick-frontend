@@ -64,7 +64,6 @@ export function DashboardSidebarContent() {
   const {
     data: communityList,
     isLoading: isLoadingMyCommunityList,
-    isError: isErrorMyCommunityList,
   } = useGetMyCommunityList();
 
   const myCommunityList = communityList?.created_communities
@@ -77,7 +76,7 @@ export function DashboardSidebarContent() {
     formData.append("banner_image", imageFile);
 
     editCommunity({
-      communityUsername: selectedBrandCommunity.username,
+      communityUsername: selectedBrandCommunity?.username,
       payload: formData,
     });
   };
@@ -135,7 +134,6 @@ export function DashboardSidebarContent() {
           <DashboardSwitcher
             data={myCommunityList}
             isLoading={isLoadingMyCommunityList}
-            isError={isErrorMyCommunityList}
             selectedCommunity={selectedBrandCommunity}
             setSelectedCommunity={setSelectedBrandCommunity}
           />

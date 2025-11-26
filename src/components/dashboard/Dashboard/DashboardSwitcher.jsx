@@ -41,7 +41,7 @@ export default function DashboardSwitcher({
         </Avatar>
         <div className="text-start flex flex-col gap-1 leading-none w-full">
           <span className="text-base leading-none font-semibold truncate max-w-[17ch]">
-            {selectedCommunity?.business_name?.slice(0, 15)}z
+            {selectedCommunity?.business_name?.slice(0, 15)}
             {selectedCommunity?.business_name?.length > 15 ? "..." : ""}
           </span>
           <span className="text-xs truncate max-w-[20ch]">
