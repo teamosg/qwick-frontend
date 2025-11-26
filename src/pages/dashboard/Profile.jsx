@@ -125,8 +125,8 @@ const Profile = () => {
         {/* Tabs Sidebar */}
         <div
           className={`${isTabsOpen
-              ? "translate-x-0 opacity-100"
-              : "-translate-x-full opacity-0"
+            ? "translate-x-0 opacity-100"
+            : "-translate-x-full opacity-0"
             }  md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
         >
           {/* Mobile Close Button */}

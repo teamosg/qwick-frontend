@@ -45,7 +45,7 @@ export const useSignUp = () => {
         localStorage.setItem("otp", otp);
         toast.success(
           data?.message ||
-            "Account created successfully! Please verify your email."
+          "Account created successfully! Please verify your email."
         );
         navigate("/verify-account", {
           state: { email: form.getValues("email") },
@@ -240,7 +240,7 @@ export const useChangePassword = () => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  return useMutation({
     mutationFn: async (passwordData) => {
       const res = await axiosPrivate.post(
         "/v1/account/change-password/",
@@ -265,8 +265,6 @@ export const useChangePassword = () => {
       toast.error(message);
     },
   });
-
-  return { form, mutate, isPending };
 };
 
 // Forgot Password Hook
