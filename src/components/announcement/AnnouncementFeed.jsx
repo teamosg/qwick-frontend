@@ -120,11 +120,6 @@ const AnnouncementFeed = () => {
     )
   }
 
-  if (!announcementsList?.length) {
-    return (
-      <NoAnnouncementsYet owner={canPost} />
-    )
-  }
 
   return (
     <motion.div
@@ -159,6 +154,19 @@ const AnnouncementFeed = () => {
           />
         )
       }
+
+      {
+        !!announcementsList?.length ||
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <NoAnnouncementsYet owner={canPost} />
+        </motion.div>
+      }
+
+
 
       {/* Render posts dynamically */}
       <motion.div

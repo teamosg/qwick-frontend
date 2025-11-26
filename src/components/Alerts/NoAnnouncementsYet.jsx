@@ -22,15 +22,6 @@ export default function NoAnnouncementsYet({ owner }) {
             </p>
 
             {/* Owner Action Button */}
-            {owner && (
-                <Link
-                    to="/dashboard"
-                    className="bg-[#003933] dark:bg-[#003933] text-white px-6 py-3 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium flex items-center gap-2"
-                >
-                    <Plus className="w-5 h-5" />
-                    Create Announcement
-                </Link>
-            )}
         </div>
     );
 }
