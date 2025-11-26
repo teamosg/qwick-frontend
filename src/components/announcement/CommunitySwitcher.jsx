@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Spinner } from "@/components/ui/spinner";
 import { ArrowDown, Check } from "lucide-react";
+import AvatarUser from "../ui/AvatarUser";
 
 export default function CommunitySwitcher({
   data: communityList,
@@ -30,15 +31,11 @@ export default function CommunitySwitcher({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="z-40 flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg text-white focus-visible:outline-none">
-        <Avatar className="rounded-lg h-8 w-8">
-          <AvatarFallback className="rounded-lg text-primary-foreground">
-            <img
-              src={selectedCommunity?.avatarUrl || "https://placehold.co/60x60"}
-              alt=""
-              className="w-11 h-11 object-cover"
-            />
-          </AvatarFallback>
-        </Avatar>
+        <AvatarUser
+          src={selectedCommunity?.avatar}
+          alt={selectedCommunity?.business_name}
+          className="h-8 w-8"
+        />
         <div className="text-start flex flex-col gap-1 leading-none w-full">
           <span className="text-base leading-none font-semibold truncate max-w-[17ch]">
             {selectedCommunity?.business_name?.slice(0, 15)}
@@ -58,17 +55,11 @@ export default function CommunitySwitcher({
             onClick={() => setSelectedCommunity(community)}
           >
             <div className="flex items-center gap-2">
-              <Avatar className="rounded-md h-8 w-8">
-                <AvatarFallback className="rounded-md  text-foreground">
-                  <img
-                    src={
-                      selectedCommunity?.avatarUrl ||
-                      "https://placehold.co/60x60"
-                    }
-                    alt=""
-                  />
-                </AvatarFallback>
-              </Avatar>
+              <AvatarUser
+                src={community?.avatar}
+                alt={community?.business_name}
+                className="h-8 w-8"
+              />
               <div className="flex flex-col min-w-40">
                 <span>
                   {community?.business_name?.slice(0, 15)}

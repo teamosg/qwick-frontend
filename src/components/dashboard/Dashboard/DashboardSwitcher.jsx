@@ -1,5 +1,6 @@
 "use client";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import AvatarUser from "@/components/ui/AvatarUser";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +18,7 @@ export default function DashboardSwitcher({
   selectedCommunity,
 }) {
 
-  
+
   if (isLoadingCommunityList || !selectedCommunity) {
     return (
       <div className="w-full h-full flex items-center justify-center">
@@ -30,15 +31,11 @@ export default function DashboardSwitcher({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="z-40 flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg text-white focus-visible:outline-none">
-        <Avatar className="rounded-lg h-8 w-8">
-          <AvatarFallback className="rounded-lg text-primary-foreground">
-            <img
-              src={selectedCommunity?.avatarUrl || "https://placehold.co/60x60"}
-              alt=""
-              className="w-11 h-11 object-cover"
-            />
-          </AvatarFallback>
-        </Avatar>
+        <AvatarUser
+          src={selectedCommunity?.avatar}
+          alt={selectedCommunity?.business_name}
+          className="h-8 w-8"
+        />
         <div className="text-start flex flex-col gap-1 leading-none w-full">
           <span className="text-base leading-none font-semibold truncate max-w-[17ch]">
             {selectedCommunity?.business_name?.slice(0, 15)}
@@ -58,17 +55,11 @@ export default function DashboardSwitcher({
             onClick={() => setSelectedCommunity(community)}
           >
             <div className="flex items-center gap-2">
-              <Avatar className="rounded-md h-8 w-8">
-                <AvatarFallback className="rounded-md  text-foreground">
-                  <img
-                    src={
-                      selectedCommunity?.avatarUrl ||
-                      "https://placehold.co/60x60"
-                    }
-                    alt=""
-                  />
-                </AvatarFallback>
-              </Avatar>
+              <AvatarUser
+                src={community?.avatar}
+                alt={community?.business_name}
+                className="h-8 w-8"
+              />
               <div className="flex flex-col min-w-40">
                 <span>
                   {community?.business_name?.slice(0, 15)}
