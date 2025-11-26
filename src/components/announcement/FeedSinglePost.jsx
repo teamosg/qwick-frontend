@@ -1,9 +1,18 @@
 import { Heart, MessageCircle, Share } from "lucide-react";
 import AvatarUser from "../ui/AvatarUser";
-import { useLikeAnnouncement } from "@/hooks/announcement.hook";
+import { useDislikeAnnouncement, useLikeAnnouncement } from "@/hooks/announcement.hook";
 
 export default function FeedSinglePost({ post }) {
   const { mutate: likeAnnouncement, isPending: isLiking } = useLikeAnnouncement()
+  const { mutate: dislikeAnnouncement, isPending: isDisliking } = useDislikeAnnouncement()
+
+  const handlePostLike = () => {
+    if (post?.is_liked) {
+      dislikeAnnouncement(post?.id)
+    } else {
+      likeAnnouncement(post?.id)
+    }
+  }
 
   return (
     <div className="bg-white dark:bg-zinc-900 shadow rounded-[12px] p-6 mb-8 border border-gray-200 dark:border-zinc-700">
@@ -78,19 +87,21 @@ export default function FeedSinglePost({ post }) {
       <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-600">
         <div className="flex items-center space-x-6">
           {/* Like Button */}
-          <button
-            onClick={() => likeAnnouncement(post?.id)}
-            disabled={isLiking}
-            className="disabled:cursor-not-allowed cursor-pointer flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors group"
-          >
-            <Heart
-              className={`w-5 h-5 ${post?.is_liked
-                ? "fill-red-500 text-red-500"
-                : "group-hover:text-red-500 dark:group-hover:text-red-400"
-                }`}
-            />
+          <div className=" flex items-center space-x-2">
+            <button
+              onClick={handlePostLike}
+              disabled={isLiking || isDisliking}
+              className="disabled:cursor-progress cursor-pointer text-gray-600 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors group"
+            >
+              <Heart
+                className={`w-5 h-5 ${post?.is_liked
+                  ? "fill-red-500 text-red-500"
+                  : "group-hover:text-red-500 dark:group-hover:text-red-400"
+                  }`}
+              />
+            </button>
             <span className="text-sm font-medium">{post?.like_count} Likes</span>
-          </button>
+          </div>
 
           {/* Comment Button */}
           <button className="cursor-pointer flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors group">

@@ -84,3 +84,25 @@ export const useLikeAnnouncement = () => {
         }
     })
 }
+
+
+export const useDislikeAnnouncement = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (id) => {
+            const res = await axiosPrivate.delete(`/v1/announcements/${id}/like/`);
+            return res?.data;
+        },
+        onSuccess: data =>{
+            if(data?.success){
+                toast.success(data?.message || "Announcement disliked successfully!");
+                queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+            } else {
+                handleApiError({
+                    error: data,
+                    errorMessage: "Failed to dislike announcement"
+                })
+            }
+        }
+    })
+}
