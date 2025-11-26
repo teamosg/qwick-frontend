@@ -19,7 +19,7 @@ export default function FeedSinglePost({ post }) {
       {/* Post Header */}
       <div className="flex items-center space-x-3 mb-4">
         <AvatarUser
-          src={post?.avatar}
+          src={post?.author?.avatar}
           alt={post?.author?.first_name}
           className="w-12 h-12"
         />

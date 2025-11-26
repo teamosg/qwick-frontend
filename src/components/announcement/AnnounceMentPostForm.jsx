@@ -3,8 +3,10 @@ import EmojiPicker from "emoji-picker-react";
 import { Image as ImageIcon, Paperclip, Smile, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router";
+import AvatarUser from "../ui/AvatarUser";
 
 const AnnouncementPostForm = ({
+  creator,
   isPosting,
   postText,
   setPostText,
@@ -91,9 +93,9 @@ const AnnouncementPostForm = ({
     <div className="bg-white dark:bg-zinc-900 rounded-lg shadow p-4 mb-6">
       <form onSubmit={handleSubmit}>
         <div className="flex items-start space-x-3">
-          <img
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt="User"
+          <AvatarUser
+            src={creator?.avatar}
+            alt={creator?.first_name}
             className="w-10 h-10 rounded-full object-cover"
           />
           <div className="flex-1">

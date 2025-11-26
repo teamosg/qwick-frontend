@@ -16,6 +16,8 @@ const AnnouncementFeed = () => {
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const fileInputRef = useRef(null);
 
+  const creator = selectedCreatorCommunity?.creator
+
 
   const communityUsername = selectedCreatorCommunity?.username;
   const { data: announcementsList, isLoading: isLoadingAnnouncements } = useGetAnnouncementsList(communityUsername);
@@ -140,6 +142,7 @@ const AnnouncementFeed = () => {
       {
         !!canPost && (
           <AnnouncementPostForm
+            creator={creator}
             isPosting={isCreatingAnnouncement}
             postText={postText}
             setPostText={setPostText}
