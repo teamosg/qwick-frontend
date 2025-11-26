@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useGetAnnouncementsList = (communityUsername) => {
     return useQuery({
-        queryKey: ["announcementsList"],
+        queryKey: ["announcementsList", communityUsername],
         queryFn: async () => {
             try {
                 const res = await axiosPrivate.get(`/v1/${communityUsername}/announcements/`);

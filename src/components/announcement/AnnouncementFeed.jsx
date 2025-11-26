@@ -2,12 +2,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRef, useState } from "react";
 import AnnouncementPostForm from "./AnnounceMentPostForm";
 import FeedSinglePost from "./FeedSinglePost";
+import { useCommunityStore } from "@/store/communityStore";
+import { useGetAnnouncementsList } from "@/hooks/announcement.hook";
+import FeedSinglePostSkeleton from "../skeletons/FeedSinglePostSkeleton";
 
 const AnnouncementFeed = () => {
   const [postText, setPostText] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const fileInputRef = useRef(null);
+
+  const { selectedCreatorCommunity } = useCommunityStore()
+  console.log(selectedCreatorCommunity);
+
+  const communityUsername = selectedCreatorCommunity?.username;
+
+  const { data: announcementsList, isLoading: isLoadingAnnouncements } = useGetAnnouncementsList(communityUsername);
+
+  console.log(announcementsList);
 
   const [posts, setPosts] = useState([
     {
@@ -58,6 +70,7 @@ const AnnouncementFeed = () => {
 
     setSelectedImages((prev) => [...prev, ...imageFiles]);
 
+
     // Create preview URLs
     imageFiles.forEach((file) => {
       const reader = new FileReader();
@@ -68,10 +81,12 @@ const AnnouncementFeed = () => {
     });
   };
 
+
   const removeImage = (index) => {
     setSelectedImages((prev) => prev.filter((_, i) => i !== index));
     setImagePreviewUrls((prev) => prev.filter((_, i) => i !== index));
   };
+
 
   const handlePostSubmit = () => {
     if (postText.trim() || imagePreviewUrls.length > 0) {
@@ -98,19 +113,8 @@ const AnnouncementFeed = () => {
     }
   };
 
-  const handleLike = (postId) => {
-    setPosts(
-      posts.map((post) =>
-        post.id === postId
-          ? {
-              ...post,
-              isLiked: !post.isLiked,
-              likes: post.isLiked ? post.likes - 1 : post.likes + 1,
-            }
-          : post
-      )
-    );
-  };
+
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -139,6 +143,21 @@ const AnnouncementFeed = () => {
       },
     },
   };
+
+
+
+
+  if (isLoadingAnnouncements) {
+    return (
+      <>
+        {
+          [...new Array(2)].map((_, index) => (
+            <FeedSinglePostSkeleton key={index} />
+          ))
+        }
+      </>
+    )
+  }
 
   return (
     <motion.div
@@ -176,7 +195,7 @@ const AnnouncementFeed = () => {
         animate="visible"
       >
         <AnimatePresence>
-          {posts.map((post) => (
+          {announcementsList?.map((post) => (
             <motion.div
               key={post.id}
               variants={itemVariants}
@@ -184,7 +203,7 @@ const AnnouncementFeed = () => {
               animate="visible"
               exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
             >
-              <FeedSinglePost post={post} onLike={() => handleLike(post.id)} />
+              <FeedSinglePost post={post} />
             </motion.div>
           ))}
         </AnimatePresence>
