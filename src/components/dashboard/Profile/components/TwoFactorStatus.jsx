@@ -1,6 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { useGetTwoFactorStatus } from "@/hooks/auth.hook";
 
 const TwoFactorStatus = () => {
+    const { data, isLoading } = useGetTwoFactorStatus();
+    const status = data?.status
+    console.log(status);
     return (
         <div className="space-y-4">
             <div className="mb-8">
@@ -18,7 +22,15 @@ const TwoFactorStatus = () => {
                         <h3 className="font-medium text-gray-900 dark:text-white">
                             Text message
                         </h3>
-                        <p className="text-sm text-gray-500">Receive a code via SMS</p>
+                        <p className="text-sm text-gray-500">
+                            {
+                                isLoading
+                                    ? "Loading..."
+                                    : status
+                                        ? "Two-factor authentication is enabled. You will receive a code via SMS when signing in."
+                                        : "Two-factor authentication is disabled. Your account is less secure."
+                            }
+                        </p>
                     </div>
                 </CardContent>
             </Card>

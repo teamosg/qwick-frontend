@@ -16,6 +16,7 @@ import {
   deleteAccountSchema,
   profileEditSchema,
 } from "../schemas/auth.schema.js";
+import handleApiError from "@/services/handleApiError.js";
 
 // Sign Up Hook
 export const useSignUp = () => {
@@ -486,3 +487,20 @@ export const useDeleteAccount = () => {
 
   return { form, mutate, isPending };
 };
+
+
+
+
+export const useGetTwoFactorStatus = () => {
+  return useQuery({
+    queryKey: ['twoFactorStatus'],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/account/two-factor-status/");
+        return res?.data;
+      } catch (error) {
+        handleApiError({ error, throwError: true, errorMessage: "Failed to get two factor status" })
+      }
+    }
+  })
+} 
