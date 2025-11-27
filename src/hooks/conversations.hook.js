@@ -1,4 +1,5 @@
 import { axiosPrivate } from "@/lib/axios.config";
+import handleApiError from "@/services/handleApiError";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -311,3 +312,25 @@ export const useCreateConversationGroup = () => {
     },
   });
 };
+
+
+
+export const useAddMemberToGroup = () => {
+  return useMutation({
+    mutationFn: async ({ groupId, members }) => {
+      const payload = { members }
+      const res = await axiosPrivate.post(`/v1/account/groups/${groupId}/add-members/`, payload)
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message);
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to add member to group" })
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to add member to group" })
+    }
+  })
+}

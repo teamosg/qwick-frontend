@@ -1,7 +1,7 @@
 import MessageOptions from "@/components/MessagesComponents/MessageSelect/MessageOptions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat }) => {
+const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpenAddToGroupModal }) => {
   const { avatar, last_message, last_message_at, unread_count } = chat;
   const username = chat?.sender_username || chat?.username;
   const user_id = chat?.sender_id || chat?.user_id;
@@ -20,7 +20,6 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat }) => {
     timeZone: "UTC",
   };
   const formattedDate = date.toLocaleTimeString("en-US", options);
-
   return (
     <div
       onClick={() => onSelectChat(chat)}
@@ -52,11 +51,12 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat }) => {
           <p className="text-xs text-gray-600 dark:text-gray-300 truncate">
             {last_message}
           </p>
-          {selectedChatId === conversationId ? (
+          {selectedChatId === conversationId && chat?.type === "dm" ? (
             <MessageOptions
               chat={chat}
               avatar={avatar || "https://i.pravatar.cc/40?img=10"}
               setSelectedChat={setSelectedChat}
+              setOpenAddToGroupModal={setOpenAddToGroupModal}
             />
           ) : (
             unread_count > 0 && (

@@ -23,6 +23,7 @@ const Message = () => {
         onSelectChat={handleSelectChat}
         selectedChatId={selectedChat?.user_id || selectedChat?.group_id}
         setSelectedChat={setSelectedChat}
+        selectedChat={selectedChat}
       />
 
       {/* Right Side - Chat Area */}

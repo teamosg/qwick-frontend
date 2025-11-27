@@ -11,9 +11,13 @@ import MessageListSkeleton from "./skeletonns/MessageListSkeleton";
 import ChatList from "./ChatList";
 import { FetchErrorAlert } from "../Alerts/FetchErrorAlerts";
 import { useEffect } from "react";
+import AddToGroupModal from "./AddToGroupModal";
 
 
-const MessageList = ({ onSelectChat, selectedChatId, setSelectedChat }) => {
+const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedChat }) => {
+  const [openAddToGroupModal, setOpenAddToGroupModal] = useState(false);
+
+
   // const [sortBy, setSortBy] = useState("Newest");
   const [searchQuery, setSearchQuery] = useState("");
   const [showRequestsOnly, setShowRequestsOnly] = useState(false);
@@ -24,6 +28,7 @@ const MessageList = ({ onSelectChat, selectedChatId, setSelectedChat }) => {
 
   const pinnedConversation = conversationList?.filter((chat) => chat.pinned) || []
   const regularConversation = conversationList?.filter((chat) => !chat.pinned) || []
+  const groupConversations = conversationList?.filter((chat) => chat.type === "group") || []
 
   const {
     data: fetchedConversationList,
@@ -208,6 +213,7 @@ const MessageList = ({ onSelectChat, selectedChatId, setSelectedChat }) => {
           pinnedConversation={pinnedConversation}
           regularConversation={regularConversation}
           setSelectedChat={setSelectedChat}
+          setOpenAddToGroupModal={setOpenAddToGroupModal}
         />
       )}
 
@@ -227,6 +233,13 @@ const MessageList = ({ onSelectChat, selectedChatId, setSelectedChat }) => {
         fetchedConversationList={fetchedConversationList}
         onClose={() => setShowCreateGroupModal(false)}
         onSelectChat={onSelectChat}
+      />
+
+      <AddToGroupModal
+        chat={selectedChat}
+        isOpen={openAddToGroupModal}
+        onClose={() => setOpenAddToGroupModal(false)}
+        groups={groupConversations}
       />
     </div>
   );

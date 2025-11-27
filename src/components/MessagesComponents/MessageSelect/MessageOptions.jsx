@@ -12,7 +12,6 @@ import {
   Ban,
   Ellipsis,
 } from "lucide-react";
-import toast from "react-hot-toast";
 import { PinOff } from "lucide-react";
 import {
   useUnBlockUser,
@@ -21,7 +20,7 @@ import {
   useBlockUser,
 } from "@/hooks/conversations.hook";
 
-function MessageOptions({ chat, setSelectedChat }) {
+function MessageOptions({ chat, setSelectedChat, setOpenAddToGroupModal }) {
   // const { avatar, username, pinned, user_id, type, group_id, group_name } = chat;
   const { pinned, user_id, type, group_id } = chat;
   const { mutate: pinConversation } = usePinConversation();
@@ -30,11 +29,6 @@ function MessageOptions({ chat, setSelectedChat }) {
   const { mutate: unblockUser } = useUnBlockUser();
 
   // const conversationName = type === "dm" ? username : group_name;
-
-  // single handler for all items
-  const handleItemClick = () => {
-    toast.error("This feature hasn't been implemented yet!");
-  };
 
   const handlePinConversation = () => {
     pinConversation({
@@ -95,7 +89,7 @@ function MessageOptions({ chat, setSelectedChat }) {
                 </Avatar>
                 Profile
               </DropdownMenuItem> */}
-              <DropdownMenuItem onClick={() => handleItemClick("Add to group")}>
+              <DropdownMenuItem onClick={() => setOpenAddToGroupModal(true)}>
                 <UserPlus />
                 Add to group
               </DropdownMenuItem>
