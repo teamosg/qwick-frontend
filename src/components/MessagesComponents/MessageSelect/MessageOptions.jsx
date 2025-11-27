@@ -9,14 +9,10 @@ import {
 import {
   UserPlus,
   Pin,
-  CircleX,
-  ExternalLink,
   Ban,
-  CheckCircle,
   Ellipsis,
 } from "lucide-react";
 import toast from "react-hot-toast";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PinOff } from "lucide-react";
 import {
   useUnBlockUser,
@@ -26,13 +22,14 @@ import {
 } from "@/hooks/conversations.hook";
 
 function MessageOptions({ chat, setSelectedChat }) {
-  const { avatar, username, pinned, user_id, type, group_id, group_name } = chat;
+  // const { avatar, username, pinned, user_id, type, group_id, group_name } = chat;
+  const { pinned, user_id, type, group_id } = chat;
   const { mutate: pinConversation } = usePinConversation();
   const { mutate: unpinConversation } = useUnpinConversation();
   const { mutate: blockUser } = useBlockUser();
   const { mutate: unblockUser } = useUnBlockUser();
 
-  const conversationName = type === "dm" ? username : group_name;
+  // const conversationName = type === "dm" ? username : group_name;
 
   // single handler for all items
   const handleItemClick = () => {
@@ -78,26 +75,26 @@ function MessageOptions({ chat, setSelectedChat }) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="start" className="dark:bg-gray-800">
-        <DropdownMenuGroup>
+        {/* <DropdownMenuGroup>
           <DropdownMenuItem onClick={() => handleItemClick("Mark as unread")}>
             <CheckCircle />
             Mark as unread
           </DropdownMenuItem>
-        </DropdownMenuGroup>
+        </DropdownMenuGroup> */}
 
-        <DropdownMenuSeparator />
+        {/* <DropdownMenuSeparator /> */}
 
         <DropdownMenuGroup>
           {
             type === 'dm' &&
             <>
-              <DropdownMenuItem onClick={() => handleItemClick("Profile")}>
+              {/* <DropdownMenuItem onClick={() => handleItemClick("Profile")}>
                 <Avatar className={"w-[18px] h-[18px] rounded-full object-cover"}>
                   <AvatarImage src={avatar} alt={conversationName} />
                   <AvatarFallback>{conversationName.split("")[0]}</AvatarFallback>
                 </Avatar>
                 Profile
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuItem onClick={() => handleItemClick("Add to group")}>
                 <UserPlus />
                 Add to group
@@ -141,13 +138,13 @@ function MessageOptions({ chat, setSelectedChat }) {
             <ExternalLink />
             Open in new tab
           </DropdownMenuItem> */}
-          <DropdownMenuItem
+          {/* <DropdownMenuItem
             className="text-red-600 hover:text-red-600 font-bold"
             onClick={() => handleItemClick("Close chat")}
           >
             <CircleX color="red" />
             Close chat
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

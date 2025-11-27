@@ -87,19 +87,25 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
       setIsWsError(false);
     };
 
-    ws.current.onerror = () => {
-      // console.log("WS error:", err);
-      setIsWsError(true);
-    };
-
-    // ws.current.onclose = () => {
-    //   console.log("WS closed");
+    // ws.current.onerror = () => {
+    //   // console.log("WS error:", err);
+    //   setIsWsError(true);
     // };
+
 
     ws.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
       handleNewMessages(data);
     };
+
+
+    ws.current.onclose = () => {
+      // If it closes BEFORE open → failed connection
+      if (ws.current.readyState === WebSocket.CLOSED) {
+        setIsWsError(true);
+      }
+    };
+
 
     // CLEANUP MUST ALWAYS BE RETURNED FROM USEEFFECT
     return () => {
