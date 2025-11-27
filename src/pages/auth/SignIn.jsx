@@ -9,7 +9,7 @@ import { useSignIn } from "../../hooks/auth.hook.js";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const darkMode = theme === "dark";
 
   // Use the new auth hook

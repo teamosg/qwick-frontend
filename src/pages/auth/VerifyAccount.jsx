@@ -5,6 +5,7 @@ import commonAuthLogo from "../../assets/authImg.png";
 import { useVerifyOtp } from "@/hooks/auth.hook";
 import toast from "react-hot-toast";
 import { Spinner } from "@/components/ui/spinner";
+import ResendOtp from "./ResendOtp";
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -35,8 +36,10 @@ const VerifyAccount = () => {
   };
 
   const location = useLocation();
-  const email =
-    location.state?.email || localStorage.getItem("signup_email") || "";
+  const email = location?.state?.email || localStorage.getItem("signup_email") || "";
+  const data = location?.state?.data
+  console.log(data);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const code = otp.join("");
@@ -171,17 +174,11 @@ const VerifyAccount = () => {
               </div>
             </div>
 
-            <div className="text-center">
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Don't receive the email?{" "}
-                <button
-                  type="button"
-                  className="text-[#003933] dark:text-white font-medium hover:underline"
-                >
-                  Click to resend code
-                </button>
-              </p>
-            </div>
+            {/* <ResendOtp
+              type={"verify-account"}
+              data={data}
+              email={email}
+            /> */}
 
             <button
               type="submit"

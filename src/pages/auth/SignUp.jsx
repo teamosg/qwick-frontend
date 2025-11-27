@@ -1,4 +1,3 @@
-import { useTheme } from "@/components/shared/ThemeProvider";
 import { useState } from "react";
 import {
   FaEnvelope,
@@ -13,24 +12,28 @@ import { Link } from "react-router-dom";
 import arrowRight from "../../assets/arrow-right.svg";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useSignUp } from "../../hooks/auth.hook.js";
+import { useNavigate } from "react-router";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const darkMode = theme === "dark";
 
   // Use the new auth hook
   const { form, mutate, isPending } = useSignUp();
-  const { register, handleSubmit, watch, formState: { errors } } = form;
-
-  const toggleDarkMode = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+  const { register, handleSubmit, formState: { errors } } = form;
 
   const onSubmit = (data) => {
     // Data already matches API schema since we're using the correct field names
-    mutate(data);
+    mutate(data, {
+      onSuccess: res => {
+        if (res?.status) {
+          navigate("/verify-account", {
+            state: { email: form.getValues("email"), data: data },
+          });
+        }
+      }
+    });
   };
 
   return (

@@ -19,7 +19,6 @@ import handleApiError from "@/services/handleApiError.js";
 
 // Sign Up Hook
 export const useSignUp = () => {
-  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(signUpSchema),
@@ -47,9 +46,6 @@ export const useSignUp = () => {
           data?.message ||
           "Account created successfully! Please verify your email."
         );
-        navigate("/verify-account", {
-          state: { email: form.getValues("email") },
-        });
       } else {
         toast.error(data?.message || "Failed to create account");
       }
@@ -95,15 +91,22 @@ export const useSignIn = () => {
         localStorage.setItem("refresh", refresh);
 
         const access = data?.access
+        const message = data?.message
         const email = form.getValues("email");
 
 
         if (access) {
           navigate(redirectUrl || "/");
         } else {
-          navigate("/verify-2fa", {
-            state: { email: email },
-          });
+          if (message.includes("2FA")) {
+            navigate("/verify-2fa", {
+              state: { email: email },
+            });
+          } else {
+            navigate("/verify-account", {
+              state: { email: email, data: data },
+            });
+          }
         }
       } else {
         toast.error(data?.message || "Failed to sign in");
