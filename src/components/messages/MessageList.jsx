@@ -14,7 +14,7 @@ import { useEffect } from "react";
 
 
 const MessageList = ({ onSelectChat, selectedChatId }) => {
-  const [sortBy, setSortBy] = useState("Newest");
+  // const [sortBy, setSortBy] = useState("Newest");
   const [searchQuery, setSearchQuery] = useState("");
   const [showRequestsOnly, setShowRequestsOnly] = useState(false);
   const [showUnreadOnly, setShowUnreadOnly] = useState(false);
@@ -39,6 +39,9 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
 
   const unreadConversations = conversationList?.filter(conversation => conversation?.unread_count)
 
+
+
+
   useEffect(() => {
     if (fetchedConversationList) {
       setConversationList(fetchedConversationList);
@@ -51,7 +54,11 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
       return
     }
     setConversationList(fetchedConversationList)
-  }, [showUnreadOnly, unreadConversations, fetchedConversationList])
+  }, [showUnreadOnly])
+
+
+
+
 
   const handleUserSelect = (user) => {
     // Create new chat with user
@@ -71,6 +78,9 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
   };
 
 
+
+
+
   // skeleton
   if (
     isConversationLoading ||
@@ -80,6 +90,9 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
   )
     return <MessageListSkeleton />;
 
+
+
+
   return (
     <div className="w-80 border-r border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717] flex flex-col h-full max-h-full">
       {/* Header */}
@@ -88,7 +101,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
             Messages
           </h2>
-          <div className="relative">
+          {/* <div className="relative">
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -98,7 +111,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
               <option value="Oldest">Oldest</option>
             </select>
             <ChevronDown className="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-          </div>
+          </div> */}
         </div>
       </div>
       {/* Search and badge section */}

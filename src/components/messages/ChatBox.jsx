@@ -6,8 +6,11 @@ import ChatConversationContainer from "./ChatConversationContainer";
 import ConversationActionBox from "./ConversationActionBox";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import MessageError from "./components/MessageError ";
 
 const ChatBox = ({ selectedChat, setSelectedChat }) => {
+  const [isWsError, setIsWsError] = useState(false);
+  const isBlocked = selectedChat?.blocked;
   // State management for chat features
   const [messages, setMessages] = useState([]);
   const ws = useRef();
@@ -36,6 +39,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     type: "dm",
     conversationId: sender_id,
   });
+
 
   const handleNewMessages = (data) => {
     if (!data?.message) return;
@@ -67,32 +71,45 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     )
   }
 
+
   // Load messages whenever chat changes
   useEffect(() => {
-    if (sender_username) {
-      setMessages(conversationDetails || []);
-      ws.current = new WebSocket(
-        `wss://darrenchua.softvencealpha.com/ws/chat/${sender_username}/?token=${token}`
-      );
+    if (!sender_username) return;
 
-      ws.current.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        handleNewMessages(data);
-      };
+    setMessages(conversationDetails || []);
 
-      // ws.current.onopen = () => {
-      //   console.log("connected to ws");
-      // };
+    ws.current = new WebSocket(
+      `wss://darrenchua.softvencealpha.com/ws/chat/${sender_username}/?token=${token}`
+    );
 
-      // ws.current.onclose = () => {
-      //   console.log("disconnected from ws");
-      // };
+    ws.current.onopen = () => {
+      // console.log("WS connected");
+      setIsWsError(false);
+    };
 
-      return () => {
+    ws.current.onerror = () => {
+      // console.log("WS error:", err);
+      setIsWsError(true);
+    };
+
+    // ws.current.onclose = () => {
+    //   console.log("WS closed");
+    // };
+
+    ws.current.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      handleNewMessages(data);
+    };
+
+    // CLEANUP MUST ALWAYS BE RETURNED FROM USEEFFECT
+    return () => {
+      if (ws.current) {
         ws.current.close();
-      };
-    }
-  }, [sender_username, conversationDetails, token]);
+        ws.current = null;
+      }
+    };
+  }, [sender_username, token]); // remove conversationDetails
+
 
   // skeleton
   if (
@@ -100,8 +117,8 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     isConversationError ||
     isUserLoading ||
     isUserError
-  )
-    return <ConversationDetailsSkeleton />;
+  ) return <ConversationDetailsSkeleton />;
+
 
   return (
     <div className="flex-1 flex flex-col bg-gray-50 dark:bg-[#171717] max-h-full">
@@ -115,16 +132,24 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
         />
         {/* <div ref={messagesEndRef} /> */}
       </div>
-
-      {/* Message Input or Request Acceptance */}
-      <ConversationActionBox
-        selectedChat={selectedChat}
-        setSelectedChat={setSelectedChat}
-        messages={messages}
-        setMessages={setMessages}
-        sender={sender}
-        handleSendMessage={handleSendMessage}
-      />
+      {
+        isBlocked || isWsError
+          ? (
+            <MessageError
+              isBlocked={isBlocked}
+              isError={isWsError}
+            />
+          ) : (
+            <ConversationActionBox
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+              messages={messages}
+              setMessages={setMessages}
+              sender={sender}
+              handleSendMessage={handleSendMessage}
+            />
+          )
+      }
     </div>
   );
 };

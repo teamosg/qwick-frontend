@@ -30,7 +30,6 @@ function MessageOptions({ chat }) {
   const { mutate: unpinConversation } = useUnpinConversation();
   const { mutate: blockUser } = useBlockUser();
 
-  console.log(chat);
   const conversationName = type === "dm" ? username : group_name;
 
   // single handler for all items
