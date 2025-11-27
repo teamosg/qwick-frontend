@@ -12,7 +12,6 @@ import {
   changePasswordSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
-  twoFactorSchema,
   deleteAccountSchema,
   profileEditSchema,
 } from "../schemas/auth.schema.js";
@@ -249,8 +248,6 @@ export const useChangePassword = () => {
 
 // Forgot Password Hook
 export const useForgotPassword = () => {
-  const navigate = useNavigate();
-
   const form = useForm({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
@@ -272,7 +269,6 @@ export const useForgotPassword = () => {
       } else {
         toast.error(data?.message || "Failed to send reset email");
       }
-      navigate("/enter-otp", { state: { email: data.email } });
     },
     onError: (error) => {
       const message =
