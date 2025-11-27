@@ -94,10 +94,16 @@ export const useSignIn = () => {
         localStorage.setItem("token", token);
         localStorage.setItem("refresh", refresh);
 
-        if (redirectUrl) {
-          navigate(redirectUrl);
+        const access = data?.access
+        const email = form.getValues("email");
+
+
+        if (access) {
+          navigate(redirectUrl || "/");
         } else {
-          navigate("/");
+          navigate("/verify-2fa", {
+            state: { email: email },
+          });
         }
       } else {
         toast.error(data?.message || "Failed to sign in");
@@ -125,45 +131,6 @@ export const useSignIn = () => {
   return { form, mutate, isPending };
 };
 
-// Verify OTP Hook
-// export const useVerifyOtp = () => {
-//   const navigate = useNavigate();
-
-//   const form = useForm({
-//     resolver: zodResolver(verifyOtpSchema),
-//     defaultValues: {
-//       email: "",
-//       otp: "",
-//       otp_type: "",
-//     },
-//   });
-
-//   const { mutate, isPending } = useMutation({
-//     mutationFn: async (otpData) => {
-//       const res = await axiosPublic.post("/v1/account/verify-otp/", otpData);
-//       return res.data;
-//     },
-//     onSuccess: (data) => {
-//       if (data?.status) {
-//         toast.success(data?.message || "Account verified successfully!");
-//         localStorage.removeItem("signup_email"); // remove after success
-//         navigate("/successfully-verified");
-//       } else {
-//         toast.error(data?.message || "Failed to verify account");
-//       }
-//     },
-//     onError: (error) => {
-//       const message =
-//         error?.response?.data?.message ||
-//         error?.response?.data?.error ||
-//         error.message ||
-//         "Failed to verify account";
-//       toast.error(message);
-//     },
-//   });
-
-//   return { form, mutate, isPending };
-// };
 
 export const useVerifyOtp = (otpType = "account_verification") => {
   const navigate = useNavigate();
@@ -180,8 +147,20 @@ export const useVerifyOtp = (otpType = "account_verification") => {
           localStorage.removeItem("signup_email");
           navigate("/successfully-verified");
         }
+
+
         if (otpType === "password_reset") {
           navigate("/reset-password");
+        }
+
+
+        if (otpType === "two_factor_auth") {
+          const token = data?.access;
+          const refresh = data?.refresh;
+          localStorage.setItem("token", token);
+          localStorage.setItem("refresh", refresh);
+
+          navigate("/");
         }
       } else {
         toast.error(data?.message || "OTP verification failed");

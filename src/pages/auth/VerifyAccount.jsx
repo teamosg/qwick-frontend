@@ -4,16 +4,14 @@ import { Link, useLocation } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useVerifyOtp } from "@/hooks/auth.hook";
 import toast from "react-hot-toast";
+import { Spinner } from "@/components/ui/spinner";
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const darkMode = theme === "dark";
   const inputRefs = useRef([]);
   const { mutate, isPending } = useVerifyOtp("account_verification");
-  const toggleDarkMode = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   const handleOtpChange = (index, value) => {
     // Only allow numbers
@@ -42,6 +40,11 @@ const VerifyAccount = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const code = otp.join("");
+
+    if (!code || code.length !== 6) {
+      toast.error("Please enter a valid OTP.");
+      return;
+    }
 
     if (!email) {
       toast.error("Email is missing, please sign up again.");
@@ -184,7 +187,11 @@ const VerifyAccount = () => {
               type="submit"
               className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
             >
-              Confirm
+              {
+                isPending
+                  ? <div className="flex items-center justify-center"><Spinner /> </div>
+                  : "Confirm"
+              }
             </button>
           </form>
         </div>
