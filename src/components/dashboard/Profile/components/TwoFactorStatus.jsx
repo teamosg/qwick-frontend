@@ -1,10 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { useGetTwoFactorStatus } from "@/hooks/auth.hook";
+import { useGetTwoFactorStatus, useToggleTwoFactor } from "@/hooks/auth.hook";
+import ToggleSwitch from "../../Dashboard/ToggleSwitch";
 
 const TwoFactorStatus = () => {
+    const { mutate: toggleTwoFactor, isPending: isToggling } = useToggleTwoFactor()
     const { data, isLoading } = useGetTwoFactorStatus();
-    const status = data?.status
-    console.log(status);
+    const status = data?.is_2fa_enabled || false
+
+    const handleTwoFactorToggle = () => {
+        if (isToggling) return;
+        toggleTwoFactor({ action: status ? 'disable' : 'enable' })
+    }
+
     return (
         <div className="space-y-4">
             <div className="mb-8">
@@ -17,7 +24,7 @@ const TwoFactorStatus = () => {
             </div>
 
             <Card className="text-left text-[#717171] border-[#003933] text-[16px] mb-8 w-full shadow rounded-[24px] p-0">
-                <CardContent className="p-6">
+                <CardContent className="p-6 flex items-center justify-between">
                     <div className="space-y-2">
                         <h3 className="font-medium text-gray-900 dark:text-white">
                             Text message
@@ -32,6 +39,11 @@ const TwoFactorStatus = () => {
                             }
                         </p>
                     </div>
+                    <ToggleSwitch
+                        enabled={status}
+                        disabled={isToggling}
+                        onToggle={handleTwoFactorToggle}
+                    />
                 </CardContent>
             </Card>
         </div>

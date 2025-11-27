@@ -402,47 +402,6 @@ export const useTwoFactorStatus = () => {
   });
 };
 
-// Toggle Two Factor Hook
-export const useToggleTwoFactor = () => {
-  const queryClient = useQueryClient();
-
-  const form = useForm({
-    resolver: zodResolver(twoFactorSchema),
-    defaultValues: {
-      action: "enable",
-    },
-  });
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data) => {
-      const res = await axiosPrivate.post("/v1/account/two-factor-enable/", {
-        action: data.action,
-      });
-      return res.data;
-    },
-    onSuccess: (data) => {
-      if (data?.status) {
-        toast.success(data?.message || "Two factor authentication updated!");
-        queryClient.invalidateQueries({ queryKey: ["twoFactorStatus"] });
-      } else {
-        toast.error(
-          data?.message || "Failed to update two factor authentication"
-        );
-      }
-    },
-    onError: (error) => {
-      const message =
-        error?.response?.data?.message ||
-        error?.response?.data?.error ||
-        error.message ||
-        "Failed to update two factor authentication";
-      toast.error(message);
-    },
-  });
-
-  return { form, mutate, isPending };
-};
-
 // Delete Account Hook
 export const useDeleteAccount = () => {
   const navigate = useNavigate();
@@ -503,4 +462,26 @@ export const useGetTwoFactorStatus = () => {
       }
     }
   })
-} 
+}
+
+
+export const useToggleTwoFactor = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (action) => {
+      const res = await axiosPrivate.post("/v1/account/two-factor-enable/", { action });
+      return res?.data;
+    },
+    onSuccess: data => {
+      if (data?.status) {
+        toast.success(data?.message || "Two factor authentication updated!");
+        queryClient.invalidateQueries({ queryKey: ["twoFactorStatus"] });
+      } else {
+        handleApiError({ error: data, errorMessage: "Failed to update two factor authentication" })
+      }
+    },
+    onError: error => {
+      handleApiError({ error, errorMessage: "Failed to update two factor authentication" })
+    }
+  })
+}
