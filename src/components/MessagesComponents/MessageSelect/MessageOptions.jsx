@@ -19,16 +19,18 @@ import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PinOff } from "lucide-react";
 import {
-  useBlockUser,
+  useUnBlockUser,
   usePinConversation,
   useUnpinConversation,
+  useBlockUser,
 } from "@/hooks/conversations.hook";
 
-function MessageOptions({ chat }) {
+function MessageOptions({ chat, setSelectedChat }) {
   const { avatar, username, pinned, user_id, type, group_id, group_name } = chat;
   const { mutate: pinConversation } = usePinConversation();
   const { mutate: unpinConversation } = useUnpinConversation();
   const { mutate: blockUser } = useBlockUser();
+  const { mutate: unblockUser } = useUnBlockUser();
 
   const conversationName = type === "dm" ? username : group_name;
 
@@ -52,8 +54,22 @@ function MessageOptions({ chat }) {
   const handleBlockUser = () => {
     blockUser({
       userId: user_id ?? group_id,
+    }, {
+      onSuccess: () => {
+        setSelectedChat({ ...chat, blocked: true });
+      }
     });
   };
+
+  const handleUnblockUser = () => {
+    unblockUser({
+      userId: user_id ?? group_id,
+    }, {
+      onSuccess: () => {
+        setSelectedChat({ ...chat, blocked: false });
+      }
+    });
+  }
 
   return (
     <DropdownMenu>
@@ -86,13 +102,23 @@ function MessageOptions({ chat }) {
                 <UserPlus />
                 Add to group
               </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-red-600 hover:text-red-600 font-bold"
-                onClick={() => handleBlockUser()}
-              >
-                <Ban color="red" className="rotate-90" />
-                Block User
-              </DropdownMenuItem>
+              {chat?.blocked ? (
+                <DropdownMenuItem
+                  className="text-green-600 hover:text-green-600 font-bold flex items-center gap-2"
+                  onClick={handleUnblockUser}
+                >
+                  <Ban className="rotate-90" />
+                  Unblock User
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem
+                  className="text-red-600 hover:text-red-600 font-bold flex items-center gap-2"
+                  onClick={handleBlockUser}
+                >
+                  <Ban color="red" className="rotate-90" />
+                  Block User
+                </DropdownMenuItem>
+              )}
             </>
           }
         </DropdownMenuGroup>

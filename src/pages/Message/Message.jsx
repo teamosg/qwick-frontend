@@ -22,6 +22,7 @@ const Message = () => {
       <MessageList
         onSelectChat={handleSelectChat}
         selectedChatId={selectedChat?.user_id || selectedChat?.group_id}
+        setSelectedChat={setSelectedChat}
       />
 
       {/* Right Side - Chat Area */}

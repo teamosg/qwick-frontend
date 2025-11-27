@@ -201,7 +201,7 @@ export const useConversationRequestAction = () => {
 export const useBlockUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ userId }) => {
+    mutationFn: async ({ userId, }) => {
       try {
         const res = await axiosPrivate.post(`/v1/account/block/${userId}/`);
         return res?.data;
@@ -229,6 +229,44 @@ export const useBlockUser = () => {
         error?.response?.data?.error ||
         error?.message ||
         "Failed to block user";
+      toast.error(message);
+    },
+  });
+};
+
+
+
+export const useUnBlockUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ userId, }) => {
+      try {
+        const res = await axiosPrivate.post(`/v1/account/block/${userId}/`);
+        return res?.data;
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error?.message ||
+          "Failed to un-block user";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success("User un-blocked successfully");
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+      } else {
+        toast.error("Failed to un-block user");
+      }
+    },
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error?.message ||
+        "Failed to un-block user";
       toast.error(message);
     },
   });

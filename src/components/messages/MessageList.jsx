@@ -13,7 +13,7 @@ import { FetchErrorAlert } from "../Alerts/FetchErrorAlerts";
 import { useEffect } from "react";
 
 
-const MessageList = ({ onSelectChat, selectedChatId }) => {
+const MessageList = ({ onSelectChat, selectedChatId, setSelectedChat }) => {
   // const [sortBy, setSortBy] = useState("Newest");
   const [searchQuery, setSearchQuery] = useState("");
   const [showRequestsOnly, setShowRequestsOnly] = useState(false);
@@ -207,6 +207,7 @@ const MessageList = ({ onSelectChat, selectedChatId }) => {
           selectedChatId={selectedChatId}
           pinnedConversation={pinnedConversation}
           regularConversation={regularConversation}
+          setSelectedChat={setSelectedChat}
         />
       )}
 

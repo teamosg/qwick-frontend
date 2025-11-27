@@ -10,6 +10,7 @@ const ChatList = ({
   pinnedConversation,
   regularConversation,
   showUnreadOnly,
+  setSelectedChat,
 }) => {
   return (
     <div className="flex-1 overflow-y-auto">
@@ -29,6 +30,7 @@ const ChatList = ({
                 chat={chat}
                 onSelectChat={onSelectChat}
                 selectedChatId={selectedChatId}
+                setSelectedChat={setSelectedChat}
               />
             ))}
           </div>
@@ -55,6 +57,7 @@ const ChatList = ({
                     chat={chat}
                     onSelectChat={onSelectChat}
                     selectedChatId={selectedChatId}
+                    setSelectedChat={setSelectedChat}
                   />
                 ))}
               </div>
@@ -78,6 +81,7 @@ const ChatList = ({
                   chat={chat}
                   onSelectChat={onSelectChat}
                   selectedChatId={selectedChatId}
+                  setSelectedChat={setSelectedChat}
                 />
               ))}
             </div>
@@ -104,6 +108,7 @@ const ChatList = ({
                       chat={chat}
                       onSelectChat={onSelectChat}
                       selectedChatId={selectedChatId}
+                      setSelectedChat={setSelectedChat}
                     />
                   ))}
               </div>
@@ -116,4 +121,3 @@ const ChatList = ({
 };
 
 export default ChatList;
- 

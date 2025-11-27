@@ -1,7 +1,7 @@
 import MessageOptions from "@/components/MessagesComponents/MessageSelect/MessageOptions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const ChatItem = ({ chat, onSelectChat, selectedChatId }) => {
+const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat }) => {
   const { avatar, last_message, last_message_at, unread_count } = chat;
   const username = chat?.sender_username || chat?.username;
   const user_id = chat?.sender_id || chat?.user_id;
@@ -56,6 +56,7 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId }) => {
             <MessageOptions
               chat={chat}
               avatar={avatar || "https://i.pravatar.cc/40?img=10"}
+              setSelectedChat={setSelectedChat}
             />
           ) : (
             unread_count > 0 && (
