@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { useGetConversationDetails } from "@/hooks/conversations.hook";
+import { useGetGroupConversationDetails } from "@/hooks/conversations.hook";
 import ConversationDetailsSkeleton from "./skeletonns/ConversationDetailsSkeleton";
 import { useProfile } from "@/hooks/auth.hook";
 import ChatConversationContainer from "./ChatConversationContainer";
-import ConversationActionBox from "./ConversationActionBox";
 
 const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
   // State management for chat features
@@ -27,7 +26,7 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
     data: conversationDetails,
     isLoading: isConversationLoading,
     isError: isConversationError,
-  } = useGetConversationDetails({
+  } = useGetGroupConversationDetails({
     type: "group",
     conversationId: selectedChat?.group_id,
   });
@@ -41,10 +40,11 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
   // Load messages whenever chat changes
   useEffect(() => {
     if (selectedChat) {
-      setMessages(conversationDetails || []);
+      setMessages(conversationDetails?.messages || []);
+      setSelectedChat({ ...selectedChat, members: conversationDetails?.group?.members || [] })
       setShouldScrollToBottom(true);
     }
-  }, [selectedChat, conversationDetails]);
+  }, [conversationDetails]);
 
   // Scroll on messages update if flagged
   useEffect(() => {

@@ -151,6 +151,30 @@ export const useGetConversationDetails = ({ type, conversationId }) => {
   });
 };
 
+export const useGetGroupConversationDetails = ({ type, conversationId }) => {
+  return useQuery({
+    queryKey: ["conversationDetails", conversationId],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/account/conversations/${type}/${conversationId}/`
+        );
+        return res?.data || [];
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error?.message ||
+          "Failed to fetch conversation details";
+
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+};
+
 export const useConversationRequestAction = () => {
   const queryClient = useQueryClient();
   const { mutateAsync, isPending } = useMutation({
