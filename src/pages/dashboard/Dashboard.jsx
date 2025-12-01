@@ -17,20 +17,20 @@ const Dashboard = () => {
   const createdCommunityList = communityList?.created_communities
 
 
-  
+
   const selectedBrandCommunityExist = createdCommunityList?.find(
     (community) => community?.id === selectedBrandCommunity?.id
   );
 
-
-
   useEffect(() => {
+    if (!selectedBrandCommunityExist) setSelectedBrandCommunity(null)
     if (!createdCommunityList?.length) return
 
 
     if (selectedBrandCommunityExist) {
       setSelectedBrandCommunity(selectedBrandCommunityExist);
     } else {
+      console.log('ok');
       if (
         createdCommunityList?.length &&
         !isLoadingMyCommunityList &&
