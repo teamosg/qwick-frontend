@@ -11,6 +11,7 @@ const ChatList = ({
   regularConversation,
   showUnreadOnly,
   setOpenAddToGroupModal,
+  setSelectedChat,
 }) => {
   return (
     <div className="flex-1 overflow-y-auto">
@@ -30,6 +31,7 @@ const ChatList = ({
                 chat={chat}
                 onSelectChat={onSelectChat}
                 selectedChatId={selectedChatId}
+                setSelectedChat={setSelectedChat}
                 setOpenAddToGroupModal={setOpenAddToGroupModal}
               />
             ))}
@@ -57,6 +59,7 @@ const ChatList = ({
                     chat={chat}
                     onSelectChat={onSelectChat}
                     selectedChatId={selectedChatId}
+                    setSelectedChat={setSelectedChat}
                     setOpenAddToGroupModal={setOpenAddToGroupModal}
                   />
                 ))}
@@ -81,6 +84,7 @@ const ChatList = ({
                   chat={chat}
                   onSelectChat={onSelectChat}
                   selectedChatId={selectedChatId}
+                  setSelectedChat={setSelectedChat}
                   setOpenAddToGroupModal={setOpenAddToGroupModal}
                 />
               ))}
@@ -108,6 +112,7 @@ const ChatList = ({
                       chat={chat}
                       onSelectChat={onSelectChat}
                       selectedChatId={selectedChatId}
+                      setSelectedChat={setSelectedChat}
                       setOpenAddToGroupModal={setOpenAddToGroupModal}
                     />
                   ))}

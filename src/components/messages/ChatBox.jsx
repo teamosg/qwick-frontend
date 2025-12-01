@@ -41,6 +41,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
   });
 
 
+
   const handleNewMessages = (data) => {
     if (!data?.message) return;
 
@@ -114,7 +115,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
         ws.current = null;
       }
     };
-  }, [sender_username, token]); // remove conversationDetails
+  }, [sender_username, token, conversationDetails]); // remove conversationDetails
 
 
   // skeleton

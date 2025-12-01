@@ -47,8 +47,8 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
         </div>
       </div>
 
-      {/* Notification Toggle */}
-      <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+      {/* //* Notification Toggle */}
+      {/* <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {notificationsEnabled ? (
@@ -78,7 +78,7 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
             />
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* User Information: About, Email, Shared Media */}
       <div className="flex-1 overflow-y-auto p-4">
@@ -93,8 +93,8 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
             </p>
           </div>
 
-          {/* Email */}
-          <div>
+          {/* //* Email */}
+          {/* <div>
             <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">
               Email
             </h3>
@@ -104,10 +104,10 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
                 emma.johnson@example.com
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* Shared Media */}
-          <div>
+          {/* //* <div>
             <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">
               Shared Media
             </h3>
@@ -119,7 +119,7 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
                 ></div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
