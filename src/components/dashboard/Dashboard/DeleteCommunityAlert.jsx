@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
     AlertDialog,
@@ -23,7 +21,7 @@ const DeleteCommunityAlert = () => {
     const navigate = useNavigate()
     const { mutate: deleteCommunity, isPending: isDeletingPending } = useDeleteCommunity();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const { selectedBrandCommunity } = useCommunityStore()
+    const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore()
     const communityUsername = selectedBrandCommunity?.username;
 
     const handleDeleteCommunity = async (e) => {
@@ -33,6 +31,7 @@ const DeleteCommunityAlert = () => {
                 onSuccess: data => {
                     if (data?.success) {
                         setIsDialogOpen(false);
+                        setSelectedBrandCommunity(null)
                         navigate("/dashboard");
                     }
                 }
