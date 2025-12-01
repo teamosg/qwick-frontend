@@ -28,7 +28,7 @@ const Message = () => {
 
       {/* Right Side - Chat Area */}
       <div className="flex-1 flex flex-col">
-        <ChatHeader selectedChat={selectedChat} />
+        <ChatHeader selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
         {selectedChat ? (
           selectedChat?.type === "group" ? (
             <GroupChatBox

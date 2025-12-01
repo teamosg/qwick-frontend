@@ -1,22 +1,42 @@
 import { X, Phone, Video, Mail, Bell, BellOff, UserX } from "lucide-react";
 import { motion } from "framer-motion";
-import toast from "react-hot-toast";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import AvatarUser from "../ui/AvatarUser";
+import { UserCheck } from "lucide-react";
+import { useBlockUser, useUnBlockUser } from "@/hooks/conversations.hook";
 
 /**
  * DirectChatInfo displays details of a direct chat user,
  * including notification toggle, contact info, and block user button.
  * Dark mode colors updated for consistency.
  */
-const DirectChatInfo = ({ selectedChat, onClose }) => {
+const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
+  const { mutate: blockUser } = useBlockUser();
+  const { mutate: unblockUser } = useUnBlockUser();
   // const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const { avatar } = selectedChat;
+  const { avatar, blocked, user_id, group_id } = selectedChat;
   const username = selectedChat?.sender_username || selectedChat?.username;
 
-  const handleBlock = () => {
-    toast.error("Block user feature coming soon!");
+  console.log(selectedChat);
+
+  const handleBlockUser = () => {
+    blockUser({
+      userId: user_id ?? group_id,
+    }, {
+      onSuccess: () => {
+        setSelectedChat({ ...selectedChat, blocked: true });
+      }
+    });
   };
+
+  const handleUnblockUser = () => {
+    unblockUser({
+      userId: user_id ?? group_id,
+    }, {
+      onSuccess: () => {
+        setSelectedChat({ ...selectedChat, blocked: false });
+      }
+    });
+  }
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-[#171717] text-gray-900 dark:text-white">
@@ -126,14 +146,33 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
 
       {/* Block User Button */}
       <div className="p-4 border-t border-gray-200 dark:border-[#282828]">
-        <button
-          onClick={handleBlock}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-medium"
-          aria-label="Block user"
-        >
-          <UserX className="w-5 h-5" />
-          Block User
-        </button>
+        {
+          blocked ? (
+            <button
+              onClick={handleUnblockUser}
+              className="
+              w-full flex items-center justify-center gap-2
+              px-4 py-3 rounded-xl font-semibold
+              text-green-600 dark:text-green-400
+              bg-green-50/50 dark:bg-green-900/10
+              hover:bg-green-100 dark:hover:bg-green-900/20
+              transition-all"
+              aria-label="Unblock user"
+            >
+              <UserCheck className="w-5 h-5" />
+              Unblock User
+            </button>
+          ) : (
+            <button
+              onClick={handleBlockUser}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-medium"
+              aria-label="Block user"
+            >
+              <UserX className="w-5 h-5" />
+              Block User
+            </button>
+          )
+        }
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
  * ChatHeader displays chat info for the selected conversation,
  * and provides sidebar/info toggle actions. Updates color only for dark mode.
  */
-const ChatHeader = ({ selectedChat }) => {
+const ChatHeader = ({ selectedChat, setSelectedChat }) => {
   // State to control showing chat info sidebar
   const [showInfoSidebar, setShowInfoSidebar] = useState(false);
 
@@ -60,12 +60,12 @@ const ChatHeader = ({ selectedChat }) => {
           >
             <Info className="w-5 h-5" />
           </button>
-          <button
+          {/* <button
             className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#222] rounded-lg transition-colors"
             aria-label="More options"
           >
             <MoreVertical className="w-5 h-5" />
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -74,6 +74,7 @@ const ChatHeader = ({ selectedChat }) => {
         isOpen={showInfoSidebar}
         onClose={() => setShowInfoSidebar(false)}
         selectedChat={selectedChat}
+        setSelectedChat={setSelectedChat}
       />
     </>
   );

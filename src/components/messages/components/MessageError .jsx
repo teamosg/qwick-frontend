@@ -11,7 +11,7 @@ const MessageError = ({ isBlocked = false, isError = false, onUnblock }) => {
             exit={{ y: 100, opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="bottom-0 left-0 right-0 
-            p-4 z-50
+            p-4
             bg-white dark:bg-[#1b1b1b]
             border-t border-gray-200 dark:border-gray-800
             flex flex-col items-center gap-3"

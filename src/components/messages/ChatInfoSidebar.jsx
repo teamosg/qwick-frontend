@@ -1,9 +1,8 @@
-import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import GroupChatInfo from "./GroupChatInfo";
 import DirectChatInfo from "./DirectChatInfo";
 
-const ChatInfoSidebar = ({ isOpen, onClose, selectedChat }) => {
+const ChatInfoSidebar = ({ isOpen, onClose, selectedChat, setSelectedChat }) => {
   if (!selectedChat) return null;
   const isGroupChat = selectedChat.type === "group";
 
@@ -31,7 +30,7 @@ const ChatInfoSidebar = ({ isOpen, onClose, selectedChat }) => {
             {isGroupChat ? (
               <GroupChatInfo selectedChat={selectedChat} onClose={onClose} />
             ) : (
-              <DirectChatInfo selectedChat={selectedChat} onClose={onClose} />
+              <DirectChatInfo selectedChat={selectedChat} onClose={onClose} setSelectedChat={setSelectedChat} />
             )}
           </motion.div>
         </>
