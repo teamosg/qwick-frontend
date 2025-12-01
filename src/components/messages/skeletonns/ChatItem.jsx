@@ -1,5 +1,6 @@
 import MessageOptions from "@/components/MessagesComponents/MessageSelect/MessageOptions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AvatarUser from "@/components/ui/AvatarUser";
 
 const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpenAddToGroupModal }) => {
   const { avatar, last_message, last_message_at, unread_count } = chat;
@@ -29,10 +30,12 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpen
         }`}
     >
       <div className="relative">
-        <Avatar className="w-10 h-10 rounded-full object-cover">
-          <AvatarImage src={avatar} alt={conversationName} />
-          <AvatarFallback>{conversationName.split("")[0]}</AvatarFallback>
-        </Avatar>
+        <AvatarUser
+          src={avatar}
+          alt={conversationName}
+          className="w-10 h-10 rounded-full object-cover"
+        />
+
         {chat?.isOnline && (
           <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
         )}

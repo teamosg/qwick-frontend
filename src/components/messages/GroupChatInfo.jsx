@@ -2,6 +2,7 @@ import { X, Edit2, UserPlus, LogOut, Bell, BellOff } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import AvatarUser from "../ui/AvatarUser";
 
 /**
  * GroupChatInfo shows group details including members, notifications toggle,
@@ -50,6 +51,8 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
     toast.error(`Remove ${memberName} feature coming soon!`);
   };
 
+  console.log(selectedChat);
+
   return (
     <div className="flex flex-col h-full bg-white dark:bg-[#171717] text-gray-900 dark:text-white">
       {/* Header with close button and group avatar + name */}
@@ -64,9 +67,9 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
 
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
-            <img
-              src={selectedChat.avatar}
-              alt={selectedChat.name}
+            <AvatarUser
+              src={selectedChat?.avatar}
+              alt={selectedChat?.name || selectedChat?.group_name}
               className="w-20 h-20 rounded-full object-cover"
             />
           </div>
@@ -125,19 +128,17 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
           </div>
           <button
             onClick={() => setNotificationsEnabled(!notificationsEnabled)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              notificationsEnabled
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${notificationsEnabled
                 ? "bg-blue-600"
                 : "bg-gray-300 dark:bg-gray-600"
-            }`}
+              }`}
             aria-pressed={notificationsEnabled}
             aria-label="Toggle notifications"
           >
             <motion.span
               layout
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                notificationsEnabled ? "translate-x-6" : "translate-x-1"
-              }`}
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${notificationsEnabled ? "translate-x-6" : "translate-x-1"
+                }`}
             />
           </button>
         </div>

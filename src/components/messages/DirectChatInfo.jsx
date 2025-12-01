@@ -1,8 +1,8 @@
 import { X, Phone, Video, Mail, Bell, BellOff, UserX } from "lucide-react";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import AvatarUser from "../ui/AvatarUser";
 
 /**
  * DirectChatInfo displays details of a direct chat user,
@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
  * Dark mode colors updated for consistency.
  */
 const DirectChatInfo = ({ selectedChat, onClose }) => {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  // const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const { avatar } = selectedChat;
   const username = selectedChat?.sender_username || selectedChat?.username;
 
@@ -32,10 +32,11 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
 
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
-            <Avatar className="w-20 h-20 rounded-full object-cover">
-              <AvatarImage src={avatar} alt={username} />
-              <AvatarFallback>{username.split("")[0]}</AvatarFallback>
-            </Avatar>
+            <AvatarUser
+              src={avatar}
+              alt={username}
+              className="w-20 h-20 rounded-full object-cover text-2xl"
+            />
             {selectedChat.isOnline && (
               <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
             )}
