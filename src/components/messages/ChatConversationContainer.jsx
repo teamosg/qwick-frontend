@@ -3,36 +3,17 @@ import { FiImage } from "react-icons/fi";
 import { LuFile } from "react-icons/lu";
 import AvatarUser from "../ui/AvatarUser";
 import formatFileSize from "@/lib/formatFileSize";
-import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 
 const ChatConversationContainer = ({ messages, sender, user }) => {
-  // State management for chat features
-  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
-
   const { sender_id, sender_avatar, sender_username } = sender;
 
-  // Animation: scroll to latest message
   const messagesEndRef = useRef(null);
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView();
-  };
-
-  // Load messages whenever chat changes
   useEffect(() => {
-    if (messages) {
-      setShouldScrollToBottom(true);
-    }
+    messagesEndRef.current?.scrollIntoView();
   }, [messages]);
 
-  // Scroll on messages update if flagged
-  useEffect(() => {
-    if (shouldScrollToBottom) {
-      scrollToBottom();
-      setShouldScrollToBottom(false);
-    }
-  }, [shouldScrollToBottom]);
 
   return (
     <>
@@ -44,11 +25,10 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className={`mb-4 flex ${
-                message?.sender_id === sender_id
+              className={`mb-4 flex ${message?.sender_id === sender_id
                   ? "justify-start"
                   : "justify-end"
-              }`}
+                }`}
             >
               <div className="relative max-w-md flex items-center gap-3">
                 {message?.sender_id === sender_id && (
@@ -60,11 +40,10 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                 )}
                 <div>
                   <div
-                    className={`py-3 px-4 rounded-2xl text-sm ${
-                      message.sender_id !== sender_id
+                    className={`py-3 px-4 rounded-2xl text-sm ${message.sender_id !== sender_id
                         ? "bg-blue-500 text-white"
                         : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
-                    } ${message.isCard ? "border border-blue-300" : ""}`}
+                      } ${message.isCard ? "border border-blue-300" : ""}`}
                   >
                     {/* File attachments in message */}
                     {message.attachments && message.attachments.length > 0 && (
@@ -96,9 +75,8 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                     {message.content}
                   </div>
                   <div
-                    className={`${
-                      message.sender === "me" ? "text-right" : "text-left"
-                    } mt-1 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1`}
+                    className={`${message.sender === "me" ? "text-right" : "text-left"
+                      } mt-1 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1`}
                   >
                     <span>{message.timestamp}</span>
                     {message.isRead && (

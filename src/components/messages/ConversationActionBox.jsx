@@ -11,8 +11,6 @@ import MessageRequestConfirmation from "./MessageRequestConfirmation";
 const ConversationActionBox = ({
   selectedChat,
   setSelectedChat,
-  messages,
-  setMessages,
   sender,
   handleSendMessage: hs,
 }) => {
@@ -68,25 +66,25 @@ const ConversationActionBox = ({
   // Send text or file message, reset input on send
   const handleSendMessage = () => {
     if (newMessage.trim() === "" && attachments.length === 0) return;
-    const newId = messages.length
-      ? Math.max(...messages.map((m) => m.id)) + 1
-      : 1;
-    setMessages([
-      ...messages,
-      {
-        id: newId,
-        // sender_id: 18,
-        // sender_username: "yo5",
-        // recipient_id: 15,
-        // recipient_username: "yo",
-        content: newMessage,
-        created_at: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        attachments: [...attachments],
-      },
-    ]);
+    // const newId = messages.length
+    //   ? Math.max(...messages.map((m) => m.id)) + 1
+    //   : 1;
+    // setMessages([
+    //   ...messages,
+    //   {
+    //     id: newId,
+    //     // sender_id: 18,
+    //     // sender_username: "yo5",
+    //     // recipient_id: 15,
+    //     // recipient_username: "yo",
+    //     content: newMessage,
+    //     created_at: new Date().toLocaleTimeString([], {
+    //       hour: "2-digit",
+    //       minute: "2-digit",
+    //     }),
+    //     attachments: [...attachments],
+    //   },
+    // ]);
     setNewMessage("");
     setAttachments([]);
     if (inputRef.current) inputRef.current.focus();

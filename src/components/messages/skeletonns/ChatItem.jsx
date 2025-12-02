@@ -1,5 +1,4 @@
 import MessageOptions from "@/components/MessagesComponents/MessageSelect/MessageOptions";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import AvatarUser from "@/components/ui/AvatarUser";
 
 const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpenAddToGroupModal }) => {

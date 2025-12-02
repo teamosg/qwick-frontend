@@ -102,7 +102,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
 
     ws.current.onclose = () => {
       // If it closes BEFORE open → failed connection
-      if (ws.current.readyState === WebSocket.CLOSED) {
+      if (ws.current?.readyState === WebSocket.CLOSED) {
         setIsWsError(true);
       }
     };
@@ -111,7 +111,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     // CLEANUP MUST ALWAYS BE RETURNED FROM USEEFFECT
     return () => {
       if (ws.current) {
-        ws.current.close();
+        ws.current?.close();
         ws.current = null;
       }
     };
@@ -150,8 +150,6 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
             <ConversationActionBox
               selectedChat={selectedChat}
               setSelectedChat={setSelectedChat}
-              messages={messages}
-              setMessages={setMessages}
               sender={sender}
               handleSendMessage={handleSendMessage}
             />
