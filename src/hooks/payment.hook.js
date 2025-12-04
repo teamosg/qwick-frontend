@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosPrivate } from "../lib/axios.config.js";
 import { toast } from "sonner";
+import handleApiError from "@/services/handleApiError.js";
 
 /**
  * ================================
@@ -85,3 +86,26 @@ export const useGetDepositTransactions = () => {
     staleTime: 1000 * 60 * 2, // cache for 2 mins
   });
 };
+
+
+
+export const useAddPaymentMethod = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["addPaymentMethod"],
+    mutationFn: async () => {
+      const res = await axiosPrivate.post("/v1/payment/stripe/connect/onboarding/");
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.account_id) {
+        const redirect = data?.onboarding_url
+        window.open(redirect, "_blank", "noopener,noreferrer");
+        queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to add payment method" })
+    }
+  })
+}
