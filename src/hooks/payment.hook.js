@@ -138,3 +138,31 @@ export const useDeposit = () => {
     }
   })
 }
+
+
+
+
+export const useWithdraw = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["withdraw"],
+    mutationFn: async (payload) => {
+      const res = axiosPrivate.post("/v1/payment/withdraw/", payload)
+      return res
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message);
+
+        queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
+        queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
+        queryClient.invalidateQueries({ queryKey: ["depositTransactions"] });
+      } else {
+        toast.error(data?.error || "Failed to withdraw");
+      }
+    },
+    onError(error) {
+      handleApiError({ error, errorMessage: "Failed to withdraw" })
+    }
+  })
+}

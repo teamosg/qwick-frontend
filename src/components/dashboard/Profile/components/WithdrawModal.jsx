@@ -8,13 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { useState } from "react";
+import { useWithdraw } from "@/hooks/payment.hook";
 
 const WITHDRAW_FEE = 0.02; // 2%
 
 const WithdrawModal = ({ open, setOpen }) => {
+    const { mutate: withdraw, isPending: withdrawLoading } = useWithdraw();
     const [amount, setAmount] = useState("");
     // const [method, setMethod] = useState("bank");
-    const [loading, setLoading] = useState(false);
 
     // const fee = useMemo(() => amount * WITHDRAW_FEE || 0, [amount]);
     // const receiveAmount = useMemo(
@@ -23,19 +24,13 @@ const WithdrawModal = ({ open, setOpen }) => {
     // );
 
     const handleWithdraw = () => {
-        setLoading(true);
-
-        console.log("WITHDRAW DATA", {
-            amount,
-            // method,
-            // fee,
-            // receiveAmount,
-        });
-
-        setTimeout(() => {
-            setLoading(false);
-            setOpen(false);
-        }, 1500);
+        withdraw(
+            {
+                amount: 1000.00,
+                destination_type: "connected_account",
+                connected_account_id: "acct_1SaYU7L12T9dNAwP"
+            }
+        )
     };
 
     return (
@@ -98,10 +93,10 @@ const WithdrawModal = ({ open, setOpen }) => {
                 {/* Confirm */}
                 <Button
                     onClick={handleWithdraw}
-                    disabled={!amount || loading}
+                    disabled={!amount || withdrawLoading}
                     className="w-full bg-[#003933] hover:bg-[#002822] text-white"
                 >
-                    {loading ? <Spinner className="w-4 h-4" /> : "Confirm Withdraw"}
+                    {withdrawLoading ? <Spinner className="w-4 h-4" /> : "Confirm Withdraw"}
                 </Button>
             </DialogContent>
         </Dialog>
