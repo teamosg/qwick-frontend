@@ -1,27 +1,59 @@
 import { X, Search, Users } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import AvatarUser from "../ui/AvatarUser";
+import { useGetOtherUser } from "@/hooks/users.hook";
+import { useMemo } from "react";
+import { useEffect } from "react";
+import SuggestedUsersList from "./components/SuggestedUsersList";
+import SkeletonUser from "./skeletonns/SkeletonUser";
+import { NoDataAlert } from "../Alerts/NoDataAlert";
+import SearchedUsersList from "./components/SearchedUsersList";
+import { TodoAlert } from "../Alerts/TodoAlert";
 
 
 const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onClose, onCreateGroup }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  const suggestedUsers = {}
 
-  fetchedConversationList?.forEach(conversation => {
-    if (conversation?.type === 'dm') {
-      suggestedUsers[conversation?.username] = conversation
-    }
-  })
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500);
 
-  // Filter users based on search input (name or username)
-  // const filteredUsers = suggestedUsers?.filter(
-  //   user => user?.username?.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
-  const filteredUsers = suggestedUsers[searchQuery] ? [suggestedUsers[searchQuery]] : []
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
-  console.log("filtered users:", filteredUsers);
+
+  const suggestedUsers = useMemo(() => {
+    const map = {};
+    fetchedConversationList?.forEach(conversation => {
+      if (conversation?.type === "dm") {
+        map[conversation?.username] = conversation;
+      }
+    });
+    return map;
+  }, [fetchedConversationList]);
+
+
+
+  const filteredUsers = useMemo(() => {
+    if (!debouncedSearch) return [];
+    return suggestedUsers[debouncedSearch]
+      ? [suggestedUsers[debouncedSearch]]
+      : [];
+  }, [debouncedSearch, suggestedUsers]);
+
+  const isUserFoundInLocal = filteredUsers.length > 0;
+
+
+
+
+  const { data: searchedUser, isLoading } = useGetOtherUser({
+    userName: debouncedSearch.trim(),
+    enabled: !!debouncedSearch && !isUserFoundInLocal,
+  });
+
 
 
   const handleUserSelect = (user) => {
@@ -107,38 +139,40 @@ const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onCl
               </button>
             </div>
 
-            {/* Suggested Users List */}
-            <div className="flex-1 overflow-y-auto">
-              <div className="p-4">
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Suggested</h3>
-                <div className="space-y-1">
-                  {filteredUsers.map(user => (
-                    <motion.button
-                      key={user?.user_id}
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.99 }}
-                      onClick={() => handleUserSelect(user)}
-                      className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
-                    >
-                      <div className="relative">
-                        <AvatarUser
-                          src={user?.avatar}
-                          alt={user?.username}
-                          className="w-10 h-10 rounded-full object-cover"
-                        />
-                        {user?.isOnline && (
-                          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
-                        )}
-                      </div>
-                      <div className="flex-1 text-left">
-                        <h4 className="font-medium text-sm text-gray-900 dark:text-white">{user?.username}</h4>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">@{user?.username}</p>
-                      </div>
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            </div>
+            {
+              !searchQuery
+                ? (
+                  <TodoAlert message="Search for users to start a conversation" />
+                )
+                : (
+                  isLoading ? (
+                    <div>
+                      <SkeletonUser />
+                      <SkeletonUser />
+                      <SkeletonUser />
+                    </div>
+                  ) : (
+                    filteredUsers?.length ? (
+                      <SuggestedUsersList
+                        suggestedUsers={filteredUsers}
+                        handleUserSelect={handleUserSelect}
+                      />
+                    )
+                      : (
+                        searchedUser
+                          ? (
+                            <SearchedUsersList
+                              usersList={[searchedUser]}
+                              handleUserSelect={handleUserSelect}
+                            />
+                          )
+                          : (
+                            <NoDataAlert message="No users found" />
+                          )
+                      )
+                  )
+                )
+            }
           </motion.div>
         </>
       )}

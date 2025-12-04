@@ -64,9 +64,6 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
 
 
 
-
-
-
   // skeleton
   if (
     isConversationLoading ||
