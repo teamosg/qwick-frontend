@@ -8,6 +8,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
  * and provides sidebar/info toggle actions. Updates color only for dark mode.
  */
 const ChatHeader = ({ selectedChat, setSelectedChat }) => {
+
+  console.log(selectedChat);
   // State to control showing chat info sidebar
   const [showInfoSidebar, setShowInfoSidebar] = useState(false);
 

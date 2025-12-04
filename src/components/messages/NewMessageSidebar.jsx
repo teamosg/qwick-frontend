@@ -4,17 +4,47 @@ import { useState } from "react";
 import AvatarUser from "../ui/AvatarUser";
 
 
-const NewMessageSidebar = ({ fetchedConversationList, isOpen, onClose, onUserSelect, onCreateGroup }) => {
+const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onClose, onCreateGroup }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const suggestedUsers = fetchedConversationList?.filter(conversation => conversation?.type === 'dm') || []
+  const suggestedUsers = {}
+
+  fetchedConversationList?.forEach(conversation => {
+    if (conversation?.type === 'dm') {
+      suggestedUsers[conversation?.username] = conversation
+    }
+  })
 
   // Filter users based on search input (name or username)
-  const filteredUsers = suggestedUsers.filter(
-    user =>
-      // user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user?.username?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // const filteredUsers = suggestedUsers?.filter(
+  //   user => user?.username?.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
+  const filteredUsers = suggestedUsers[searchQuery] ? [suggestedUsers[searchQuery]] : []
+
+  console.log("filtered users:", filteredUsers);
+
+
+  const handleUserSelect = (user) => {
+    // Create new chat with user
+    // const newChat = {
+    //   avatar: "http://darrenchua.softvencealpha.com/media/avatars/cat.webp",
+    //   blocked: true,
+    //   last_message: "ok",
+    //   last_message_at: "2025-12-01T06:07:24.352479+00:00",
+    //   pinned: true,
+    //   type: "dm",
+    //   user_id: 16,
+    //   username: "yo3"
+    // };
+
+    const newChat = user
+
+    console.log(user);
+    onSelectChat(newChat);
+    onClose()
+  };
+
+
 
   return (
     <AnimatePresence>
@@ -87,7 +117,7 @@ const NewMessageSidebar = ({ fetchedConversationList, isOpen, onClose, onUserSel
                       key={user?.user_id}
                       whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.99 }}
-                      onClick={() => onUserSelect(user)}
+                      onClick={() => handleUserSelect(user)}
                       className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
                     >
                       <div className="relative">

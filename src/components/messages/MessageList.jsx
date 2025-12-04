@@ -65,25 +65,6 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
 
 
 
-  const handleUserSelect = (user) => {
-    // Create new chat with user
-    const newChat = {
-      id: Date.now(),
-      name: user.name,
-      avatar: user.avatar,
-      lastMessage: "Start a conversation...",
-      time: "Now",
-      unreadCount: 0,
-      isOnline: user.isOnline,
-      type: "direct",
-    };
-
-    onSelectChat(newChat);
-    setShowNewMessageSidebar(false);
-  };
-
-
-
 
 
   // skeleton
@@ -221,7 +202,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
         isOpen={showNewMessageSidebar}
         fetchedConversationList={fetchedConversationList}
         onClose={() => setShowNewMessageSidebar(false)}
-        onUserSelect={handleUserSelect}
+        onSelectChat={onSelectChat}
         onCreateGroup={() => {
           setShowNewMessageSidebar(false);
           setShowCreateGroupModal(true);
