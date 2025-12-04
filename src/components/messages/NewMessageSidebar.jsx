@@ -57,21 +57,11 @@ const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onCl
 
 
   const handleUserSelect = (user) => {
-    // Create new chat with user
-    // const newChat = {
-    //   avatar: "http://darrenchua.softvencealpha.com/media/avatars/cat.webp",
-    //   blocked: true,
-    //   last_message: "ok",
-    //   last_message_at: "2025-12-01T06:07:24.352479+00:00",
-    //   pinned: true,
-    //   type: "dm",
-    //   user_id: 16,
-    //   username: "yo3"
-    // };
+    const newChat = { ...user }
+    newChat.last_message = ""
+    newChat.new_conversation = true
 
-    const newChat = user
 
-    console.log(user);
     onSelectChat(newChat);
     onClose()
   };

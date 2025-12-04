@@ -38,6 +38,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
   } = useGetConversationDetails({
     type: "dm",
     conversationId: sender_id,
+    enabled: !selectedChat?.new_conversation, // skip if new conversation
   });
 
 

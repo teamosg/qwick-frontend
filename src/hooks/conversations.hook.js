@@ -127,7 +127,7 @@ export const useUnpinConversation = () => {
   return { mutate, isPending };
 };
 
-export const useGetConversationDetails = ({ type, conversationId }) => {
+export const useGetConversationDetails = ({ type, conversationId, enabled }) => {
   return useQuery({
     queryKey: ["conversationDetails", conversationId],
     queryFn: async () => {
@@ -147,6 +147,7 @@ export const useGetConversationDetails = ({ type, conversationId }) => {
         throw new Error(message);
       }
     },
+    enabled,
     staleTime: 1000 * 60 * 10,
   });
 };

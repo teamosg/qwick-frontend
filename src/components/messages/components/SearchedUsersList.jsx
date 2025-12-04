@@ -1,5 +1,4 @@
 import AvatarUser from "@/components/ui/AvatarUser";
-import notImplemented from "@/dummyMessages/notImplemented";
 import { motion } from "framer-motion";
 
 
@@ -12,17 +11,16 @@ const SearchedUsersList = ({ usersList, handleUserSelect }) => {
                 <div className="space-y-1">
                     {usersList?.map(user => (
                         <motion.button
-                            key={user?.user_id}
+                            key={user?.username}
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
-                            // onClick={() => handleUserSelect(user)}
-                            onClick={() => notImplemented()}
+                            onClick={() => handleUserSelect(user)}
                             className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
                         >
                             <div className="relative">
                                 <AvatarUser
                                     src={user?.avatar}
-                                    alt={user?.username}
+                                    alt={user?.first_name}
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
                                 {user?.isOnline && (
@@ -30,7 +28,7 @@ const SearchedUsersList = ({ usersList, handleUserSelect }) => {
                                 )}
                             </div>
                             <div className="flex-1 text-left">
-                                <h4 className="font-medium text-sm text-gray-900 dark:text-white">{user?.username}</h4>
+                                <h4 className="font-medium text-sm text-gray-900 dark:text-white">{user?.first_name} {user?.last_name}</h4>
                                 <p className="text-xs text-gray-500 dark:text-gray-400">@{user?.username}</p>
                             </div>
                         </motion.button>
