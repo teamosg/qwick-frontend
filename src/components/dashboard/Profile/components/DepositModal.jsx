@@ -8,13 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { useState } from "react";
+import { useDeposit } from "@/hooks/payment.hook";
 
 const DEPOSIT_FEE = 0.015; // 1.5%
 
 const DepositModal = ({ open, setOpen }) => {
+    const { mutate: deposit, isPending: isDepositing } = useDeposit();
     const [amount, setAmount] = useState("");
     // const [method, setMethod] = useState("card");
-    const [loading, setLoading] = useState(false);
 
     // const fee = useMemo(() => amount * DEPOSIT_FEE || 0, [amount]);
     // const finalAmount = useMemo(
@@ -23,19 +24,7 @@ const DepositModal = ({ open, setOpen }) => {
     // );
 
     const handleDeposit = () => {
-        setLoading(true);
-
-        console.log("DEPOSIT DATA", {
-            amount,
-            // method,
-            // fee,
-            // finalAmount,
-        });
-
-        setTimeout(() => {
-            setLoading(false);
-            setOpen(false);
-        }, 1500);
+        deposit({ amount: amount })
     };
 
     return (
@@ -47,7 +36,7 @@ const DepositModal = ({ open, setOpen }) => {
 
                 {/* Amount */}
                 <div>
-                    <label className="text-sm">Amount</label>
+                    <label className="text-sm">Amount ($)</label>
                     <Input
                         type="number"
                         placeholder="Enter amount"
@@ -97,10 +86,10 @@ const DepositModal = ({ open, setOpen }) => {
                 {/* Confirm */}
                 <Button
                     onClick={handleDeposit}
-                    disabled={!amount || loading}
+                    disabled={!amount || isDepositing}
                     className="w-full bg-[#003933] hover:bg-[#002822] text-white"
                 >
-                    {loading ? <Spinner className="w-4 h-4" /> : "Confirm Deposit"}
+                    {isDepositing ? <Spinner className="w-4 h-4" /> : "Confirm Deposit"}
                 </Button>
             </DialogContent>
         </Dialog>

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosPrivate } from "../lib/axios.config.js";
-import { toast } from "sonner";
 import handleApiError from "@/services/handleApiError.js";
+import toast from "react-hot-toast";
 
 /**
  * ================================
@@ -83,7 +83,7 @@ export const useGetDepositTransactions = () => {
         throw new Error(message);
       }
     },
-    staleTime: 1000 * 60 * 2, // cache for 2 mins
+    staleTime: 1000 * 60 * 2,
   });
 };
 
@@ -106,6 +106,35 @@ export const useAddPaymentMethod = () => {
     },
     onError: (error) => {
       handleApiError({ error, errorMessage: "Failed to add payment method" })
+    }
+  })
+}
+
+
+
+export const useDeposit = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["deposit"],
+    mutationFn: async (payload) => {
+      const res = await axiosPrivate.post("/v1/payment/deposit/", payload);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        const redirect = data?.deposit_url
+        window.open(redirect, "_blank", "noopener,noreferrer");
+
+        toast.success(data?.message);
+        queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
+        queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
+        queryClient.invalidateQueries({ queryKey: ["depositTransactions"] });
+      } else {
+        toast.error(data?.message || "Failed to deposit");
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to deposit" })
     }
   })
 }
