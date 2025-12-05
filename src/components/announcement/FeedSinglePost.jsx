@@ -1,8 +1,14 @@
-import { Heart, MessageCircle, Share } from "lucide-react";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import {  Heart, Image, MessageCircle } from "lucide-react";
 import AvatarUser from "../ui/AvatarUser";
 import { useDislikeAnnouncement, useLikeAnnouncement } from "@/hooks/announcement.hook";
+import { useState } from "react";
 
 export default function FeedSinglePost({ post }) {
+  const [openImage, setOpenImage] = useState(false)
+
+
   const { mutate: likeAnnouncement, isPending: isLiking } = useLikeAnnouncement()
   const { mutate: dislikeAnnouncement, isPending: isDisliking } = useDislikeAnnouncement()
 
@@ -13,6 +19,12 @@ export default function FeedSinglePost({ post }) {
       likeAnnouncement(post?.id)
     }
   }
+
+  const formattedImages = post?.files?.map((file) => ({
+    src: file?.file,
+    alt: `Post image ${file?.id}`,
+  }))
+
 
   return (
     <div className="bg-white dark:bg-zinc-900 shadow rounded-[12px] p-6 mb-8 border border-gray-200 dark:border-zinc-700">
@@ -52,36 +64,60 @@ export default function FeedSinglePost({ post }) {
         )}
       </div>
 
+
       {/* Images - only show if images exist */}
       {post?.files && post?.files.length > 0 && (
-        <div className="mb-4">
+        <div
+          onClick={() => {
+            setOpenImage(true)
+          }}
+          className="mb-4 cursor-pointer"
+        >
           {post?.files.length === 1 ? (
             // Single image - centered with 50% width
             <div className="flex justify-center">
-              <div className="w-1/2">
+              <div className="w-1/2 relative group">
                 <img
                   src={post?.files[0]?.file}
                   alt="Post image"
                   className="w-full h-64 object-cover rounded-lg"
                 />
+
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <Image className="text-white w-8 h-8" />
+                </div>
               </div>
             </div>
           ) : (
             // Multiple images - 2 per row with 50% width each
             <div className="grid grid-cols-2 gap-3">
               {post?.files.map((file, index) => (
-                <div key={index} className="w-full">
+                <div
+                  key={index}
+                  onClick={() => {
+                    setOpenImage(true)
+                  }}
+                  className="w-full cursor-pointer relative group"
+                >
                   <img
                     src={file?.file}
                     alt={`Post image ${index + 1}`}
                     className="w-full h-64 object-cover rounded-lg"
                   />
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <Image className="text-white w-7 h-7" />
+                  </div>
                 </div>
               ))}
             </div>
           )}
         </div>
       )}
+
+
 
       {/* Post Actions */}
       <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-600">
@@ -118,6 +154,11 @@ export default function FeedSinglePost({ post }) {
           <span className="text-sm font-medium">Share</span>
         </button> */}
       </div>
+      <Lightbox
+        open={openImage}
+        close={() => setOpenImage(false)}
+        slides={formattedImages}
+      />
     </div>
   );
 }

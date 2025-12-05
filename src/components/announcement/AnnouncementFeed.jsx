@@ -139,7 +139,7 @@ const AnnouncementFeed = () => {
         Announcement
       </motion.h2>
 
-      {
+      {/* {
         !!canPost && (
           <AnnouncementPostForm
             creator={creator}
@@ -156,7 +156,24 @@ const AnnouncementFeed = () => {
             handlePostSubmit={handlePostSubmit}
           />
         )
-      }
+      } */}
+
+
+      <AnnouncementPostForm
+        creator={creator}
+        isPosting={isCreatingAnnouncement}
+        postText={postText}
+        setPostText={setPostText}
+        imagePreviewUrls={imagePreviewUrls}
+        setImagePreviewUrls={setImagePreviewUrls}
+        selectedImages={selectedImages}
+        setSelectedImages={setSelectedImages}
+        fileInputRef={fileInputRef}
+        handleImageUpload={handleImageUpload}
+        removeImage={removeImage}
+        handlePostSubmit={handlePostSubmit}
+      />
+
 
       {
         !!announcementsList?.length ||
