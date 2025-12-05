@@ -47,9 +47,14 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
         addMemberToGroup({
             groupId: selectedChat?.group_id,
             members: selectedUsers
-        })
-        setSelectedUsers([]);
-        onClose();
+        },
+            {
+                onSuccess: () => {
+                    setSelectedUsers([]);
+                    onClose();
+                }
+            }
+        )
     };
 
 
@@ -179,13 +184,12 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={handleAddMembers}
-                                    disabled={selectedUsers.length === 0}
+                                    disabled={selectedUsers.length === 0 || isAdding}
                                     className="w-full px-6 py-3 bg-[#003933] hover:bg-[#002822] text-white rounded-lg font-semibold shadow-md transition-all disabled:opacity-50 disabled:hover:scale-100"
                                 >
-                                    Add Members ({selectedUsers.length})
+                                    {isAdding ? "Adding..." : "Add Members"} ({selectedUsers.length})
                                 </motion.button>
                             </div>
-
                         </div>
                     </motion.div>
                 </>
