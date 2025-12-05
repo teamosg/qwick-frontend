@@ -158,7 +158,6 @@ const AnnouncementFeed = () => {
         )
       } */}
 
-
       <AnnouncementPostForm
         creator={creator}
         isPosting={isCreatingAnnouncement}
@@ -173,7 +172,6 @@ const AnnouncementFeed = () => {
         removeImage={removeImage}
         handlePostSubmit={handlePostSubmit}
       />
-
 
       {
         !!announcementsList?.length ||

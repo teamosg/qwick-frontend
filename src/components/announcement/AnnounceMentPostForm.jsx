@@ -4,6 +4,7 @@ import { Image as ImageIcon, Paperclip, Smile, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router";
 import AvatarUser from "../ui/AvatarUser";
+import { useProfile } from "@/hooks/auth.hook";
 
 const AnnouncementPostForm = ({
   creator,
@@ -18,6 +19,8 @@ const AnnouncementPostForm = ({
   removeImage,
   handlePostSubmit,
 }) => {
+  const { data: user } = useProfile()
+
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const emojiPickerRef = useRef(null);
   const { openImageModal, uploadedImage, setUploadedImage } =
@@ -94,8 +97,8 @@ const AnnouncementPostForm = ({
       <form onSubmit={handleSubmit}>
         <div className="flex items-start space-x-3">
           <AvatarUser
-            src={creator?.avatar}
-            alt={creator?.first_name}
+            src={user?.avatar}
+            alt={user?.first_name}
             className="w-10 h-10 rounded-full object-cover"
           />
           <div className="flex-1">
