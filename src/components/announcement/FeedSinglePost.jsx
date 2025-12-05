@@ -75,12 +75,13 @@ export default function FeedSinglePost({ post }) {
         >
           {post?.files.length === 1 ? (
             // Single image - centered with 50% width
-            <div className="flex justify-center">
+            <div
+              onClick={() => {
+                setOpenImage(true)
+              }}
+              className="flex justify-center">
               <div className="w-full relative group">
                 <img
-                  onClick={() => {
-                    setOpenImage(true)
-                  }}
                   src={post?.files[0]?.file}
                   alt="Post image"
                   className="w-full object-cover rounded-lg"
@@ -162,7 +163,7 @@ export default function FeedSinglePost({ post }) {
         </button> */}
       </div>
 
-      
+
       <Lightbox
         open={openImage}
         close={() => setOpenImage(false)}
