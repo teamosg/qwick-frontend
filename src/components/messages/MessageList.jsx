@@ -13,6 +13,7 @@ import { FetchErrorAlert } from "../Alerts/FetchErrorAlerts";
 import { useEffect } from "react";
 import AddToGroupModal from "./AddToGroupModal";
 import { useConversationStore } from "@/store/conversationStore";
+import SearchedMessageList from "./SearchedMessageList";
 
 
 const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedChat }) => {
@@ -32,6 +33,10 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
   const regularConversation = conversationList?.filter((chat) => !chat.pinned) || []
   const groupConversations = conversationList?.filter((chat) => chat.type === "group") || []
 
+  const searchedConversation = conversationList?.filter((chat) => {
+    return chat?.username?.toLowerCase()?.includes(searchQuery?.toLowerCase()) || chat?.group_name?.toLowerCase()?.includes(searchQuery?.toLowerCase())
+  }) || []
+
   const {
     data: fetchedConversationList,
     isLoading: isConversationLoading,
@@ -49,7 +54,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
 
   useEffect(() => {
     setFetchedConversationList(fetchedConversationList)
-  }, [fetchedConversationList])
+  }, [fetchedConversationList, setFetchedConversationList])
 
   useEffect(() => {
     if (fetchedConversationList) {
@@ -180,24 +185,40 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
         </div>
       </div>
 
-      {/* Chat List */}
-      {isConversationError ? (
-        <div className="p-4">
-          <FetchErrorAlert />
-        </div>
-      ) : (
-        <ChatList
-          showUnreadOnly={showUnreadOnly}
-          showRequestsOnly={showRequestsOnly}
-          requestsChats={requestConversationList}
-          onSelectChat={onSelectChat}
-          selectedChatId={selectedChatId}
-          pinnedConversation={pinnedConversation}
-          regularConversation={regularConversation}
-          setSelectedChat={setSelectedChat}
-          setOpenAddToGroupModal={setOpenAddToGroupModal}
-        />
-      )}
+      {
+        searchQuery
+          ? (
+            <SearchedMessageList
+              searchedConversation={searchedConversation}
+
+              onSelectChat={onSelectChat}
+              selectedChatId={selectedChatId}
+
+              setSelectedChat={setSelectedChat}
+              setOpenAddToGroupModal={setOpenAddToGroupModal}
+            />
+          )
+          : (
+            isConversationError ? (
+              <div className="p-4">
+                <FetchErrorAlert />
+              </div>
+            ) : (
+              <ChatList
+                showUnreadOnly={showUnreadOnly}
+                showRequestsOnly={showRequestsOnly}
+                requestsChats={requestConversationList}
+                onSelectChat={onSelectChat}
+                selectedChatId={selectedChatId}
+                pinnedConversation={pinnedConversation}
+                regularConversation={regularConversation}
+                setSelectedChat={setSelectedChat}
+                setOpenAddToGroupModal={setOpenAddToGroupModal}
+              />
+            )
+          )
+      }
+
 
       <NewMessageSidebar
         isOpen={showNewMessageSidebar}
