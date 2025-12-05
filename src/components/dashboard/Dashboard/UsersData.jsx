@@ -33,6 +33,7 @@ const TableCell = ({ children, className = "" }) => (
 const getStatusBadge = (status = 'active') => {
   const variants = {
     active: "bg-green-100 text-green-800 border-green-200",
+    moderator: "bg-green-100 text-green-800 border-green-200",
     pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
     cancel: "bg-red-100 text-red-800 border-red-200",
   };
@@ -115,6 +116,12 @@ const UsersData = () => {
                   Status
                 </TableHead>
                 <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  Role
+                </TableHead>
+                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  Joined at
+                </TableHead>
+                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
                   Actions
                 </TableHead>
               </TableRow>
@@ -133,6 +140,12 @@ const UsersData = () => {
                   </TableCell>
                   <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
                     {getStatusBadge(user?.status)}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 font-semibold text-sm text-gray-500 dark:text-[#fff]">
+                    {user?.joined_at?.substring(0, 10)}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
+                    {getStatusBadge(user?.is_moderator ? 'moderator' : 'user')}
                   </TableCell>
                   <TableCell className="py-4 px-6 flex gap-2">
                     {
