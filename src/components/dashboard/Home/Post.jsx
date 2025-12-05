@@ -20,9 +20,8 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-  const [likeCount, setLikeCount] = useState(post.likes || 0);
-  const [isLiked, setIsLiked] = useState(post.isLiked || false);
-  const [recentLikers, setRecentLikers] = useState(post.recentLikers || []);
+  const [likeCount, setLikeCount] = useState(post.like_count || 0);
+  const [isLiked, setIsLiked] = useState(post.is_liked || false);
   const emojiPickerRef = useRef(null);
 
   useEffect(() => {
@@ -39,46 +38,11 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
         }
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [post.id]);
-
-  // Initialize with sample likers if none exist
-  useEffect(() => {
-    if (recentLikers.length === 0 && likeCount > 0) {
-      const sampleLikers = [
-        {
-          id: "user1",
-          name: "Alice Johnson",
-          avatar: "https://bundui-images.netlify.app/avatars/01.png",
-        },
-        {
-          id: "user2",
-          name: "Bob Smith",
-          avatar: "https://bundui-images.netlify.app/avatars/03.png",
-        },
-        {
-          id: "user3",
-          name: "Carol Davis",
-          avatar: "https://bundui-images.netlify.app/avatars/05.png",
-        },
-        {
-          id: "user5",
-          name: "David Wilson",
-          avatar: "https://bundui-images.netlify.app/avatars/06.png",
-        },
-        {
-          id: "user4",
-          name: "David Wilson",
-          avatar: "https://bundui-images.netlify.app/avatars/06.png",
-        },
-      ].slice(0, Math.min(likeCount, 4));
-      setRecentLikers(sampleLikers);
-    }
-  }, [likeCount, recentLikers.length]);
 
   const dropdownItems = [
     {
@@ -124,25 +88,11 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
     if (isLiked) {
       setLikeCount((prev) => prev - 1);
       setIsLiked(false);
-      // Remove current user from recent likers
-      setRecentLikers((prev) =>
-        prev.filter((liker) => liker.id !== "current-user")
-      );
     } else {
       setLikeCount((prev) => prev + 1);
       setIsLiked(true);
-      // Add current user to recent likers (most recent first)
-      const currentUser = {
-        id: "current-user",
-        name: "You", // or get from user context
-        avatar: "https://i.pravatar.cc/150?img=5", // or get from user context
-      };
-      setRecentLikers((prev) => [currentUser, ...prev.slice(0, 3)]);
     }
-    // Call the parent onLike function if provided
-    if (onLike) {
-      onLike(post.id);
-    }
+    if (onLike) onLike(post.id);
   };
 
   return (
@@ -151,29 +101,19 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       <div className="flex justify-between items-start mb-3 sm:mb-4">
         <div className="flex items-center space-x-2 sm:space-x-3">
           <img
-            src={post.authorImage}
-            alt={post.author}
+            src={post.author.avatar}
+            alt={post.author.first_name}
             className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
           />
           <div className="min-w-0 flex-1">
             <div className="flex items-center space-x-2">
               <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
-                {post.author}
+                {post.author.first_name} {post.author.last_name}
               </h3>
-              {/* <span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full flex items-center">
-                {post.postType === "group" ? (
-                  <>
-                    <Users size={12} className="mr-1" /> {post.group}
-                  </>
-                ) : (
-                  <>
-                    <Globe size={12} className="mr-1" /> Public
-                  </>
-                )}
-              </span> */}
             </div>
             <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
-              <Clock size={10} className="mr-1" /> {post.time}
+              <Clock size={10} className="mr-1" />{" "}
+              {new Date(post.created_at).toLocaleString()}
             </div>
           </div>
         </div>
@@ -213,56 +153,37 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
         {post.content}
       </p>
 
-      {/* Images - only show if images exist */}
-      {post.images && post.images.length > 0 && (
-        <div className="mb-3 sm:mb-4">
-          {post.images.length === 1 ? (
-            // Single image - responsive width
-            <div className="flex justify-center">
-              <div className="w-full">
-                <img
-                  src={post.images[0]}
-                  alt="Post image"
-                  className="w-full object-cover rounded-lg max-h-[450px]"
-                />
-              </div>
+      {/* Post Files/Images */}
+      {post.files && post.files.length > 0 && (
+        <div className="mb-3 sm:mb-4 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+          {post.files.map((file) => (
+            <div key={file.id} className="w-full">
+              <img
+                src={file.file}
+                alt="Post file"
+                className="w-full h-48 sm:h-64 object-cover rounded-lg"
+              />
             </div>
-          ) : (
-            // Multiple images - responsive grid
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-              {post.images.map((image, index) => (
-                <div key={index} className="w-full">
-                  <img
-                    src={image}
-                    alt={`Post image ${index + 1}`}
-                    className="w-full h-48 sm:h-64 object-cover rounded-lg"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          ))}
         </div>
       )}
 
       {/* Post Stats */}
       <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-3 sm:mb-4 font-semibold bg-white dark:bg-zinc-900">
         <div className="flex justify-between gap-2 sm:gap-0">
-          {/* Like Button */}
           <button
             onClick={handleLike}
             className={`flex sm:items-center sm:justify-center space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors
-        ${
-          isLiked
-            ? "text-[#003933] dark:text-emerald-400"
-            : "text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300"
-        }`}
+        ${isLiked
+                ? "text-[#003933] dark:text-emerald-400"
+                : "text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300"
+              }`}
             aria-label={isLiked ? "Liked" : "Like"}
           >
             <Like isLiked={isLiked} />
             <span className="sm:hidden">{isLiked ? "Liked" : "Like"}</span>
           </button>
 
-          {/* Comment Button */}
           <button
             onClick={() =>
               document.getElementById(`comment-${post.id}`).focus()
@@ -273,20 +194,17 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
             <Comment />
           </button>
 
-          {/* Share Button/Component */}
           <div className="sm:col-span-1">
             <PostShare />
           </div>
 
-          {/* Save Button */}
           <button
             onClick={() => onSave(post.id)}
             className={`flex sm:items-center sm:justify-center px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors
-        ${
-          post.isSaved
-            ? "text-[#003933] dark:text-emerald-400"
-            : "text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300"
-        }`}
+        ${post.isSaved
+                ? "text-[#003933] dark:text-emerald-400"
+                : "text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300"
+              }`}
             aria-label={post.isSaved ? "Saved" : "Save"}
           >
             <Save />
@@ -296,30 +214,59 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
 
       {/* Comments Section */}
       <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
-        {post.comments.map((comment, index) => (
-          <div key={index} className="flex space-x-2">
-            <img
-              src={comment.userImage || "https://i.pravatar.cc/150?img=3"}
-              alt={comment.user}
-              className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover flex-shrink-0"
-            />
-            <div className="bg-gray-100 dark:bg-[#2E2E2E] rounded-lg p-2 sm:p-3 flex-1 min-w-0">
-              <div className="font-medium text-xs sm:text-sm dark:text-white truncate">
-                {comment.user}
+        {post.comments.map((comment) => {
+          const [showCommentDropdown, setShowCommentDropdown] = useState(false);
+
+          return (
+            <div key={comment.id} className="flex space-x-2 relative">
+              <img
+                src={comment.author.avatar || "https://i.pravatar.cc/150?img=3"}
+                alt={comment.author.first_name}
+                className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover flex-shrink-0"
+              />
+              <div className="bg-gray-100 dark:bg-[#2E2E2E] rounded-lg p-2 sm:p-3 flex-1 min-w-0">
+                <div className="flex justify-between items-start">
+                  <div className="font-medium text-xs sm:text-sm dark:text-white truncate">
+                    {comment.author.first_name} {comment.author.last_name}
+                  </div>
+                  <div className="relative flex-shrink-0">
+                    <button
+                      onClick={() =>
+                        setShowCommentDropdown(!showCommentDropdown)
+                      }
+                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1"
+                    >
+                      <MoreHorizontal size={16} />
+                    </button>
+                    {showCommentDropdown && (
+                      <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-zinc-900 rounded-md shadow-lg z-10 border border-gray-200 dark:border-zinc-700">
+                        <button
+                          onClick={() => {
+                            onDelete(comment.id);
+                            setShowCommentDropdown(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
+                        >
+                          <Trash2 size={16} className="mr-2" /> Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="text-gray-700 dark:text-zinc-400 text-xs sm:text-sm break-words">
+                  {comment.content}
+                </div>
+                {comment.image && (
+                  <img
+                    src={comment.image}
+                    alt="Comment"
+                    className="mt-2 rounded-lg max-h-32 sm:max-h-40 object-cover w-full"
+                  />
+                )}
               </div>
-              <div className="text-gray-700 dark:text-zinc-400 text-xs sm:text-sm break-words">
-                {comment.text}
-              </div>
-              {comment.image && (
-                <img
-                  src={comment.image}
-                  alt="Comment"
-                  className="mt-2 rounded-lg max-h-32 sm:max-h-40 object-cover w-full"
-                />
-              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Comment Input */}
@@ -359,11 +306,10 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
               <button
                 type="submit"
                 disabled={!commentText.trim() && !imagePreview}
-                className={`p-1 ${
-                  commentText.trim() || imagePreview
+                className={`p-1 ${commentText.trim() || imagePreview
                     ? "text-primary"
                     : "text-gray-400"
-                }`}
+                  }`}
               >
                 <Send size={16} className="sm:w-[18px] sm:h-[18px]" />
               </button>

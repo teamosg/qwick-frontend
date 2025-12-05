@@ -230,3 +230,26 @@ export const useDeleteCommunity = () => {
     },
   });
 }
+
+
+
+export const useFeed = () => {
+  return useQuery({
+    queryKey: ["feed"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/feed/`
+        );
+        return res?.data || [];
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch feed"
+        });
+      }
+    },
+    staleTime: 1000 * 60 * 2,
+  });
+}

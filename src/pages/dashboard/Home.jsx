@@ -3,31 +3,13 @@ import PostForm from "@/components/dashboard/Home/PostForm";
 import { useState } from "react";
 import Post from "../../components/dashboard/Home/Post";
 import notImplemented from "@/dummyMessages/notImplemented";
+import { useFeed } from "@/hooks/community.hook";
 
 const Home = () => {
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      author: "John Doe",
-      authorImage: "https://i.pravatar.cc/150?img=1",
-      time: "2 hours ago",
-      content: "This is a sample post with comments!",
-      images: ["https://picsum.photos/800/400?random=1"],
-      likes: 42,
-      comments: [
-        {
-          user: "Jane Smith",
-          userImage: "https://i.pravatar.cc/150?img=2",
-          text: "Great post! 😊",
-          time: "1 hour ago",
-        },
-      ],
-      shares: 5,
-      isLiked: false,
-      isSaved: false,
-      postType: "public",
-    },
-  ]);
+  const { data: feedPosts, isLoading: isFeedLoading, isError: isFeedError } = useFeed()
+  console.log(feedPosts);
+
+  const posts = feedPosts?.announcements || [];
 
   const handleSubmitPost = (newPost) => {
     const post = {
