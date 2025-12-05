@@ -1,11 +1,15 @@
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import {  Heart, Image, MessageCircle } from "lucide-react";
+import { Heart, Image, MessageCircle } from "lucide-react";
 import AvatarUser from "../ui/AvatarUser";
 import { useDislikeAnnouncement, useLikeAnnouncement } from "@/hooks/announcement.hook";
 import { useState } from "react";
+import PostModal from "./PostModal";
+
+
 
 export default function FeedSinglePost({ post }) {
+  const [openComments, setOpenComments] = useState(false)
   const [openImage, setOpenImage] = useState(false)
 
 
@@ -67,20 +71,19 @@ export default function FeedSinglePost({ post }) {
 
       {/* Images - only show if images exist */}
       {post?.files && post?.files.length > 0 && (
-        <div
-          onClick={() => {
-            setOpenImage(true)
-          }}
-          className="mb-4 cursor-pointer"
+        <div className="mb-4 cursor-pointer"
         >
           {post?.files.length === 1 ? (
             // Single image - centered with 50% width
             <div className="flex justify-center">
-              <div className="w-1/2 relative group">
+              <div className="w-full relative group">
                 <img
+                  onClick={() => {
+                    setOpenImage(true)
+                  }}
                   src={post?.files[0]?.file}
                   alt="Post image"
-                  className="w-full h-64 object-cover rounded-lg"
+                  className="w-full object-cover rounded-lg"
                 />
 
                 {/* Hover Overlay */}
@@ -140,12 +143,16 @@ export default function FeedSinglePost({ post }) {
           </div>
 
           {/* Comment Button */}
-          <button className="cursor-pointer flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors group">
+          <button
+            onClick={() => setOpenComments(true)}
+            className="cursor-pointer flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors group"
+          >
             <MessageCircle className="w-5 h-5 group-hover:text-blue-500 dark:group-hover:text-blue-400" />
             <span className="text-sm font-medium">
               {post?.comment_count} comments
             </span>
           </button>
+
         </div>
 
         {/* Share Button */}
@@ -154,11 +161,24 @@ export default function FeedSinglePost({ post }) {
           <span className="text-sm font-medium">Share</span>
         </button> */}
       </div>
+
+      
       <Lightbox
         open={openImage}
         close={() => setOpenImage(false)}
         slides={formattedImages}
       />
+
+
+      <PostModal
+        openComments={openComments}
+        setOpenComments={setOpenComments}
+        post={post}
+        setOpenImage={setOpenImage}
+      />
+
+      {/* Full Post With Comments Modal */}
+
     </div>
   );
 }
