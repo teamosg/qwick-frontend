@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Textarea } from "@/components/ui/textarea"
 import {
     Dialog,
     DialogContent,
@@ -6,7 +7,6 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { MoreVertical, Send } from "lucide-react"
-import { Input } from "@/components/ui/input"
 import AvatarUser from '../ui/AvatarUser';
 
 const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
@@ -22,7 +22,7 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                 </DialogHeader>
 
                 {/* Scroll Area */}
-                <div className="max-h-[80vh] overflow-y-auto">
+                <div className="bg-white dark:bg-zinc-900 max-h-[70vh] overflow-y-auto">
 
                     {/* ✅ FULL POST INSIDE MODAL */}
                     {/* ✅ FULL ORIGINAL POST FORMAT INSIDE MODAL */}
@@ -84,7 +84,7 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                                                 src={file?.file}
                                                 alt={`Post image ${index + 1}`}
                                                 onClick={() => setOpenImage(true)}
-                                                className="w-full h-64 object-cover rounded-lg cursor-pointer"
+                                                className="w-full h-50 object-cover rounded-lg cursor-pointer"
                                             />
                                         ))}
                                     </div>
@@ -131,23 +131,31 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                     </div>
                 </div>
 
-                {/* ✅ COMMENT INPUT FIXED AT BOTTOM */}
-                <div className="border-t p-4 flex gap-3">
-                    <Input
-                        placeholder="Write a comment..."
-                        value={commentText}
-                        onChange={(e) => setCommentText(e.target.value)}
-                    />
-                    <button
-                        onClick={() => {
-                            console.log("New comment:", commentText)
-                            setCommentText("")
-                        }}
-                        className="bg-[#002822] text-white px-4 rounded-lg hover:bg-[#002822]/60 transition-all duration-300 cursor-pointer"
-                    >
-                        <Send className="w-4 h-4" />
-                    </button>
+                {/* ✅ COMMENT INPUT FIXED AT BOTTOM (MULTI-LINE) */}
+                <div
+                    className='relative mt-20'
+                >
+                    <div className="absolute bg-white dark:bg-zinc-900 w-full  bottom-0 border-t p-4 flex gap-3 items-end">
+                        <Textarea
+                            placeholder="Write a comment..."
+                            value={commentText}
+                            onChange={(e) => setCommentText(e.target.value)}
+                            rows={1}
+                            className="resize-none max-h-[200px]"
+                        />
+
+                        <button
+                            onClick={() => {
+                                console.log("New comment:", commentText)
+                                setCommentText("")
+                            }}
+                            className="bg-[#002822] text-white px-4 py-2 rounded-lg hover:bg-[#002822]/60 transition-all duration-300 cursor-pointer"
+                        >
+                            <Send className="w-4 h-4" />
+                        </button>
+                    </div>
                 </div>
+
             </DialogContent>
         </Dialog>
     );
