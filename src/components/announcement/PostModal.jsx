@@ -8,9 +8,25 @@ import {
 } from "@/components/ui/dialog"
 import { MoreVertical, Send } from "lucide-react"
 import AvatarUser from '../ui/AvatarUser';
+import { useComment } from '@/hooks/announcement.hook';
 
 const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
+    const { mutate: postComment, isPending: isCommenting } = useComment()
     const [commentText, setCommentText] = useState("")
+
+    console.log(post);
+
+    const handleComment = () => {
+        if (!commentText) return;
+        
+        postComment({
+            AnnouncementId: post?.id,
+            payload: {
+                content: commentText
+            }
+        })
+        setCommentText("")
+    }
     return (
         <Dialog open={openComments} onOpenChange={setOpenComments}>
             <DialogContent className="max-w-200! p-0 overflow-hidden">
@@ -145,11 +161,9 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                         />
 
                         <button
-                            onClick={() => {
-                                console.log("New comment:", commentText)
-                                setCommentText("")
-                            }}
-                            className="bg-[#002822] text-white px-4 py-2 rounded-lg hover:bg-[#002822]/60 transition-all duration-300 cursor-pointer"
+                            onClick={handleComment}
+                            disabled={!commentText || isCommenting}
+                            className="bg-[#002822] disabled:bg-[#002822]/60 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg hover:bg-[#002822]/60 transition-all duration-300 cursor-pointer"
                         >
                             <Send className="w-4 h-4" />
                         </button>

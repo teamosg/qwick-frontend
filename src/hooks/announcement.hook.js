@@ -93,14 +93,38 @@ export const useDislikeAnnouncement = () => {
             const res = await axiosPrivate.delete(`/v1/announcements/${id}/like/`);
             return res?.data;
         },
-        onSuccess: data =>{
-            if(data?.success){
+        onSuccess: data => {
+            if (data?.success) {
                 toast.success(data?.message || "Announcement disliked successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
             } else {
                 handleApiError({
                     error: data,
                     errorMessage: "Failed to dislike announcement"
+                })
+            }
+        }
+    })
+}
+
+
+
+
+export const useComment = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ AnnouncementId, payload }) => {
+            const res = await axiosPrivate.post(`/v1/announcements/${AnnouncementId}/comments/`, payload);
+            return res?.data;
+        },
+        onSuccess: data => {
+            if (data?.success) {
+                toast.success(data?.message || "Comment posted successfully!");
+                queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+            } else {
+                handleApiError({
+                    error: data,
+                    errorMessage: "Failed to post comment"
                 })
             }
         }
