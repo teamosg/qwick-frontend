@@ -155,6 +155,7 @@ const UsersData = () => {
                         )
                         : (
                           <CommunityUsersActions
+                            role={user?.is_moderator ? 'moderator' : 'user'}
                             onApprove={() => handleApproveToModerator(user?.id)}
                             onDemote={() => handleDemoteToUser(user?.id)}
                           />

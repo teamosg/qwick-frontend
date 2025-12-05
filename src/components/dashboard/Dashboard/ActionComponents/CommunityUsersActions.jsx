@@ -6,7 +6,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-function CommunityUsersActions({ onApprove, onDemote }) {
+function CommunityUsersActions({ onApprove, onDemote, role }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -16,13 +16,21 @@ function CommunityUsersActions({ onApprove, onDemote }) {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent side="right" align="start" className="w-32">
-                <DropdownMenuItem onClick={onApprove}>Promote to Moderator</DropdownMenuItem>
-                <DropdownMenuItem
-                    className="text-red-600 dark:text-red-400"
-                    onClick={onDemote}
-                >
-                    Demote to User
-                </DropdownMenuItem>
+                {
+                    role === 'user'
+                        ? (
+                            <DropdownMenuItem onClick={onApprove}>Promote to Moderator</DropdownMenuItem>
+                        )
+                        : (
+                            <DropdownMenuItem
+                                className="text-red-600 dark:text-red-400"
+                                onClick={onDemote}
+                            >
+                                Demote to User
+                            </DropdownMenuItem>
+                        )
+                }
+
             </DropdownMenuContent>
         </DropdownMenu>
     );
