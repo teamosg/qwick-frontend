@@ -130,3 +130,24 @@ export const useComment = () => {
         }
     })
 }
+
+export const useDeleteComment = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ AnnouncementId, commentId }) => {
+            const res = await axiosPrivate.delete(`/v1/announcements/${AnnouncementId}/comments/${commentId}/`);
+            return res?.data;
+        },
+        onSuccess: data => {
+            if (data?.success) {
+                toast.success(data?.message || "Comment deleted successfully!");
+                queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+            } else {
+                handleApiError({
+                    error: data,
+                    errorMessage: "Failed to delete comment"
+                })
+            }
+        }
+    })
+}

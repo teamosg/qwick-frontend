@@ -8,17 +8,22 @@ import {
 } from "@/components/ui/dialog"
 import { MoreVertical, Send } from "lucide-react"
 import AvatarUser from '../ui/AvatarUser';
-import { useComment } from '@/hooks/announcement.hook';
+import { useComment, useDeleteComment } from '@/hooks/announcement.hook';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
     const { mutate: postComment, isPending: isCommenting } = useComment()
+    const { mutate: deleteComment, isPending: isDeleting } = useDeleteComment()
+
+
     const [commentText, setCommentText] = useState("")
+    const user = JSON.parse(localStorage.getItem('user'))
 
     console.log(post);
 
     const handleComment = () => {
         if (!commentText) return;
-        
+
         postComment({
             AnnouncementId: post?.id,
             payload: {
@@ -27,6 +32,16 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
         })
         setCommentText("")
     }
+
+
+    const handleDeleteComment = (commentId) => {
+        deleteComment({
+            AnnouncementId: post?.id,
+            commentId
+        })
+    }
+
+
     return (
         <Dialog open={openComments} onOpenChange={setOpenComments}>
             <DialogContent className="max-w-200! p-0 overflow-hidden">
@@ -127,17 +142,37 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                                 />
 
                                 <div className="flex-1 bg-gray-100 dark:bg-zinc-800 rounded-xl px-4 py-2 relative">
-                                    {/* Three Dot Menu */}
-                                    <button
-                                        onClick={() => console.log("Action clicked:", comment.id)}
-                                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition"
-                                    >
-                                        <MoreVertical className="w-4 h-4 text-gray-500" />
-                                    </button>
+
+                                    {/* ✅ Three Dot Dropdown Menu */}
+                                    {
+                                        user?.first_name === comment?.author?.first_name && (
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <button
+                                                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition"
+                                                    >
+                                                        <MoreVertical className="w-4 h-4 cursor-pointer text-gray-500" />
+                                                    </button>
+                                                </DropdownMenuTrigger>
+
+                                                <DropdownMenuContent align="end" className="w-32">
+                                                    <DropdownMenuItem
+                                                        className="text-red-500 cursor-pointer"
+                                                        onClick={() => {
+                                                            handleDeleteComment(comment.id)
+                                                        }}
+                                                    >
+                                                        Delete
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
+                                        )
+                                    }
 
                                     <p className="text-sm text-gray-800 dark:text-gray-200">
                                         {comment.content}
                                     </p>
+
                                     <span className="text-xs text-gray-500 block mt-1">
                                         {new Date(comment.created_at).toLocaleTimeString()}
                                     </span>
