@@ -12,10 +12,12 @@ import ChatList from "./ChatList";
 import { FetchErrorAlert } from "../Alerts/FetchErrorAlerts";
 import { useEffect } from "react";
 import AddToGroupModal from "./AddToGroupModal";
+import { useConversationStore } from "@/store/conversationStore";
 
 
 const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedChat }) => {
   const [openAddToGroupModal, setOpenAddToGroupModal] = useState(false);
+  const { setFetchedConversationList } = useConversationStore((state) => state);
 
 
   // const [sortBy, setSortBy] = useState("Newest");
@@ -45,7 +47,9 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
   const unreadConversations = conversationList?.filter(conversation => conversation?.unread_count)
 
 
-
+  useEffect(() => {
+    setFetchedConversationList(fetchedConversationList)
+  }, [fetchedConversationList])
 
   useEffect(() => {
     if (fetchedConversationList) {

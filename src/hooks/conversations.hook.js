@@ -341,6 +341,7 @@ export const useCreateConversationGroup = () => {
 
 
 export const useAddMemberToGroup = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ groupId, members }) => {
       const payload = { members }
@@ -350,6 +351,8 @@ export const useAddMemberToGroup = () => {
     onSuccess: (data) => {
       if (data?.success) {
         toast.success(data?.message);
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+        queryClient.invalidateQueries({ queryKey: ["conversationDetails"] });
       } else {
         handleApiError({ error: data?.message, errorMessage: "Failed to add member to group" })
       }

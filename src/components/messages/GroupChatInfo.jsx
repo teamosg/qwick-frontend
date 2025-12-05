@@ -2,6 +2,10 @@ import { X, Edit2, UserPlus, LogOut, Bell, BellOff } from "lucide-react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import AvatarUser from "../ui/AvatarUser";
+import { useConversationStore } from "@/store/conversationStore";
+import { useMemo } from "react";
+import { useState } from "react";
+import AddMemberToGroupModal from "./AddMemberToGroupModal";
 
 /**
  * GroupChatInfo shows group details including members, notifications toggle,
@@ -9,6 +13,14 @@ import AvatarUser from "../ui/AvatarUser";
  * Dark mode colors updated for consistency.
  */
 const GroupChatInfo = ({ selectedChat, onClose }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const { fetchedConversationList } = useConversationStore();
+
+  const dmConversations = useMemo(() => {
+    return fetchedConversationList?.filter(conversation => conversation?.type === "dm") || []
+  }, [fetchedConversationList])
+
+
 
   const members = selectedChat?.members || [];
 
@@ -18,7 +30,7 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
   // };
 
   const handleAddUser = () => {
-    toast.success("Add user feature coming soon!");
+    setOpenModal(true);
   };
 
   // const handleLeave = () => {
@@ -165,6 +177,12 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
           </div>
         </div>
       </div>
+      <AddMemberToGroupModal
+        isOpen={openModal}
+        onClose={() => setOpenModal(false)}
+        existingMembers={members}
+        selectedChat={selectedChat}
+      />
     </div>
   );
 };
