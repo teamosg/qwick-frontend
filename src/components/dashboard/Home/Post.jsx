@@ -14,6 +14,12 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { PostShare } from "./PostShare";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
   const [commentText, setCommentText] = useState("");
@@ -215,8 +221,6 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
       {/* Comments Section */}
       <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
         {post.comments.map((comment) => {
-          const [showCommentDropdown, setShowCommentDropdown] = useState(false);
-
           return (
             <div key={comment.id} className="flex space-x-2 relative">
               <img
@@ -224,38 +228,40 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
                 alt={comment.author.first_name}
                 className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover flex-shrink-0"
               />
+
               <div className="bg-gray-100 dark:bg-[#2E2E2E] rounded-lg p-2 sm:p-3 flex-1 min-w-0">
                 <div className="flex justify-between items-start">
                   <div className="font-medium text-xs sm:text-sm dark:text-white truncate">
                     {comment.author.first_name} {comment.author.last_name}
                   </div>
-                  <div className="relative flex-shrink-0">
-                    <button
-                      onClick={() =>
-                        setShowCommentDropdown(!showCommentDropdown)
-                      }
-                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1"
+
+                  {/* ✅ ShadCN Dropdown */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1">
+                        <MoreHorizontal size={16} />
+                      </button>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent
+                      align="end"
+                      className="w-32 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700"
                     >
-                      <MoreHorizontal size={16} />
-                    </button>
-                    {showCommentDropdown && (
-                      <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-zinc-900 rounded-md shadow-lg z-10 border border-gray-200 dark:border-zinc-700">
-                        <button
-                          onClick={() => {
-                            onDelete(comment.id);
-                            setShowCommentDropdown(false);
-                          }}
-                          className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
-                        >
-                          <Trash2 size={16} className="mr-2" /> Delete
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                      <DropdownMenuItem
+                        onClick={() => onDelete(comment.id)}
+                        className="cursor-pointer text-red-600 focus:text-red-600"
+                      >
+                        <Trash2 size={16} className="mr-2 text-red-600" />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
+
                 <div className="text-gray-700 dark:text-zinc-400 text-xs sm:text-sm break-words">
                   {comment.content}
                 </div>
+
                 {comment.image && (
                   <img
                     src={comment.image}
@@ -307,8 +313,8 @@ const Post = ({ post, onLike, onSave, onDelete, onEdit, onCommentSubmit }) => {
                 type="submit"
                 disabled={!commentText.trim() && !imagePreview}
                 className={`p-1 ${commentText.trim() || imagePreview
-                    ? "text-primary"
-                    : "text-gray-400"
+                  ? "text-primary"
+                  : "text-gray-400"
                   }`}
               >
                 <Send size={16} className="sm:w-[18px] sm:h-[18px]" />
