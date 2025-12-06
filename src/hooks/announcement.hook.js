@@ -58,6 +58,29 @@ export const useCreateAnnouncements = (communityUsername) => {
 
 
 
+export const useFeed = () => {
+    return useQuery({
+        queryKey: ["feed"],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get(
+                    `/v1/feed/`
+                );
+                return res?.data || [];
+            } catch (error) {
+                handleApiError({
+                    error,
+                    throwError: true,
+                    errorMessage: "Failed to fetch feed"
+                });
+            }
+        },
+        staleTime: 1000 * 60 * 2,
+    });
+}
+
+
+
 export const useLikeAnnouncement = () => {
     const queryClient = useQueryClient()
     return useMutation({
@@ -69,6 +92,7 @@ export const useLikeAnnouncement = () => {
             if (data?.status) {
                 toast.success(data?.message || "Announcement liked successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
             } else {
                 handleApiError({
                     error: data,
@@ -97,6 +121,7 @@ export const useDislikeAnnouncement = () => {
             if (data?.success) {
                 toast.success(data?.message || "Announcement disliked successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
             } else {
                 handleApiError({
                     error: data,

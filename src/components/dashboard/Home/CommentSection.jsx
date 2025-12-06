@@ -7,7 +7,6 @@ const CommentSection = ({ post }) => {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const emojiPickerRef = useRef(null);
 
-
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -29,19 +28,16 @@ const CommentSection = ({ post }) => {
         };
     }, [post.id]);
 
-
     const handleEmojiClick = (emojiData) => {
         setCommentText((prev) => prev + emojiData.emoji);
     };
-
-
 
     return (
         <form
             onSubmit={(e) => {
                 e.preventDefault();
                 if (!commentText.trim()) return;
-                console.log(commentText);
+                console.log(commentText); // ✅ logs comment
                 setCommentText("");
             }}
             className="flex space-x-2"
@@ -53,13 +49,12 @@ const CommentSection = ({ post }) => {
             />
 
             <div className="flex-1 relative">
-                <input
+                <textarea
                     id={`comment-${post.id}`}
-                    type="text"
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder="Write a comment..."
-                    className="w-full bg-gray-100 dark:bg-[#2E2E2E] rounded-lg py-2 px-3 sm:px-4 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary pr-20 text-sm sm:text-base"
+                    className="w-full bg-gray-100 dark:bg-[#2E2E2E] rounded-lg py-2 px-3 sm:px-4 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary pr-20 text-sm sm:text-base resize-none overflow-y-auto"
                 />
 
                 {/* ✅ Emoji + Send Buttons */}

@@ -1,8 +1,8 @@
 import NoPostsState from "@/components/dashboard/Home/NoPostsState";
 import PostForm from "@/components/dashboard/Home/PostForm";
 import Post from "../../components/dashboard/Home/Post";
-import { useFeed } from "@/hooks/community.hook";
 import { PostSkeletonList } from "@/components/dashboard/Home/PostSkeleton";
+import { useFeed } from "@/hooks/announcement.hook";
 
 const Home = () => {
   const { data: feedPosts, isLoading: isFeedLoading } = useFeed()
