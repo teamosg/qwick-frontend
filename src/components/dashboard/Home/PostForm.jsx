@@ -1,4 +1,5 @@
 // src/components/dashboard/Home/PostForm.jsx
+import { useCommunityStore } from "@/store/communityStore";
 import EmojiPicker from "emoji-picker-react";
 import {
   ChevronDown,
@@ -10,6 +11,9 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 const PostForm = ({ onSubmit }) => {
+  const { myCommunityList } = useCommunityStore()
+  console.log('myCommunityList', myCommunityList);
+
   const [content, setContent] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
@@ -137,15 +141,14 @@ const PostForm = ({ onSubmit }) => {
             {imagePreviewUrls.length > 0 && (
               <div className="mb-3">
                 <div
-                  className={`grid gap-2 sm:gap-3 ${
-                    imagePreviewUrls.length === 1
-                      ? "grid-cols-1"
-                      : imagePreviewUrls.length === 2
+                  className={`grid gap-2 sm:gap-3 ${imagePreviewUrls.length === 1
+                    ? "grid-cols-1"
+                    : imagePreviewUrls.length === 2
                       ? "grid-cols-1 sm:grid-cols-2"
                       : imagePreviewUrls.length === 3
-                      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                      : "grid-cols-1 sm:grid-cols-2"
-                  }`}
+                        ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                        : "grid-cols-1 sm:grid-cols-2"
+                    }`}
                 >
                   {imagePreviewUrls.map((url, index) => (
                     <div key={index} className="relative">
@@ -187,12 +190,12 @@ const PostForm = ({ onSubmit }) => {
                     className="hidden"
                     onChange={handleImageUpload}
                   />
-                  <button
+                  {/* <button
                     type="button"
                     className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E]  transition-colors"
                   >
                     <Paperclip size={18} className="sm:w-5 sm:h-5" />
-                  </button>
+                  </button> */}
                   <button
                     type="button"
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -234,11 +237,10 @@ const PostForm = ({ onSubmit }) => {
                                 setSelectedTag(communityTags[community][0]); // Set first tag as default
                                 setShowCommunityDropdown(false);
                               }}
-                              className={`w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${
-                                selectedCommunity === community
-                                  ? "bg-gray-100 dark:bg-[#2E2E2E]  text-primary"
-                                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E] "
-                              }`}
+                              className={`w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${selectedCommunity === community
+                                ? "bg-gray-100 dark:bg-[#2E2E2E]  text-primary"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E] "
+                                }`}
                             >
                               {community}
                             </button>
@@ -249,7 +251,7 @@ const PostForm = ({ onSubmit }) => {
                   </div>
 
                   {/* Community Tags Dropdown */}
-                  <div className="relative tag-dropdown">
+                  {/* <div className="relative tag-dropdown">
                     <button
                       type="button"
                       onClick={() => setShowTagDropdown(!showTagDropdown)}
@@ -275,11 +277,10 @@ const PostForm = ({ onSubmit }) => {
                                 setSelectedTag(tag);
                                 setShowTagDropdown(false);
                               }}
-                              className={`w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${
-                                selectedTag === tag
+                              className={`w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${selectedTag === tag
                                   ? "bg-gray-100 dark:bg-[#2E2E2E]  text-primary dark:text-gray-300"
                                   : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E] "
-                              }`}
+                                }`}
                             >
                               {tag}
                             </button>
@@ -287,18 +288,17 @@ const PostForm = ({ onSubmit }) => {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
               <button
                 type="submit"
                 disabled={!content.trim() && imagePreviewUrls.length === 0}
-                className={`px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors ${
-                  content.trim() || imagePreviewUrls.length > 0
-                    ? "bg-[#003933] text-white cursor-pointer hover:bg-[#002a26]"
-                    : "bg-[#003933] dark:bg-[#2E2E2E]  text-white cursor-not-allowed opacity-50"
-                }`}
+                className={`px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors ${content.trim() || imagePreviewUrls.length > 0
+                  ? "bg-[#003933] text-white cursor-pointer hover:bg-[#002a26]"
+                  : "bg-[#003933] dark:bg-[#2E2E2E]  text-white cursor-not-allowed opacity-50"
+                  }`}
               >
                 Post
               </button>

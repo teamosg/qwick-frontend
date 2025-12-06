@@ -1,10 +1,4 @@
-import { Clock, Edit, MoreHorizontal, Trash2 } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Clock } from "lucide-react";
 import PostComments from "./PostComments";
 import CommentSection from "./CommentSection";
 import PostImages from "./PostImages";

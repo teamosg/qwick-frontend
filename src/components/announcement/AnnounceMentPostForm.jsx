@@ -7,7 +7,6 @@ import AvatarUser from "../ui/AvatarUser";
 import { useProfile } from "@/hooks/auth.hook";
 
 const AnnouncementPostForm = ({
-  creator,
   isPosting,
   postText,
   setPostText,
@@ -23,8 +22,7 @@ const AnnouncementPostForm = ({
 
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const emojiPickerRef = useRef(null);
-  const { openImageModal, uploadedImage, setUploadedImage } =
-    useOutletContext() || {};
+  const { openImageModal, uploadedImage, setUploadedImage } = useOutletContext() || {};
 
   // Add uploaded image to preview URLs when it's available
   useEffect(() => {
