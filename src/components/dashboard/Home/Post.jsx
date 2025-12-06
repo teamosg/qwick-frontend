@@ -35,7 +35,7 @@ const Post = ({ post }) => {
         </div>
 
         {/* Three Dot Menu */}
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1">
               <MoreHorizontal size={18} />
@@ -60,7 +60,7 @@ const Post = ({ post }) => {
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </div>
 
       {/* ================= POST CONTENT ================= */}
