@@ -22,7 +22,7 @@ const PostCommentSingle = ({ comment, profile }) => {
 
             <div className="bg-gray-100 dark:bg-[#2E2E2E] rounded-lg p-2 sm:p-3 flex-1 min-w-0">
                 <div className="flex justify-between items-start">
-                    <div className="flex items-center  gap-4">
+                    <div className="flex items-end gap-4">
                         <div className="font-medium text-xs sm:text-sm dark:text-white truncate">
                             {comment.author.first_name} {comment.author.last_name}
                         </div>

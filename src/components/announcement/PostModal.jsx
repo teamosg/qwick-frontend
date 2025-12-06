@@ -6,18 +6,18 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { MoreVertical, Send } from "lucide-react"
+import { MoreHorizontal, MoreVertical, Send, Trash2 } from "lucide-react"
 import AvatarUser from '../ui/AvatarUser';
 import { useComment, useDeleteComment } from '@/hooks/announcement.hook';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { useProfile } from '@/hooks/auth.hook';
 
 const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
     const { mutate: postComment, isPending: isCommenting } = useComment()
     const { mutate: deleteComment, isPending: isDeleting } = useDeleteComment()
-
+    const { data: user } = useProfile()
 
     const [commentText, setCommentText] = useState("")
-    const user = JSON.parse(localStorage.getItem('user'))
 
     console.log(post);
 
@@ -141,41 +141,51 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                                     className="w-9 h-9"
                                 />
 
-                                <div className="flex-1 bg-gray-100 dark:bg-zinc-800 rounded-xl px-4 py-2 relative">
+                                <div className="flex-1 flex justify-between bg-gray-100 dark:bg-zinc-800 rounded-xl px-4 py-2 relative">
+                                    <div>
+                                        <div className='flex items-end gap-4 mb-1'>
+                                            <div className="font-medium text-black dark:text-white truncate">
+                                                {comment.author.first_name} {comment.author.last_name}
+                                            </div>
 
-                                    {/* ✅ Three Dot Dropdown Menu */}
-                                    {
-                                        user?.first_name === comment?.author?.first_name && (
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <button
-                                                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition"
+                                            {/* ✅ CREATED AT TIME */}
+                                            <div className="text-[10px] text-gray-500 dark:text-zinc-400 mt-0.5">
+                                                {new Date(comment.created_at).toLocaleString()}
+                                            </div>
+                                        </div>
+                                        <p className="text-sm text-gray-800 dark:text-gray-200">
+                                            {comment.content}
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        {/* ✅ Three Dot Dropdown Menu */}
+                                        {
+                                            user?.email === comment?.author?.email && (
+                                                <DropdownMenu>
+                                                    <DropdownMenuTrigger asChild>
+                                                        <button className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1">
+                                                            <MoreHorizontal size={16} />
+                                                        </button>
+                                                    </DropdownMenuTrigger>
+
+                                                    <DropdownMenuContent
+                                                        align="end"
+                                                        className="w-32 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700"
                                                     >
-                                                        <MoreVertical className="w-4 h-4 cursor-pointer text-gray-500" />
-                                                    </button>
-                                                </DropdownMenuTrigger>
-
-                                                <DropdownMenuContent align="end" className="w-32">
-                                                    <DropdownMenuItem
-                                                        className="text-red-500 cursor-pointer"
-                                                        onClick={() => {
-                                                            handleDeleteComment(comment.id)
-                                                        }}
-                                                    >
-                                                        Delete
-                                                    </DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
-                                        )
-                                    }
-
-                                    <p className="text-sm text-gray-800 dark:text-gray-200">
-                                        {comment.content}
-                                    </p>
-
-                                    <span className="text-xs text-gray-500 block mt-1">
-                                        {new Date(comment.created_at).toLocaleTimeString()}
-                                    </span>
+                                                        <DropdownMenuItem
+                                                            onClick={() => handleDeleteComment(comment.id)}
+                                                            disabled={isDeleting}
+                                                            className="cursor-pointer disabled:cursor-not-allowed text-red-600 focus:text-red-600
+                                     ">
+                                                            <Trash2 size={16} className="mr-2 text-red-400" />
+                                                            Delete
+                                                        </DropdownMenuItem>
+                                                    </DropdownMenuContent>
+                                                </DropdownMenu>
+                                            )
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         ))}
