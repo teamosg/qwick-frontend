@@ -146,6 +146,7 @@ export const useComment = () => {
             if (data?.success) {
                 toast.success(data?.message || "Comment posted successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
             } else {
                 handleApiError({
                     error: data,
@@ -167,6 +168,7 @@ export const useDeleteComment = () => {
             if (data?.success) {
                 toast.success(data?.message || "Comment deleted successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
             } else {
                 handleApiError({
                     error: data,
