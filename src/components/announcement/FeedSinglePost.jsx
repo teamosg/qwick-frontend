@@ -1,34 +1,44 @@
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
 import { Heart, Image, MessageCircle } from "lucide-react";
 import AvatarUser from "../ui/AvatarUser";
-import { useDislikeAnnouncement, useLikeAnnouncement } from "@/hooks/announcement.hook";
+import {
+  useDislikeAnnouncement,
+  useLikeAnnouncement,
+} from "@/hooks/announcement.hook";
 import { useState } from "react";
 import PostModal from "./PostModal";
 
-
-
 export default function FeedSinglePost({ post }) {
-  const [openComments, setOpenComments] = useState(false)
-  const [openImage, setOpenImage] = useState(false)
+  const [openComments, setOpenComments] = useState(false);
+  const [openImage, setOpenImage] = useState(false);
+  const [index, setIndex] = useState(0); // track current slide[web:21]
 
-
-  const { mutate: likeAnnouncement, isPending: isLiking } = useLikeAnnouncement()
-  const { mutate: dislikeAnnouncement, isPending: isDisliking } = useDislikeAnnouncement()
+  const { mutate: likeAnnouncement, isPending: isLiking } =
+    useLikeAnnouncement();
+  const { mutate: dislikeAnnouncement, isPending: isDisliking } =
+    useDislikeAnnouncement();
 
   const handlePostLike = () => {
     if (post?.is_liked) {
-      dislikeAnnouncement(post?.id)
+      dislikeAnnouncement(post?.id);
     } else {
-      likeAnnouncement(post?.id)
+      likeAnnouncement(post?.id);
     }
-  }
+  };
 
-  const formattedImages = post?.files?.map((file) => ({
-    src: file?.file,
-    alt: `Post image ${file?.id}`,
-  }))
+  const formattedImages =
+    post?.files?.map((file) => ({
+      src: file?.file,
+      alt: `Post image ${file?.id}`,
+    })) ?? [];
 
+  const handleOpenImage = (i) => {
+    setIndex(i);
+    setOpenImage(true);
+  };
 
   return (
     <div className="bg-white dark:bg-zinc-900 shadow rounded-[12px] p-6 mb-8 border border-gray-200 dark:border-zinc-700">
@@ -55,7 +65,6 @@ export default function FeedSinglePost({ post }) {
           {post?.content}
         </p>
 
-        {/* Link Preview - only show if link exists */}
         {post?.link && (
           <a
             href={post?.link}
@@ -68,49 +77,38 @@ export default function FeedSinglePost({ post }) {
         )}
       </div>
 
-
-      {/* Images - only show if images exist */}
+      {/* Images */}
       {post?.files && post?.files.length > 0 && (
-        <div className="mb-4 cursor-pointer"
-        >
+        <div className="mb-4 cursor-pointer">
           {post?.files.length === 1 ? (
-            // Single image - centered with 50% width
             <div
-              onClick={() => {
-                setOpenImage(true)
-              }}
-              className="flex justify-center">
+              onClick={() => handleOpenImage(0)}
+              className="flex justify-center"
+            >
               <div className="w-full relative group">
                 <img
                   src={post?.files[0]?.file}
                   alt="Post image"
                   className="w-full object-cover rounded-lg"
                 />
-
-                {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <Image className="text-white w-8 h-8" />
                 </div>
               </div>
             </div>
           ) : (
-            // Multiple images - 2 per row with 50% width each
             <div className="grid grid-cols-2 gap-3">
-              {post?.files.map((file, index) => (
+              {post?.files.map((file, i) => (
                 <div
-                  key={index}
-                  onClick={() => {
-                    setOpenImage(true)
-                  }}
+                  key={i}
+                  onClick={() => handleOpenImage(i)}
                   className="w-full cursor-pointer relative group"
                 >
                   <img
                     src={file?.file}
-                    alt={`Post image ${index + 1}`}
+                    alt={`Post image ${i + 1}`}
                     className="w-full h-64 object-cover rounded-lg"
                   />
-
-                  {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <Image className="text-white w-7 h-7" />
                   </div>
@@ -121,12 +119,9 @@ export default function FeedSinglePost({ post }) {
         </div>
       )}
 
-
-
       {/* Post Actions */}
       <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-600">
         <div className="flex items-center space-x-6">
-          {/* Like Button */}
           <div className=" flex items-center space-x-2">
             <button
               onClick={handlePostLike}
@@ -140,10 +135,11 @@ export default function FeedSinglePost({ post }) {
                   }`}
               />
             </button>
-            <span className="text-sm font-medium">{post?.like_count} Likes</span>
+            <span className="text-sm font-medium">
+              {post?.like_count} Likes
+            </span>
           </div>
 
-          {/* Comment Button */}
           <button
             onClick={() => setOpenComments(true)}
             className="cursor-pointer flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors group"
@@ -153,23 +149,18 @@ export default function FeedSinglePost({ post }) {
               {post?.comment_count} comments
             </span>
           </button>
-
         </div>
-
-        {/* Share Button */}
-        {/* <button className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-green-500 dark:hover:text-green-400 transition-colors group">
-          <Share className="w-5 h-5 group-hover:text-green-500 dark:group-hover:text-green-400" />
-          <span className="text-sm font-medium">Share</span>
-        </button> */}
       </div>
 
-
+      {/* Lightbox with thumbnails */}
       <Lightbox
         open={openImage}
         close={() => setOpenImage(false)}
         slides={formattedImages}
+        index={index}
+        plugins={[Thumbnails]}                // enable thumbnails[web:1]
+        thumbnails={{ position: "bottom" }}   // optional config[web:1]
       />
-
 
       <PostModal
         openComments={openComments}
@@ -177,9 +168,6 @@ export default function FeedSinglePost({ post }) {
         post={post}
         setOpenImage={setOpenImage}
       />
-
-      {/* Full Post With Comments Modal */}
-
     </div>
   );
 }
