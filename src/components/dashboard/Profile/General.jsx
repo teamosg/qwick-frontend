@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useEditProfile, useProfile } from "@/hooks/auth.hook";
 import { useEffect, useState } from "react";
+import ProfileInfoSkeleton from "./components/ProfileInfoSkeleton";
 
 const ProfileGeneral = () => {
   const { data, isLoading: isProfileLoading } = useProfile();
@@ -50,14 +51,17 @@ const ProfileGeneral = () => {
   };
 
   if (isProfileLoading) {
-    return <p className="p-6 text-gray-500 dark:text-white">Loading profile...</p>;
+    return <ProfileInfoSkeleton />;
   }
 
   return (
     <form onSubmit={handleSubmit} className="p-6 space-y-6">
       {/* Name */}
       <div className="space-y-2">
-        <label htmlFor="name" className="text-sm font-medium text-[#0d0d12] dark:text-white">
+        <label
+          htmlFor="name"
+          className="text-sm font-medium text-[#0d0d12] dark:text-white"
+        >
           Name
         </label>
         <input
@@ -72,11 +76,14 @@ const ProfileGeneral = () => {
 
       {/* Bio */}
       <div className="space-y-2">
-        <label htmlFor="bio" className="text-sm font-medium text-[#0d0d12] dark:text-white">
+        <label
+          htmlFor="bio"
+          className="text-sm font-medium text-[#0d0d12] dark:text-white"
+        >
           Bio
         </label>
         <textarea
-        rows={4}
+          rows={4}
           id="bio"
           value={formData.bio}
           onChange={(e) => handleInputChange("bio", e.target.value)}
@@ -87,7 +94,10 @@ const ProfileGeneral = () => {
 
       {/* Username */}
       <div className="space-y-2">
-        <label htmlFor="username" className="text-sm font-medium text-[#0d0d12] dark:text-white">
+        <label
+          htmlFor="username"
+          className="text-sm font-medium text-[#0d0d12] dark:text-white"
+        >
           Username
         </label>
         <input
@@ -102,7 +112,10 @@ const ProfileGeneral = () => {
 
       {/* Phone */}
       <div className="space-y-2">
-        <label htmlFor="phone" className="text-sm font-medium text-[#0d0d12] dark:text-white">
+        <label
+          htmlFor="phone"
+          className="text-sm font-medium text-[#0d0d12] dark:text-white"
+        >
           Phone Number
         </label>
         <input

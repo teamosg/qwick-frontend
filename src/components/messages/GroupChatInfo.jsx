@@ -1,54 +1,45 @@
 import { X, Edit2, UserPlus, LogOut, Bell, BellOff } from "lucide-react";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import AvatarUser from "../ui/AvatarUser";
+import { useConversationStore } from "@/store/conversationStore";
+import { useMemo } from "react";
+import { useState } from "react";
+import AddMemberToGroupModal from "./AddMemberToGroupModal";
 
 /**
  * GroupChatInfo shows group details including members, notifications toggle,
- * and actions like rename, add user, leave, and remove member.
+ * and actions like rename, add user, leave, and remove member?.
  * Dark mode colors updated for consistency.
  */
 const GroupChatInfo = ({ selectedChat, onClose }) => {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+  const { fetchedConversationList } = useConversationStore();
 
-  // Sample group members list
-  const members = [
-    {
-      id: 1,
-      name: "DARREN CHUA YI JIE",
-      avatar: "https://i.pravatar.cc/40?img=1",
-      role: "Admin",
-    },
-    {
-      id: 2,
-      name: "Dum My",
-      avatar: "https://i.pravatar.cc/40?img=2",
-      role: "Member",
-    },
-    {
-      id: 3,
-      name: "Brook",
-      avatar: "https://i.pravatar.cc/40?img=3",
-      role: "Member",
-    },
-  ];
+  const dmConversations = useMemo(() => {
+    return fetchedConversationList?.filter(conversation => conversation?.type === "dm") || []
+  }, [fetchedConversationList])
+
+
+
+  const members = selectedChat?.members || [];
 
   // Placeholder handlers for future features
-  const handleRename = () => {
-    toast.success("Rename feature coming soon!");
-  };
+  // const handleRename = () => {
+  //   toast.success("Rename feature coming soon!");
+  // };
 
   const handleAddUser = () => {
-    toast.success("Add user feature coming soon!");
+    setOpenModal(true);
   };
 
-  const handleLeave = () => {
-    toast.error("Leave group feature coming soon!");
-  };
+  // const handleLeave = () => {
+  //   toast.error("Leave group feature coming soon!");
+  // };
 
-  const handleRemoveMember = (memberName) => {
-    toast.error(`Remove ${memberName} feature coming soon!`);
-  };
+  // const handleRemoveMember = (memberName) => {
+  //   toast.error(`Remove ${memberName} feature coming soon!`);
+  // };
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-[#171717] text-gray-900 dark:text-white">
@@ -64,19 +55,19 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
 
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
-            <img
-              src={selectedChat.avatar}
-              alt={selectedChat.name}
+            <AvatarUser
+              src={selectedChat?.avatar}
+              alt={selectedChat?.name || selectedChat?.group_name}
               className="w-20 h-20 rounded-full object-cover"
             />
           </div>
-          <h2 className="text-lg font-semibold text-center">{selectedChat.name}</h2>
+          <h2 className="text-lg font-semibold text-center">{selectedChat.name || selectedChat?.group_name}</h2>
         </div>
       </div>
 
       {/* Action Buttons: Rename, Add User, Leave */}
-      <div className="grid grid-cols-3 gap-3 p-4 border-b border-gray-200 dark:border-[#282828]">
-        <button
+      <div className="grid grid-cols-1 gap-3 p-4 border-b border-gray-200 dark:border-[#282828]">
+        {/* <button
           onClick={handleRename}
           className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
           aria-label="Rename group"
@@ -85,7 +76,7 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
           <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
             Rename
           </span>
-        </button>
+        </button> */}
 
         <button
           onClick={handleAddUser}
@@ -98,7 +89,7 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
           </span>
         </button>
 
-        <button
+        {/* <button
           onClick={handleLeave}
           className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
           aria-label="Leave group"
@@ -107,11 +98,11 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
           <span className="text-xs font-medium text-red-700 dark:text-red-300">
             Leave
           </span>
-        </button>
+        </button> */}
       </div>
 
       {/* Notifications Toggle */}
-      <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+      {/* <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {notificationsEnabled ? (
@@ -125,23 +116,21 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
           </div>
           <button
             onClick={() => setNotificationsEnabled(!notificationsEnabled)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              notificationsEnabled
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${notificationsEnabled
                 ? "bg-blue-600"
                 : "bg-gray-300 dark:bg-gray-600"
-            }`}
+              }`}
             aria-pressed={notificationsEnabled}
             aria-label="Toggle notifications"
           >
             <motion.span
               layout
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                notificationsEnabled ? "translate-x-6" : "translate-x-1"
-              }`}
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${notificationsEnabled ? "translate-x-6" : "translate-x-1"
+                }`}
             />
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* Members List */}
       <div className="flex-1 overflow-y-auto">
@@ -150,42 +139,50 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
             {members.length} members
           </h3>
           <div className="space-y-1">
-            {members.map((member, index) => (
+            {members.map((member) => (
               <div
-                key={member.id}
+                key={member?.id}
                 className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <img
-                    src={member.avatar}
-                    alt={member.name}
+                  <AvatarUser
+                    src={member?.avatar}
+                    alt={member?.username}
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <div>
                     <h4 className="text-sm font-medium text-gray-900 dark:text-white">
-                      {member.name}
+                      {member?.username}
                     </h4>
-                    {index === 0 && (
+                    {/* role  */}
+                    {/* {index === 0 && (
                       <span className="text-xs text-gray-500 dark:text-gray-400">
-                        {member.role}
+                        {member?.role}
                       </span>
-                    )}
+                    )} */}
                   </div>
                 </div>
-                {index !== 0 && (
+                {/* remove button  */}
+                {/* {index !== 0 && (
                   <button
-                    onClick={() => handleRemoveMember(member.name)}
+                    onClick={() => handleRemoveMember(member?.name)}
                     className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-                    aria-label={`Remove ${member.name}`}
+                    aria-label={`Remove ${member?.name}`}
                   >
                     Remove
                   </button>
-                )}
+                )} */}
               </div>
             ))}
           </div>
         </div>
       </div>
+      <AddMemberToGroupModal
+        isOpen={openModal}
+        onClose={() => setOpenModal(false)}
+        existingMembers={members}
+        selectedChat={selectedChat}
+      />
     </div>
   );
 };

@@ -9,18 +9,16 @@ import { axiosPublic, axiosPrivate } from "../lib/axios.config.js";
 import {
   signUpSchema,
   signInSchema,
-  verifyOtpSchema,
   changePasswordSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
-  twoFactorSchema,
   deleteAccountSchema,
   profileEditSchema,
 } from "../schemas/auth.schema.js";
+import handleApiError from "@/services/handleApiError.js";
 
 // Sign Up Hook
 export const useSignUp = () => {
-  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(signUpSchema),
@@ -46,11 +44,8 @@ export const useSignUp = () => {
         localStorage.setItem("otp", otp);
         toast.success(
           data?.message ||
-            "Account created successfully! Please verify your email."
+          "Account created successfully! Please verify your email."
         );
-        navigate("/verify-account", {
-          state: { email: form.getValues("email") },
-        });
       } else {
         toast.error(data?.message || "Failed to create account");
       }
@@ -95,10 +90,23 @@ export const useSignIn = () => {
         localStorage.setItem("token", token);
         localStorage.setItem("refresh", refresh);
 
-        if (redirectUrl) {
-          navigate(redirectUrl);
+        const access = data?.access
+        const message = data?.message
+        const email = form.getValues("email");
+
+
+        if (access) {
+          navigate(redirectUrl || "/");
         } else {
-          navigate("/");
+          if (message.includes("2FA")) {
+            navigate("/verify-2fa", {
+              state: { email: email },
+            });
+          } else {
+            navigate("/verify-account", {
+              state: { email: email, data: data },
+            });
+          }
         }
       } else {
         toast.error(data?.message || "Failed to sign in");
@@ -126,45 +134,6 @@ export const useSignIn = () => {
   return { form, mutate, isPending };
 };
 
-// Verify OTP Hook
-// export const useVerifyOtp = () => {
-//   const navigate = useNavigate();
-
-//   const form = useForm({
-//     resolver: zodResolver(verifyOtpSchema),
-//     defaultValues: {
-//       email: "",
-//       otp: "",
-//       otp_type: "",
-//     },
-//   });
-
-//   const { mutate, isPending } = useMutation({
-//     mutationFn: async (otpData) => {
-//       const res = await axiosPublic.post("/v1/account/verify-otp/", otpData);
-//       return res.data;
-//     },
-//     onSuccess: (data) => {
-//       if (data?.status) {
-//         toast.success(data?.message || "Account verified successfully!");
-//         localStorage.removeItem("signup_email"); // remove after success
-//         navigate("/successfully-verified");
-//       } else {
-//         toast.error(data?.message || "Failed to verify account");
-//       }
-//     },
-//     onError: (error) => {
-//       const message =
-//         error?.response?.data?.message ||
-//         error?.response?.data?.error ||
-//         error.message ||
-//         "Failed to verify account";
-//       toast.error(message);
-//     },
-//   });
-
-//   return { form, mutate, isPending };
-// };
 
 export const useVerifyOtp = (otpType = "account_verification") => {
   const navigate = useNavigate();
@@ -181,8 +150,20 @@ export const useVerifyOtp = (otpType = "account_verification") => {
           localStorage.removeItem("signup_email");
           navigate("/successfully-verified");
         }
+
+
         if (otpType === "password_reset") {
           navigate("/reset-password");
+        }
+
+
+        if (otpType === "two_factor_auth") {
+          const token = data?.access;
+          const refresh = data?.refresh;
+          localStorage.setItem("token", token);
+          localStorage.setItem("refresh", refresh);
+
+          navigate("/");
         }
       } else {
         toast.error(data?.message || "OTP verification failed");
@@ -241,7 +222,7 @@ export const useChangePassword = () => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  return useMutation({
     mutationFn: async (passwordData) => {
       const res = await axiosPrivate.post(
         "/v1/account/change-password/",
@@ -266,14 +247,10 @@ export const useChangePassword = () => {
       toast.error(message);
     },
   });
-
-  return { form, mutate, isPending };
 };
 
 // Forgot Password Hook
 export const useForgotPassword = () => {
-  const navigate = useNavigate();
-
   const form = useForm({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
@@ -295,7 +272,6 @@ export const useForgotPassword = () => {
       } else {
         toast.error(data?.message || "Failed to send reset email");
       }
-      navigate("/enter-otp", { state: { email: data.email } });
     },
     onError: (error) => {
       const message =
@@ -425,47 +401,6 @@ export const useTwoFactorStatus = () => {
   });
 };
 
-// Toggle Two Factor Hook
-export const useToggleTwoFactor = () => {
-  const queryClient = useQueryClient();
-
-  const form = useForm({
-    resolver: zodResolver(twoFactorSchema),
-    defaultValues: {
-      action: "enable",
-    },
-  });
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data) => {
-      const res = await axiosPrivate.post("/v1/account/two-factor-enable/", {
-        action: data.action,
-      });
-      return res.data;
-    },
-    onSuccess: (data) => {
-      if (data?.status) {
-        toast.success(data?.message || "Two factor authentication updated!");
-        queryClient.invalidateQueries({ queryKey: ["twoFactorStatus"] });
-      } else {
-        toast.error(
-          data?.message || "Failed to update two factor authentication"
-        );
-      }
-    },
-    onError: (error) => {
-      const message =
-        error?.response?.data?.message ||
-        error?.response?.data?.error ||
-        error.message ||
-        "Failed to update two factor authentication";
-      toast.error(message);
-    },
-  });
-
-  return { form, mutate, isPending };
-};
-
 // Delete Account Hook
 export const useDeleteAccount = () => {
   const navigate = useNavigate();
@@ -510,3 +445,42 @@ export const useDeleteAccount = () => {
 
   return { form, mutate, isPending };
 };
+
+
+
+
+export const useGetTwoFactorStatus = () => {
+  return useQuery({
+    queryKey: ['twoFactorStatus'],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/account/two-factor-status/");
+        return res?.data;
+      } catch (error) {
+        handleApiError({ error, throwError: true, errorMessage: "Failed to get two factor status" })
+      }
+    }
+  })
+}
+
+
+export const useToggleTwoFactor = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (action) => {
+      const res = await axiosPrivate.post("/v1/account/two-factor-enable/", { action });
+      return res?.data;
+    },
+    onSuccess: data => {
+      if (data?.status) {
+        toast.success(data?.message || "Two factor authentication updated!");
+        queryClient.invalidateQueries({ queryKey: ["twoFactorStatus"] });
+      } else {
+        handleApiError({ error: data, errorMessage: "Failed to update two factor authentication" })
+      }
+    },
+    onError: error => {
+      handleApiError({ error, errorMessage: "Failed to update two factor authentication" })
+    }
+  })
+}

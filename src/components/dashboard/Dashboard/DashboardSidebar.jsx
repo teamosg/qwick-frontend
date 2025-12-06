@@ -19,6 +19,9 @@ import { useState } from "react";
 import { Link } from "react-router";
 import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
+import { useEditCommunity, useGetMyCommunityList } from "@/hooks/community.hook";
+import { Spinner } from "@/components/ui/spinner";
+import { useCommunityStore } from "@/store/communityStore";
 
 // Menu items.
 const items = [
@@ -55,48 +58,58 @@ const items = [
 // Main sidebar content component
 export function DashboardSidebarContent() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const { mutate: editCommunity, isPending } = useEditCommunity();
+  
+  const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore();
+  const {
+    data: communityList,
+    isLoading: isLoadingMyCommunityList,
+  } = useGetMyCommunityList();
+
+  const myCommunityList = communityList?.created_communities
+
 
   const handleImageUpload = (imageFile) => {
-    // Convert the uploaded image to a preview URL
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setUploadedImage({
-        file: imageFile,
-        previewUrl: e.target.result,
-      });
-    };
-    reader.readAsDataURL(imageFile);
+    if (!imageFile) return;
 
-    // Close the modal after successful upload
-    setIsImageModalOpen(false);
+    const formData = new FormData();
+    formData.append("banner_image", imageFile);
+
+    editCommunity({
+      communityUsername: selectedBrandCommunity?.username,
+      payload: formData,
+    });
   };
 
   const openImageModal = () => {
     setIsImageModalOpen(true);
   };
 
+  const bg = selectedBrandCommunity?.banner_image || "/communityBG.png";
+
+
   return (
     <>
       <Sidebar className="sticky md:left-64 left-0">
         <SidebarHeader
-          className="p-0 bg-[url(https://placehold.co/400x250)] bg-center bg-cover bg-no-repeat h-[135px] relative"
-          style={
-            uploadedImage?.previewUrl
-              ? { backgroundImage: `url(${uploadedImage.previewUrl})` }
-              : {}
-          }
+          className="p-0 bg-center bg-cover bg-no-repeat h-[135px] relative"
+          style={{ backgroundImage: `url(${bg})` }}
         >
           <div className="absolute inset-0 bg-black/30"></div>
 
           {/* Image Upload Button */}
           <div className="absolute bottom-2 right-2">
             <button
+              disabled={isPending}
               onClick={openImageModal}
               className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
               title="Edit banner"
             >
-              <PencilIcon size={16} className="text-white" />
+              {
+                isPending
+                  ? <Spinner className={'text-white'} />
+                  : <PencilIcon size={16} className="text-white" />
+              }
             </button>
           </div>
 
@@ -118,7 +131,12 @@ export function DashboardSidebarContent() {
               </div>
             </div>
           </div> */}
-          <DashboardSwitcher />
+          <DashboardSwitcher
+            data={myCommunityList}
+            isLoading={isLoadingMyCommunityList}
+            selectedCommunity={selectedBrandCommunity}
+            setSelectedCommunity={setSelectedBrandCommunity}
+          />
         </SidebarHeader>
 
         <SidebarContent>

@@ -25,6 +25,8 @@ import { FaFileInvoice } from "react-icons/fa";
 import { useEditProfile, useProfile } from "@/hooks/auth.hook";
 import { Bookmark } from "lucide-react";
 import SavedPosts from "@/components/dashboard/Profile/SavedPosts";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Save from "@/assets/svg/Save";
 
 const tabs = [
   {
@@ -72,7 +74,7 @@ const tabs = [
   {
     name: "Saved Post",
     value: "saved-post",
-    icon: Bookmark,
+    icon: Save,
     content: <SavedPosts />,
   },
   {
@@ -85,19 +87,13 @@ const tabs = [
 
 const Profile = () => {
   const [isTabsOpen, setIsTabsOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null);
 
   const { data: profile, isLoading: isProfileLoading } = useProfile();
   const { mutate: editProfile, isPending: isUploading } = useEditProfile();
 
-
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => setPreviewImage(reader.result);
-    reader.readAsDataURL(file);
 
     // Prepare FormData for upload
     const formData = new FormData();
@@ -107,10 +103,7 @@ const Profile = () => {
   };
 
   const userName = profile?.first_name || "User Name";
-  const userAvatar =
-    previewImage ||
-    profile?.avatar ||
-    "https://darrenchua.softvencealpha.com/media/avatars/avatar.jpg";
+  const userAvatar = profile?.avatar;
 
   return (
     <div className="p-6 min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
@@ -131,11 +124,10 @@ const Profile = () => {
       >
         {/* Tabs Sidebar */}
         <div
-          className={`${
-            isTabsOpen
-              ? "translate-x-0 opacity-100"
-              : "-translate-x-full opacity-0"
-          }  md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
+          className={`${isTabsOpen
+            ? "translate-x-0 opacity-100"
+            : "-translate-x-full opacity-0"
+            }  md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
         >
           {/* Mobile Close Button */}
           <div className="md:hidden flex justify-between items-center p-4 border-b border-gray-200 dark:border-zinc-700">
@@ -154,11 +146,11 @@ const Profile = () => {
           <div className="p-6 md:p-0">
             <div className="p-4 relative group text-center">
               <div className="relative inline-block">
-                <img
-                  alt={userName}
-                  src={userAvatar}
-                  className="h-20 w-20 rounded-full object-cover border border-border transition-all"
-                />
+                <Avatar className="h-20 w-20 rounded-full object-cover border border-border transition-all">
+                  <AvatarImage src={userAvatar} alt={userName} />
+                  <AvatarFallback>{userName.split("")[0]}</AvatarFallback>
+                </Avatar>
+
                 <label
                   htmlFor="profile-upload"
                   className="absolute inset-0 bg-black/50 text-white text-xs flex items-center justify-center rounded-full opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity"
@@ -193,7 +185,7 @@ const Profile = () => {
                   className="cursor-pointer !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
                   onClick={() => setIsTabsOpen(false)}
                 >
-                  <tab.icon className="h-5 w-5 me-3" /> {tab.name}
+                  <tab.icon /> {tab.name}
                 </TabsTrigger>
               ))}
             </TabsList>

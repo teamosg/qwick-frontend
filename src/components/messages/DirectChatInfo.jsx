@@ -1,28 +1,42 @@
 import { X, Phone, Video, Mail, Bell, BellOff, UserX } from "lucide-react";
-import { useState } from "react";
 import { motion } from "framer-motion";
-import toast from "react-hot-toast";
+import AvatarUser from "../ui/AvatarUser";
+import { UserCheck } from "lucide-react";
+import { useBlockUser, useUnBlockUser } from "@/hooks/conversations.hook";
 
 /**
  * DirectChatInfo displays details of a direct chat user,
  * including notification toggle, contact info, and block user button.
  * Dark mode colors updated for consistency.
  */
-const DirectChatInfo = ({ selectedChat, onClose }) => {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
+  const { mutate: blockUser } = useBlockUser();
+  const { mutate: unblockUser } = useUnBlockUser();
+  // const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const { avatar, blocked, user_id, group_id } = selectedChat;
+  const username = selectedChat?.sender_username || selectedChat?.username;
 
-  // Placeholder handlers for features
-  const handleCall = () => {
-    toast.success("Voice call feature coming soon!");
+  console.log(selectedChat);
+
+  const handleBlockUser = () => {
+    blockUser({
+      userId: user_id ?? group_id,
+    }, {
+      onSuccess: () => {
+        setSelectedChat({ ...selectedChat, blocked: true });
+      }
+    });
   };
 
-  const handleVideoCall = () => {
-    toast.success("Video call feature coming soon!");
-  };
-
-  const handleBlock = () => {
-    toast.error("Block user feature coming soon!");
-  };
+  const handleUnblockUser = () => {
+    unblockUser({
+      userId: user_id ?? group_id,
+    }, {
+      onSuccess: () => {
+        setSelectedChat({ ...selectedChat, blocked: false });
+      }
+    });
+  }
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-[#171717] text-gray-900 dark:text-white">
@@ -38,24 +52,24 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
 
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
-            <img
-              src={selectedChat.avatar}
-              alt={selectedChat.name}
-              className="w-20 h-20 rounded-full object-cover"
+            <AvatarUser
+              src={avatar}
+              alt={username}
+              className="w-20 h-20 rounded-full object-cover text-2xl"
             />
             {selectedChat.isOnline && (
               <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
             )}
           </div>
-          <h2 className="text-lg font-semibold text-center">{selectedChat.name}</h2>
+          <h2 className="text-lg font-semibold text-center">{username}</h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {selectedChat.isOnline ? "Active now" : "Offline"}
           </p>
         </div>
       </div>
 
-      {/* Notification Toggle */}
-      <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+      {/* //* Notification Toggle */}
+      {/* <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {notificationsEnabled ? (
@@ -85,7 +99,7 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
             />
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* User Information: About, Email, Shared Media */}
       <div className="flex-1 overflow-y-auto p-4">
@@ -100,8 +114,8 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
             </p>
           </div>
 
-          {/* Email */}
-          <div>
+          {/* //* Email */}
+          {/* <div>
             <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">
               Email
             </h3>
@@ -111,10 +125,10 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
                 emma.johnson@example.com
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* Shared Media */}
-          <div>
+          {/* //* <div>
             <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">
               Shared Media
             </h3>
@@ -126,20 +140,39 @@ const DirectChatInfo = ({ selectedChat, onClose }) => {
                 ></div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* Block User Button */}
       <div className="p-4 border-t border-gray-200 dark:border-[#282828]">
-        <button
-          onClick={handleBlock}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-medium"
-          aria-label="Block user"
-        >
-          <UserX className="w-5 h-5" />
-          Block User
-        </button>
+        {
+          blocked ? (
+            <button
+              onClick={handleUnblockUser}
+              className="
+              w-full flex items-center justify-center gap-2
+              px-4 py-3 rounded-xl font-semibold
+              text-green-600 dark:text-green-400
+              bg-green-50/50 dark:bg-green-900/10
+              hover:bg-green-100 dark:hover:bg-green-900/20
+              transition-all"
+              aria-label="Unblock user"
+            >
+              <UserCheck className="w-5 h-5" />
+              Unblock User
+            </button>
+          ) : (
+            <button
+              onClick={handleBlockUser}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-medium"
+              aria-label="Block user"
+            >
+              <UserX className="w-5 h-5" />
+              Block User
+            </button>
+          )
+        }
       </div>
     </div>
   );

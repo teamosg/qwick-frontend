@@ -1,30 +1,72 @@
 import { X, Search, Users } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useGetOtherUser } from "@/hooks/users.hook";
+import { useMemo } from "react";
+import { useEffect } from "react";
+import SuggestedUsersList from "./components/SuggestedUsersList";
+import SkeletonUser from "./skeletonns/SkeletonUser";
+import { NoDataAlert } from "../Alerts/NoDataAlert";
+import SearchedUsersList from "./components/SearchedUsersList";
+import { TodoAlert } from "../Alerts/TodoAlert";
 
-/**
- * NewMessageSidebar allows searching users to start new chats,
- * creating group chats, and suggested user selections.
- * Dark mode colors are updated for coherence.
- */
-const NewMessageSidebar = ({ isOpen, onClose, onUserSelect, onCreateGroup }) => {
+
+const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onClose, onCreateGroup }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  // Suggested users sample data
-  const suggestedUsers = [
-    { id: 101, name: "Sarah Wilson", avatar: "https://i.pravatar.cc/40?img=20", username: "@sarahw", isOnline: true },
-    { id: 102, name: "David Chen", avatar: "https://i.pravatar.cc/40?img=21", username: "@davidc", isOnline: false },
-    { id: 103, name: "Maria Garcia", avatar: "https://i.pravatar.cc/40?img=22", username: "@mariag", isOnline: true },
-    { id: 104, name: "James Park", avatar: "https://i.pravatar.cc/40?img=23", username: "@jamespark", isOnline: true },
-    { id: 105, name: "Emily Brown", avatar: "https://i.pravatar.cc/40?img=24", username: "@emilyb", isOnline: false },
-  ];
 
-  // Filter users based on search input (name or username)
-  const filteredUsers = suggestedUsers.filter(
-    user =>
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.username.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+
+  const suggestedUsers = useMemo(() => {
+    const map = {};
+    fetchedConversationList?.forEach(conversation => {
+      if (conversation?.type === "dm") {
+        map[conversation?.username] = conversation;
+      }
+    });
+    return map;
+  }, [fetchedConversationList]);
+
+
+
+  const filteredUsers = useMemo(() => {
+    if (!debouncedSearch) return [];
+    return suggestedUsers[debouncedSearch]
+      ? [suggestedUsers[debouncedSearch]]
+      : [];
+  }, [debouncedSearch, suggestedUsers]);
+
+  const isUserFoundInLocal = filteredUsers.length > 0;
+
+
+
+
+  const { data: searchedUser, isLoading } = useGetOtherUser({
+    userName: debouncedSearch.trim(),
+    enabled: !!debouncedSearch && !isUserFoundInLocal,
+  });
+
+
+
+  const handleUserSelect = (user) => {
+    const newChat = { ...user }
+    newChat.last_message = ""
+    newChat.new_conversation = true
+
+
+    onSelectChat(newChat);
+    onClose()
+  };
+
+
 
   return (
     <AnimatePresence>
@@ -87,38 +129,40 @@ const NewMessageSidebar = ({ isOpen, onClose, onUserSelect, onCreateGroup }) => 
               </button>
             </div>
 
-            {/* Suggested Users List */}
-            <div className="flex-1 overflow-y-auto">
-              <div className="p-4">
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Suggested</h3>
-                <div className="space-y-1">
-                  {filteredUsers.map(user => (
-                    <motion.button
-                      key={user.id}
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.99 }}
-                      onClick={() => onUserSelect(user)}
-                      className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
-                    >
-                      <div className="relative">
-                        <img
-                          src={user.avatar}
-                          alt={user.name}
-                          className="w-10 h-10 rounded-full object-cover"
-                        />
-                        {user.isOnline && (
-                          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
-                        )}
-                      </div>
-                      <div className="flex-1 text-left">
-                        <h4 className="font-medium text-sm text-gray-900 dark:text-white">{user.name}</h4>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{user.username}</p>
-                      </div>
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            </div>
+            {
+              !searchQuery
+                ? (
+                  <TodoAlert message="Search for users to start a conversation" />
+                )
+                : (
+                  isLoading ? (
+                    <div>
+                      <SkeletonUser />
+                      <SkeletonUser />
+                      <SkeletonUser />
+                    </div>
+                  ) : (
+                    filteredUsers?.length ? (
+                      <SuggestedUsersList
+                        suggestedUsers={filteredUsers}
+                        handleUserSelect={handleUserSelect}
+                      />
+                    )
+                      : (
+                        searchedUser
+                          ? (
+                            <SearchedUsersList
+                              usersList={[searchedUser]}
+                              handleUserSelect={handleUserSelect}
+                            />
+                          )
+                          : (
+                            <NoDataAlert message="No users found" />
+                          )
+                      )
+                  )
+                )
+            }
           </motion.div>
         </>
       )}

@@ -91,7 +91,7 @@ const menuItems = [
     text: "Dashboard Settings",
   },
 ];
-console.log(menuItems);
+
 const Header = ({ userName, userImage, onMenuClick }) => {
   const location = useLocation();
   const isHome = location.pathname === "/";

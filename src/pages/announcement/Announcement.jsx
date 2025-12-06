@@ -1,28 +1,54 @@
 // Announcement.jsx
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { useState } from "react";
 import { Outlet } from "react-router";
 import { AnnouncementSidebar } from "../../components/announcement/AnnouncementSidebar";
-import ImageUploadModal from "../../components/announcement/ImageUploadModal";
+import { useCommunityStore } from "@/store/communityStore";
+import DashboardSkeleton from "@/components/dashboard/Dashboard/skeletons/DashboardSkeleton";
+import NoAnnouncementDashboardPage from "@/components/dashboard/Dashboard/EmptyPages/NoAnnoouncementDashboardPage";
+import { useEffect } from "react";
+
 
 const Announcement = () => {
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const {
+    isLoadingCommunityList,
+    myCommunityList,
+    selectedCreatorCommunity,
+    setSelectedCreatorCommunity
+  } = useCommunityStore()
 
-  const handleImageUpload = (imageFile) => {
-    // Convert the uploaded image to a preview URL
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setUploadedImage({
-        file: imageFile,
-        previewUrl: e.target.result,
-      });
-    };
-    reader.readAsDataURL(imageFile);
 
-    // Close the modal after successful upload
-    setIsImageModalOpen(false);
-  };
+  const selectedCreatorCommunityExist = myCommunityList?.find(
+    community => community.id === selectedCreatorCommunity?.id
+  )
+
+
+  useEffect(() => {
+    if (!myCommunityList?.length) return
+
+
+    if (selectedCreatorCommunityExist) {
+      setSelectedCreatorCommunity(selectedCreatorCommunityExist)
+    } else {
+      if (myCommunityList?.length && !isLoadingCommunityList) {
+        setSelectedCreatorCommunity(myCommunityList[0])
+      } else {
+        setSelectedCreatorCommunity(null)
+      }
+    }
+  }, [myCommunityList])
+
+
+
+
+  if (isLoadingCommunityList) {
+    return <DashboardSkeleton />
+  }
+
+
+  
+  if (!myCommunityList?.length) {
+    return <NoAnnouncementDashboardPage />;
+  }
 
   return (
     <SidebarProvider>
@@ -37,23 +63,10 @@ const Announcement = () => {
           </div>
 
           <div className="w-full">
-            <Outlet
-              context={{
-                openImageModal: () => setIsImageModalOpen(true),
-                uploadedImage,
-                setUploadedImage,
-              }}
-            />
+            <Outlet />
           </div>
         </main>
       </div>
-
-      {/* Image Upload Modal */}
-      <ImageUploadModal
-        isOpen={isImageModalOpen}
-        onClose={() => setIsImageModalOpen(false)}
-        onImageUpload={handleImageUpload}
-      />
     </SidebarProvider>
   );
 };

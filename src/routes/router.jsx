@@ -38,6 +38,7 @@ import AuthLayout from "../layout/AuthLayout";
 import SignIn from "../pages/auth/SignIn";
 import Home from "../pages/dashboard/Home";
 import DashboardLayout from "./../layout/DashboardLayout";
+import VerifyTwoAuth from "@/pages/auth/VerifyTwoAuth";
 const router = createBrowserRouter([
   //Admin Dashboard layout
 
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/verify-account",
         element: <VerifyAccount />,
+      },
+      {
+        path: "/verify-2fa",
+        element: <VerifyTwoAuth />,
       },
       {
         path: "/successfully-verified",

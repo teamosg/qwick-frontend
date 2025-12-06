@@ -4,17 +4,14 @@ import { Link, useLocation } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useVerifyOtp } from "@/hooks/auth.hook";
 import toast from "react-hot-toast";
+import ResendOtp from "./ResendOtp";
 
 const ResetPasswordOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const darkMode = theme === "dark";
   const inputRefs = useRef([]);
   const { mutate, isPending } = useVerifyOtp("password_reset");
-
-  const toggleDarkMode = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   const handleOtpChange = (index, value) => {
     // Only allow numbers
@@ -46,7 +43,6 @@ const ResetPasswordOtp = () => {
   const location = useLocation();
   const email =
     location.state?.email || localStorage.getItem("signup_email") || "";
-  const otpCode = location.state?.otp || localStorage.getItem("otp") || "";
   const handleSubmit = (e) => {
     e.preventDefault();
     const code = otp.join("");
@@ -176,23 +172,13 @@ const ResetPasswordOtp = () => {
               </div>
             </div>
 
-            <div className="text-left">
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Don't receive the email?{" "}
-                <button
-                  type="button"
-                  className="text-[#003933] dark:text-white font-medium hover:underline"
-                >
-                  Click to resend code
-                </button>
-              </p>
-            </div>
+            <ResendOtp type="forgot-password" email={email} />
 
             <button
               type="submit"
               className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
             >
-              Confirm
+              {isPending ? "Verifying..." : "Confirm"}
             </button>
           </form>
         </div>

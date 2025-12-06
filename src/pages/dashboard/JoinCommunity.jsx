@@ -1,7 +1,14 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 
+import JoinCommunityImage from '@/assets/JoinCommunityImage.png'
+import { useJoinCommunity } from "@/hooks/community.hook";
+import { Spinner } from "@/components/ui/spinner";
+
 const JoinCommunity = () => {
+  const { mutate: joinCommunity, isPending: isJoining } = useJoinCommunity()
+
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -30,6 +37,10 @@ const JoinCommunity = () => {
     },
   };
 
+  const handleJoinCommunity = () => {
+    joinCommunity({ communityUsername: 'nice' })
+  }
+
   return (
     <motion.div
       className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen"
@@ -54,16 +65,18 @@ const JoinCommunity = () => {
         initial="hidden"
         animate="visible"
       >
-        <motion.img
-          src="https://placehold.co/1200x800"
-          alt=""
-          className="max-w-full object-cover rounded-xl mb-6"
-          variants={itemVariants}
-          whileHover={{
-            scale: 1.02,
-            transition: { duration: 0.2 },
-          }}
-        />
+        <div className="max-h-100 overflow-hidden rounded-xl mb-6">
+          <motion.img
+            src={JoinCommunityImage || "https://placehold.co/1200x800"}
+            alt=""
+            className="max-w-full object-cover "
+            variants={itemVariants}
+            whileHover={{
+              scale: 1.02,
+              transition: { duration: 0.2 },
+            }}
+          />
+        </div>
 
         <motion.div
           className="max-w-md mx-auto text-center"
@@ -106,7 +119,7 @@ const JoinCommunity = () => {
             the readable content of a page when looking at its layout. The point
             of{" "}
           </motion.p>
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -117,18 +130,21 @@ const JoinCommunity = () => {
             >
               Join to WaitList
             </Link>
-          </motion.div>{" "}
+          </motion.div>{" "} */}
           <motion.div
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link
-              to={`/announcement`}
-              className="inline-block max-w-sm w-full text-white bg-[#003933] hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition"
+            <button
+              disabled={isJoining}
+              onClick={handleJoinCommunity}
+              className="mx-auto max-w-sm flex items-center justify-center w-full text-white bg-[#003933] hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition"
             >
-              Join
-            </Link>
+              {
+                isJoining ? <Spinner className={'text-white size-6'} /> : 'Join Community'
+              }
+            </button>
           </motion.div>
         </motion.div>
       </motion.div>

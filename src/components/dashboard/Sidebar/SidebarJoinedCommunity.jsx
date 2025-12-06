@@ -7,33 +7,39 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { SidebarMyCommunitySkeleton } from "./skeletons/SidebarMyCommunitySkeleton";
+import AvatarUser from "@/components/ui/AvatarUser";
 
-const tags = Array.from({ length: 3 }).map(
-  (_, i, a) => `Profile ${a.length - i}`
-);
-export function SidebarJoinedCommunity({ onClose }) {
+
+export function SidebarJoinedCommunity({ onClose, joinedCommunityList, isLoadingCommunityList, isErrorCommunityList }) {
+
+  if (isLoadingCommunityList || isErrorCommunityList)
+    return <SidebarMyCommunitySkeleton />;
+
+
   return (
-    <Accordion type="single" collapsible>
+    <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
-        <AccordionTrigger className="text-[#090003] font-semibold text-base hover:no-underline dark:text-white">
+        <AccordionTrigger className="text-[#090003] dark:text-white font-semibold text-base hover:no-underline">
           Joined Community
         </AccordionTrigger>
         <AccordionContent>
-          <ScrollArea className="h-40 max-h-40 ">
+          <ScrollArea className="max-h-40 ">
             <div className="p-4">
-              {tags.map((tag) => (
-                <React.Fragment key={tag}>
+              {joinedCommunityList?.map((community) => (
+                <React.Fragment key={community?.business_name}>
                   <div className="text-sm  mb-3">
                     <button
                       onClick={onClose}
-                      className="cursor-pointer transition duration-300 hover:text-[#17173c]"
+                      className="flex items-center gap-2 dark:text-white cursor-pointer transition duration-300 hover:text-[#17173c]"
                     >
-                      <img
-                        src="https://placehold.co/60x60"
-                        alt=""
-                        className="rounded-full inline mr-2 object-cover h-8 w-8"
+                      <AvatarUser
+                        src={community?.avatar}
+                        alt={community?.business_name}
+                        className="h-8 w-8"
                       />
-                      {tag}
+                      {community?.business_name?.slice(0, 15)}
+                      {community?.business_name?.length > 15 ? "..." : ""}
                     </button>
                   </div>
                 </React.Fragment>

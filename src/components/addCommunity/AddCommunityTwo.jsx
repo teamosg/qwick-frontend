@@ -2,25 +2,18 @@ import { motion } from "framer-motion";
 import AddCommunityItem from "./AddCommunityItem";
 
 const communityTwoData = [
-  { id: "1a2b3c10", title: "Confidence Camp" },
-  { id: "1a2b3c11", title: "Pitch Perfect" },
-  { id: "1a2b3c12", title: "Hustle Hub" },
-  { id: "1a2b3c13", title: "Vision Vault" },
-  { id: "1a2b3c14", title: "Remote Ready" },
-  { id: "1a2b3c15", title: "Team Talks" },
-  { id: "1a2b3c16", title: "Idea Igniter" },
-  { id: "1a2b3c17", title: "Success Sprint" },
-  { id: "1a2b3c18", title: "Next Level" },
+  { id: 1, title: "Fitness" },
+  { id: 2, title: "Real estate" },
+  { id: 3, title: "Business" },
+  { id: 4, title: "Personal Development" },
+  { id: 5, title: "Sales" },
+  { id: 6, title: "Social Media" },
+  { id: 7, title: "Personal finance" },
+  { id: 8, title: "AI" },
+  { id: 9, title: "Ecommerce" },
 ];
 
-const AddCommunityTwo = ({
-  currentStep,
-  setCurrentStep,
-  formData,
-  updateFormData,
-  onNext,
-  isLoading,
-}) => {
+const AddCommunityTwo = ({ selectedId, onClick }) => {
   return (
     <motion.div
       className=""
@@ -37,12 +30,9 @@ const AddCommunityTwo = ({
             transition={{ duration: 0.3, delay: index * 0.1 }}
           >
             <AddCommunityItem
+              selected={selectedId === data.id}
+              onClick={() => onClick(data.id)}
               data={data}
-              currentStep={currentStep}
-              setCurrentStep={setCurrentStep}
-              formData={formData}
-              updateFormData={updateFormData}
-              onNext={onNext}
             />
           </motion.div>
         ))}

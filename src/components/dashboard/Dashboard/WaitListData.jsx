@@ -1,6 +1,12 @@
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { EllipsisVertical, Link2 } from "lucide-react";
+import { useApproveCommunityUser, useGetCommunityUsers } from "@/hooks/community.hook";
+import { useCommunityStore } from "@/store/communityStore";
+import WaitListSkeleton from "./skeletons/WaitListSkeleton";
+import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
+import { NoDataAlert } from "@/components/Alerts/NoDataAlert";
+import { WaitingListActions } from "./ActionComponents/WaitingListActions";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 // Table components (inline implementation)
 const Table = ({ children, className = "" }) => (
   <div className={`w-full ${className}`}>
@@ -22,232 +28,141 @@ const TableCell = ({ children, className = "" }) => (
   <td className={className}>{children}</td>
 );
 
-const WaitListData = () => {
-  const users = [
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "waiting",
-      contact: "0191-392912",
-      joined_at: "02-10-2025",
-    },
-  ];
-  console.log(users);
-
-  const getStatusBadge = (status) => {
-    const variants = {
-      waiting: "bg-[#f1e0c6] text-[#c2821b] border-yellow-200",
-    };
-
-    return (
-      <Badge
-        variant="outline"
-        className={`${
-          variants[status.toLowerCase()]
-        } rounded-full px-3 py-1 text-xs font-medium`}
-      >
-        {status}
-      </Badge>
-    );
+const getStatusBadge = (status = 'waiting') => {
+  const variants = {
+    waiting: "bg-[#f1e0c6] text-[#c2821b] border-yellow-200",
   };
 
   return (
-    <div className="p-o">
-      <Tabs defaultValue="withdraw" className="w-full">
-        {/* Withdraw Tab Content */}
-        <TabsContent value="withdraw" className="p-0">
-          {/* Mobile Card View */}
-          <div className="block sm:hidden space-y-3">
-            {users.map((user, index) => (
-              <div
-                key={index}
-                className="bg-white border rounded-lg p-4 shadow-sm dark:bg-[#2E2E2E] dark:border-[#444] dark:text-[#fff]"
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="font-semibold text-[#25324B] dark:text-[#fff]">
-                    {user.name}
-                  </div>
-                </div>
-                <div className="text-sm text-[#25324B] dark:text-[#fff]">{user.email}</div>
-                <div className="text-sm text-[#25324B] dark:text-[#fff]">{user.status}</div>
-                <div className="font-semibold text-[#25324B] dark:text-[#fff]">
-                  {user.contact}
-                </div>
-                <div className="font-semibold text-[#25324B] dark:text-[#fff]">
-                  {user.joined_at}
-                </div>
-              </div>
-            ))}
-          </div>
+    <Badge
+      variant="outline"
+      className={`${variants[status.toLowerCase()]
+        } rounded-full px-3 py-1 text-xs font-medium`}
+    >
+      {status}
+    </Badge>
+  );
+};
 
-          {/* Desktop Table View */}
-          <div className="hidden sm:block">
-            <div className="p-1">
-              <Table>
-                <TableHeader className="">
-                  <TableRow className="bg-[#f5f5f5] text-gray-900 dark:bg-[#2E2E2E] dark:text-[#fff] border-black rounded-full">
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
-                      Name
-                    </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
-                      Email
-                    </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
-                      Status
-                    </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
-                      Contact
-                    </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
-                      Joined At
-                    </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
-                      Actions
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody className="rounded-xl">
-                  {users.map((user, index) => (
-                    <TableRow
-                      key={index}
-                      className="border-none hover:bg-white dark:hover:bg-[#2E2E2E]"
-                    >
-                      <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
-                        {user.name}
-                      </TableCell>
-                      <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
-                        {user.email}
-                      </TableCell>
-                      <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
-                        {getStatusBadge(user.status)}
-                      </TableCell>
-                      <TableCell className="py-4 px-6 dark:text-[#fff]">
-                        {user.contact}
-                      </TableCell>
-                      <TableCell className="py-4 px-6 dark:text-[#fff]">
-                        {user.joined_at}
-                      </TableCell>
-                      <TableCell className="py-4 px-6 flex gap-2">
-                        <button className="cursor-pointer">
-                          <EllipsisVertical />
-                        </button>
-                        <button className="cursor-pointer">
-                          <Link2 />
-                        </button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+
+
+const WaitListData = () => {
+
+  const { selectedBrandCommunity } = useCommunityStore();
+  const { data, isLoading, isError } = useGetCommunityUsers(selectedBrandCommunity?.username)
+  const { mutate: approveUser, isPending: isApproving } = useApproveCommunityUser(selectedBrandCommunity?.username)
+  const [userOnAction, setUserOnAction] = useState(null)
+
+  const waitingUsers = data?.pending_requests || [];
+
+  function handleApprove(id) {
+    setUserOnAction(id)
+    approveUser({
+      userId: id,
+      action: "approve",
+    })
+  }
+
+  function handleReject(id) {
+    setUserOnAction(id)
+    approveUser({
+      userId: id,
+      action: "reject",
+    })
+  }
+
+
+  if (isLoading) return <WaitListSkeleton />
+
+  return (
+    <div className="p-o">
+      {/* Mobile Card View */}
+      <div className="block sm:hidden space-y-3">
+        {waitingUsers?.map((user, index) => (
+          <div
+            key={index}
+            className="bg-white border rounded-lg p-4 shadow-sm dark:bg-[#2E2E2E] dark:border-[#444] dark:text-[#fff]"
+          >
+            <div className="flex justify-between items-start mb-2">
+              <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+                {user?.username}
+              </div>
+            </div>
+            <div className="text-sm text-[#25324B] dark:text-[#fff]">{user?.email}</div>
+            <div className="text-sm text-[#25324B] dark:text-[#fff]">{user?.status}</div>
+            <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+              {user?.email}
+            </div>
+            <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+              {user?.joined_at}
             </div>
           </div>
-        </TabsContent>
+        ))}
+      </div>
 
-        {/* Deposit Tab Content */}
-        <TabsContent value="deposit" className="mt-6">
-          <div className="text-center py-8 text-[#717171]">
-            No deposit transactions found
-          </div>
-        </TabsContent>
-      </Tabs>
+      {/* Desktop Table View */}
+      <div className="hidden sm:block">
+        <div className="p-1">
+          <Table>
+            <TableHeader className="">
+              <TableRow className="bg-[#f5f5f5] text-gray-900 dark:bg-[#2E2E2E] dark:text-[#fff] border-black rounded-full">
+                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  Name
+                </TableHead>
+                <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
+                  Email
+                </TableHead>
+                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  Status
+                </TableHead>
+                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  Actions
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className="rounded-xl">
+              {waitingUsers?.map((user, index) => (
+                <TableRow
+                  key={index}
+                  className="border-none hover:bg-white dark:hover:bg-[#2E2E2E]"
+                >
+                  <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
+                    {user?.username}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                    {user?.email}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
+                    {getStatusBadge(user?.status)}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 flex gap-2">
+                    {
+                      isApproving && userOnAction === user?.user_id
+                        ? (
+                          <Spinner />
+                        )
+                        : (
+                          <WaitingListActions
+                            onApprove={() => handleApprove(user?.user_id)}
+                            onReject={() => handleReject(user?.user_id)}
+                          />
+                        )
+                    }
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      {
+        waitingUsers?.length === 0 && <NoDataAlert />
+      }
+
+      {
+        isError && <FetchErrorAlert />
+      }
     </div>
   );
 };

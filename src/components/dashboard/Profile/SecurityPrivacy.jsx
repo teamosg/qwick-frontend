@@ -1,31 +1,14 @@
-import { Card, CardContent } from "@/components/ui/card";
+import ChangePassword from "./components/ChangePassword";
+import TwoFactorStatus from "./components/TwoFactorStatus";
 
 const SecurityPrivacy = () => {
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-10">
       {/* Two-factor authentication section */}
-      <div className="space-y-4">
-        <div className="mb-8">
-          <h2 className="text-[18px] font-semibold text-[#090003] dark:text-white mb-1">
-            Two-factor authentication
-          </h2>
-          <p className="text-[#717171] text-sm">
-            Secure your account by requiring a verification code when signing in
-          </p>
-        </div>
+      <TwoFactorStatus />
 
-        {/* Text message card */}
-        <Card className="text-left text-[#717171] text-[16px] mb-8 w-full shadow rounded-[24px] p-0">
-          <CardContent className="p-6">
-            <div className="space-y-2">
-              <h3 className="font-medium text-gray-900 dark:text-white">
-                Text message
-              </h3>
-              <p className="text-sm text-gray-500">Receive a code via SMS</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Change Password Section */}
+      <ChangePassword />
     </div>
   );
 };

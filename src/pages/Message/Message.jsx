@@ -2,19 +2,17 @@ import { useState } from "react";
 import ChatBox from "../../components/messages/ChatBox";
 import ChatHeader from "../../components/messages/ChatHeader";
 import MessageList from "../../components/messages/MessageList";
+import EmptyChatBox from "@/components/messages/EmptyChatBox";
+import GroupChatBox from "@/components/messages/GroupChatBox";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Message = () => {
-  const [selectedChat, setSelectedChat] = useState({
-    id: 1,
-    name: "Emma Johnson",
-    avatar: "https://i.pravatar.cc/40?img=1",
-    lastMessage: "Hello, I'm having an issue with my recent order...",
-    time: "07:00 AM",
-    unreadCount: 2,
-    isOnline: true,
-  });
+  const queryClient = useQueryClient()
+  const [selectedChat, setSelectedChat] = useState(null);
 
   const handleSelectChat = (chat) => {
+    queryClient.invalidateQueries({ queryKey: ["conversationList"] })
+    queryClient.invalidateQueries({ queryKey: ["requestConversationList"] })
     setSelectedChat(chat);
   };
 
@@ -23,13 +21,29 @@ const Message = () => {
       {/* Left Sidebar - Message List */}
       <MessageList
         onSelectChat={handleSelectChat}
-        selectedChatId={selectedChat?.id}
+        selectedChatId={selectedChat?.user_id || selectedChat?.group_id}
+        setSelectedChat={setSelectedChat}
+        selectedChat={selectedChat}
       />
 
       {/* Right Side - Chat Area */}
       <div className="flex-1 flex flex-col">
-        <ChatHeader selectedChat={selectedChat} />
-        <ChatBox selectedChat={selectedChat} />
+        <ChatHeader selectedChat={selectedChat} setSelectedChat={setSelectedChat} />
+        {selectedChat ? (
+          selectedChat?.type === "group" ? (
+            <GroupChatBox
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+            />
+          ) : (
+            <ChatBox
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
+            />
+          )
+        ) : (
+          <EmptyChatBox />
+        )}
       </div>
     </div>
   );

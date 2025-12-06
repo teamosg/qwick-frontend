@@ -4,16 +4,15 @@ import { Link, useLocation } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useVerifyOtp } from "@/hooks/auth.hook";
 import toast from "react-hot-toast";
+import { Spinner } from "@/components/ui/spinner";
+import ResendOtp from "./ResendOtp";
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const darkMode = theme === "dark";
   const inputRefs = useRef([]);
   const { mutate, isPending } = useVerifyOtp("account_verification");
-  const toggleDarkMode = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   const handleOtpChange = (index, value) => {
     // Only allow numbers
@@ -37,11 +36,18 @@ const VerifyAccount = () => {
   };
 
   const location = useLocation();
-  const email =
-    location.state?.email || localStorage.getItem("signup_email") || "";
+  const email = location?.state?.email || localStorage.getItem("signup_email") || "";
+  const data = location?.state?.data
+  console.log(data);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const code = otp.join("");
+
+    if (!code || code.length !== 6) {
+      toast.error("Please enter a valid OTP.");
+      return;
+    }
 
     if (!email) {
       toast.error("Email is missing, please sign up again.");
@@ -168,23 +174,21 @@ const VerifyAccount = () => {
               </div>
             </div>
 
-            <div className="text-center">
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Don't receive the email?{" "}
-                <button
-                  type="button"
-                  className="text-[#003933] dark:text-white font-medium hover:underline"
-                >
-                  Click to resend code
-                </button>
-              </p>
-            </div>
+            {/* <ResendOtp
+              type={"verify-account"}
+              data={data}
+              email={email}
+            /> */}
 
             <button
               type="submit"
               className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
             >
-              Confirm
+              {
+                isPending
+                  ? <div className="flex items-center justify-center"><Spinner /> </div>
+                  : "Confirm"
+              }
             </button>
           </form>
         </div>

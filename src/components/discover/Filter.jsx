@@ -31,7 +31,7 @@ export default function DiscoverFilter() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-3 bg-[#003933] text-white p-1.5 md:px-6 sm:py-3.5 rounded-lg hover:bg-[#002822] transition-all w-auto sm:min-w-[200px] group"
+        className="flex items-center gap-3  text-white p-1.5 md:px-6 sm:py-3.5 rounded-lg hover:bg-[#002822] bg-[#003933] transition-all w-auto sm:min-w-[200px] group"
       >
         <span className="text-white font-medium text-[8px] sm:text-base">
           {label}

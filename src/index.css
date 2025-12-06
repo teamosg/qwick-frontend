@@ -3,6 +3,36 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle (thumb) — SQUARE */
+::-webkit-scrollbar-thumb {
+  background: #003933;
+  border-radius: 0;
+  /* ✅ makes it square */
+}
+
+/* active effect */
+::-webkit-scrollbar-thumb:active {
+  background: #7F9C99;
+}
+
+/* Hover effect */
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+}
+
+
+
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -124,6 +154,7 @@ body {
   font-family: "Inter", sans-serif;
   color: #717171;
 }
+
 body,
 html,
 #root {

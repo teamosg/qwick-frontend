@@ -3,14 +3,6 @@ import { Outlet } from "react-router-dom";
 import Header from "./../components/dashboard/Header";
 import Sidebar from "./../components/dashboard/Sidebar";
 
-// Default user data
-const userData = {
-  name: "Linda smith",
-  fullName: "Linda smith",
-  image:
-    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-};
-
 function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -43,7 +35,7 @@ function DashboardLayout() {
           onMenuClick={() => setSidebarOpen(true)}
         />
 
-        <main className="flex-1 flex flex-col overflow-auto p-4">
+        <main className="flex-1 flex flex-col overflow-auto">
           <div className="flex-1">
             <Outlet />
           </div>
