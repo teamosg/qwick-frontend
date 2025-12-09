@@ -1,41 +1,17 @@
-import { useState } from 'react';
-import { Textarea } from "@/components/ui/textarea";
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { MoreHorizontal, Send, Trash2, Clock, Edit } from "lucide-react";
+import { Clock } from "lucide-react";
 import AvatarUser from '../ui/AvatarUser';
-import { useComment, useDeleteComment } from '@/hooks/announcement.hook';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { useProfile } from '@/hooks/auth.hook';
+
+import AnnounceMentCommentAction from './components/AnnounceMentCommentAction';
+import AnnouncementComments from './components/AnnouncementComments';
 
 const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
-    const { mutate: postComment, isPending: isCommenting } = useComment();
-    const { mutate: deleteComment, isPending: isDeleting } = useDeleteComment();
-    const { data: user } = useProfile();
 
-    const [editingCommentId, setEditingCommentId] = useState(null);
-    const [editContent, setEditContent] = useState("");
-    const [commentText, setCommentText] = useState("");
-
-    const handleComment = () => {
-        if (!commentText) return;
-        postComment({
-            AnnouncementId: post?.id,
-            payload: { content: commentText }
-        });
-        setCommentText("");
-    };
-
-    const handleDeleteComment = (commentId) => {
-        deleteComment({
-            AnnouncementId: post?.id,
-            commentId
-        });
-    };
 
     return (
         <Dialog open={openComments} onOpenChange={setOpenComments}>
@@ -118,103 +94,15 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                     </div>
 
                     {/* Comments */}
-                    <div className="p-4 sm:p-6 space-y-4">
-                        {post?.comments?.map((comment) => (
-                            <div key={comment?.id} className="flex gap-2 sm:gap-3 group">
-                                <AvatarUser
-                                    src={comment?.author?.avatar}
-                                    alt={comment?.author?.first_name}
-                                    className="w-8 h-8 sm:w-9 sm:h-9"
-                                />
-
-                                <div className="flex-1 flex justify-between bg-gray-100 dark:bg-zinc-800 rounded-xl px-3 sm:px-4 py-2 relative">
-                                    <div className="w-full">
-                                        <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-1">
-                                            <div className="font-medium text-sm sm:text-base text-black dark:text-white truncate">
-                                                {comment?.author?.first_name} {comment?.author?.last_name}
-                                            </div>
-                                            <div className="text-[10px] text-gray-500 dark:text-zinc-400">
-                                                {new Date(comment?.created_at)?.toLocaleString()}
-                                            </div>
-                                        </div>
-
-                                        {editingCommentId === comment?.id ? (
-                                            <div className="flex flex-col sm:flex-row gap-2 mt-1">
-                                                <input
-                                                    type="text"
-                                                    value={editContent}
-                                                    onChange={(e) => setEditContent(e.target.value)}
-                                                    className="w-full px-3 py-1.5 text-sm rounded-md border bg-white dark:bg-zinc-900"
-                                                />
-                                                <button
-                                                    onClick={() => {
-                                                        console.log("Updated Comment:", editContent);
-                                                        setEditingCommentId(null);
-                                                    }}
-                                                    className="px-3 py-1.5 text-xs rounded-md bg-[#003933] text-white"
-                                                >
-                                                    Save
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <p className="text-xs sm:text-sm text-gray-800 dark:text-gray-200">
-                                                {comment?.content}
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    {user?.email === comment?.author?.email && (
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <button className="text-gray-400 p-1">
-                                                    <MoreHorizontal size={16} />
-                                                </button>
-                                            </DropdownMenuTrigger>
-
-                                            <DropdownMenuContent align="end">
-                                                <DropdownMenuItem
-                                                    onClick={() => {
-                                                        setEditingCommentId(comment?.id);
-                                                        setEditContent(comment?.content);
-                                                    }}
-                                                >
-                                                    <Edit size={14} className="mr-2" /> Edit
-                                                </DropdownMenuItem>
-
-                                                <DropdownMenuItem
-                                                    onClick={() => handleDeleteComment(comment?.id)}
-                                                    disabled={isDeleting}
-                                                    className="text-red-600"
-                                                >
-                                                    <Trash2 size={14} className="mr-2" /> Delete
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    <AnnouncementComments
+                        post={post}
+                    />
                 </div>
 
                 {/* Sticky Comment Input */}
-                <div className="sticky bottom-0 bg-white dark:bg-zinc-900 border-t p-3 sm:p-4 flex gap-2 sm:gap-3 items-end">
-                    <Textarea
-                        placeholder="Write a comment..."
-                        value={commentText}
-                        onChange={(e) => setCommentText(e.target.value)}
-                        rows={1}
-                        className="resize-none max-h-[150px] sm:max-h-[200px] text-sm"
-                    />
-
-                    <button
-                        onClick={handleComment}
-                        disabled={!commentText || isCommenting}
-                        className="bg-[#002822] disabled:bg-[#002822]/60 text-white px-3 sm:px-4 py-2 rounded-lg"
-                    >
-                        <Send className="w-4 h-4" />
-                    </button>
-                </div>
+                <AnnounceMentCommentAction
+                    AnnouncementId={post?.id}
+                />
 
             </DialogContent>
         </Dialog>
