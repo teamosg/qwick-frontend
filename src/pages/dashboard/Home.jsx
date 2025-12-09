@@ -31,25 +31,29 @@ const Home = () => {
 
 
   return (
-    <div className="w-full border rounded-2xl mx-auto p-6 bg-[#F5F5F5] dark:bg-transparent c h-full max-w-5xl">
-      <PostForm onSubmit={handleSubmitPost} />
-      {
-        isFeedLoading ? (
-          <PostSkeletonList />
-        ) : (
-          /* Show NoPostsState when there are no posts */
-          posts.length === 0 ? (
-            <NoPostsState />
+    <div
+    className="p-4"
+    >
+      <div className="w-full border rounded-2xl mx-auto p-6 space-y-6 bg-[#F5F5F5] dark:bg-transparent c h-full max-w-5xl">
+        <PostForm onSubmit={handleSubmitPost} />
+        {
+          isFeedLoading ? (
+            <PostSkeletonList />
           ) : (
-            posts.map((post) => (
-              <Post
-                key={post.id}
-                post={post}
-              />
-            ))
+            /* Show NoPostsState when there are no posts */
+            posts.length === 0 ? (
+              <NoPostsState />
+            ) : (
+              posts.map((post) => (
+                <Post
+                  key={post.id}
+                  post={post}
+                />
+              ))
+            )
           )
-        )
-      }
+        }
+      </div>
     </div>
   );
 };

@@ -106,7 +106,7 @@ const Profile = () => {
   const userAvatar = profile?.avatar;
 
   return (
-    <div className="p-6 min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
+    <div className="min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
       {/* Mobile Toggle Button */}
       <div className="md:hidden mb-4">
         <button

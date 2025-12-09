@@ -192,6 +192,7 @@ const AnnouncementFeed = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
+        className="space-y-8"
       >
         <AnimatePresence>
           {announcementsList?.map((post) => (

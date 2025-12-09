@@ -41,7 +41,7 @@ export default function FeedSinglePost({ post }) {
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-900 shadow rounded-[12px] p-6 mb-8 border border-gray-200 dark:border-zinc-700">
+    <div className="bg-white dark:bg-zinc-900 shadow rounded-[12px] p-6 border border-gray-200 dark:border-zinc-700">
       {/* Post Header */}
       <div className="flex items-center space-x-3 mb-4">
         <AvatarUser

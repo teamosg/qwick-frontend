@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const Notifications = () => {
   return (
-    <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen">
+    <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen p-4">
       <div className="bg-white dark:bg-zinc-900 p-6 border border-gray-200 dark:border-zinc-700 rounded-2xl">
         {/* <div className="mb-9 inline-block">
           <h1 className="text-[#191919] dark:text-white text-xl font-semibold">
