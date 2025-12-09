@@ -178,3 +178,26 @@ export const useDeleteComment = () => {
         }
     })
 }
+
+
+export const useUpdateComment = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ AnnouncementId, commentId, payload }) => {
+            const res = await axiosPrivate.put(`/v1/announcements/${AnnouncementId}/comments/${commentId}/`, payload);
+            return res?.data;
+        },
+        onSuccess: data => {
+            if (data?.success) {
+                toast.success(data?.message || "Comment updated successfully!");
+                queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
+            } else {
+                handleApiError({
+                    error: data,
+                    errorMessage: "Failed to update comment"
+                })
+            }
+        }
+    })
+}

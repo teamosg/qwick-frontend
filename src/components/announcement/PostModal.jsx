@@ -8,7 +8,7 @@ import { Clock } from "lucide-react";
 import AvatarUser from '../ui/AvatarUser';
 
 import AnnounceMentCommentAction from './components/AnnounceMentCommentAction';
-import AnnouncementComments from './components/AnnouncementComments';
+import AnnouncementComment from "./components/AnnouncementComment";
 
 const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
 
@@ -94,9 +94,9 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                     </div>
 
                     {/* Comments */}
-                    <AnnouncementComments
-                        post={post}
-                    />
+                    <div className="p-4 sm:p-6 space-y-4">
+                        {post?.comments?.map((comment) => <AnnouncementComment comment={comment} key={comment?.id} AnnouncementId={post?.id} />)}
+                    </div>
                 </div>
 
                 {/* Sticky Comment Input */}
