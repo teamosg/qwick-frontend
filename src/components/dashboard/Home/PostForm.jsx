@@ -69,7 +69,6 @@ const PostForm = () => {
 
   const handleEmojiClick = (emojiData) => {
     setContent((prev) => prev + emojiData.emoji);
-    setShowEmojiPicker(false);
   };
 
   const triggerFileInput = () => fileInputRef.current.click();
