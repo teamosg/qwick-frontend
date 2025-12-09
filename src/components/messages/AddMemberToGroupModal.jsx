@@ -9,8 +9,6 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
     const { fetchedConversationList } = useConversationStore((state) => state);
     const { mutate: addMemberToGroup, isPending: isAdding } = useAddMemberToGroup()
 
-    console.log(selectedChat);
-
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedUsers, setSelectedUsers] = useState([]);
 

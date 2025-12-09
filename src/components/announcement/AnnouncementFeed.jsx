@@ -67,7 +67,6 @@ const AnnouncementFeed = () => {
       formData.append("content", postText)
       selectedImages?.forEach(file => formData.append("files", file))
 
-      console.log(formData);
       createAnnouncement(formData, {
         onSuccess: () => {
           setPostText("");

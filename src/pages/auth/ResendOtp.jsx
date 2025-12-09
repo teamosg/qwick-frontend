@@ -24,8 +24,6 @@ const ResendOtp = ({ type, email, data }) => {
         return () => clearInterval(interval);
     }, [timer]);
 
-    console.log(data);
-
 
 
     const handleResendOtp = () => {

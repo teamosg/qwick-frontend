@@ -46,7 +46,6 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
   selectedChat?.members?.forEach(member => {
     return members[member?.username] = member
   })
-  console.log('messages ', messages);
 
 
 
@@ -101,13 +100,11 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
     );
 
     // ws.current.onopen = () => {
-    //   console.log("WS connected");
     //   setIsWsError(false);
     // };
 
     // ws.current.onerror = (err) => {
-    //   console.log("WS error:", err);
-    //   // setIsWsError(true);
+    //   setIsWsError(true);
     // };
 
 

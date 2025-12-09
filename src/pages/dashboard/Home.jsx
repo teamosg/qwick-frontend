@@ -6,7 +6,6 @@ import { useFeed } from "@/hooks/announcement.hook";
 
 const Home = () => {
   const { data: feedPosts, isLoading: isFeedLoading } = useFeed()
-  console.log(feedPosts);
 
   const posts = feedPosts?.announcements || [];
 
@@ -32,7 +31,7 @@ const Home = () => {
 
   return (
     <div
-    className="p-4"
+      className="p-4"
     >
       <div className="w-full border rounded-2xl mx-auto p-6 space-y-6 bg-[#F5F5F5] dark:bg-transparent c h-full max-w-5xl">
         <PostForm onSubmit={handleSubmitPost} />

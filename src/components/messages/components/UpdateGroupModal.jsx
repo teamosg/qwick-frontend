@@ -21,9 +21,6 @@ const UpdateGroupModal = ({ isOpen, onClose, selectedChat }) => {
 
     // ✅ Save handler
     const handleSave = () => {
-        console.log("Updated Name:", groupName);
-        console.log("Updated File:", imageFile);
-
         const data = new FormData();
         data.append("name", groupName);
         if (imageFile) {

@@ -1,18 +1,13 @@
-// src/components/dashboard/Home/PostForm.jsx
-import { useCommunityStore } from "@/store/communityStore";
 import EmojiPicker from "emoji-picker-react";
 import {
   ChevronDown,
   Image as ImageIcon,
-  Paperclip,
   Smile,
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const PostForm = ({ onSubmit }) => {
-  const { myCommunityList } = useCommunityStore()
-  console.log('myCommunityList', myCommunityList);
 
   const [content, setContent] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);

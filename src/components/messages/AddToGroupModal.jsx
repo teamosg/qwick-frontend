@@ -10,9 +10,6 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
     const [search, setSearch] = useState("");
     const [selectedGroup, setSelectedGroup] = useState(null);
 
-    console.log(chat);
-    console.log(groups);
-
     const filteredGroups = useMemo(() => {
         return groups.filter((g) =>
             g.group_name.toLowerCase().includes(search.toLowerCase())

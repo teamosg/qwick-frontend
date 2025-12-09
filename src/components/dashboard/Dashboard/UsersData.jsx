@@ -69,8 +69,6 @@ const UsersData = () => {
     changeRole({ userId, action: "demote" })
   }
 
-  console.log(activeUsers);
-
 
   if (isLoading) return <WaitListSkeleton />
 

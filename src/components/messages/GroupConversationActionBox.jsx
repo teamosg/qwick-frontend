@@ -9,19 +9,15 @@ import { LuFile, LuX } from "react-icons/lu";
 
 const GroupConversationActionBox = ({
     handleSendMessage: hs,
-    user
 }) => {
     const [newMessage, setNewMessage] = useState("");
     const [attachments, setAttachments] = useState([]);
     const [isUploading, setIsUploading] = useState(false);
     const [totalAttachments, setTotalAttachments] = useState(0);
 
-    console.log(user);
-
 
     const inputRef = useRef(null);
     const fileInputRef = useRef(null);
-
 
 
     // Remove an attachment by id

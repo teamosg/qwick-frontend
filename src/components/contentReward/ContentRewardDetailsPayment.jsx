@@ -25,7 +25,6 @@ const ContentRewardDetailsPayment = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleDrop = (files) => {
-    console.log(files);
     setFiles(files);
   };
 
@@ -101,8 +100,6 @@ const ContentRewardDetailsPayment = () => {
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      console.log("Submitting with links:", formData);
 
       // Reset form and close popup
       handleClosePopup();

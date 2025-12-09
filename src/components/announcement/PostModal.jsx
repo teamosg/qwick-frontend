@@ -20,8 +20,6 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
 
     const [commentText, setCommentText] = useState("")
 
-    console.log(post);
-
     const handleComment = () => {
         if (!commentText) return;
 

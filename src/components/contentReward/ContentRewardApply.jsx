@@ -12,7 +12,6 @@ import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 const ContentRewardApply = () => {
   const [files, setFiles] = useState();
   const handleDrop = (files) => {
-    console.log(files);
     setFiles(files);
   };
 
@@ -102,8 +101,6 @@ const ContentRewardApply = () => {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      console.log("Submitting with links:", formData);
-
       // Reset form and close popup
       handleClosePopup();
 
@@ -117,13 +114,6 @@ const ContentRewardApply = () => {
     }
   };
 
-  //   const handleDrop = (e) => {
-  //     e.preventDefault();
-  //     setDragActive(false);
-  //     // Handle file drop logic here
-  //     const files = e.dataTransfer.files;
-  //     console.log("Files dropped:", files);
-  //   };
 
   return (
     <>

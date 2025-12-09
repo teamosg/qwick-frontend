@@ -37,8 +37,6 @@ const VerifyAccount = () => {
 
   const location = useLocation();
   const email = location?.state?.email || localStorage.getItem("signup_email") || "";
-  const data = location?.state?.data
-  console.log(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();

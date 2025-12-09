@@ -34,12 +34,7 @@ const ResetPasswordOtp = () => {
     }
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const code = otp.join("");
-  //   console.log("Verification code:", code);
-  //   // Handle verification logic here
-  // };
+
   const location = useLocation();
   const email =
     location.state?.email || localStorage.getItem("signup_email") || "";
