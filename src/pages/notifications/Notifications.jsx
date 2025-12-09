@@ -1,7 +1,6 @@
 import SingleNotificationItem from "@/components/notifications/SingleNotificationItem";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SquareCheck } from "lucide-react";
-import { Link } from "react-router";
 
 const Notifications = () => {
   return (
@@ -51,13 +50,12 @@ const Notifications = () => {
                 </TabsTrigger>
               </TabsList>
               <div className="">
-                <Link
-                  to="#"
-                  className="font-semibold text-[#003933] dark:text-white flex gap-1 justify-center items-center text-xs md:text-sm"
+                <button
+                  className="cursor-pointer font-semibold text-[#003933] dark:text-white flex gap-1 justify-center items-center text-xs md:text-sm"
                 >
                   <SquareCheck />
                   <span className=""> Mark all as read</span>
-                </Link>
+                </button>
               </div>
             </div>
             <TabsContent value="all-notifications">
