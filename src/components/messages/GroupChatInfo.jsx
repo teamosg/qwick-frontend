@@ -1,6 +1,6 @@
 import { X, Edit2, UserPlus, LogOut, Bell, BellOff } from "lucide-react";
 import { motion } from "framer-motion";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import AvatarUser from "../ui/AvatarUser";
 import { useConversationStore } from "@/store/conversationStore";
 import { useMemo } from "react";

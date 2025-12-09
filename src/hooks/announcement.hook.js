@@ -1,7 +1,7 @@
 import { axiosPrivate } from "@/lib/axios.config";
 import handleApiError from "@/services/handleApiError";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 export const useGetAnnouncementsList = (communityUsername) => {
     return useQuery({

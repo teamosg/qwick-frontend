@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { axiosPublic, axiosPrivate } from "../lib/axios.config.js";
 
 // Import schemas

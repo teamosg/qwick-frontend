@@ -6,7 +6,8 @@ import { useCommunityStore } from "@/store/communityStore";
 import { useCreateAnnouncements, useGetAnnouncementsList } from "@/hooks/announcement.hook";
 import FeedSinglePostSkeleton from "../skeletons/FeedSinglePostSkeleton";
 import NoAnnouncementsYet from "../Alerts/NoAnnouncementsYet";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
+
 
 const AnnouncementFeed = () => {
   const { selectedCreatorCommunity } = useCommunityStore()

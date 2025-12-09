@@ -4,7 +4,7 @@ import ConversationDetailsSkeleton from "./skeletonns/ConversationDetailsSkeleto
 import { useProfile } from "@/hooks/auth.hook";
 import ConversationActionBox from "./ConversationActionBox";
 import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import MessageError from "./components/MessageError ";
 import GroupChatConversationContainer from "./GroupChatConversationContainer";
 import GroupConversationActionBox from "./GroupConversationActionBox";
