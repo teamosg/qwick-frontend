@@ -17,7 +17,7 @@ export const useCommunityStore = create(
             setMyCommunityList: communityList => set({ myCommunityList: communityList }),
         }),
         {
-            name: "selectedBrandCommunity",
+            name: "communityStore",
             // getStorage: () => localStorage,
         }
     )
