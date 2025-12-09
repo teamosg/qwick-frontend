@@ -40,6 +40,7 @@ export const useCreateAnnouncements = (communityUsername) => {
             if (data?.status) {
                 toast.success(data?.message || "Announcement created successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList", communityUsername] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
             } else {
                 handleApiError({
                     error: data,
