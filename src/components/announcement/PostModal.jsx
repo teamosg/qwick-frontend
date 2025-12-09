@@ -11,6 +11,7 @@ import AvatarUser from '../ui/AvatarUser';
 import { useComment, useDeleteComment } from '@/hooks/announcement.hook';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { useProfile } from '@/hooks/auth.hook';
+import { Clock } from 'lucide-react';
 
 const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
     const { mutate: postComment, isPending: isCommenting } = useComment()
@@ -65,13 +66,14 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                                 alt={post?.author?.first_name}
                                 className="w-12 h-12"
                             />
-                            <div className="flex gap-4">
-                                <h3 className="font-semibold text-gray-900 dark:text-white text-lg">
+                            <div className="min-w-0 flex-1">
+                                <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
                                     {post?.author?.first_name} {post?.author?.last_name}
                                 </h3>
-                                <p className="text-gray-600 dark:text-gray-400 text-[16px]">
-                                    {post?.timestamp}
-                                </p>
+                                <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
+                                    <Clock size={10} className="mr-1" />
+                                    {new Date(post?.created_at).toLocaleString()}
+                                </div>
                             </div>
                         </div>
 
@@ -143,7 +145,7 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
 
                                 <div className="flex-1 flex justify-between bg-gray-100 dark:bg-zinc-800 rounded-xl px-4 py-2 relative">
                                     <div>
-                                        <div className='flex items-end gap-4 mb-1'>
+                                        <div className='flex items-center gap-4 mb-1'>
                                             <div className="font-medium text-black dark:text-white truncate">
                                                 {comment.author.first_name} {comment.author.last_name}
                                             </div>

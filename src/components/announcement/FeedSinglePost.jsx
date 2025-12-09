@@ -10,6 +10,7 @@ import {
 } from "@/hooks/announcement.hook";
 import { useState } from "react";
 import PostModal from "./PostModal";
+import { Clock } from "lucide-react";
 
 export default function FeedSinglePost({ post }) {
   const [openComments, setOpenComments] = useState(false);
@@ -49,13 +50,14 @@ export default function FeedSinglePost({ post }) {
           alt={post?.author?.first_name}
           className="w-12 h-12"
         />
-        <div className="flex gap-4">
-          <h3 className="font-semibold text-gray-900 dark:text-white text-lg">
+        <div className="min-w-0 flex-1">
+          <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
             {post?.author?.first_name} {post?.author?.last_name}
           </h3>
-          <p className="text-gray-600 dark:text-gray-400 text-[16px]">
-            {post?.timestamp}
-          </p>
+          <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
+            <Clock size={10} className="mr-1" />
+            {new Date(post?.created_at).toLocaleString()}
+          </div>
         </div>
       </div>
 
