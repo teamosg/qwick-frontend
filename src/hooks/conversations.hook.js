@@ -362,3 +362,26 @@ export const useAddMemberToGroup = () => {
     }
   })
 }
+
+
+export const useUpdateGroup = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ groupId, data }) => {
+      const res = await axiosPrivate.post(`/v1/account/groups/${groupId}/update/`, data)
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message);
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+        queryClient.invalidateQueries({ queryKey: ["conversationDetails"] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to update group" })
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to update group" })
+    }
+  })
+}
