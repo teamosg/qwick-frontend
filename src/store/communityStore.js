@@ -15,10 +15,10 @@ export const useCommunityStore = create(
 
             myCommunityList: [],
             setMyCommunityList: communityList => set({ myCommunityList: communityList }),
-        })
-    ),
-    {
-        name: "selectedBrandCommunity",
-        // getStorage: () => localStorage,
-    }
+        }),
+        {
+            name: "selectedBrandCommunity",
+            // getStorage: () => localStorage,
+        }
+    )
 )
