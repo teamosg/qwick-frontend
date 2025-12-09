@@ -16,8 +16,6 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
   const { avatar, blocked, user_id, group_id } = selectedChat;
   const username = selectedChat?.sender_username || selectedChat?.username;
 
-  console.log(selectedChat);
-
   const handleBlockUser = () => {
     blockUser({
       userId: user_id ?? group_id,

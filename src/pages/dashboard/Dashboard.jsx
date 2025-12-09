@@ -30,7 +30,6 @@ const Dashboard = () => {
     if (selectedBrandCommunityExist) {
       setSelectedBrandCommunity(selectedBrandCommunityExist);
     } else {
-      console.log('ok');
       if (
         createdCommunityList?.length &&
         !isLoadingMyCommunityList &&

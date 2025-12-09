@@ -88,7 +88,6 @@ const PayoutData = () => {
       total_amount: "12345",
     },
   ];
-  console.log(users);
 
   const getStatusBadge = (status) => {
     const variants = {

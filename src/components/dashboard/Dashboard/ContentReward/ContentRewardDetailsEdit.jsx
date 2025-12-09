@@ -5,6 +5,7 @@ import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import ContentRewardForm from "./ContentRewardForm";
 import ContentRewardNav from "./ContentRewardNav";
+import { toast } from "sonner";
 
 const ContentRewardDetailsEdit = () => {
   const { id } = useParams();
@@ -30,7 +31,6 @@ const ContentRewardDetailsEdit = () => {
   });
 
   // Log the reward ID for debugging/API calls
-  console.log("Reward ID:", id);
 
   const handleEditClick = () => {
     setShowFormModal(true);
@@ -40,11 +40,10 @@ const ContentRewardDetailsEdit = () => {
     setShowFormModal(false);
   };
 
-  const handleFormSubmit = (formData) => {
-    console.log("Form submitted with data:", formData);
+  const handleFormSubmit = () => {
     // Here you would typically make an API call to update the reward
     setShowFormModal(false);
-    alert("Reward updated successfully!");
+    toast.success("Reward updated successfully!");
   };
 
   const handleFormCancel = () => {

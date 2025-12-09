@@ -42,73 +42,67 @@ const SingleNotificationItem = () => {
       <SelectSeparator />
 
       {/* Posts */}
+      <div className="divide-y divide-gray-100 p-3">
+        {posts.map((post) => (
+          <div
+            key={post.id}
+            className="p-4 hover:bg-[#e7f5ff] dark:hover:bg-transparent transition-colors"
+          >
+            <div className="flex items-center justify-center space-x-3">
+              {/* Avatar */}
+              <img
+                src={post.avatar}
+                alt={`${post.user} avatar`}
+                className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+              />
 
-      <Link to="#">
-        <div className="divide-y divide-gray-100 p-3">
-          {posts.map((post) => (
-            <>
-              {" "}
-              <div
-                key={post.id}
-                className="p-4 hover:bg-[#e7f5ff] dark:hover:bg-transparent transition-colors"
-              >
-                <div className="flex items-center justify-center space-x-3">
-                  {/* Avatar */}
-                  <img
-                    src={post.avatar}
-                    alt={`${post.user} avatar`}
-                    className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                  />
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-semibold text-black dark:text-white">
-                          {post.user}
-                        </span>
-                        <span className="text-[#6F6F6F] dark:text-zinc-400 text-base">
-                          {post.action}
-                        </span>
-                      </div>
-                      <span className="text-xs text-[#6F6F6F]">
-                        {post.time}
-                      </span>
-                    </div>
-
-                    {/* Handle for Tyler's post */}
-                    {post.handle && (
-                      <div className="mt-1">
-                        <span className="text-blue-600 text-sm">
-                          {post.handle}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Description */}
-                    <div className="mt-1">
-                      {post.description.startsWith("https://") ? (
-                        <a
-                          href={post.description}
-                          className="text-blue-600 hover:text-blue-800 text-sm break-all"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {post.description}
-                        </a>
-                      ) : (
-                        <span className="text-[#6F6F6F] dark:text-zinc-400 text-sm">
-                          {post.description}
-                        </span>
-                      )}
-                    </div>
+              {/* Content */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="font-semibold text-black dark:text-white">
+                      {post.user}
+                    </span>
+                    <span className="text-[#6F6F6F] dark:text-zinc-400 text-base">
+                      {post.action}
+                    </span>
                   </div>
+                  <span className="text-xs text-[#6F6F6F]">
+                    {post.time}
+                  </span>
+                </div>
+
+                {/* Handle for Tyler's post */}
+                {post.handle && (
+                  <div className="mt-1">
+                    <span className="text-blue-600 text-sm">
+                      {post.handle}
+                    </span>
+                  </div>
+                )}
+
+                {/* Description */}
+                <div className="mt-1">
+                  {post.description.startsWith("https://") ? (
+                    <a
+                      href={post.description}
+                      className="text-blue-600 hover:text-blue-800 text-sm break-all"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {post.description}
+                    </a>
+                  ) : (
+                    <span className="text-[#6F6F6F] dark:text-zinc-400 text-sm">
+                      {post.description}
+                    </span>
+                  )}
                 </div>
               </div>
-            </>
-          ))}
-        </div>
-      </Link>
+            </div>
+          </div>
+        ))}
+      </div>
       <SelectSeparator />
     </div>
   );

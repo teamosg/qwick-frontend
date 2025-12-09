@@ -8,11 +8,11 @@ import {
 import { CircleAlert, X } from "lucide-react";
 import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { toast } from "sonner";
 
 const ContentRewardApply = () => {
   const [files, setFiles] = useState();
   const handleDrop = (files) => {
-    console.log(files);
     setFiles(files);
   };
 
@@ -102,13 +102,11 @@ const ContentRewardApply = () => {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      console.log("Submitting with links:", formData);
-
       // Reset form and close popup
       handleClosePopup();
 
       // You could add a success message here
-      alert("Application submitted successfully!");
+      toast.success("Application submitted successfully!");
     } catch (error) {
       console.error("Error submitting application:", error);
       setErrors({ general: "Failed to submit application. Please try again." });
@@ -117,13 +115,6 @@ const ContentRewardApply = () => {
     }
   };
 
-  //   const handleDrop = (e) => {
-  //     e.preventDefault();
-  //     setDragActive(false);
-  //     // Handle file drop logic here
-  //     const files = e.dataTransfer.files;
-  //     console.log("Files dropped:", files);
-  //   };
 
   return (
     <>
@@ -282,11 +273,10 @@ const ContentRewardApply = () => {
                         handleInputChange("youtube", e.target.value)
                       }
                       placeholder="https://www.youtube.com/watch?v=..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                        errors.youtube
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.youtube
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
-                      }`}
+                        }`}
                     />
                     {errors.youtube && (
                       <p className="text-red-500 text-xs mt-1">
@@ -306,11 +296,10 @@ const ContentRewardApply = () => {
                         handleInputChange("instagram", e.target.value)
                       }
                       placeholder="https://www.instagram.com/p/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                        errors.instagram
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.instagram
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
-                      }`}
+                        }`}
                     />
                     {errors.instagram && (
                       <p className="text-red-500 text-xs mt-1">
@@ -330,11 +319,10 @@ const ContentRewardApply = () => {
                         handleInputChange("tiktok", e.target.value)
                       }
                       placeholder="https://www.tiktok.com/@user/video/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                        errors.tiktok
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.tiktok
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
-                      }`}
+                        }`}
                     />
                     {errors.tiktok && (
                       <p className="text-red-500 text-xs mt-1">
@@ -354,11 +342,10 @@ const ContentRewardApply = () => {
                         handleInputChange("linkedin", e.target.value)
                       }
                       placeholder="https://www.linkedin.com/posts/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                        errors.linkedin
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.linkedin
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
-                      }`}
+                        }`}
                     />
                     {errors.linkedin && (
                       <p className="text-red-500 text-xs mt-1">

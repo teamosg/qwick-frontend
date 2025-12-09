@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useVerifyOtp } from "@/hooks/auth.hook";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import ResendOtp from "./ResendOtp";
 
 const ResetPasswordOtp = () => {
@@ -34,12 +34,7 @@ const ResetPasswordOtp = () => {
     }
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const code = otp.join("");
-  //   console.log("Verification code:", code);
-  //   // Handle verification logic here
-  // };
+
   const location = useLocation();
   const email =
     location.state?.email || localStorage.getItem("signup_email") || "";

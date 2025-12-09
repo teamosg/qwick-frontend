@@ -34,7 +34,7 @@ const Discover = () => {
 
   return (
     <motion.div
-      className="min-h-screen bg-[#f9fafb] dark:bg-zinc-950 "
+      className="min-h-screen p-4 bg-[#f9fafb] dark:bg-zinc-950 "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}

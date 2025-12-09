@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosPrivate } from "../lib/axios.config.js";
 import handleApiError from "@/services/handleApiError.js";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 /**
  * ================================

@@ -1,5 +1,5 @@
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 // Base URL from Postman collection: https://qwick.softvencealpha.com/api
 const API_BASE_URL =
@@ -43,7 +43,7 @@ axiosPrivate.interceptors.response.use(
   function (error) {
     // window.location.href = "/sign-in";
     if (error?.response?.status === 401) {
-      toast.error("Session expired. Please sign in again.");
+      // toast.error("Session expired. Please sign in again.");
       localStorage.removeItem("token");
 
       setTimeout(() => {

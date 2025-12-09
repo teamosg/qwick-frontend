@@ -1,11 +1,8 @@
-import { X, Edit2, UserPlus, LogOut, Bell, BellOff } from "lucide-react";
-import { motion } from "framer-motion";
-import toast from "react-hot-toast";
+import { X, Edit2, UserPlus, LogOut } from "lucide-react";
 import AvatarUser from "../ui/AvatarUser";
-import { useConversationStore } from "@/store/conversationStore";
-import { useMemo } from "react";
 import { useState } from "react";
 import AddMemberToGroupModal from "./AddMemberToGroupModal";
+import UpdateGroupModal from "./components/UpdateGroupModal";
 
 /**
  * GroupChatInfo shows group details including members, notifications toggle,
@@ -14,11 +11,7 @@ import AddMemberToGroupModal from "./AddMemberToGroupModal";
  */
 const GroupChatInfo = ({ selectedChat, onClose }) => {
   const [openModal, setOpenModal] = useState(false);
-  const { fetchedConversationList } = useConversationStore();
-
-  const dmConversations = useMemo(() => {
-    return fetchedConversationList?.filter(conversation => conversation?.type === "dm") || []
-  }, [fetchedConversationList])
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
 
 
@@ -66,17 +59,17 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
       </div>
 
       {/* Action Buttons: Rename, Add User, Leave */}
-      <div className="grid grid-cols-1 gap-3 p-4 border-b border-gray-200 dark:border-[#282828]">
-        {/* <button
-          onClick={handleRename}
+      <div className="grid grid-cols-3 gap-3 p-4 border-b border-gray-200 dark:border-[#282828]">
+        <button
+          onClick={() => setOpenUpdateModal(true)}
           className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
           aria-label="Rename group"
         >
           <Edit2 className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-            Rename
+            Edit
           </span>
-        </button> */}
+        </button>
 
         <button
           onClick={handleAddUser}
@@ -89,8 +82,8 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
           </span>
         </button>
 
-        {/* <button
-          onClick={handleLeave}
+        <button
+          // onClick={handleLeave}
           className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
           aria-label="Leave group"
         >
@@ -98,7 +91,7 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
           <span className="text-xs font-medium text-red-700 dark:text-red-300">
             Leave
           </span>
-        </button> */}
+        </button>
       </div>
 
       {/* Notifications Toggle */}
@@ -177,6 +170,14 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
           </div>
         </div>
       </div>
+
+      <UpdateGroupModal
+        isOpen={openUpdateModal}
+        onClose={() => setOpenUpdateModal(false)}
+        selectedChat={selectedChat}
+      />
+
+
       <AddMemberToGroupModal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}

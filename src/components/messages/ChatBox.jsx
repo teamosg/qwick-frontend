@@ -5,7 +5,7 @@ import { useProfile } from "@/hooks/auth.hook";
 import ChatConversationContainer from "./ChatConversationContainer";
 import ConversationActionBox from "./ConversationActionBox";
 import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import MessageError from "./components/MessageError ";
 
 const ChatBox = ({ selectedChat, setSelectedChat }) => {
@@ -85,12 +85,10 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     );
 
     ws.current.onopen = () => {
-      // console.log("WS connected");
       setIsWsError(false);
     };
 
     // ws.current.onerror = () => {
-    //   // console.log("WS error:", err);
     //   setIsWsError(true);
     // };
 

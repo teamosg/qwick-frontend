@@ -1,4 +1,4 @@
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 const handleApiError = ({ error, errorMessage = "Network Error", throwError = false }) => {
     const message =

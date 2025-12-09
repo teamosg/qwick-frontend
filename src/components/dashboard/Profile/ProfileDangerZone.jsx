@@ -13,15 +13,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { AlertTriangle } from "lucide-react";
-import notImplemented from "@/dummyMessages/notImplemented";
 import { useState } from "react";
 import { useDeleteAccount, useLogout } from "@/hooks/auth.hook";
 
 const ProfileDangerZone = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const user = localStorage.getItem("user");
-  console.log(user);
 
   const { mutate: logOut, isPending } = useLogout();
   const { mutate: deleteAccount, isPending: isDeletingPending } =

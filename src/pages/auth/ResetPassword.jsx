@@ -2,7 +2,7 @@ import { useTheme } from "@/components/shared/ThemeProvider";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useResetPassword } from "@/hooks/auth.hook";
 
@@ -16,17 +16,13 @@ const ResetPassword = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const darkMode = theme === "dark";
 
   const { mutate } = useResetPassword();
 
-  const toggleDarkMode = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   const onSubmit = (data) => {
-    console.log(data);
     mutate({
       email: data.email,
       new_password: data.new_password,

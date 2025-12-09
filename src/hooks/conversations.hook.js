@@ -1,7 +1,7 @@
 import { axiosPrivate } from "@/lib/axios.config";
 import handleApiError from "@/services/handleApiError";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 export const useGetConversationList = () => {
   return useQuery({
@@ -359,6 +359,29 @@ export const useAddMemberToGroup = () => {
     },
     onError: (error) => {
       handleApiError({ error, errorMessage: "Failed to add member to group" })
+    }
+  })
+}
+
+
+export const useUpdateGroup = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ groupId, data }) => {
+      const res = await axiosPrivate.post(`/v1/account/groups/${groupId}/update/`, data)
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message);
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+        queryClient.invalidateQueries({ queryKey: ["conversationDetails"] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to update group" })
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to update group" })
     }
   })
 }

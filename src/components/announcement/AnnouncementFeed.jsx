@@ -6,7 +6,8 @@ import { useCommunityStore } from "@/store/communityStore";
 import { useCreateAnnouncements, useGetAnnouncementsList } from "@/hooks/announcement.hook";
 import FeedSinglePostSkeleton from "../skeletons/FeedSinglePostSkeleton";
 import NoAnnouncementsYet from "../Alerts/NoAnnouncementsYet";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
+
 
 const AnnouncementFeed = () => {
   const { selectedCreatorCommunity } = useCommunityStore()
@@ -66,7 +67,6 @@ const AnnouncementFeed = () => {
       formData.append("content", postText)
       selectedImages?.forEach(file => formData.append("files", file))
 
-      console.log(formData);
       createAnnouncement(formData, {
         onSuccess: () => {
           setPostText("");
@@ -191,6 +191,7 @@ const AnnouncementFeed = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
+        className="space-y-8"
       >
         <AnimatePresence>
           {announcementsList?.map((post) => (

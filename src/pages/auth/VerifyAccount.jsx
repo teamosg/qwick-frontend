@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useVerifyOtp } from "@/hooks/auth.hook";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import ResendOtp from "./ResendOtp";
 
@@ -37,8 +37,6 @@ const VerifyAccount = () => {
 
   const location = useLocation();
   const email = location?.state?.email || localStorage.getItem("signup_email") || "";
-  const data = location?.state?.data
-  console.log(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();

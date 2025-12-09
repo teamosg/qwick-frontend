@@ -2,7 +2,7 @@ import { useTheme } from "@/components/shared/ThemeProvider";
 import { useRef, useState } from "react";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useVerifyOtp } from "@/hooks/auth.hook";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { Link, useLocation } from "react-router";
 

@@ -8,6 +8,7 @@ import {
 import { CircleAlert, X } from "lucide-react";
 import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { toast } from "sonner";
 
 const ContentRewardDetailsPayment = () => {
   const [files, setFiles] = useState();
@@ -25,7 +26,6 @@ const ContentRewardDetailsPayment = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleDrop = (files) => {
-    console.log(files);
     setFiles(files);
   };
 
@@ -102,13 +102,11 @@ const ContentRewardDetailsPayment = () => {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      console.log("Submitting with links:", formData);
-
       // Reset form and close popup
       handleClosePopup();
 
       // You could add a success message here
-      alert("Application submitted successfully!");
+      toast.success("Application submitted successfully!");
     } catch (error) {
       console.error("Error submitting application:", error);
       setErrors({ general: "Failed to submit application. Please try again." });

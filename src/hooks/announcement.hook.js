@@ -1,7 +1,7 @@
 import { axiosPrivate } from "@/lib/axios.config";
 import handleApiError from "@/services/handleApiError";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 export const useGetAnnouncementsList = (communityUsername) => {
     return useQuery({
@@ -40,6 +40,7 @@ export const useCreateAnnouncements = (communityUsername) => {
             if (data?.status) {
                 toast.success(data?.message || "Announcement created successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList", communityUsername] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
             } else {
                 handleApiError({
                     error: data,
@@ -173,6 +174,29 @@ export const useDeleteComment = () => {
                 handleApiError({
                     error: data,
                     errorMessage: "Failed to delete comment"
+                })
+            }
+        }
+    })
+}
+
+
+export const useUpdateComment = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ AnnouncementId, commentId, payload }) => {
+            const res = await axiosPrivate.put(`/v1/announcements/${AnnouncementId}/comments/${commentId}/`, payload);
+            return res?.data;
+        },
+        onSuccess: data => {
+            if (data?.success) {
+                toast.success(data?.message || "Comment updated successfully!");
+                queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
+            } else {
+                handleApiError({
+                    error: data,
+                    errorMessage: "Failed to update comment"
                 })
             }
         }

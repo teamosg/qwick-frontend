@@ -4,7 +4,7 @@ import ConversationDetailsSkeleton from "./skeletonns/ConversationDetailsSkeleto
 import { useProfile } from "@/hooks/auth.hook";
 import ConversationActionBox from "./ConversationActionBox";
 import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import MessageError from "./components/MessageError ";
 import GroupChatConversationContainer from "./GroupChatConversationContainer";
 import GroupConversationActionBox from "./GroupConversationActionBox";
@@ -46,7 +46,6 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
   selectedChat?.members?.forEach(member => {
     return members[member?.username] = member
   })
-  console.log('messages ', messages);
 
 
 
@@ -101,13 +100,11 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
     );
 
     // ws.current.onopen = () => {
-    //   console.log("WS connected");
     //   setIsWsError(false);
     // };
 
     // ws.current.onerror = (err) => {
-    //   console.log("WS error:", err);
-    //   // setIsWsError(true);
+    //   setIsWsError(true);
     // };
 
 

@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { axiosPublic, axiosPrivate } from "../lib/axios.config.js";
 
 // Import schemas
@@ -16,6 +16,7 @@ import {
   profileEditSchema,
 } from "../schemas/auth.schema.js";
 import handleApiError from "@/services/handleApiError.js";
+import clearLocalStorage from "@/services/clearLocalstore.js";
 
 // Sign Up Hook
 export const useSignUp = () => {
@@ -196,9 +197,7 @@ export const useLogout = () => {
       return res.data;
     },
     onSuccess: () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("refresh");
-      localStorage.removeItem("user");
+      clearLocalStorage();
       queryClient.clear();
       toast.success("Logged out successfully");
       navigate("/sign-in");
