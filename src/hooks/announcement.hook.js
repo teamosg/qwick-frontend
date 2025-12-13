@@ -23,6 +23,25 @@ export const useGetAnnouncementsList = (communityUsername) => {
     })
 }
 
+export const useGetSavedAnnouncements = () => {
+    return useQuery({
+        queryKey: ["savedAnnouncements"],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get(`/v1/announcements/saved/`);
+                return res?.data?.data || [];
+            } catch (error) {
+                handleApiError({
+                    error,
+                    throwError: true,
+                    errorMessage: "Failed to fetch saved announcements"
+                })
+            }
+        },
+        staleTime: 1000 * 60 * 2,
+    })
+}
+
 
 
 export const useCreateAnnouncements = (communityUsername) => {
@@ -147,6 +166,7 @@ export const useSaveAnnouncement = () => {
                 toast.success(data?.message || "Announcement saved successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
                 queryClient.invalidateQueries({ queryKey: ["feed",] })
+                queryClient.invalidateQueries({ queryKey: ["savedAnnouncements",] })
             } else {
                 handleApiError({
                     error: data,
@@ -176,6 +196,7 @@ export const useUnsaveAnnouncement = () => {
                 toast.success(data?.message || "Announcement unsaved successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
                 queryClient.invalidateQueries({ queryKey: ["feed",] })
+                queryClient.invalidateQueries({ queryKey: ["savedAnnouncements",] })
             } else {
                 handleApiError({
                     error: data,
@@ -230,6 +251,7 @@ export const useDeleteComment = () => {
                 toast.success(data?.message || "Comment deleted successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
                 queryClient.invalidateQueries({ queryKey: ["feed",] })
+                queryClient.invalidateQueries({ queryKey: ["savedAnnouncements",] })
             } else {
                 handleApiError({
                     error: data,
@@ -253,6 +275,7 @@ export const useUpdateComment = () => {
                 toast.success(data?.message || "Comment updated successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
                 queryClient.invalidateQueries({ queryKey: ["feed",] })
+                queryClient.invalidateQueries({ queryKey: ["savedAnnouncements",] })
             } else {
                 handleApiError({
                     error: data,
