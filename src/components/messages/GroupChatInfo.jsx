@@ -1,7 +1,9 @@
 import { X, Edit2, UserPlus, LogOut } from "lucide-react";
 import AvatarUser from "../ui/AvatarUser";
 import { useState } from "react";
+import { useLeaveGroup } from "@/hooks/conversations.hook";
 import AddMemberToGroupModal from "./AddMemberToGroupModal";
+import LeaveGroupModal from "./components/LeaveGroupModal";
 import UpdateGroupModal from "./components/UpdateGroupModal";
 
 /**
@@ -12,6 +14,9 @@ import UpdateGroupModal from "./components/UpdateGroupModal";
 const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [openLeaveModal, setOpenLeaveModal] = useState(false);
+
+  const { mutate: leaveGroup, isPending: isLeaving } = useLeaveGroup();
 
 
 
@@ -26,9 +31,22 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
     setOpenModal(true);
   };
 
-  // const handleLeave = () => {
-  //   toast.error("Leave group feature coming soon!");
-  // };
+  const handleLeave = () => {
+    setOpenLeaveModal(true);
+  };
+
+  const confirmLeave = () => {
+    leaveGroup(
+      { groupId: selectedChat?.group_id },
+      {
+        onSuccess: () => {
+          setOpenLeaveModal(false);
+          onClose(); // Close sidebar
+          setSelectedChat(null); // Clear selected chat
+        },
+      }
+    );
+  };
 
   // const handleRemoveMember = (memberName) => {
   //   toast.error(`Remove ${memberName} feature coming soon!`);
@@ -83,7 +101,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
         </button>
 
         <button
-          // onClick={handleLeave}
+          onClick={handleLeave}
           className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
           aria-label="Leave group"
         >
@@ -176,6 +194,13 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
         onClose={() => setOpenUpdateModal(false)}
         selectedChat={selectedChat}
         setSelectedChat={setSelectedChat}
+      />
+
+      <LeaveGroupModal
+        isOpen={openLeaveModal}
+        onClose={() => setOpenLeaveModal(false)}
+        onConfirm={confirmLeave}
+        isLeaving={isLeaving}
       />
 
 

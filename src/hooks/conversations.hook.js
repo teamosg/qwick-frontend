@@ -389,3 +389,25 @@ export const useUpdateGroup = () => {
     }
   })
 }
+
+export const useLeaveGroup = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ groupId }) => {
+      const res = await axiosPrivate.post(`/v1/account/groups/${groupId}/leave/`);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message || "Left group successfully");
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+        queryClient.invalidateQueries({ queryKey: ["conversationDetails"] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to leave group" })
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to leave group" })
+    }
+  })
+}
