@@ -54,11 +54,7 @@ const PostActions = ({ post }) => {
                 <button
                     onClick={handleSave}
                     disabled={isSaving || isUnsaving}
-                    className={`flex items-center px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors disabled:cursor-progress
-              ${post?.is_saved
-                            ? "text-[#003933] dark:text-emerald-400"
-                            : "text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300"
-                        }`}
+                    className={`flex items-center px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors disabled:cursor-progress text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300`}
                 >
                     <Save isSaved={post?.is_saved} />
                 </button>
