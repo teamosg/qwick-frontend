@@ -111,6 +111,7 @@ export const useLikeAnnouncement = () => {
 }
 
 
+
 export const useDislikeAnnouncement = () => {
     const queryClient = useQueryClient()
     return useMutation({
@@ -132,6 +133,65 @@ export const useDislikeAnnouncement = () => {
         }
     })
 }
+
+// Hook for saving an announcement
+export const useSaveAnnouncement = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (id) => {
+            const res = await axiosPrivate.post(`/v1/announcement/${id}/save-toggle/`);
+            return res?.data;
+        },
+        onSuccess: data => {
+            if (data?.success) {
+                toast.success(data?.message || "Announcement saved successfully!");
+                queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
+            } else {
+                handleApiError({
+                    error: data,
+                    errorMessage: "Failed to save announcement"
+                })
+            }
+        },
+        onError: data => {
+            handleApiError({
+                error: data,
+                errorMessage: "Failed to save announcement"
+            })
+        }
+    })
+}
+
+// Hook for unsaving an announcement
+export const useUnsaveAnnouncement = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (id) => {
+            const res = await axiosPrivate.post(`/v1/announcement/${id}/save-toggle/`);
+            return res?.data;
+        },
+        onSuccess: data => {
+            if (data?.success) {
+                toast.success(data?.message || "Announcement unsaved successfully!");
+                queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
+                queryClient.invalidateQueries({ queryKey: ["feed",] })
+            } else {
+                handleApiError({
+                    error: data,
+                    errorMessage: "Failed to unsave announcement"
+                })
+            }
+        },
+        onError: data => {
+            handleApiError({
+                error: data,
+                errorMessage: "Failed to unsave announcement"
+            })
+        }
+    })
+}
+
 
 
 

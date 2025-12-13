@@ -2,18 +2,28 @@ import Comment from "@/assets/svg/Comment";
 import Like from "@/assets/svg/Like";
 import Save from "@/assets/svg/Save";
 import { PostShare } from "./PostShare";
-import { useDislikeAnnouncement, useLikeAnnouncement } from "@/hooks/announcement.hook";
+import { useDislikeAnnouncement, useLikeAnnouncement, useSaveAnnouncement, useUnsaveAnnouncement } from "@/hooks/announcement.hook";
 
 
 const PostActions = ({ post }) => {
     const { mutate: likeAnnouncement, isPending: isLiking } = useLikeAnnouncement();
     const { mutate: dislikeAnnouncement, isPending: isDisliking } = useDislikeAnnouncement();
+    const { mutate: saveAnnouncement, isPending: isSaving } = useSaveAnnouncement();
+    const { mutate: unsaveAnnouncement, isPending: isUnsaving } = useUnsaveAnnouncement();
 
     const handlePostLike = () => {
         if (post?.is_liked) {
             dislikeAnnouncement(post?.id);
         } else {
             likeAnnouncement(post?.id);
+        }
+    };
+
+    const handleSave = () => {
+        if (post?.isSaved) {
+            unsaveAnnouncement(post?.id);
+        } else {
+            saveAnnouncement(post?.id);
         }
     };
 
@@ -42,13 +52,15 @@ const PostActions = ({ post }) => {
                 <PostShare />
 
                 <button
-                    className={`flex items-center px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors
-              ${post?.isSaved
+                    onClick={handleSave}
+                    disabled={isSaving || isUnsaving}
+                    className={`flex items-center px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors disabled:cursor-progress
+              ${post?.is_saved
                             ? "text-[#003933] dark:text-emerald-400"
                             : "text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300"
                         }`}
                 >
-                    <Save />
+                    <Save isSaved={post?.is_saved} />
                 </button>
             </div>
         </div>
