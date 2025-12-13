@@ -22,7 +22,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
     );
   }
 
-  const { avatar } = selectedChat;
+  const { avatar, group_avatar } = selectedChat;
   const username = selectedChat?.sender_username || selectedChat?.username || selectedChat?.group_name;
 
   // Main chat header showing participant info, status, and action buttons
@@ -33,7 +33,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
         <div className="flex items-center gap-3">
           <div className="relative">
             <Avatar className="w-10 h-10 rounded-full object-cover">
-              <AvatarImage src={avatar} alt={username} />
+              <AvatarImage src={avatar || group_avatar} alt={username} />
               <AvatarFallback>{username.split("")[0]}</AvatarFallback>
             </Avatar>
             {/* {selectedChat.isOnline && (

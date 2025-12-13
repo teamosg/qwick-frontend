@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUpdateGroup } from "@/hooks/conversations.hook";
 
-const UpdateGroupModal = ({ isOpen, onClose, selectedChat }) => {
+const UpdateGroupModal = ({ isOpen, onClose, selectedChat, setSelectedChat }) => {
     const { mutate: updateGroup, isPending: isUpdating } = useUpdateGroup();
     const [groupName, setGroupName] = useState(selectedChat?.group_name || "");
     const [imageFile, setImageFile] = useState(null);
@@ -31,6 +31,11 @@ const UpdateGroupModal = ({ isOpen, onClose, selectedChat }) => {
             { groupId: selectedChat?.group_id, data },
             {
                 onSuccess: () => {
+                    setSelectedChat({
+                        ...selectedChat,
+                        group_name: groupName,
+                        avatar: preview,
+                    });
                     onClose?.();
                 }
             }

@@ -368,7 +368,11 @@ export const useUpdateGroup = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ groupId, data }) => {
-      const res = await axiosPrivate.post(`/v1/account/groups/${groupId}/update/`, data)
+      const res = await axiosPrivate.put(`/v1/account/groups/${groupId}/update/`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       return res?.data;
     },
     onSuccess: (data) => {

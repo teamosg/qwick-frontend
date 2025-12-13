@@ -85,7 +85,8 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
   useEffect(() => {
     if (selectedChat) {
       setMessages(conversationDetails?.messages || []);
-      setSelectedChat({ ...selectedChat, members: conversationDetails?.group?.members || [] })
+      setMessages(conversationDetails?.messages || []);
+      setSelectedChat({ ...selectedChat, members: conversationDetails?.group?.members || [], name: conversationDetails?.group?.name, avatar: conversationDetails?.group?.avatar || selectedChat?.group_avatar })
     }
   }, [conversationDetails]);
 

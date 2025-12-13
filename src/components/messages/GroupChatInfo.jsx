@@ -9,7 +9,7 @@ import UpdateGroupModal from "./components/UpdateGroupModal";
  * and actions like rename, add user, leave, and remove member?.
  * Dark mode colors updated for consistency.
  */
-const GroupChatInfo = ({ selectedChat, onClose }) => {
+const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
   const [openModal, setOpenModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
@@ -49,9 +49,9 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
             <AvatarUser
-              src={selectedChat?.avatar}
+              src={selectedChat?.avatar || selectedChat?.group_avatar}
               alt={selectedChat?.name || selectedChat?.group_name}
-              className="w-20 h-20 rounded-full object-cover"
+              className="w-20 h-20 rounded-full"
             />
           </div>
           <h2 className="text-lg font-semibold text-center">{selectedChat.name || selectedChat?.group_name}</h2>
@@ -175,6 +175,7 @@ const GroupChatInfo = ({ selectedChat, onClose }) => {
         isOpen={openUpdateModal}
         onClose={() => setOpenUpdateModal(false)}
         selectedChat={selectedChat}
+        setSelectedChat={setSelectedChat}
       />
 
 

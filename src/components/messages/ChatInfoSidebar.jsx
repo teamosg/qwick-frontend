@@ -28,7 +28,7 @@ const ChatInfoSidebar = ({ isOpen, onClose, selectedChat, setSelectedChat }) => 
             className="fixed right-0 top-0 h-full w-80 bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-700 z-50 flex flex-col overflow-hidden"
           >
             {isGroupChat ? (
-              <GroupChatInfo selectedChat={selectedChat} onClose={onClose} />
+              <GroupChatInfo selectedChat={selectedChat} onClose={onClose} setSelectedChat={setSelectedChat} />
             ) : (
               <DirectChatInfo selectedChat={selectedChat} onClose={onClose} setSelectedChat={setSelectedChat} />
             )}

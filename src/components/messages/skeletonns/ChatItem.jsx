@@ -2,7 +2,7 @@ import MessageOptions from "@/components/MessagesComponents/MessageSelect/Messag
 import AvatarUser from "@/components/ui/AvatarUser";
 
 const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpenAddToGroupModal }) => {
-  const { avatar, last_message, last_message_at, unread_count } = chat;
+  const { avatar, group_avatar, last_message, last_message_at, unread_count } = chat;
   const username = chat?.sender_username || chat?.username;
   const user_id = chat?.sender_id || chat?.user_id;
 
@@ -30,7 +30,7 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpen
     >
       <div className="relative">
         <AvatarUser
-          src={avatar}
+          src={avatar || group_avatar}
           alt={conversationName}
           className="w-10 h-10 rounded-full object-cover"
         />
@@ -56,7 +56,7 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpen
           {selectedChatId === conversationId && chat?.type === "dm" ? (
             <MessageOptions
               chat={chat}
-              avatar={avatar || "https://i.pravatar.cc/40?img=10"}
+              avatar={avatar || group_avatar}
               setSelectedChat={setSelectedChat}
               setOpenAddToGroupModal={setOpenAddToGroupModal}
             />
