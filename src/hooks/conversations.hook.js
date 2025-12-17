@@ -20,6 +20,7 @@ export const useGetConversationList = () => {
         throw new Error(message);
       }
     },
+    refetchInterval: 20000,
     staleTime: 1000 * 60 * 10,
   });
 };
@@ -41,6 +42,7 @@ export const useGetRequestConversationList = () => {
         throw new Error(message);
       }
     },
+    refetchInterval: 20000,
     staleTime: 1000 * 60 * 10,
   });
 };

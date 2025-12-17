@@ -38,7 +38,7 @@ const JoinCommunity = () => {
   };
 
   const handleJoinCommunity = () => {
-    joinCommunity({ communityUsername: 'nice' })
+    joinCommunity({ communityUsername: 'fun' })
   }
 
   return (
