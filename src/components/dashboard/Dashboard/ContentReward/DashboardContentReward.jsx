@@ -55,9 +55,7 @@ const DashboardContentReward = () => {
     // console.log("setShowForm(true) called");
   };
 
-  const handleFormSubmit = (formData) => {
-    const payload = new FormData();
-
+  const handleFormSubmit = async (formData) => {
     // Mappings
     const typeMap = {
       "UGC": 1,
@@ -83,42 +81,46 @@ const DashboardContentReward = () => {
       "Tiktok": 4
     };
 
+    const toBase64 = (file) => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+
+    let thumbnailBase64 = "";
     if (formData.thumbnailFile) {
-      payload.append("thumbnail", formData.thumbnailFile);
+      try {
+        thumbnailBase64 = await toBase64(formData.thumbnailFile);
+      } catch (error) {
+        console.error("Error converting file to base64", error);
+      }
     }
 
-    payload.append("name", formData.campaignName);
-    payload.append("campaign_type", typeMap[formData.type] || 1);
-    payload.append("category", categoryMap[formData.category] || 1); // Default Other?
-    payload.append("budget", Number(formData.campaignBudget) || 0);
-    payload.append("reward_rate", Number(formData.rewardRate) || 0);
-    payload.append("min_payout", Number(formData.minPayout) || 0);
-    payload.append("max_payout", Number(formData.maxPayout) || 0);
-    payload.append("flat_fee_bonus", Number(formData.flatFeeBonus) || 0); // optional
-    payload.append("available_content", parseInt(formData.availableContent) || 1); // IntegerField default=1
-    payload.append("content_requirement", formData.contentRequirement);
+    // Map platforms to IDs as strings
+    const platformIds = (formData.platforms || []).map(p => {
+      const id = platformMap[p];
+      return id ? id.toString() : null;
+    }).filter(id => id !== null);
 
-    if (formData.startDate) {
-      payload.append("start_date", format(formData.startDate, "yyyy-MM-dd"));
-    }
-    if (formData.endDate) {
-      payload.append("end_date", format(formData.endDate, "yyyy-MM-dd"));
-    }
+    const payload = {
+      thumbnail: thumbnailBase64,
+      name: formData.campaignName,
+      campaign_type: typeMap[formData.type] || 1,
+      category: categoryMap[formData.category] || 1,
+      budget: Number(formData.campaignBudget) || 0,
+      reward_rate: Number(formData.rewardRate) || 0,
+      min_payout: Number(formData.minPayout) || 0,
+      max_payout: Number(formData.maxPayout) || 0,
+      flat_fee_bonus: Number(formData.flatFeeBonus) || 0,
+      platforms: platformIds,
+      available_content: parseInt(formData.availableContent) || 1,
+      content_requirement: formData.contentRequirement,
+      start_Date: formData.startDate ,
+      end_date: formData.endDate 
+    };
 
-    // Platforms
-    // Backend expects an array of strings/ids
-    if (formData.platforms && formData.platforms.length > 0) {
-      formData.platforms.forEach(p => {
-        const id = platformMap[p];
-        if (id) payload.append("platforms", id.toString());
-      });
-    }
-
-
-    for (const [key, value] of payload.entries()) {
-      console.log(`${key}:`, value);
-    }
-
+    console.log("Submitting payload:", payload);
 
     createCampaign(payload, {
       onSuccess: () => {
