@@ -3,6 +3,7 @@ import { axiosPrivate } from "../lib/axios.config.js";
 import handleApiError from "@/services/handleApiError.js";
 import { toast } from "sonner";
 
+
 /**
  * ================================
  * Payment Hooks
@@ -151,8 +152,9 @@ export const useWithdraw = () => {
       return res
     },
     onSuccess: (data) => {
+      console.log(data)
       if (data?.status) {
-        toast.success(data?.message);
+        toast.success(data?.data?.message);
 
         queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
         queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
@@ -166,3 +168,32 @@ export const useWithdraw = () => {
     }
   })
 }
+
+export const useProcessWithdrawal = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["processWithdrawal"],
+    mutationFn: async (payload) => {
+      const res = await axiosPrivate.post("/v1/payment/withdraw/process/", payload);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message || "Withdrawal processed successfully");
+        queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
+      } else {
+        toast.error(data?.reason || data?.error || "Failed to process withdrawal");
+      }
+      queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
+    },
+    onError: (error) => {
+      const responseData = error?.response?.data;
+      if (responseData && !responseData.success && responseData.reason) {
+        toast.error(responseData.reason);
+      } else {
+        handleApiError({ error, errorMessage: "Failed to process withdrawal" });
+      }
+      queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
+    },
+  });
+};
