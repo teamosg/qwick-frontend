@@ -172,11 +172,10 @@ const VerifyAccount = () => {
               </div>
             </div>
 
-            {/* <ResendOtp
+            <ResendOtp
               type={"verify-account"}
-              data={data}
               email={email}
-            /> */}
+            />
 
             <button
               type="submit"
