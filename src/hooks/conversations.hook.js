@@ -20,6 +20,7 @@ export const useGetConversationList = () => {
         throw new Error(message);
       }
     },
+    refetchInterval: 20000,
     staleTime: 1000 * 60 * 10,
   });
 };
@@ -41,6 +42,7 @@ export const useGetRequestConversationList = () => {
         throw new Error(message);
       }
     },
+    refetchInterval: 20000,
     staleTime: 1000 * 60 * 10,
   });
 };
@@ -368,7 +370,11 @@ export const useUpdateGroup = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ groupId, data }) => {
-      const res = await axiosPrivate.post(`/v1/account/groups/${groupId}/update/`, data)
+      const res = await axiosPrivate.put(`/v1/account/groups/${groupId}/update/`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       return res?.data;
     },
     onSuccess: (data) => {
@@ -382,6 +388,28 @@ export const useUpdateGroup = () => {
     },
     onError: (error) => {
       handleApiError({ error, errorMessage: "Failed to update group" })
+    }
+  })
+}
+
+export const useLeaveGroup = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ groupId }) => {
+      const res = await axiosPrivate.post(`/v1/account/groups/${groupId}/leave/`);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message || "Left group successfully");
+        queryClient.invalidateQueries({ queryKey: ["conversationList"] });
+        queryClient.invalidateQueries({ queryKey: ["conversationDetails"] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to leave group" })
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to leave group" })
     }
   })
 }

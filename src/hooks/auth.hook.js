@@ -248,6 +248,31 @@ export const useChangePassword = () => {
   });
 };
 
+// Resend OTP Hook
+export const useResendOtp = () => {
+  return useMutation({
+    mutationFn: async (payload) => {
+      const res = await axiosPublic.post("/v1/account/resend-otp/", payload);
+      return res.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message || "OTP resent successfully");
+      } else {
+        toast.error(data?.message || "Failed to resend OTP");
+      }
+    },
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error.message ||
+        "Failed to resend OTP";
+      toast.error(message);
+    },
+  });
+};
+
 // Forgot Password Hook
 export const useForgotPassword = () => {
   const form = useForm({

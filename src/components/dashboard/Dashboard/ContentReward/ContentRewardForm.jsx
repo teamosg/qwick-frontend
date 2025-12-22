@@ -2,14 +2,13 @@ import { Upload, HelpCircle, DollarSign, CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../../../ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import PaymentSetDialog from "./PaymentSetDialog";
 import { ChevronDown } from "lucide-react";
 
 const CampaignForm = ({
@@ -21,6 +20,7 @@ const CampaignForm = ({
 }) => {
   const [formData, setFormData] = useState({
     thumbnailPreview: initialData?.thumbnailPreview || null,
+    thumbnailFile: null,
     campaignName: initialData?.campaignName || "",
     type: initialData?.type || "",
     category: initialData?.category || "",
@@ -31,14 +31,55 @@ const CampaignForm = ({
     maxPayout: initialData?.maxPayout || "",
     flatFeeBonus: initialData?.flatFeeBonus || "",
     platforms: initialData?.platforms || [],
-    availableContent: initialData?.availableContent || "",
+    availableContent: initialData?.availableContent || 1,
     contentRequirement: initialData?.contentRequirement || "",
     startDate: initialData?.startDate || undefined,
     endDate: initialData?.endDate || undefined,
   });
 
   const [errors, setErrors] = useState({});
-  const [showPaymentsModal, setShowPaymentsModal] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const validate = () => {
+      const requiredFields = [
+        formData.campaignName?.trim(),
+        formData.type,
+        formData.category,
+        formData.campaignBudget,
+        formData.rewardRate,
+        formData.minPayout,
+        formData.maxPayout,
+        formData.contentRequirement?.trim(),
+        formData.startDate,
+        formData.endDate,
+      ];
+
+      const isBasicAndNumericValid = requiredFields.every((field) => field);
+
+      let isDurationValid = false;
+      if (formData.startDate && formData.endDate) {
+        const start = new Date(formData.startDate);
+        const end = new Date(formData.endDate);
+        const duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+        isDurationValid = duration >= 30;
+      }
+
+      const isPlatformsValid = formData.platforms.length > 0;
+      const isBudgetValid = Number(formData.campaignBudget) > 0;
+      const isRewardRateValid = Number(formData.rewardRate) > 0;
+
+      setIsFormValid(
+        isBasicAndNumericValid &&
+        isDurationValid &&
+        isPlatformsValid &&
+        isBudgetValid &&
+        isRewardRateValid
+      );
+    };
+
+    validate();
+  }, [formData]);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -61,6 +102,7 @@ const CampaignForm = ({
         setFormData((prev) => ({
           ...prev,
           thumbnailPreview: e.target.result,
+          thumbnailFile: file,
         }));
       };
       reader.readAsDataURL(file);
@@ -71,6 +113,7 @@ const CampaignForm = ({
     setFormData((prev) => ({
       ...prev,
       thumbnailPreview: null,
+      thumbnailFile: null,
     }));
     const fileInput = document.getElementById("thumbnail-upload");
     if (fileInput) fileInput.value = "";
@@ -92,12 +135,11 @@ const CampaignForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (onSubmit) {
+    if (isFormValid && onSubmit) {
       onSubmit(formData);
     } else {
-      console.log("Form submitted:", formData);
+      console.log("Form invalid or no submit handler");
     }
-    setShowPaymentsModal(true);
   };
 
   const handleCancel = () => {
@@ -107,9 +149,6 @@ const CampaignForm = ({
       console.log("Form cancelled");
     }
   };
-
-  const date = new Date()
-  console.log(date);
 
   return (
     <div className="max-w-3xl mx-auto p-6 dark:bg-[#1E1E1E] min-h-screen">
@@ -205,7 +244,7 @@ const CampaignForm = ({
                focus:ring-2 focus:ring-[#364152] focus:border-transparent
                transition-all outline-none appearance-none"
               >
-                <option value="">UGC</option>
+                <option value="">Select Type</option>
                 <option value="UGC">UGC</option>
                 <option value="Sponsored">Sponsored</option>
                 <option value="Review">Review</option>
@@ -222,7 +261,7 @@ const CampaignForm = ({
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-              Category
+              Category*
             </label>
             <div className="relative w-full">
               <select
@@ -233,6 +272,7 @@ const CampaignForm = ({
                focus:ring-2 focus:ring-[#364152] focus:border-transparent
                transition-all outline-none appearance-none"
               >
+                <option value="">Select Category</option>
                 <option value="Personal brand">Personal brand</option>
                 <option value="Entertainment">Entertainment</option>
                 <option value="Products">Products</option>
@@ -278,8 +318,6 @@ const CampaignForm = ({
                transition-all outline-none appearance-none"
               >
                 <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="GBP">GBP</option>
               </select>
 
               {/* Custom dropdown icon */}
@@ -314,7 +352,7 @@ const CampaignForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-              Minimum payout
+              Minimum payout*
               <Popover>
                 <PopoverTrigger asChild>
                   <button type="button" tabIndex={-1}>
@@ -343,7 +381,7 @@ const CampaignForm = ({
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-              Maximum payout
+              Maximum payout*
               <Popover>
                 <PopoverTrigger asChild>
                   <button type="button" tabIndex={-1}>
@@ -409,7 +447,7 @@ const CampaignForm = ({
             Platform*
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {["Facebook", "Instagram", "Youtube", "Tiktok"].map((platform) => (
+            {["Instagram", "Tiktok", "Youtube"].map((platform) => (
               <label
                 key={platform}
                 className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-[#2E2E2E] hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
@@ -440,11 +478,8 @@ const CampaignForm = ({
             creators to edit with here via a Google Drive link
           </p>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-              $
-            </span>
             <input
-              type="text"
+              type="number"
               value={formData.availableContent}
               onChange={(e) =>
                 handleInputChange("availableContent", e.target.value)
@@ -458,7 +493,7 @@ const CampaignForm = ({
         {/* Content requirement */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Content requirement
+            Content requirement*
           </label>
           <p className="text-xs text-gray-500 dark:text-gray-400">
             We recommend including content guidelines for users to follow.
@@ -601,7 +636,11 @@ const CampaignForm = ({
         <div className="flex flex-col sm:flex-row gap-4 pt-4">
           <Button
             type="submit"
-            className="bg-[#003933] dark:bg-[#003933] text-white hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium px-6 py-4 rounded-lg"
+            disabled={!isFormValid}
+            className={`transition font-medium px-6 py-4 rounded-lg text-white ${isFormValid
+              ? "bg-[#003933] dark:bg-[#003933] hover:bg-[#002822] dark:hover:bg-primary/90"
+              : "bg-gray-300 dark:bg-gray-700 cursor-not-allowed"
+              }`}
           >
             {isEditMode ? "Update Campaign" : "Create Campaign"}
           </Button>
@@ -615,13 +654,6 @@ const CampaignForm = ({
           </Button>
         </div>
       </form>
-
-      {/* dialog  */}
-      <PaymentSetDialog
-        showPaymentsModal={showPaymentsModal}
-        setShowForm={setShowForm}
-        setShowPaymentsModal={setShowPaymentsModal}
-      />
     </div>
   );
 };

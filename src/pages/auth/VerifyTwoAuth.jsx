@@ -5,6 +5,7 @@ import { useVerifyOtp } from "@/hooks/auth.hook";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { Link, useLocation } from "react-router";
+import ResendOtp from "./ResendOtp";
 
 const VerifyTwoAuth = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -173,17 +174,7 @@ const VerifyTwoAuth = () => {
                             </div>
                         </div>
 
-                        <div className="text-center">
-                            <p className="text-gray-600 dark:text-gray-400 text-sm">
-                                Don't receive the email?{" "}
-                                <button
-                                    type="button"
-                                    className="text-[#003933] dark:text-white font-medium hover:underline"
-                                >
-                                    Click to resend code
-                                </button>
-                            </p>
-                        </div>
+                        <ResendOtp type="verify-2fa" email={email} />
 
                         <button
                             type="submit"

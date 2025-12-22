@@ -62,7 +62,7 @@ export function DashboardSidebarContent() {
   
   const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore();
   const {
-    data: communityList,
+    data: communityList, 
     isLoading: isLoadingMyCommunityList,
   } = useGetMyCommunityList();
 

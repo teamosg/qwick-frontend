@@ -34,7 +34,7 @@ const ProfileBalance = () => {
             ${walletBalance?.balance || 0}
           </h3>
 
-          <p>$0.00 available to withdraw</p>
+          <p>${walletBalance?.balance || 0} available to withdraw</p>
 
           {/* ACTION BUTTONS */}
           <div className="flex flex-col sm:flex-row gap-3 mt-6">
