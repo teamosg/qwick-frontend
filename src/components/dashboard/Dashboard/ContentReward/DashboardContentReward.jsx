@@ -85,17 +85,16 @@ const DashboardContentReward = () => {
     const payload = new FormData();
 
     if (formData.thumbnailFile) {
-      payload.append("thumbnail", formData.thumbnailFile);
+      // payload.append("thumbnail", formData.thumbnailFile);
     }
 
     payload.append("name", formData.campaignName);
-    payload.append("campaign_type", typeMap[formData.type] || 1);
-    payload.append("category", categoryMap[formData.category] || 1);
+    payload.append("campaign_type_id", typeMap[formData.type] || 1);
+    payload.append("category_id", categoryMap[formData.category] || 1);
     payload.append("budget", Number(formData.campaignBudget) || 0);
     payload.append("reward_rate", Number(formData.rewardRate) || 0);
     payload.append("min_payout", Number(formData.minPayout) || 0);
     payload.append("max_payout", Number(formData.maxPayout) || 0);
-    payload.append("flat_fee_bonus", Number(formData.flatFeeBonus) || 0);
     payload.append("available_content", parseInt(formData.availableContent) || 1);
     payload.append("content_requirement", formData.contentRequirement);
 
@@ -113,9 +112,7 @@ const DashboardContentReward = () => {
     platforms.forEach((p) => {
       const id = platformMap[p];
       if (id) {
-        // Appending multiple times is correct for FormData M2M, 
-        // but ensure your Django Serializer is PrimaryKeyRelatedField(many=True)
-        payload.append("platforms", id);
+        payload.append("platform_ids", id.toString());
       }
     });
 
