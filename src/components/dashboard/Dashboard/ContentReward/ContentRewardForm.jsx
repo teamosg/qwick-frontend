@@ -447,7 +447,7 @@ const CampaignForm = ({
             Platform*
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {["Facebook", "Instagram", "Youtube", "Tiktok"].map((platform) => (
+            {["Instagram", "Tiktok", "Youtube"].map((platform) => (
               <label
                 key={platform}
                 className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-[#2E2E2E] hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
@@ -638,8 +638,8 @@ const CampaignForm = ({
             type="submit"
             disabled={!isFormValid}
             className={`transition font-medium px-6 py-4 rounded-lg text-white ${isFormValid
-                ? "bg-[#003933] dark:bg-[#003933] hover:bg-[#002822] dark:hover:bg-primary/90"
-                : "bg-gray-300 dark:bg-gray-700 cursor-not-allowed"
+              ? "bg-[#003933] dark:bg-[#003933] hover:bg-[#002822] dark:hover:bg-primary/90"
+              : "bg-gray-300 dark:bg-gray-700 cursor-not-allowed"
               }`}
           >
             {isEditMode ? "Update Campaign" : "Create Campaign"}

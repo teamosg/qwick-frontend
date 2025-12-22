@@ -75,17 +75,17 @@ const DashboardContentReward = () => {
     };
 
     const platformMap = {
-      "Facebook": 1,
       "Instagram": 2,
-      "Youtube": 3,
-      "Tiktok": 4
+      "Tiktok": 3,
+      "Youtube": 1
     };
 
 
     const payload = new FormData();
 
     if (formData.thumbnailFile) {
-      // payload.append("thumbnail", formData.thumbnailFile);
+      console.log("Thumbnail file:", formData.thumbnailFile);
+      payload.append("thumbnail", formData.thumbnailFile);
     }
 
     payload.append("name", formData.campaignName);
@@ -112,14 +112,9 @@ const DashboardContentReward = () => {
     platforms.forEach((p) => {
       const id = platformMap[p];
       if (id) {
-        payload.append("platform_ids", id.toString());
+        payload.append("platform_ids[]", id);
       }
     });
-
-    console.log("Submitting payload:", payload);
-    for (let [key, value] of payload.entries()) {
-      console.log(`${key}: ${value}`);
-    }
 
     createCampaign(payload, {
       onSuccess: () => {
