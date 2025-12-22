@@ -39,6 +39,7 @@ import SignIn from "../pages/auth/SignIn";
 import Home from "../pages/dashboard/Home";
 import DashboardLayout from "./../layout/DashboardLayout";
 import VerifyTwoAuth from "@/pages/auth/VerifyTwoAuth";
+import DepositSuccess from "@/pages/deposit/DepositSuccess";
 const router = createBrowserRouter([
   //Admin Dashboard layout
 
@@ -222,6 +223,10 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
     ],
+  },
+  {
+    path: "/deposit/success",
+    element: <DepositSuccess />,
   },
 ]);
 
