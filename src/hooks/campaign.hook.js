@@ -3,6 +3,22 @@ import { axiosPrivate } from "../lib/axios.config";
 import handleApiError from "@/services/handleApiError";
 import { toast } from "sonner";
 
+export const useGetAllCampaigns = () => {
+    return useQuery({
+        queryKey: ["allCampaigns"],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get("/v1/campaigns/");
+                return res?.data;
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch campaigns" });
+            }
+        },
+        staleTime: 1000 * 60 * 2, // cache for 2 mins
+    });
+};
+
+
 export const useCreateCampaign = (communityId) => {
     const queryClient = useQueryClient();
 
@@ -23,6 +39,7 @@ export const useCreateCampaign = (communityId) => {
         onSuccess: (data) => {
             if (data?.success) {
                 toast.success(data?.message || "Campaign created successfully");
+                queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
                 // Invalidate relevant queries if needed, e.g., fetching campaigns list
                 // queryClient.invalidateQueries({ queryKey: ["campaigns", communityId] });
             } else {
@@ -35,20 +52,7 @@ export const useCreateCampaign = (communityId) => {
     });
 };
 
-export const useGetAllCampaigns = () => {
-    return useQuery({
-        queryKey: ["allCampaigns"],
-        queryFn: async () => {
-            try {
-                const res = await axiosPrivate.get("/v1/campaigns/");
-                return res?.data;
-            } catch (error) {
-                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch campaigns" });
-            }
-        },
-        staleTime: 1000 * 60 * 2, // cache for 2 mins
-    });
-};
+
 
 export const useSubmitCampaignContent = (campaignId) => {
     const queryClient = useQueryClient();
