@@ -70,7 +70,7 @@ const JoinCommunity = () => {
       >
         <div className="max-h-100 overflow-hidden rounded-xl mb-6">
           <motion.img
-            src={JoinCommunityImage || "https://placehold.co/1200x800"}
+            src={JoinCommunityImage}
             alt=""
             className="max-w-full object-cover "
             variants={itemVariants}
@@ -85,12 +85,12 @@ const JoinCommunity = () => {
           className="max-w-md mx-auto text-center"
           variants={itemVariants}
         >
-          <motion.div
+          {/* <motion.div
             className="flex items-center justify-center gap-3 mb-3"
             variants={itemVariants}
           >
             <motion.img
-              src="https://i.pravatar.cc/36"
+              src={""}
               alt="Profile"
               className="w-6 h-6 rounded-full"
               whileHover={{ scale: 1.2 }}
@@ -106,7 +106,7 @@ const JoinCommunity = () => {
                 </span>
               </Link>
             </motion.div>
-          </motion.div>
+          </motion.div> */}
           <motion.h2
             className="text-2xl text-[#090003] dark:text-white font-semibold mb-6"
             variants={itemVariants}
