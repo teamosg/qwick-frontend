@@ -19,7 +19,10 @@ import { useGetMyCommunityList } from "@/hooks/community.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import Logo from "../Logo/Logo";
 
-const NavItem = ({ icon, text, to, onClose }) => {
+import { useNotificationStore } from "@/store/notificationStore";
+
+const NavItem = ({ icon, text, to, onClose, showDot }) => {
+
   const { theme } = useTheme();
   return (
     <NavLink
@@ -43,6 +46,9 @@ const NavItem = ({ icon, text, to, onClose }) => {
             {React.cloneElement(icon, {
               color: isActive || isPending ? "white" : theme === 'light' ? "#202224" : "white",
             })}
+            {showDot && (
+              <span className="absolute top-3 left-7 w-2.5 h-2.5 bg-red-500 border-2 border-white dark:border-zinc-900 rounded-full" />
+            )}
           </div>
           <span className="truncate text-[16px]">{text}</span>
         </div>
@@ -77,6 +83,8 @@ const Sidebar = ({ onClose }) => {
   }, [communityList])
 
 
+  const { hasUnread } = useNotificationStore();
+
   return (
     <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#171717] overflow-y-auto  ">
       <div className="flex flex-col justify-between h-full">
@@ -102,6 +110,7 @@ const Sidebar = ({ onClose }) => {
                   icon: <NotificationSVG />,
                   text: "Notifications",
                   to: "/notifications",
+                  showDot: hasUnread,
                 },
                 { icon: <DashboardSVG />, text: "Dashboard", to: "/dashboard" },
                 { icon: <ProfileSVG />, text: "Profile", to: "/profile" },
@@ -112,10 +121,12 @@ const Sidebar = ({ onClose }) => {
                   text={item.text}
                   to={item.to}
                   onClose={onClose}
+                  showDot={item.showDot}
                 />
               ))}
             </div>
           </div>
+
 
           {/* Search Community */}
           <div className="px-4 border-t border-sidebar-border">

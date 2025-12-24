@@ -1,11 +1,17 @@
 import { useNotificationStore } from "@/store/notificationStore";
 import { format } from "date-fns";
 import { Bell } from "lucide-react";
+import { useEffect } from "react";
 
 const Notifications = () => {
-  const { notifications } = useNotificationStore();
+  const { notifications, setHasUnread } = useNotificationStore();
+
+  useEffect(() => {
+    setHasUnread(false);
+  }, [setHasUnread]);
 
   return (
+
     <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white dark:bg-zinc-900 shadow-sm border border-gray-200 dark:border-zinc-800 rounded-2xl overflow-hidden">
