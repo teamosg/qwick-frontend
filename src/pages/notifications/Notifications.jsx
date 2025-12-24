@@ -1,79 +1,51 @@
-import SingleNotificationItem from "@/components/notifications/SingleNotificationItem";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SquareCheck } from "lucide-react";
+import { useNotificationStore } from "@/store/notificationStore";
+import { format } from "date-fns";
+import { Bell } from "lucide-react";
 
 const Notifications = () => {
+  const { notifications } = useNotificationStore();
+
   return (
-    <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen p-4">
-      <div className="bg-white dark:bg-zinc-900 p-6 border border-gray-200 dark:border-zinc-700 rounded-2xl">
-        {/* <div className="mb-9 inline-block">
-          <h1 className="text-[#191919] dark:text-white text-xl font-semibold">
-            Notifications
-          </h1>
-        </div> */}
-        <div className="flex w-full flex-col gap-6">
-          <Tabs defaultValue="all-notifications">
-            <div className="flex flex-row justify-between">
-              <TabsList className="bg-transparent border-b border-border rounded-none p-0 mb-8 h-auto w-full justify-start  max-w-[425px]">
-                <TabsTrigger
-                  value="all-notifications"
-                  className="bg-transparent shadow-none rounded-none border-0 relative data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 mr-8 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-1 data-[state=active]:after:right-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-primary data-[state=active]:after:content-['']"
+    <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen p-4 md:p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white dark:bg-zinc-900 shadow-sm border border-gray-200 dark:border-zinc-800 rounded-2xl overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-zinc-800 flex items-center justify-between">
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <Bell className="w-5 h-5 text-primary" />
+              Notifications
+            </h1>
+            <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+              {notifications.length} Total
+            </span>
+          </div>
+
+          <div className="divide-y divide-gray-100 dark:divide-zinc-800">
+            {notifications.length > 0 ? (
+              notifications.map((notification) => (
+                <div
+                  key={notification.id}
+                  className="p-6 hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors"
                 >
-                  All
-                </TabsTrigger>
-                <TabsTrigger
-                  value="unread"
-                  className="bg-transparent shadow-none rounded-none border-0 relative data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 mr-8 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-1 data-[state=active]:after:right-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-primary data-[state=active]:after:content-['']"
-                >
-                  <span>Unread</span>
-                  <span className="text-muted-foreground text-sm ml-1">
-                    (17)
-                  </span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="mentions"
-                  className="bg-transparent shadow-none rounded-none border-0 relative data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 mr-8 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-1 data-[state=active]:after:right-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-primary data-[state=active]:after:content-['']"
-                >
-                  <span>Mentions</span>
-                  <span className="text-muted-foreground text-sm ml-1">
-                    (6)
-                  </span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="all-activity"
-                  className="bg-transparent shadow-none rounded-none border-0 relative data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 mr-8 data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-1 data-[state=active]:after:right-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-primary data-[state=active]:after:content-['']"
-                >
-                  <span>All Activity</span>
-                  <span className="text-muted-foreground text-sm ml-1">
-                    (60)
-                  </span>
-                </TabsTrigger>
-              </TabsList>
-              <div className="">
-                <button
-                  className="cursor-pointer font-semibold text-[#003933] dark:text-white flex gap-1 justify-center items-center text-xs md:text-sm"
-                >
-                  <SquareCheck />
-                  <span className=""> Mark all as read</span>
-                </button>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-gray-900 dark:text-gray-100 font-medium">
+                      {notification.message}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {format(new Date(notification.timestamp), "MMM d, h:mm a")}
+                    </p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="p-12 text-center">
+                <div className="bg-gray-100 dark:bg-zinc-800 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Bell className="w-6 h-6 text-gray-400" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">No notifications</h3>
+                <p className="text-gray-500 dark:text-gray-400">When you receive notifications, they will appear here.</p>
               </div>
-            </div>
-            <TabsContent value="all-notifications">
-              <SingleNotificationItem />
-              <SingleNotificationItem />
-              <SingleNotificationItem />
-              <SingleNotificationItem />
-            </TabsContent>
-            <TabsContent value="unread">
-              <SingleNotificationItem />
-            </TabsContent>
-            <TabsContent value="mentions">
-              <SingleNotificationItem />
-            </TabsContent>
-            <TabsContent value="all-activity">
-              <SingleNotificationItem />
-            </TabsContent>
-          </Tabs>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -81,3 +53,4 @@ const Notifications = () => {
 };
 
 export default Notifications;
+

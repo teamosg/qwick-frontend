@@ -9,6 +9,7 @@ import { ThemeProvider } from "./components/shared/ThemeProvider";
 import "./index.css";
 import router from "./routes/router";
 import { Toaster } from "./components/ui/sonner";
+import NotificationProvider from "./providers/NotificationProvider";
 
 AOS.init({
   duration: 1000,
@@ -20,10 +21,13 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
+        <NotificationProvider>
+          <RouterProvider router={router} />
+        </NotificationProvider>
         {/* <Toaster position="bottom-right" /> */}
         <Toaster />
       </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>
 );
+
