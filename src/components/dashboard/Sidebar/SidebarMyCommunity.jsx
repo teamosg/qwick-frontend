@@ -9,16 +9,13 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarMyCommunitySkeleton } from "./skeletons/SidebarMyCommunitySkeleton";
 import AvatarUser from "@/components/ui/AvatarUser";
-import { useCommunityStore } from "@/store/communityStore";
-import { useNavigate } from "react-router";
 
 
 export function SidebarMyCommunity({ onClose, createdCommunityList, isLoadingCommunityList, isErrorCommunityList }) {
-  const navigate = useNavigate()
+
   if (isLoadingCommunityList || isErrorCommunityList)
     return <SidebarMyCommunitySkeleton />;
 
-  const { setSelectedBrandCommunity } = useCommunityStore()
 
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
@@ -33,10 +30,7 @@ export function SidebarMyCommunity({ onClose, createdCommunityList, isLoadingCom
                 <React.Fragment key={community?.business_name}>
                   <div className="text-sm  mb-3">
                     <button
-                      onClick={() => {
-                        setSelectedBrandCommunity(community)
-                        navigate(`/dashboard/content-payout`)
-                      }}
+                      onClick={onClose}
                       className="flex items-center gap-2 dark:text-white cursor-pointer transition duration-300 hover:text-[#17173c]"
                     >
                       <AvatarUser
