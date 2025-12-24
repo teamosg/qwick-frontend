@@ -49,3 +49,38 @@ export const useGetAllCampaigns = () => {
         staleTime: 1000 * 60 * 2, // cache for 2 mins
     });
 };
+
+export const useSubmitCampaignContent = (campaignId) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationKey: ["submitCampaignContent", campaignId],
+        mutationFn: async (payload) => {
+            // payload should be FormData: file, tiktok_link, youtube_link, instagram_link
+            const res = await axiosPrivate.post(
+                `/v1/campaign/${campaignId}/content/submit/`,
+                payload, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+            );
+            return res?.data;
+        },
+        onSuccess: (data) => {
+            if (data?.success || data?.status === 200 || data?.status === 201) {
+                toast.success(data?.message || "Content submitted successfully");
+                queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+            } else {
+                toast.error(data?.message || "Failed to submit content");
+            }
+        },
+        onError: (error) => {
+            if (error?.response?.status === 400) {
+                toast.error("Please check your links and media file for errors.");
+            } else {
+                handleApiError({ error, errorMessage: "Failed to submit content" });
+            }
+        },
+    });
+};

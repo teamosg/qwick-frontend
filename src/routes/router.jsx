@@ -128,11 +128,11 @@ const router = createBrowserRouter([
                 element: <ContentRewordPublic />,
               },
               {
-                path: "reward-details",
+                path: "reward-details/:campaignId",
                 element: <ContentRewardDetails />,
               },
               {
-                path: "reward-details-payment",
+                path: "reward-details-payment/:campaignId",
                 element: <ContentRewardDetailsPayment />,
               },
             ],

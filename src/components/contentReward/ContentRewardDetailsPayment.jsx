@@ -6,27 +6,46 @@ import {
 } from "@/components/ui/shadcn-io/dropzone";
 
 import { CircleAlert, X } from "lucide-react";
-import { useState } from "react";
-import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { useState, useMemo } from "react";
+import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { toast } from "sonner";
+import { useParams, useNavigate } from "react-router";
+import { useGetAllCampaigns, useSubmitCampaignContent } from "@/hooks/campaign.hook";
+import { useCommunityStore } from "@/store/communityStore";
+
+const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
 
 const ContentRewardDetailsPayment = () => {
+  const { campaignId } = useParams();
+  const navigate = useNavigate();
+  const { selectedCreatorCommunity } = useCommunityStore();
+  const { data: campaignRes, isLoading: isLoadingCampaigns } = useGetAllCampaigns();
+  const { mutate: submitContent, isPending: isSubmitting } = useSubmitCampaignContent(campaignId);
+
+  const campaign = useMemo(() => {
+    return campaignRes?.campaigns?.find(c => c.id === parseInt(campaignId));
+  }, [campaignRes, campaignId]);
+
   const [files, setFiles] = useState();
   const [showPopup, setShowPopup] = useState(false);
 
-  // Separate state for each social media platform
+  // Filter available platforms from campaign data
+  const availablePlatforms = useMemo(() => {
+    return campaign?.platforms?.map(p => p.name?.toLowerCase()) || [];
+  }, [campaign]);
+
   const [formData, setFormData] = useState({
-    youtube: "",
-    instagram: "",
-    tiktok: "",
-    linkedin: "",
+    youtube_link: "",
+    instagram_link: "",
+    tiktok_link: "",
   });
 
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleDrop = (files) => {
-    setFiles(files);
+  const isCreator = selectedCreatorCommunity?.can_edit;
+
+  const handleDrop = (droppedFiles) => {
+    setFiles(droppedFiles);
   };
 
   const handleApplyClick = () => {
@@ -36,13 +55,11 @@ const ContentRewardDetailsPayment = () => {
   const handleClosePopup = () => {
     setShowPopup(false);
     setFormData({
-      youtube: "",
-      instagram: "",
-      tiktok: "",
-      linkedin: "",
+      youtube_link: "",
+      instagram_link: "",
+      tiktok_link: "",
     });
     setErrors({});
-    setIsSubmitting(false);
   };
 
   const handleInputChange = (platform, value) => {
@@ -50,84 +67,113 @@ const ContentRewardDetailsPayment = () => {
       ...prev,
       [platform]: value,
     }));
-
-    // Clear error when user starts typing
     if (errors[platform]) {
-      setErrors((prev) => ({
-        ...prev,
-        [platform]: "",
-      }));
+      setErrors((prev) => ({ ...prev, [platform]: "" }));
     }
   };
 
   const validateForm = () => {
     const newErrors = {};
 
-    // Check if at least one platform has a link
-    const hasAnyLink = Object.values(formData).some(
-      (link) => link.trim() !== ""
-    );
-    if (!hasAnyLink) {
-      newErrors.general = "Please provide at least one social media link";
+    // Check if at least one available platform has a link
+    const hasAnyLink = Object.entries(formData).some(([key, val]) => {
+      const platformKey = key.replace("_link", "");
+      return availablePlatforms.includes(platformKey) && val.trim() !== "";
+    });
+
+    if (!hasAnyLink && availablePlatforms.length > 0) {
+      newErrors.general = "Please provide at least one social media link for the available platforms.";
     }
 
-    // Validate individual links (basic URL validation)
-    Object.entries(formData).forEach(([platform, link]) => {
-      if (link.trim() !== "" && !isValidUrl(link)) {
-        newErrors[platform] = "Please enter a valid URL";
-      }
-    });
+    if (!files || files.length === 0) {
+      newErrors.files = "Media file is required.";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const isValidUrl = (string) => {
-    try {
-      new URL(string);
-      return true;
-    } catch {
-      return false;
-    }
-  };
-
   const handleSubmit = async () => {
-    if (!validateForm()) {
-      return;
+    if (!validateForm()) return;
+
+    const payload = new FormData();
+    if (files && files[0]) {
+      payload.append("file", files[0]);
     }
 
-    setIsSubmitting(true);
+    // Only append links for available platforms
+    if (availablePlatforms.includes("youtube") && formData.youtube_link) payload.append("youtube_link", formData.youtube_link);
+    if (availablePlatforms.includes("instagram") && formData.instagram_link) payload.append("instagram_link", formData.instagram_link);
+    if (availablePlatforms.includes("tiktok") && formData.tiktok_link) payload.append("tiktok_link", formData.tiktok_link);
 
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Reset form and close popup
-      handleClosePopup();
-
-      // You could add a success message here
-      toast.success("Application submitted successfully!");
-    } catch (error) {
-      console.error("Error submitting application:", error);
-      setErrors({ general: "Failed to submit application. Please try again." });
-    } finally {
-      setIsSubmitting(false);
-    }
+    submitContent(payload, {
+      onSuccess: (data) => {
+        if (data?.success || data?.status === 200 || data?.status === 201) {
+          handleClosePopup();
+          navigate("/content-reward");
+        }
+      },
+      onError: (error) => {
+        const apiErrors = error?.response?.data;
+        if (apiErrors) {
+          setErrors(apiErrors);
+        }
+      }
+    });
   };
+
+  if (isCreator) {
+    return (
+      <div className="flex items-center justify-center p-10 mt-10">
+        <p className="text-gray-500">Access denied for community creators.</p>
+      </div>
+    );
+  }
+
+  if (isLoadingCampaigns) {
+    return (
+      <div className="flex items-center justify-center p-10 h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#003933]"></div>
+      </div>
+    );
+  }
+
+  if (!campaign) {
+    return (
+      <div className="flex items-center justify-center p-10 h-screen">
+        <p>Campaign data not found.</p>
+      </div>
+    )
+  }
+
+  const {
+    name,
+    thumbnail,
+    reward_rate,
+    campaign_type,
+    category,
+    platforms,
+    budget,
+    max_payout
+  } = campaign;
+
+  const fullThumbnail = thumbnail?.startsWith("http")
+    ? thumbnail
+    : `${MEDIA_BASE_URL}${thumbnail}`;
 
   return (
     <>
       <div className="p-6 text-[#717171]">
-        <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl bg-white">
+        <div className="dark:text-white dark:bg-zinc-900 p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl bg-white">
           <div className="mb-6">
             <img
-              src="/confirm-apply.png"
-              alt=""
-              className="w-full h-auto object-cover mb-7 rounded-xl"
+              src={fullThumbnail || "/confirm-apply.png"}
+              alt={name}
+              className="w-full h-[300px] object-cover mb-7 rounded-xl"
             />
             <p className="text-[#717171] text-xs mb-7 dark:text-zinc-400 flex gap-2 items-center">
               <span>
-                <CircleAlert className="text-[#FEC260]" />
+                <CircleAlert className="text-[#FEC260]" size={18} />
               </span>
               <span>
                 Only views after you submit count towards payout. Submit as soon
@@ -135,74 +181,70 @@ const ContentRewardDetailsPayment = () => {
               </span>
             </p>
             <div className="mb-2.5">
-              <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white font-semibold">
-                PAID OUT
+              <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white font-semibold uppercase">
+                Campaign Progress
               </h4>
               <p className="text-[#717171] text-xs flex justify-between dark:text-zinc-400">
-                <span className=""> $1673.18 of $14968.30</span> <span>7%</span>
+                <span className=""> $0.00 of ${budget}</span> <span>0%</span>
               </p>
             </div>
-            <Progress value={7} indicatorColor="red" className="mb-3.5" />
+            <Progress value={0} indicatorColor="red" className="mb-3.5" />
           </div>
           <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between mb-9">
             <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
+              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Reward
               </p>
               <p className="text-[#717171] text-sm dark:text-zinc-400">
-                $3.00/1k
+                ${reward_rate}/1k
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
+              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Type
               </p>
               <p className="text-[#717171] text-sm dark:text-zinc-400">
-                Clipping
+                {campaign_type?.name || "N/A"}
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
-                Clipping
-              </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
-                $3.00/1k
-              </p>
-            </div>
-            <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
-                Maximum Payout
-              </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
-                $3.00/1k
-              </p>
-            </div>
-            <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold  dark:text-white">
-                Platforms
-              </p>
-              <p className="text-[#003933] text-sm">
-                <span className="flex gap-2 dark:text-zinc-400">
-                  <FaInstagram size={20} /> <FaFacebook size={20} />
-                  <FaYoutube size={20} />
-                </span>
-              </p>
-            </div>
-            <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
+              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Category
               </p>
               <p className="text-[#717171] text-sm dark:text-zinc-400">
-                $3.00/1k
+                {category?.name || "N/A"}
               </p>
+            </div>
+            <div>
+              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Max Payout
+              </p>
+              <p className="text-[#717171] text-sm dark:text-zinc-400">
+                ${max_payout}
+              </p>
+            </div>
+            <div>
+              <p className="text-[#090003] text-xs mb-1 font-semibold  dark:text-white uppercase opacity-70">
+                Platforms
+              </p>
+              <div className="flex gap-3 dark:text-zinc-400 text-[#003933]">
+                {platforms?.map((p, idx) => {
+                  const pName = p.name?.toLowerCase();
+                  if (pName === 'instagram') return <FaInstagram key={idx} size={20} />;
+                  if (pName === 'facebook') return <FaFacebook key={idx} size={20} />;
+                  if (pName === 'youtube') return <FaYoutube key={idx} size={20} />;
+                  if (pName === 'tiktok') return <FaTiktok key={idx} size={20} />;
+                  return null;
+                })}
+              </div>
             </div>
           </div>
           <div className="text-center flex items-end justify-end ">
             <button
               onClick={handleApplyClick}
-              className="w-sm mb-2.5 text-white bg-[#003933] hover:bg-[#002822] dark:hover:bg-[#0dc4a5]  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition"
+              className="w-[200px] mb-2.5 text-white bg-[#003933] hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition shadow-lg"
             >
-              Submit
+              Submit Content
             </button>
           </div>
         </div>
@@ -210,37 +252,49 @@ const ContentRewardDetailsPayment = () => {
 
       {/* Popup Modal */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-zinc-800 rounded-2xl w-full max-w-3xl mx-auto relative overflow-y-auto max-h-[90vh] sm:p-6 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+          <div className="bg-white dark:bg-zinc-800 rounded-3xl w-full max-w-2xl mx-auto relative overflow-y-auto max-h-[95vh] sm:p-8 p-6 shadow-2xl">
             {/* Close Button */}
             <button
               onClick={handleClosePopup}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 transition-colors z-10"
+              className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 transition-colors z-10"
             >
               <X size={24} />
             </button>
 
-            <div className="space-y-6 mt-2 sm:mt-0">
+            <div className="space-y-6">
               {/* Header */}
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Create submission
-              </h2>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Create Submission
+                </h2>
+                <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1">
+                  Share your results for <strong>{name}</strong>
+                </p>
+              </div>
 
               {/* General Error Message */}
-              {errors.general && (
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                  <p className="text-sm text-red-800 dark:text-red-200">
-                    {errors.general}
-                  </p>
+              {(errors.general || errors.non_field_errors) && (
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-3 flex items-start gap-2">
+                  <CircleAlert className="text-red-600 size-4 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm text-red-800 dark:text-red-200">
+                    {errors.general && <p>{errors.general}</p>}
+                    {errors.non_field_errors && (
+                      <ul className="list-disc ml-4">
+                        {Array.isArray(errors.non_field_errors)
+                          ? errors.non_field_errors.map((err, i) => <li key={i}>{err}</li>)
+                          : <li>{errors.non_field_errors}</li>
+                        }
+                      </ul>
+                    )}
+                  </div>
                 </div>
               )}
 
               {/* Info Alert */}
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-3 flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-white text-xs font-bold">!</span>
-                </div>
-                <p className="text-sm text-orange-800 dark:text-orange-200 leading-relaxed">
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 flex items-start gap-3">
+                <CircleAlert className="text-amber-500 flex-shrink-0 mt-0.5" size={18} />
+                <p className="text-sm text-amber-800 dark:text-amber-200 leading-relaxed">
                   Only views after you submit count towards payout. Submit as
                   soon as you post to get paid for all of your views.
                 </p>
@@ -248,153 +302,111 @@ const ContentRewardDetailsPayment = () => {
 
               {/* Form Content */}
               <div className="space-y-6">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
-                    Submit your social media post
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-zinc-400">
-                    Share your posts and the original image or video below. Once
-                    approved, you'll start earning rewards based on the views
-                    your content generates.
-                  </p>
-                </div>
+                {/* Link Inputs - Dynamically rendered based on available platforms */}
+                <div className="space-y-5">
+                  {availablePlatforms.includes("youtube") && (
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                        YouTube Link
+                      </label>
+                      <input
+                        type="url"
+                        value={formData.youtube_link}
+                        onChange={(e) => handleInputChange("youtube_link", e.target.value)}
+                        placeholder="https://www.youtube.com/watch?v=..."
+                        className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700/50 dark:text-white outline-none transition-all placeholder:text-gray-400 ${errors.youtube_link ? "border-red-500" : "border-gray-200 dark:border-zinc-700"
+                          }`}
+                      />
+                      {errors.youtube_link && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {Array.isArray(errors.youtube_link) ? errors.youtube_link[0] : errors.youtube_link}
+                        </p>
+                      )}
+                    </div>
+                  )}
 
-                {/* Link Inputs */}
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                      Provide YouTube link
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.youtube}
-                      onChange={(e) =>
-                        handleInputChange("youtube", e.target.value)
-                      }
-                      placeholder="https://www.youtube.com/watch?v=..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2  focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                        errors.youtube
-                          ? "border-red-300 dark:border-red-600"
-                          : "border-gray-300 dark:border-gray-600"
-                      }`}
-                    />
-                    {errors.youtube && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.youtube}
-                      </p>
-                    )}
-                  </div>
+                  {availablePlatforms.includes("instagram") && (
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                        Instagram Link
+                      </label>
+                      <input
+                        type="url"
+                        value={formData.instagram_link}
+                        onChange={(e) => handleInputChange("instagram_link", e.target.value)}
+                        placeholder="https://www.instagram.com/reels/..."
+                        className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700/50 dark:text-white outline-none transition-all placeholder:text-gray-400 ${errors.instagram_link ? "border-red-500" : "border-gray-200 dark:border-zinc-700"
+                          }`}
+                      />
+                      {errors.instagram_link && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {Array.isArray(errors.instagram_link) ? errors.instagram_link[0] : errors.instagram_link}
+                        </p>
+                      )}
+                    </div>
+                  )}
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                      Provide Instagram link
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.instagram}
-                      onChange={(e) =>
-                        handleInputChange("instagram", e.target.value)
-                      }
-                      placeholder="https://www.instagram.com/p/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                        errors.instagram
-                          ? "border-red-300 dark:border-red-600"
-                          : "border-gray-300 dark:border-gray-600"
-                      }`}
-                    />
-                    {errors.instagram && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.instagram}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                      Provide TikTok link
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.tiktok}
-                      onChange={(e) =>
-                        handleInputChange("tiktok", e.target.value)
-                      }
-                      placeholder="https://www.tiktok.com/@user/video/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                        errors.tiktok
-                          ? "border-red-300 dark:border-red-600"
-                          : "border-gray-300 dark:border-gray-600"
-                      }`}
-                    />
-                    {errors.tiktok && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.tiktok}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                      Provide LinkedIn link
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.linkedin}
-                      onChange={(e) =>
-                        handleInputChange("linkedin", e.target.value)
-                      }
-                      placeholder="https://www.linkedin.com/posts/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                        errors.linkedin
-                          ? "border-red-300 dark:border-red-600"
-                          : "border-gray-300 dark:border-gray-600"
-                      }`}
-                    />
-                    {errors.linkedin && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.linkedin}
-                      </p>
-                    )}
-                  </div>
+                  {availablePlatforms.includes("tiktok") && (
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                        TikTok Link
+                      </label>
+                      <input
+                        type="url"
+                        value={formData.tiktok_link}
+                        onChange={(e) => handleInputChange("tiktok_link", e.target.value)}
+                        placeholder="https://www.tiktok.com/@user/video/..."
+                        className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700/50 dark:text-white outline-none transition-all placeholder:text-gray-400 ${errors.tiktok_link ? "border-red-500" : "border-gray-200 dark:border-zinc-700"
+                          }`}
+                      />
+                      {errors.tiktok_link && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {Array.isArray(errors.tiktok_link) ? errors.tiktok_link[0] : errors.tiktok_link}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Media Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
-                    Media<span className="text-red-500">*</span>
+                  <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                    Media File<span className="text-red-500">*</span>
                   </label>
 
-                  <div
-                    className="border-2 border-dashed rounded-lg p-6 sm:p-8 text-center transition-colors border-[#003933] dark:border-gray-600"
-                    onDrop={handleDrop}
-                  >
-                    <div className="flex flex-col items-center space-y-3">
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        Upload the original media file you posted (not a
-                        screenshot). For videos, upload the video file. For
-                        posts with multiple files, upload the first file.
-                      </p>
+                  <div className={`border-2 border-dashed rounded-2xl p-6 transition-all ${errors.files ? 'border-red-400 bg-red-50/50' : 'border-emerald-200 bg-emerald-50/10'}`}>
+                    <div className="flex flex-col items-center">
                       <Dropzone
-                        maxFiles={3}
+                        maxFiles={1}
                         onDrop={handleDrop}
-                        onError={console.error}
+                        onError={(err) => toast.error(err)}
                         src={files}
-                        className="border-0"
+                        className="w-full border-0 bg-transparent"
                       >
-                        <DropzoneEmptyState />
+                        <DropzoneEmptyState className="py-4">
+                          <div className="text-center">
+                            <p className="text-sm font-medium text-emerald-800 dark:text-emerald-400">Click to upload or drag and drop</p>
+                            <p className="text-xs text-gray-500 mt-1">Upload the original media file you posted</p>
+                          </div>
+                        </DropzoneEmptyState>
                         <DropzoneContent />
                       </Dropzone>
                     </div>
                   </div>
+                  {errors.files && <p className="text-red-500 text-xs mt-2">{errors.files}</p>}
                 </div>
 
                 {/* Submit Button */}
                 <button
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className="block w-full bg-emerald-800 hover:bg-emerald-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-full text-center transition-colors"
+                  className="w-full bg-[#003933] hover:bg-[#002822] disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-4 px-4 rounded-xl transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
                 >
-                  {isSubmitting ? "Submitting..." : "Apply"}
+                  {isSubmitting ? (
+                    "Submitting..."
+                  ) : (
+                    "Submit Application"
+                  )}
                 </button>
               </div>
             </div>
