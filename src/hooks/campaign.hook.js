@@ -12,7 +12,11 @@ export const useCreateCampaign = (communityId) => {
             // payload should be FormData if it contains files
             const res = await axiosPrivate.post(
                 `/v1/${communityId}/campaign/create/`,
-                payload
+                payload, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
             );
             return res?.data;
         },

@@ -84,7 +84,6 @@ const DashboardContentReward = () => {
     const payload = new FormData();
 
     if (formData.thumbnailFile) {
-      console.log("Thumbnail file:", formData.thumbnailFile);
       payload.append("thumbnail", formData.thumbnailFile);
     }
 
@@ -112,7 +111,7 @@ const DashboardContentReward = () => {
     platforms.forEach((p) => {
       const id = platformMap[p];
       if (id) {
-        payload.append("platform_ids[]", id);
+        payload.append("platform_ids", id);
       }
     });
 
