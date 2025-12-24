@@ -100,7 +100,7 @@ const router = createBrowserRouter([
         element: <Discover />,
       },
       {
-        path: "/join-community",
+        path: "/join-community/:communityUsername",
         element: <JoinCommunity />,
       },
       {

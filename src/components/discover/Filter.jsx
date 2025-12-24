@@ -1,15 +1,20 @@
+/* eslint-disable react/prop-types */
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
 
-export default function DiscoverFilter() {
-  const [typeOpen, setTypeOpen] = useState(false);
-  const [categoryOpen, setCategoryOpen] = useState(false);
-  const [sortOpen, setSortOpen] = useState(false);
-
-  const [selectedType, setSelectedType] = useState("All");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedSort, setSelectedSort] = useState("Highest available budget");
-
+export default function DiscoverFilter({
+  selectedType,
+  setSelectedType,
+  selectedCategory,
+  setSelectedCategory,
+  selectedSort,
+  setSelectedSort,
+  typeOpen,
+  setTypeOpen,
+  categoryOpen,
+  setCategoryOpen,
+  sortOpen,
+  setSortOpen
+}) {
   const types = ["All", "Clipping", "UGC", "Audio", "Other"];
   const categories = [
     "All",
@@ -33,16 +38,15 @@ export default function DiscoverFilter() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-3  text-white p-1.5 md:px-6 sm:py-3.5 rounded-lg hover:bg-[#002822] bg-[#003933] transition-all w-auto sm:min-w-[200px] group"
       >
-        <span className="text-white font-medium text-[8px] sm:text-base">
+        <span className="text-white font-medium text-[8px] sm:text-base whitespace-nowrap">
           {label}
         </span>
-        <span className="flex-1 text-left font-semibold text-[8px] sm:text-base">
+        <span className="flex-1 text-left font-semibold text-[8px] sm:text-base whitespace-nowrap overflow-hidden text-ellipsis">
           {value}
         </span>
         <ChevronDown
-          className={`w-5 h-5 transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`w-5 h-5 transition-transform flex-shrink-0 ${isOpen ? "rotate-180" : ""
+            }`}
         />
       </button>
 
@@ -52,7 +56,7 @@ export default function DiscoverFilter() {
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute top-full mt-2 w-full bg-[#003933] rounded-lg shadow-2xl z-20 overflow-hidden">
+          <div className="absolute top-full mt-2 w-full bg-[#003933] rounded-lg shadow-2xl z-20 overflow-hidden min-w-[150px]">
             {options.map((option, index) => (
               <button
                 key={option}
@@ -60,9 +64,8 @@ export default function DiscoverFilter() {
                   onSelect(option);
                   setIsOpen(false);
                 }}
-                className={`w-full text-[8px] sm:text-base text-left p-3 hover:bg-[#002822] transition-colors ${
-                  value === option ? "bg-[#002822] font-semibold" : ""
-                } ${index !== 0 ? "border-t border-[#002822]" : ""} text-white`}
+                className={`w-full text-[8px] sm:text-base text-left p-3 hover:bg-[#002822] transition-colors ${value === option ? "bg-[#002822] font-semibold" : ""
+                  } ${index !== 0 ? "border-t border-[#002822]" : ""} text-white whitespace-nowrap`}
               >
                 {option}
               </button>

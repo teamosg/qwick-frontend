@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosPrivate } from "../lib/axios.config";
 import handleApiError from "@/services/handleApiError";
 import { toast } from "sonner";
@@ -32,5 +32,20 @@ export const useCreateCampaign = (communityId) => {
         onError: (error) => {
             handleApiError({ error, errorMessage: "Failed to create campaign" });
         },
+    });
+};
+
+export const useGetAllCampaigns = () => {
+    return useQuery({
+        queryKey: ["allCampaigns"],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get("/v1/campaigns/");
+                return res?.data;
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch campaigns" });
+            }
+        },
+        staleTime: 1000 * 60 * 2, // cache for 2 mins
     });
 };
