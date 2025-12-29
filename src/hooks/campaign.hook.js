@@ -88,3 +88,18 @@ export const useSubmitCampaignContent = (campaignId) => {
         },
     });
 };
+
+export const useGetMySubmissions = () => {
+    return useQuery({
+        queryKey: ["mySubmissions"],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get("/v1/my-submissions/");
+                return res?.data;
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch submissions" });
+            }
+        },
+        staleTime: 1000 * 60 * 2,
+    });
+};
