@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import ContentRewardForm from "./ContentRewardForm";
 import ContentRewardNav from "./ContentRewardNav";
 import { toast } from "sonner";
-import { useGetAllCampaigns } from "@/hooks/campaign.hook";
+import { useGetAllCampaigns, useUpdateCampaign } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
 
 const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
@@ -14,11 +14,68 @@ const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
 const ContentRewardDetailsEdit = () => {
   const { id } = useParams();
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
+  const { mutate: updateCampaign } = useUpdateCampaign(id);
   const [showFormModal, setShowFormModal] = useState(false);
 
   const campaign = useMemo(() => {
     return campaignRes?.campaigns?.find(c => c.id === parseInt(id));
   }, [campaignRes, id]);
+
+  const initialFormData = useMemo(() => {
+    if (!campaign) return null;
+
+    // Helper to normalize platform names to match Form expectations ("Instagram", "Tiktok", "Youtube")
+    const normalizePlatform = (pName) => {
+      const lower = pName?.toLowerCase();
+      if (lower === 'instagram') return 'Instagram';
+      if (lower === 'tiktok') return 'Tiktok';
+      if (lower === 'youtube') return 'Youtube';
+      return pName; // Fallback
+    };
+
+    // Helper to normalize Type
+    const normalizeType = (tName) => {
+      // Map API response to Form Options
+      // Form Options: UGC, Sponsored, Review, Tutorial, Unboxing
+      // Assuming API might return them differently, but if they match, we just ensure casing if needed.
+      // If API returns "Ugc", we need "UGC".
+      if (!tName) return "";
+      const lower = tName.toLowerCase();
+      if (lower === 'ugc') return 'UGC';
+      return tName.charAt(0).toUpperCase() + tName.slice(1).toLowerCase(); // Standardize Capitalized
+    };
+
+    // Helper to normalize Category
+    const normalizeCategory = (cName) => {
+      // Form Options: Personal brand, Entertainment, Products, Music, Logo, Other
+      if (!cName) return "";
+      // Ensure "Personal brand" has lowercase 'b' if that's what form expects
+      // Form options: "Personal brand"
+      if (cName.toLowerCase() === 'personal brand') return 'Personal brand';
+      return cName.charAt(0).toUpperCase() + cName.slice(1).toLowerCase();
+    };
+
+    return {
+      thumbnailPreview: campaign.thumbnail
+        ? (campaign.thumbnail.startsWith("http") ? campaign.thumbnail : `${MEDIA_BASE_URL}${campaign.thumbnail}`)
+        : null,
+      campaignName: campaign.name || "",
+      type: normalizeType(campaign.campaign_type?.name),
+      category: normalizeCategory(campaign.category?.name),
+      campaignBudget: campaign.budget,
+      currency: "USD",
+      rewardRate: campaign.reward_rate,
+      minPayout: campaign.min_payout,
+      maxPayout: campaign.max_payout,
+      flatFeeBonus: campaign.flat_fee || "",
+      platforms: campaign.platforms?.map(p => normalizePlatform(p.name)) || [],
+      availableContent: campaign.available_content,
+      contentRequirement: campaign.content_requirement || "",
+      startDate: campaign.start_date ? new Date(campaign.start_date) : undefined,
+      endDate: campaign.end_date ? new Date(campaign.end_date) : undefined,
+    };
+  }, [campaign]);
+
 
   const handleEditClick = () => {
     setShowFormModal(true);
@@ -28,9 +85,75 @@ const ContentRewardDetailsEdit = () => {
     setShowFormModal(false);
   };
 
-  const handleFormSubmit = () => {
-    setShowFormModal(false);
-    toast.success("Reward updated successfully!");
+  const handleFormSubmit = (formData) => {
+    const typeMap = {
+      "UGC": 1,
+      "Sponsored": 2,
+      "Review": 3,
+      "Tutorial": 4,
+      "Unboxing": 5
+    };
+
+    const categoryMap = {
+      "Personal brand": 1,
+      "Entertainment": 2,
+      "Products": 3,
+      "Music": 4,
+      "Logo": 5,
+      "Other": 6
+    };
+
+    const platformMap = {
+      "Instagram": 2,
+      "Tiktok": 3,
+      "Youtube": 1
+    };
+
+    const payload = new FormData();
+
+    if (formData.thumbnailFile) {
+      payload.append("thumbnail", formData.thumbnailFile);
+    }
+
+    payload.append("name", formData.campaignName);
+    payload.append("campaign_type_id", typeMap[formData.type] || 1);
+    payload.append("category_id", categoryMap[formData.category] || 1);
+    payload.append("budget", Number(formData.campaignBudget) || 0);
+    payload.append("reward_rate", Number(formData.rewardRate) || 0);
+    payload.append("min_payout", Number(formData.minPayout) || 0);
+    payload.append("max_payout", Number(formData.maxPayout) || 0);
+    payload.append("available_content", parseInt(formData.availableContent) || 1);
+    payload.append("content_requirement", formData.contentRequirement);
+
+    // Check if flatFeeBonus exists in formData and append if necessary (optional in form)
+    if (formData.flatFeeBonus) {
+      payload.append("flat_fee", Number(formData.flatFeeBonus));
+    }
+
+    if (formData.startDate) {
+      const date = new Date(formData.startDate);
+      payload.append("start_date", date.toISOString().split('T')[0]);
+    }
+    if (formData.endDate) {
+      const date = new Date(formData.endDate);
+      payload.append("end_date", date.toISOString().split('T')[0]);
+    }
+
+    const platforms = formData.platforms || [];
+    platforms.forEach((p) => {
+      const id = platformMap[p];
+      if (id) {
+        payload.append("platform_ids", id);
+      }
+    });
+
+    updateCampaign(payload, {
+      onSuccess: () => {
+        setShowFormModal(false);
+        // toast.success handled in hook
+      },
+      // onError handled in hook
+    });
   };
 
   const handleFormCancel = () => {
@@ -150,12 +273,12 @@ const ContentRewardDetailsEdit = () => {
             </div>
           </div>
           <div className="text-center flex items-end justify-end ">
-            {/* <button
+            <button
               onClick={handleEditClick}
-              className="w-sm mb-2.5 text-white bg-[#003933] hover:bg-[#002822] dark:hover:bg-[#0dc4a5]  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition"
+              className="w-full mb-2.5 text-white bg-[#003933] hover:bg-[#002822] dark:hover:bg-[#0dc4a5]  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition"
             >
               Edit
-            </button> */}
+            </button>
           </div>
         </div>
       </div>
@@ -178,7 +301,7 @@ const ContentRewardDetailsEdit = () => {
                 Edit Content Reward
               </h2>
               <ContentRewardForm
-                initialData={campaign}
+                initialData={initialFormData}
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
                 isEditMode={true}

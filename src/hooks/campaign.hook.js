@@ -141,3 +141,33 @@ export const useReviewSubmission = () => {
         },
     });
 };
+
+export const useUpdateCampaign = (campaignId) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationKey: ["updateCampaign", campaignId],
+        mutationFn: async (payload) => {
+            const res = await axiosPrivate.patch(
+                `/v1/campaigns/${campaignId}/update/`,
+                payload, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+            );
+            return res?.data;
+        },
+        onSuccess: (data) => {
+            if (data?.success) {
+                toast.success(data?.message || "Campaign updated successfully");
+                queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+            } else {
+                toast.error(data?.message || "Failed to update campaign");
+            }
+        },
+        onError: (error) => {
+            handleApiError({ error, errorMessage: "Failed to update campaign" });
+        },
+    });
+};
