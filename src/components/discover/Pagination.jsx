@@ -1,22 +1,20 @@
+/* eslint-disable react/prop-types */
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
 
-const TOTAL_PAGES = 4;
-
-const Pagination = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const handlePageClick = (page) => {
-    setCurrentPage(page);
+    onPageChange(page);
   };
 
   const handlePrev = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
+    onPageChange(Math.max(currentPage - 1, 1));
   };
 
   const handleNext = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, TOTAL_PAGES));
+    onPageChange(Math.min(currentPage + 1, totalPages));
   };
+
+  if (totalPages <= 1) return null;
 
   return (
     <div className="p-6">
@@ -27,17 +25,16 @@ const Pagination = () => {
             aria-label="Previous"
             onClick={handlePrev}
             disabled={currentPage === 1}
-            className={`flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square border rounded-sm transition-all ${
-              currentPage === 1
+            className={`flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square border rounded-sm transition-all ${currentPage === 1
                 ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                 : "hover:bg-[#003933] hover:text-white"
-            }`}
+              }`}
           >
             <ArrowLeft />
           </button>
 
           <div className="flex gap-2 text-sm md:text-base">
-            {Array.from({ length: TOTAL_PAGES }, (_, i) => {
+            {Array.from({ length: totalPages }, (_, i) => {
               const page = i + 1;
               const isActive = currentPage === page;
               return (
@@ -45,11 +42,10 @@ const Pagination = () => {
                   key={page}
                   type="button"
                   onClick={() => handlePageClick(page)}
-                  className={`flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square rounded-sm transition-all ${
-                    isActive
+                  className={`flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square rounded-sm transition-all ${isActive
                       ? "bg-[#003933] text-white"
                       : "border hover:bg-[#003933] hover:text-white"
-                  }`}
+                    }`}
                 >
                   {page}
                 </button>
@@ -61,12 +57,11 @@ const Pagination = () => {
             type="button"
             aria-label="Next"
             onClick={handleNext}
-            disabled={currentPage === TOTAL_PAGES}
-            className={`flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square border rounded-sm transition-all ${
-              currentPage === TOTAL_PAGES
+            disabled={currentPage === totalPages}
+            className={`flex items-center justify-center w-9 md:w-12 h-9 md:h-12 aspect-square border rounded-sm transition-all ${currentPage === totalPages
                 ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                 : "hover:bg-[#003933] hover:text-white"
-            }`}
+              }`}
           >
             <ArrowRight />
           </button>

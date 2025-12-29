@@ -41,6 +41,17 @@ const CampaignForm = ({
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
+    if (initialData) {
+      setFormData((prev) => ({
+        ...prev,
+        ...initialData,
+        // Ensure arrays are copied
+        platforms: initialData.platforms ? [...initialData.platforms] : prev.platforms,
+      }));
+    }
+  }, [initialData]);
+
+  useEffect(() => {
     const validate = () => {
       const requiredFields = [
         formData.campaignName?.trim(),

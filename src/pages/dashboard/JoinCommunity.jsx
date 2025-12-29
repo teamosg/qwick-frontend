@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 
 import JoinCommunityImage from '@/assets/JoinCommunityImage.png'
 import { useJoinCommunity } from "@/hooks/community.hook";
 import { Spinner } from "@/components/ui/spinner";
 
 const JoinCommunity = () => {
+  const { communityUsername } = useParams();
   const { mutate: joinCommunity, isPending: isJoining } = useJoinCommunity()
 
 
@@ -38,7 +39,9 @@ const JoinCommunity = () => {
   };
 
   const handleJoinCommunity = () => {
-    joinCommunity({ communityUsername: 'fun' })
+    if (communityUsername) {
+      joinCommunity({ communityUsername })
+    }
   }
 
   return (
@@ -67,7 +70,7 @@ const JoinCommunity = () => {
       >
         <div className="max-h-100 overflow-hidden rounded-xl mb-6">
           <motion.img
-            src={JoinCommunityImage || "https://placehold.co/1200x800"}
+            src={JoinCommunityImage}
             alt=""
             className="max-w-full object-cover "
             variants={itemVariants}
@@ -82,12 +85,12 @@ const JoinCommunity = () => {
           className="max-w-md mx-auto text-center"
           variants={itemVariants}
         >
-          <motion.div
+          {/* <motion.div
             className="flex items-center justify-center gap-3 mb-3"
             variants={itemVariants}
           >
             <motion.img
-              src="https://i.pravatar.cc/36"
+              src={""}
               alt="Profile"
               className="w-6 h-6 rounded-full"
               whileHover={{ scale: 1.2 }}
@@ -99,38 +102,23 @@ const JoinCommunity = () => {
             >
               <Link to="">
                 <span className="text-sm font-medium text-[#717171] dark:text-white capitalize">
-                  Prothinidi Thomas
+                  {communityUsername || "Community"}
                 </span>
               </Link>
             </motion.div>
-          </motion.div>
+          </motion.div> */}
           <motion.h2
             className="text-2xl text-[#090003] dark:text-white font-semibold mb-6"
             variants={itemVariants}
           >
-            It is a long established fact that a reader will be distracted by
-            the
+            Welcome to {communityUsername || "our community"}
           </motion.h2>
           <motion.p
             className="text-[18px] text-[#717171] dark:text-zinc-400 mb-11"
             variants={itemVariants}
           >
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of{" "}
+            Join this community to start earning rewards for your content!
           </motion.p>
-          {/* <motion.div
-            variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link
-              to={`/`}
-              className="inline-block max-w-sm w-full text-[#003933] dark:text-white hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition mb-4 border border-[#003933] hover:text-white"
-            >
-              Join to WaitList
-            </Link>
-          </motion.div>{" "} */}
           <motion.div
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}

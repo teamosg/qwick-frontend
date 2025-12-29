@@ -1,58 +1,27 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ContentRewardForm from "./ContentRewardForm";
 import ContentRewardNav from "./ContentRewardNav";
 import DashboardContentRewardBlank from "./DashboardContentRewardBlank";
 import DashboardSingleRewardItem from "./DashboardSingleRewardItem";
 import { useCommunityStore } from "@/store/communityStore";
-import { useCreateCampaign } from "@/hooks/campaign.hook";
+import { useCreateCampaign, useGetAllCampaigns } from "@/hooks/campaign.hook";
 import { format } from "date-fns";
+import { Spinner } from "@/components/ui/spinner";
 
 const DashboardContentReward = () => {
   const { selectedBrandCommunity } = useCommunityStore();
   const { mutate: createCampaign } = useCreateCampaign(selectedBrandCommunity?.id);
+  const { data: campaignRes, isLoading } = useGetAllCampaigns();
 
-  const [hasContentRewards, setHasContentRewards] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [rewards, setRewards] = useState([
-    {
-      id: 1,
-      name: "Content Reward 1",
-      description: "Description 1",
-      status: "active",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: 2,
-      name: "Content Reward 2",
-      description: "Description 2",
-      status: "active",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: 3,
-      name: "Content Reward 3",
-      description: "Description 3",
-      status: "active",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: 4,
-      name: "Content Reward 4",
-      description: "Description 4",
-      status: "active",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-  ]);
+
+  const filteredRewards = useMemo(() => {
+    if (!campaignRes?.campaigns || !selectedBrandCommunity?.id) return [];
+    return campaignRes.campaigns.filter(c => c.community === selectedBrandCommunity.id);
+  }, [campaignRes, selectedBrandCommunity?.id]);
 
   const handleCreateReward = () => {
-    // console.log("handleCreateReward called!");
-    // console.log("Current showForm state:", showForm);
     setShowForm(true);
-    // console.log("setShowForm(true) called");
   };
 
   const handleFormSubmit = async (formData) => {
@@ -84,7 +53,6 @@ const DashboardContentReward = () => {
     const payload = new FormData();
 
     if (formData.thumbnailFile) {
-      console.log("Thumbnail file:", formData.thumbnailFile);
       payload.append("thumbnail", formData.thumbnailFile);
     }
 
@@ -112,41 +80,33 @@ const DashboardContentReward = () => {
     platforms.forEach((p) => {
       const id = platformMap[p];
       if (id) {
-        payload.append("platform_ids[]", id);
+        payload.append("platform_ids", id);
       }
     });
 
     createCampaign(payload, {
       onSuccess: () => {
         setShowForm(false);
-        setHasContentRewards(true);
       }
     });
-
-    // Keeping local update for immediate UI feedback (simulated)
-    const newReward = {
-      id: Date.now(),
-      ...formData,
-      createdAt: new Date().toISOString(),
-      status: "active",
-    };
-    setRewards((prev) => [...prev, newReward]);
   };
 
   const handleFormCancel = () => {
     setShowForm(false);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-20">
+        <Spinner className="size-10 text-[#003933]" />
+      </div>
+    );
+  }
+
   return (
     <div className="">
       {/* Tabs Navigation */}
       <ContentRewardNav />
-
-      {/* Debug State */}
-      {/* <div className="mb-4 p-2 bg-yellow-100 dark:bg-yellow-900 rounded text-sm">
-        Debug: showForm={showForm.toString()}, hasContentRewards=
-        {hasContentRewards.toString()}
-      </div> */}
 
       {showForm ? (
         <ContentRewardForm
@@ -154,12 +114,12 @@ const DashboardContentReward = () => {
           onCancel={handleFormCancel}
           setShowForm={setShowForm}
         />
-      ) : hasContentRewards ? (
-        <div>
+      ) : filteredRewards.length > 0 ? (
+        <div className="container mx-auto">
           <div className="mb-6 flex justify-between items-center">
             <p className="text-gray-600 dark:text-gray-400">
-              Active {rewards.length} content reward
-              {rewards.length !== 1 ? "s" : ""}
+              Active {filteredRewards.length} content reward
+              {filteredRewards.length !== 1 ? "s" : ""}
             </p>
             <button
               onClick={handleCreateReward}
@@ -168,7 +128,7 @@ const DashboardContentReward = () => {
               Create New Reward
             </button>
           </div>
-          {rewards.map((reward) => (
+          {filteredRewards.map((reward) => (
             <DashboardSingleRewardItem key={reward.id} reward={reward} />
           ))}
         </div>

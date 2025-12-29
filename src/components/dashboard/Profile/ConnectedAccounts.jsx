@@ -33,7 +33,7 @@ const ConnectedAccounts = () => {
   const connectedSocials = profile?.social_media || {};
 
   const accounts = [
-    { id: "facebook", name: "Facebook", icon: Facebook },
+    // { id: "facebook", name: "Facebook", icon: Facebook },
     { id: "youtube", name: "YouTube", icon: Youtube },
     { id: "instagram", name: "Instagram", icon: Instagram },
     { id: "tiktok", name: "TikTok", icon: Music },

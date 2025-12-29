@@ -7,7 +7,7 @@ import AutomatedMessage from "@/components/dashboard/Dashboard/AutomatedMessage"
 import Analytics from "@/components/dashboard/Dashboard/ContentReward/Analytics";
 import ContentRewardDetailsEdit from "@/components/dashboard/Dashboard/ContentReward/ContentRewardDetailsEdit";
 import DashboardContentReward from "@/components/dashboard/Dashboard/ContentReward/DashboardContentReward";
-import MySubmissions from "@/components/dashboard/Dashboard/ContentReward/MySubmissions";
+import MySubmissions from "@/components/dashboard/Dashboard/ContentReward/AllSubmissions";
 import DashboardSettings from "@/components/dashboard/Dashboard/DashboardSettings";
 import NotificationsSettings from "@/components/dashboard/Dashboard/NotificationsSettings";
 import Payments from "@/components/dashboard/Dashboard/Payments";
@@ -100,7 +100,7 @@ const router = createBrowserRouter([
         element: <Discover />,
       },
       {
-        path: "/join-community",
+        path: "/join-community/:communityUsername",
         element: <JoinCommunity />,
       },
       {
@@ -128,11 +128,11 @@ const router = createBrowserRouter([
                 element: <ContentRewordPublic />,
               },
               {
-                path: "reward-details",
+                path: "reward-details/:campaignId",
                 element: <ContentRewardDetails />,
               },
               {
-                path: "reward-details-payment",
+                path: "reward-details-payment/:campaignId",
                 element: <ContentRewardDetailsPayment />,
               },
             ],
@@ -156,7 +156,7 @@ const router = createBrowserRouter([
             element: <DashboardContentReward />,
           },
           {
-            path: "my-submissions",
+            path: "all-submissions",
             element: <MySubmissions />,
           },
           {
