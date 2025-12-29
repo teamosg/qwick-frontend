@@ -17,14 +17,14 @@ const ContentRewardNav = () => {
         Content Payout
       </Link>
       <Link
-        to="/dashboard/my-submissions"
+        to="/dashboard/all-submissions"
         className={` py-2  rounded-full text-center transition-colors text-sm sm:text-base ${
-          currentPath === "my-submissions"
+          currentPath === "all-submissions"
             ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-[#e4e4e7] shadow-none"
             : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
         }`}
       >
-        My submissions
+        All Submissions
       </Link>
       <Link
         to="/dashboard/analytics"

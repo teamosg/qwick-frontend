@@ -1,21 +1,42 @@
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router";
+import ContentRewardNav from "./ContentRewardNav";
+import { Button } from "@/components/ui/button";
+import { Check, X, Loader2, ExternalLink } from "lucide-react";
+import { useCommunityStore } from "@/store/communityStore";
+import { useGetCommunitySubmissions, useReviewSubmission } from "@/hooks/campaign.hook";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Link } from "react-router"; // Keep this if we need it later, though not using "Update" link for now as per "show links status created at only"
-import { useGetMySubmissions } from "@/hooks/campaign.hook";
-import { Loader2, ExternalLink } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { FaYoutube, FaTiktok, FaInstagram } from "react-icons/fa";
 
-const ProfileMySubmission = () => {
-  const { data, isLoading } = useGetMySubmissions();
+const AllSubmissions = () => {
+  const { selectedBrandCommunity } = useCommunityStore();
+  const { data, isLoading } = useGetCommunitySubmissions(selectedBrandCommunity?.id);
+  const { mutate: reviewSubmission, isPending: isReviewing } = useReviewSubmission();
+
   const submissions = data?.submissions || [];
+  const totalSubmissions = data?.total_submissions || 0;
+
+  const handleReview = (submissionId, action) => {
+    reviewSubmission({ submissionId, action });
+  };
+
+  const getImageUrl = (path) => {
+    if (!path) return "/submission.png";
+    if (path.startsWith("http")) return path;
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://darrenchua.softvencealpha.com/api";
+    // Remove /api from end if present to get root
+    const origin = baseUrl.replace(/\/api$/, "");
+    return `${origin}${path}`;
+  };
 
   const getStatusBadge = (status) => {
     const statusType = status?.toLowerCase() || "pending";
     const variants = {
       pending: "bg-[#FEF9C3] text-[#A16207] border-[#A16207]",
       accepted: "bg-[#F0FDF4] text-[#15803D] border-[#15803D]",
+      approved: "bg-[#F0FDF4] text-[#15803D] border-[#15803D]",
       reject: "bg-[#FEE2E2] text-[#CA6377] border-[#CA6377]",
       rejected: "bg-[#FEE2E2] text-[#CA6377] border-[#CA6377]",
     };
@@ -31,19 +52,13 @@ const ProfileMySubmission = () => {
     );
   };
 
-  const getImageUrl = (path) => {
-    if (!path) return "/submission.png";
-    if (path.startsWith("http")) return path;
-    const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://darrenchua.softvencealpha.com/api";
-    // Remove /api from end if present to get root
-    const origin = baseUrl.replace(/\/api$/, "");
-    return `${origin}${path}`;
-  };
-
   if (isLoading) {
     return (
-      <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-        <Skeleton className="h-7 w-48 mb-6" />
+      <div>
+        <ContentRewardNav />
+        <div className="mb-4">
+          <Skeleton className="h-6 w-24" />
+        </div>
         <div className="space-y-4 sm:space-y-6">
           {[1, 2, 3].map((i) => (
             <Card
@@ -52,20 +67,15 @@ const ProfileMySubmission = () => {
             >
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row gap-4">
-                  {/* Image Skeleton */}
                   <Skeleton className="w-full sm:w-48 h-48 sm:h-40 flex-shrink-0 rounded-xl" />
-
-                  {/* Content Skeleton */}
                   <div className="flex-1 flex flex-col justify-between py-1 space-y-4">
                     <div className="flex items-center justify-between">
                       <Skeleton className="h-4 w-32" />
                       <Skeleton className="h-6 w-20 rounded-full" />
                     </div>
-
                     <div className="space-y-2">
                       <Skeleton className="h-4 w-full sm:w-3/4" />
                       <Skeleton className="h-4 w-2/3" />
-                      <Skeleton className="h-4 w-1/2" />
                     </div>
                   </div>
                 </div>
@@ -78,13 +88,14 @@ const ProfileMySubmission = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-      {/* Header */}
-      <h1 className="text-lg sm:text-xl font-semibold text-[#15161E] dark:text-white mb-4 sm:mb-6">
-        My Submissions
-      </h1>
+    <div>
+      <ContentRewardNav />
 
-      {/* Submissions List */}
+      {/* post number */}
+      <div className="mb-4">
+        <p className="border-b border-gray-400 max-w-max">Total {totalSubmissions}</p>
+      </div>
+
       <div className="space-y-4 sm:space-y-6">
         {submissions.length === 0 ? (
           <div className="text-center py-8 text-gray-500 dark:text-gray-400">
@@ -105,7 +116,7 @@ const ProfileMySubmission = () => {
                       className="h-full w-full object-cover"
                       alt="Submission"
                       onError={(e) => {
-                        e.target.src = "/submission.png"; // Fallback if image fails
+                        e.target.src = "/submission.png";
                       }}
                     />
                   </div>
@@ -113,16 +124,25 @@ const ProfileMySubmission = () => {
                   {/* Content Section */}
                   <div className="flex-1 flex flex-col justify-between py-1">
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between flex-wrap gap-2">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          Submitted on{" "}
-                          {submission.created_at
-                            ? format(new Date(submission.created_at), "PPP")
-                            : "N/A"}
-                        </span>
-                        {getStatusBadge(submission.status)}
+                      {/* User Info and Status */}
+                      <div className="flex items-start justify-between">
+                        <div className="space-y-1">
+                          <div className="text-sm font-medium text-[#15161E] dark:text-white">
+                            Submission #{submission.id}
+                          </div>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 block">
+                            Submitted on{" "}
+                            {submission.created_at
+                              ? format(new Date(submission.created_at), "PPP")
+                              : "N/A"}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {getStatusBadge(submission.status)}
+                        </div>
                       </div>
 
+                      {/* Links */}
                       <div className="space-y-2">
                         {submission.youtube_link && (
                           <a
@@ -167,6 +187,31 @@ const ProfileMySubmission = () => {
                           </a>
                         )}
                       </div>
+
+                      {/* Action Buttons */}
+                      {(submission.status === 'pending' || submission.status === 'reviewed') && (
+                        <div className="flex gap-4 pt-2">
+                          <Button
+                            variant="ghost"
+                            onClick={() => handleReview(submission.id, "approve")}
+                            disabled={isReviewing}
+                            className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-[#15803D] hover:text-[#15803D]/80 text-xs font-medium flex items-center gap-1"
+                          >
+                            <Check className="size-4" />
+                            Accept
+                          </Button>
+
+                          <Button
+                            variant="ghost"
+                            onClick={() => handleReview(submission.id, "reject")}
+                            disabled={isReviewing}
+                            className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-[#DC2626] hover:text-[#DC2626]/80 text-xs font-medium flex items-center gap-1"
+                          >
+                            <X className="size-4" />
+                            Reject
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -179,4 +224,4 @@ const ProfileMySubmission = () => {
   );
 };
 
-export default ProfileMySubmission;
+export default AllSubmissions;

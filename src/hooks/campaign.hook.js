@@ -103,3 +103,41 @@ export const useGetMySubmissions = () => {
         staleTime: 1000 * 60 * 2,
     });
 };
+
+export const useGetCommunitySubmissions = (communityId) => {
+    return useQuery({
+        queryKey: ["communitySubmissions", communityId],
+        queryFn: async () => {
+            if (!communityId) return null;
+            try {
+                const res = await axiosPrivate.get(`/v1/communities/${communityId}/submissions/`);
+                return res?.data;
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch community submissions" });
+            }
+        },
+        enabled: !!communityId,
+    });
+};
+
+export const useReviewSubmission = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async ({ submissionId, action }) => {
+            const res = await axiosPrivate.post(`/v1/${submissionId}/content/approve/`, { action });
+            return res?.data;
+        },
+        onSuccess: (data) => {
+            if (data?.success || data?.status === 200) {
+                toast.success(data?.message || "Submission reviewed successfully");
+                queryClient.invalidateQueries({ queryKey: ["communitySubmissions"] });
+            } else {
+                toast.error(data?.message || "Failed to review submission");
+            }
+        },
+        onError: (error) => {
+            handleApiError({ error, errorMessage: "Failed to review submission" });
+        },
+    });
+};
