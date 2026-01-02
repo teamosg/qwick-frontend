@@ -143,15 +143,15 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
         {/* Action Buttons */}
         <div className="flex items-center space-x-1">
           {/* Users/People Button */}
-          <button
+          {/* <button
             onClick={handleUsersClick}
             className="p-2 rounded-lg hover:text-[#000000] dark:hover:text-white transition duration-300"
           >
             <Users className="w-6 h-6" />
-          </button>
+          </button> */}
 
           {/* Search Button/Input */}
-          {isSearchOpen ? (
+          {/* {isSearchOpen ? (
             <div className="flex items-center space-x-2 bg-gray-100 dark:bg-zinc-800 rounded-lg px-3 py-1">
               <Search className="w-4 h-4 text-gray-500" />
               <input
@@ -176,14 +176,13 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
             >
               <Search className="w-6 h-6" />
             </button>
-          )}
+          )} */}
 
           {/* Notification Bell Button */}
-          <button className="p-2 rounded-lg relative hover:text-[#000000] dark:hover:text-white">
+          {/* <button className="p-2 rounded-lg relative hover:text-[#000000] dark:hover:text-white">
             <Bell className="w-6 h-6" />
-            {/* Optional notification dot */}
-            {/* <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div> */}
-          </button>
+            <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+          </button> */}
         </div>
       </div>
 
