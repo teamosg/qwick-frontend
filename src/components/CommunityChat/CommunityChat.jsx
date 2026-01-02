@@ -1,70 +1,22 @@
-// import ChatBox from "./ChatBox";
-// import ChatHeader from "./ChatHeader";
-
-// const CommunityChat = () => {
-//   return (
-//     <div>
-//       <ChatHeader />
-//       <ChatBox />
-//     </div>
-//   );
-// };
-
-// export default CommunityChat;
-
 import { useEffect, useRef, useState } from "react";
-
-// framer motion
 import { AnimatePresence, motion } from "framer-motion";
-
-// react icons
 import { Loader } from "lucide-react";
 import { FiImage } from "react-icons/fi";
 import { LuFile, LuPaperclip, LuSend, LuX } from "react-icons/lu";
 import ChatHeader from "./ChatHeader";
+import { useCommunityStore } from "@/store/communityStore";
+import { useProfile } from "@/hooks/auth.hook";
+import { toast } from "sonner";
 
 const CommunityChat = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "Hey there! How it going?",
-      sender: "other",
-      senderProfile: { name: "Jane", avatar: "https://i.pravatar.cc/40?img=5" },
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      reaction: null,
-      attachments: [],
-    },
-    {
-      id: 2,
-      text: "How do you handle theming in ZenUI components?",
-      sender: "other",
-      senderProfile: { name: "Jane", avatar: "https://i.pravatar.cc/40?img=5" },
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      reaction: null,
-      attachments: [],
-    },
-    {
-      id: 3,
-      text: "Does ZenUI support responsive design out of the box?",
-      sender: "other",
-      senderProfile: { name: "Jane", avatar: "https://i.pravatar.cc/40?img=5" },
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      reaction: null,
-      attachments: [],
-    },
-  ]);
+  const { selectedCreatorCommunity } = useCommunityStore();
+  const token = localStorage.getItem("token");
+  const { data: user } = useProfile();
+
+  const [messages, setMessages] = useState([]);
+  const [isWsError, setIsWsError] = useState(false);
 
   const [newMessage, setNewMessage] = useState("");
-  const [reactingTo, setReactingTo] = useState(null);
   const [attachments, setAttachments] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [totalAttachments, setTotalAttachments] = useState(0);
@@ -75,13 +27,77 @@ const CommunityChat = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
+  const ws = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleNewMessages = (data) => {
+    if (!data?.message) return;
+
+    const incomingMsg = data.message;
+
+    // Map backend message structure to UI structure
+    const mappedMsg = {
+      id: incomingMsg.id || Date.now() + Math.random(),
+      text: incomingMsg.content || incomingMsg.text || "",
+      sender: incomingMsg.sender_id === user?.id ? "me" : "other",
+      senderProfile: {
+        name: incomingMsg.sender_username || "Unknown",
+        avatar: incomingMsg.sender_avatar || "https://i.pravatar.cc/40?img=5",
+      },
+      timestamp: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      reaction: null,
+      attachments: [],
+    };
+
+    setMessages((prevMessages) => [...prevMessages, mappedMsg]);
+    setShouldScrollToBottom(true);
+  };
+
+  // WebSocket Connection
   useEffect(() => {
-    // Only scroll to bottom when shouldScrollToBottom is true
+    if (!selectedCreatorCommunity?.username || !token) return;
+
+    // Reset messages when community changes
+    setMessages([]);
+
+    ws.current = new WebSocket(
+      `wss://darrenchua.softvencealpha.com/ws/${selectedCreatorCommunity.username}/?token=${token}`
+    );
+
+    ws.current.onopen = () => {
+      setIsWsError(false);
+    };
+
+    ws.current.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        handleNewMessages(data);
+      } catch (error) {
+        console.error("Failed to parse WebSocket message:", error);
+      }
+    };
+
+    ws.current.onclose = () => {
+      if (ws.current?.readyState === WebSocket.CLOSED) {
+        setIsWsError(true);
+      }
+    };
+
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+        ws.current = null;
+      }
+    };
+  }, [selectedCreatorCommunity?.username, token, user?.id]);
+
+  useEffect(() => {
     if (shouldScrollToBottom) {
       scrollToBottom();
       setShouldScrollToBottom(false);
@@ -107,32 +123,17 @@ const CommunityChat = () => {
   const handleSendMessage = () => {
     if (newMessage.trim() === "" && attachments.length === 0) return;
 
-    const newId = messages.length
-      ? Math.max(...messages.map((m) => m.id)) + 1
-      : 1;
+    if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
+      toast.error("Network error, Please try again later");
+      return;
+    }
 
-    setMessages([
-      ...messages,
-      {
-        id: newId,
-        text: newMessage,
-        sender: "me",
-        senderProfile: {
-          name: "You",
-          avatar: "https://i.pravatar.cc/40?img=1",
-        },
-        timestamp: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        reaction: null,
-        attachments: [...attachments],
-      },
-    ]);
+    ws.current.send(JSON.stringify({ content: newMessage }));
 
     setNewMessage("");
     setAttachments([]);
-    setShouldScrollToBottom(true); // Set flag to scroll to bottom after new message
+    // We expect the server to echo the message back via WebSocket
+
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -149,24 +150,8 @@ const CommunityChat = () => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
-    setTotalAttachments(files.length);
-
-    setIsUploading(true);
-
-    // Simulate file upload with timeout
-    setTimeout(() => {
-      const newAttachments = files.map((file) => ({
-        id: Math.random().toString(36).substring(2, 9),
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        url: URL.createObjectURL(file),
-      }));
-
-      setAttachments([...attachments, ...newAttachments]);
-      setIsUploading(false);
-    }, 1500);
-
+    // File upload logic placeholder
+    toast.info("File upload not yet connected to backend.");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -180,24 +165,6 @@ const CommunityChat = () => {
 
   const handleAttachmentClick = () => {
     fileInputRef.current?.click();
-  };
-
-  const handleReaction = (messageId, reaction) => {
-    setMessages(
-      messages.map((message) => {
-        if (message.id === messageId) {
-          const hasReaction = message.reaction === reaction;
-          const updatedReaction = hasReaction ? null : reaction;
-          return { ...message, reaction: updatedReaction };
-        }
-        return message;
-      })
-    );
-    setReactingTo(null);
-  };
-
-  const toggleReactionMenu = (messageId) => {
-    setReactingTo(reactingTo === messageId ? null : messageId);
   };
 
   const messageVariants = {
@@ -226,13 +193,6 @@ const CommunityChat = () => {
     },
   };
 
-  // const reactionVariants = {
-  //   hidden: { opacity: 0, y: 10 },
-  //   visible: { opacity: 1, y: 0 },
-  //   exit: { opacity: 0, y: 10 },
-  // };
-
-  // Format file size for display
   const formatFileSize = (bytes) => {
     if (bytes < 1024) return bytes + " B";
     else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
@@ -248,18 +208,17 @@ const CommunityChat = () => {
       />
       <div className="flex-1 p-2 md:p-4 overflow-y-auto pb-4">
         <AnimatePresence>
-          {filteredMessages.map((message) => (
+          {filteredMessages.map((message, index) => (
             <motion.div
-              key={message.id}
+              key={message.id || index}
               variants={messageVariants}
               custom={message}
               initial="hidden"
               animate="visible"
               exit="exit"
               layout
-              className={`mb-4 flex ${
-                message.sender === "me" ? "justify-end" : "justify-start"
-              }`}
+              className={`mb-4 flex ${message.sender === "me" ? "justify-end" : "justify-start"
+                }`}
             >
               <div className="relative max-w-md flex items-center gap-5">
                 {message.sender === "other" && (
@@ -271,11 +230,10 @@ const CommunityChat = () => {
                 )}
                 <div>
                   <div
-                    className={`py-4 px-5 rounded-high text-black dark:text-[#d2e5f5] text-sm ${
-                      message.sender === "me"
+                    className={`py-4 px-5 rounded-high text-black dark:text-[#d2e5f5] text-sm ${message.sender === "me"
                         ? "bg-[#5050fa] dark:bg-blue-900/90 rounded-full text-white"
                         : "bg-[#f0f2f5] dark:bg-slate-800 rounded-full text-[#1D2739]"
-                    }`}
+                      }`}
                   >
                     {/* File attachments in message */}
                     {message.attachments && message.attachments.length > 0 && (
@@ -307,92 +265,10 @@ const CommunityChat = () => {
                     {message.text}
                   </div>
                   <div
-                    className={`${
-                      message.sender === "me" ? "text-right" : "text-left"
-                    } mt-1 text-xs text-gray-500 dark:text-[#abc2d3]/70 mt`}
+                    className={`${message.sender === "me" ? "text-right" : "text-left"
+                      } mt-1 text-xs text-gray-500 dark:text-[#abc2d3]/70`}
                   ></div>
                 </div>
-                {/* {message.sender === "me" && (
-                  <img
-                    src={message.senderProfile?.avatar}
-                    alt={message.senderProfile?.name}
-                    className="w-8 h-8 rounded-full"
-                  />
-                )} */}
-
-                {/* Reaction display */}
-                {/* {message.reaction && (
-                  <span
-                    title={message.reaction}
-                    onClick={() => toggleReactionMenu(message.id)}
-                    className="bg-white absolute -right-2 bottom-2 rounded-full min-h-[25px] min-w-[25px] flex items-center cursor-pointer justify-center shadow-md shadow-gray-100 dark:bg-slate-700 dark:shadow-slate-800"
-                  >
-                    {message.reaction === "love" ? (
-                      <LuHeart size={12} fill="red" color="red" />
-                    ) : null}
-                    {message.reaction === "like" ? (
-                      <LuThumbsUp size={12} fill="blue" color="blue" />
-                    ) : null}
-                    {message.reaction === "smile" ? (
-                      <FaRegSmile size={12} fill="gold" color="gold" />
-                    ) : null}
-                  </span>
-                )} */}
-
-                {/* Reaction button */}
-                {/* {message.sender === "other" && !message.reaction && (
-                  <button
-                    onClick={() => toggleReactionMenu(message.id)}
-                    title="add reaction"
-                    className="absolute bottom-2 -right-2 bg-gray-100 rounded-full p-1 shadow-sm hover:bg-gray-200 dark:bg-slate-700 dark:text-[#d2e5f5] dark:hover:bg-slate-800 transition-colors"
-                  >
-                    <FaRegSmile size={14} />
-                  </button>
-                )} */}
-
-                {/* Reaction menu */}
-                {/* <AnimatePresence>
-                  {reactingTo === message.id && (
-                    <motion.div
-                      variants={reactionVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      className="absolute z-30 -bottom-6 right-0 bg-white rounded-full p-1 flex border border-border dark:bg-slate-800 dark:border-slate-700 shadow-lg"
-                    >
-                      <button
-                        onClick={() => handleReaction(message.id, "love")}
-                        className="min-w-[25px] min-h-[25px] flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-                      >
-                        <LuHeart
-                          size={15}
-                          color={message.reaction === "love" ? "red" : "gray"}
-                          className="dark:!text-[#d2e5f5]"
-                        />
-                      </button>
-                      <button
-                        onClick={() => handleReaction(message.id, "like")}
-                        className="p-1 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-                      >
-                        <LuThumbsUp
-                          size={15}
-                          color={message.reaction === "like" ? "blue" : "gray"}
-                          className="dark:!text-[#d2e5f5]"
-                        />
-                      </button>
-                      <button
-                        onClick={() => handleReaction(message.id, "smile")}
-                        className="p-1 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-                      >
-                        <FaRegSmile
-                          size={16}
-                          color={message.reaction === "smile" ? "gold" : "gray"}
-                          className="dark:!text-[#d2e5f5]"
-                        />
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence> */}
               </div>
             </motion.div>
           ))}
