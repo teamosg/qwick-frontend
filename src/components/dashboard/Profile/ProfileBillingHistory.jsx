@@ -18,31 +18,24 @@ const ProfileBillingHistory = () => {
 
   const getStatusBadge = (status) => {
     const s = status?.toLowerCase();
+    const commonClasses = "rounded-full px-2.5 sm:px-3 py-1 text-[10px] sm:text-xs font-medium ml-2 sm:ml-4 whitespace-nowrap";
+
     if (s === "approved") {
       return (
-        <Badge
-          variant="outline"
-          className="bg-green-100 text-green-800 border-green-200 rounded-full px-3 py-1 text-xs font-medium ml-4"
-        >
+        <Badge variant="outline" className={`bg-green-100/10 text-green-500 border-green-500/20 ${commonClasses}`}>
           Approved
         </Badge>
       );
     }
     if (s === "rejected") {
       return (
-        <Badge
-          variant="outline"
-          className="bg-red-100 text-red-800 border-red-200 rounded-full px-3 py-1 text-xs font-medium ml-4"
-        >
+        <Badge variant="outline" className={`bg-red-100/10 text-red-500 border-red-500/20 ${commonClasses}`}>
           Rejected
         </Badge>
       );
     }
     return (
-      <Badge
-        variant="outline"
-        className="bg-yellow-100 text-yellow-800 border-yellow-200 rounded-full px-3 py-1 text-xs font-medium ml-4"
-      >
+      <Badge variant="outline" className={`bg-yellow-100/10 text-yellow-500 border-yellow-500/20 ${commonClasses}`}>
         Pending
       </Badge>
     );

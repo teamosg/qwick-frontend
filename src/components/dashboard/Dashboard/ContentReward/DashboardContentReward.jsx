@@ -104,37 +104,43 @@ const DashboardContentReward = () => {
   }
 
   return (
-    <div className="">
+    <div className="p-0">
       {/* Tabs Navigation */}
       <ContentRewardNav />
 
       {showForm ? (
-        <ContentRewardForm
-          onSubmit={handleFormSubmit}
-          onCancel={handleFormCancel}
-          setShowForm={setShowForm}
-          isSubmitting={isSubmitting}
-        />
+        <div className="p-4 sm:p-6">
+          <ContentRewardForm
+            onSubmit={handleFormSubmit}
+            onCancel={handleFormCancel}
+            setShowForm={setShowForm}
+            isSubmitting={isSubmitting}
+          />
+        </div>
       ) : filteredRewards.length > 0 ? (
-        <div className="container mx-auto">
-          <div className="mb-6 flex justify-between items-center">
-            <p className="text-gray-600 dark:text-gray-400">
+        <div className="w-full">
+          <div className="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 px-4 sm:px-6 mt-6">
+            <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
               Active {filteredRewards.length} content reward
               {filteredRewards.length !== 1 ? "s" : ""}
             </p>
             <button
               onClick={handleCreateReward}
-              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+              className="w-full sm:w-auto bg-[#003933] text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-[#002822] transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/10"
             >
               Create New Reward
             </button>
           </div>
-          {filteredRewards.map((reward) => (
-            <DashboardSingleRewardItem key={reward.id} reward={reward} />
-          ))}
+          <div className="space-y-4 px-4 sm:px-6 pb-6">
+            {filteredRewards.map((reward) => (
+              <DashboardSingleRewardItem key={reward.id} reward={reward} />
+            ))}
+          </div>
         </div>
       ) : (
-        <DashboardContentRewardBlank onCreateReward={handleCreateReward} />
+        <div className="p-4 sm:p-6 mt-6">
+          <DashboardContentRewardBlank onCreateReward={handleCreateReward} />
+        </div>
       )}
     </div>
   );

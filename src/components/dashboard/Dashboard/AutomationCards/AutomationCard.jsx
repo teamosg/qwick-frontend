@@ -40,7 +40,7 @@ const AutomationCard = ({
     }
 
     return (
-        <div className="bg-white dark:bg-zinc-900 rounded-xl shadow p-6 md:p-10 w-full mx-auto relative">
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 p-5 sm:p-6 md:p-8 w-full mx-auto relative overflow-hidden">
             {isPending && (
                 <div className="absolute inset-0 bg-white/50 dark:bg-zinc-900/50 flex items-center justify-center z-10 rounded-xl">
                     <Loader2 className="w-8 h-8 animate-spin text-[#003933] dark:text-white" />
@@ -49,8 +49,8 @@ const AutomationCard = ({
             {isEnabled ? (
                 <>
                     {/* Header with toggle */}
-                    <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-2xl font-semibold text-[#003933] dark:text-white">
+                    <div className="flex items-center justify-between mb-4 sm:mb-6">
+                        <h2 className="text-xl sm:text-2xl font-bold text-[#003933] dark:text-white">
                             {title}
                         </h2>
                         <div className="flex items-center">
@@ -67,27 +67,29 @@ const AutomationCard = ({
                         </div>
                     </div>
 
-                    <p className="text-[#717171] text-base mb-6">{description}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base mb-6 leading-relaxed">
+                        {description}
+                    </p>
 
                     <div className="mb-6">
                         <textarea
                             key={messageText} // Re-render when data arrives
                             ref={textRef}
                             defaultValue={messageText || ""}
-                            className="w-full h-32 p-4 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#003933] dark:bg-zinc-800 dark:border-zinc-600 dark:text-white"
+                            className="w-full h-32 p-3 sm:p-4 border border-gray-200 dark:border-zinc-800 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-[#003933] dark:bg-zinc-800 dark:text-white placeholder-gray-400 text-sm sm:text-base"
                             placeholder="Enter your automated message..."
                         />
                     </div>
 
                     {/* Save Button */}
-                    <div className="flex justify-center">
+                    <div className="flex justify-center sm:justify-end">
                         <button
                             onClick={handleSave}
                             disabled={isPending}
-                            className="bg-[#003933] hover:bg-[#002822] text-white font-medium px-8 py-3 rounded-full transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-emerald-200 min-w-[120px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="w-full sm:w-auto bg-[#003933] hover:bg-[#002822] text-white font-semibold px-8 py-3 rounded-full transition-all duration-200 shadow-md shadow-emerald-900/10 min-w-[120px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
                         >
                             {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
-                            {isPending ? "Saving..." : "Save"}
+                            {isPending ? "Saving..." : "Save Changes"}
                         </button>
                     </div>
                 </>
@@ -115,10 +117,10 @@ const AutomationCard = ({
 
                     {/* Title and Description */}
                     <div className="text-center mb-8">
-                        <h2 className="text-2xl font-semibold text-[#003933] dark:text-white mb-3">
+                        <h2 className="text-xl sm:text-2xl font-bold text-[#003933] dark:text-white mb-2">
                             {title}
                         </h2>
-                        <p className="text-[#717171] text-base leading-relaxed">
+                        <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base leading-relaxed px-4">
                             {description}
                         </p>
                     </div>
@@ -127,9 +129,9 @@ const AutomationCard = ({
                     <div className="flex justify-center">
                         <button
                             onClick={handleEnableAutomation}
-                            className="bg-[#003933] dark:bg-[#003933] hover:bg-[#002822] dark:hover:bg-primary/90 text-white font-medium px-8 py-3 rounded-full transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-emerald-200 min-w-[180px]"
+                            className="w-full sm:w-auto bg-[#003933] hover:bg-[#002822] text-white font-semibold px-10 py-3.5 rounded-full transition-all duration-200 shadow-lg shadow-emerald-900/10 min-w-[200px] text-sm sm:text-base"
                         >
-                            Enable automation
+                            Enable Automation
                         </button>
                     </div>
                 </>

@@ -30,7 +30,7 @@ const SavedPostCard = ({ post, index }) => {
     return (
         <>
             <motion.div
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5 sm:p-6 rounded-xl bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-all shadow-sm hover:shadow-md cursor-pointer"
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 hover:border-blue-500/30 transition-all shadow-sm hover:shadow-md cursor-pointer"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -39,7 +39,7 @@ const SavedPostCard = ({ post, index }) => {
             >
                 {/* Image */}
                 {image && (
-                    <div className="w-full sm:w-[171px] sm:h-[132px] rounded-lg overflow-hidden shrink-0">
+                    <div className="w-full sm:w-[160px] h-[200px] sm:h-[120px] rounded-xl overflow-hidden shrink-0">
                         <img
                             src={image}
                             alt={title}
@@ -49,16 +49,18 @@ const SavedPostCard = ({ post, index }) => {
                 )}
 
                 {/* Text */}
-                <div className="flex-1 space-y-2">
-                    <h1 className="text-gray-900 dark:text-white font-semibold text-lg sm:text-xl leading-snug line-clamp-2">
+                <div className="flex-1 space-y-1.5 w-full">
+                    <h1 className="text-gray-900 dark:text-white font-bold text-base sm:text-lg leading-tight line-clamp-2">
                         {title}
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+                    <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm line-clamp-2">
                         {description}
                     </p>
-                    <p className="text-xs text-gray-500">
-                        {new Date(post.created_at).toLocaleDateString()}
-                    </p>
+                    <div className="flex items-center gap-2 pt-1">
+                        <span className="text-[10px] sm:text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 dark:bg-zinc-800 text-gray-500">
+                            {new Date(post.created_at).toLocaleDateString()}
+                        </span>
+                    </div>
                 </div>
 
                 {/* Options Icon */}

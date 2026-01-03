@@ -12,23 +12,23 @@ const DashboardContentRewardBlank = ({ onCreateReward }) => {
   };
 
   return (
-    <Card className="bg-white dark:bg-gray-900 border-0 shadow-sm">
-      <CardContent className="p-12 text-center">
-        <div>
-          <div className="overflow-hidden p-10">
-            <h2 className="text-2xl font-bold dark:text-white mb-3.5">
+    <Card className="bg-white dark:bg-zinc-900 border-0 shadow-sm rounded-2xl sm:rounded-3xl overflow-hidden">
+      <CardContent className="p-6 sm:p-12 text-center">
+        <div className="py-4">
+          <div className="mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">
               No active Content Payouts
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+            <p className="text-gray-500 dark:text-gray-400 max-w-xs sm:max-w-md mx-auto text-sm sm:text-base leading-relaxed">
               You don't have any active content payouts. Create one to start
               paying out users
             </p>
           </div>
-          <div className="mt-8 max-w-md text-center mx-auto">
+          <div className="mt-8 flex justify-center">
             <button
               onClick={handleClick}
               type="button"
-              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer"
+              className="w-full sm:w-auto bg-[#003933] text-white px-6 py-3.5 sm:px-10 sm:py-4 rounded-full hover:bg-[#002822] transition-all font-semibold text-sm sm:text-base shadow-lg shadow-emerald-900/10 cursor-pointer"
             >
               Create content payouts
             </button>

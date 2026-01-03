@@ -94,7 +94,7 @@ const PostForm = () => {
   }, []);
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2lg shadow p-3 sm:p-4 mb-6">
+    <div className="bg-white rounded-xl dark:bg-zinc-900 rounded-2lg shadow p-3 sm:p-4 mb-6">
       <form onSubmit={handlePostSubmit}>
         <div className="flex items-start space-x-2 sm:space-x-3">
           <AvatarUser
