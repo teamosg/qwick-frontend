@@ -4,6 +4,7 @@ import ProfileGeneral from "@/components/dashboard/Profile/General";
 import PaymentMethod from "@/components/dashboard/Profile/PaymentMethod";
 import ProfileBillingHistory from "@/components/dashboard/Profile/ProfileBillingHistory";
 import ProfileDangerZone from "@/components/dashboard/Profile/ProfileDangerZone";
+import ProfileMyEarnings from "@/components/dashboard/Profile/ProfileMyEarnings";
 import ProfileMySubmission from "@/components/dashboard/Profile/ProfileMySubmission";
 import SecurityPrivacy from "@/components/dashboard/Profile/SecurityPrivacy";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,6 +19,7 @@ import {
   Settings,
   X,
   Loader2,
+  Coins,
 } from "lucide-react";
 import { useState } from "react";
 import { FaFileInvoice } from "react-icons/fa";
@@ -70,6 +72,12 @@ const tabs = [
     value: "my-submission",
     icon: Captions,
     content: <ProfileMySubmission />,
+  },
+  {
+    name: "My Earnings",
+    value: "my-earnings",
+    icon: Coins,
+    content: <ProfileMyEarnings />,
   },
   {
     name: "Saved Post",
