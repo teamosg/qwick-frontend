@@ -8,36 +8,62 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { mySubmissions } from "@/data/mySubmissions";
-import { CirclePlus } from "lucide-react";
+import { CirclePlus, SearchX } from "lucide-react";
+import { useState, useMemo } from "react";
 
-const ContentRewardsTable = () => {
+const ContentRewardsTable = ({ data = [] }) => {
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  const filteredData = useMemo(() => {
+    if (statusFilter === "all") return data;
+    return data.filter(item => item.status?.toLowerCase() === statusFilter);
+  }, [data, statusFilter]);
+
   return (
-    <div className="w-full">
+    <div className="w-full space-y-4">
       {/* Filter Bar */}
-      <div className="flex flex-wrap items-center gap-2 text-[#1E293B] dark:text-gray-100 border border-[#717171]/40 dark:border-gray-700 rounded-full pl-4 pr-2 py-1 max-w-full sm:max-w-max">
-        <div className="flex items-center gap-2">
-          <CirclePlus size={14} className="text-[#1E293B] dark:text-gray-200" />
-          <p className="text-sm font-medium">Status</p>
-          <div className="w-px h-3 bg-[#717171]/60 dark:bg-gray-600"></div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-zinc-900/50 p-4 rounded-2xl border border-gray-100 dark:border-zinc-800">
+        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+          <CirclePlus size={16} />
+          <span className="text-sm font-semibold">Filter by</span>
         </div>
 
-        <Select>
-          <SelectTrigger className="cursor-pointer shadow-none border-0 focus-visible:ring-0 text-sm bg-transparent dark:text-gray-100">
-            <SelectValue placeholder="Select a status" />
-          </SelectTrigger>
-          <SelectContent className="text-[#1E293B] dark:text-gray-100 dark:bg-gray-800 border dark:border-gray-700">
-            <SelectGroup>
-              <SelectItem value="approved">Approved</SelectItem>
-              <SelectItem value="rejected">Rejected</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="w-[160px]">
+            <Select onValueChange={setStatusFilter} defaultValue="all">
+              <SelectTrigger className="h-9 rounded-full bg-gray-50 dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 focus:ring-1 focus:ring-[#003933] text-xs font-medium">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent className="dark:bg-zinc-900 dark:border-zinc-800">
+                <SelectGroup>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="approved">Approved</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="rejected">Rejected</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </div>
 
-      {/* Table */}
-      <div className="mt-4 w-full">
-        <DataTable columns={contentRewardColumn} data={mySubmissions} />
+      {/* Table Container */}
+      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 overflow-hidden shadow-sm">
+        {filteredData.length > 0 ? (
+          <div className="w-full overflow-x-auto">
+            <DataTable columns={contentRewardColumn} data={filteredData} />
+          </div>
+        ) : (
+          <div className="py-20 flex flex-col items-center justify-center gap-4 text-center px-4">
+            <div className="p-4 rounded-full bg-gray-50 dark:bg-zinc-800/50 text-gray-400">
+              <SearchX size={32} />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-900 dark:text-white">No submissions found</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Try adjusting your filters or check back later.</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
