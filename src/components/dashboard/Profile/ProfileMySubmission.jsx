@@ -42,7 +42,7 @@ const ProfileMySubmission = () => {
 
   if (isLoading) {
     return (
-      <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+      <div className="p-4 md:p-6 space-y-4 sm:space-y-6">
         <Skeleton className="h-7 w-48 mb-6" />
         <div className="space-y-4 sm:space-y-6">
           {[1, 2, 3].map((i) => (
@@ -78,7 +78,7 @@ const ProfileMySubmission = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+    <div className="md:p-6 space-y-4 sm:space-y-6">
       {/* Header */}
       <h1 className="text-lg sm:text-xl font-semibold text-[#15161E] dark:text-white mb-4 sm:mb-6">
         My Submissions

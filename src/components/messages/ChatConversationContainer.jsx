@@ -26,11 +26,11 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               className={`mb-4 flex ${message?.sender_id === sender_id
-                  ? "justify-start"
-                  : "justify-end"
+                ? "justify-start"
+                : "justify-end"
                 }`}
             >
-              <div className="relative max-w-md flex items-center gap-3">
+              <div className="relative max-w-[85%] sm:max-w-md flex items-center gap-2 sm:gap-3">
                 {message?.sender_id === sender_id && (
                   <AvatarUser
                     src={sender_avatar}
@@ -41,8 +41,8 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                 <div>
                   <div
                     className={`py-3 px-4 rounded-2xl text-sm ${message.sender_id !== sender_id
-                        ? "bg-blue-500 text-white"
-                        : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
+                      ? "bg-blue-500 text-white"
+                      : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
                       } ${message.isCard ? "border border-blue-300" : ""}`}
                   >
                     {/* File attachments in message */}
@@ -60,7 +60,7 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                                 <LuFile size={16} />
                               )}
                             </div>
-                            <div className="ml-2 flex-1 max-w-[330px]">
+                            <div className="ml-2 flex-1 max-w-[200px] sm:max-w-[330px]">
                               <span className="text-xs break-words font-medium">
                                 {attachment.name}
                               </span>

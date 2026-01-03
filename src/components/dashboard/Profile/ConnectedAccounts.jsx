@@ -101,7 +101,7 @@ const ConnectedAccounts = () => {
   const unconnectedList = accounts.filter(account => !connectedSocials[account.id]);
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="md:p-6 space-y-8">
       {/* Connected Accounts Section */}
       <div className="space-y-4">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">

@@ -50,7 +50,7 @@ const ProfileBillingHistory = () => {
 
   if (isLoading) {
     return (
-      <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+      <div className="p-4 md:p-6 space-y-4 sm:space-y-6">
         <Skeleton className="h-8 w-48 mb-6" />
         <Skeleton className="h-10 w-full mb-6 rounded-lg" />
         <div className="space-y-3">
@@ -63,7 +63,7 @@ const ProfileBillingHistory = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+    <div className="p-4 md:p-6 space-y-4 sm:space-y-6">
       {/* Header */}
       <h1 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4 sm:mb-6">
         Billing history

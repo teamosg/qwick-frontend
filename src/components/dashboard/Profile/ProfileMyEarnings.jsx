@@ -46,7 +46,7 @@ const ProfileMyEarnings = () => {
 
     if (isLoading) {
         return (
-            <div className="p-4 sm:p-6 space-y-6">
+            <div className="p-4 md:p-6 space-y-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <Skeleton className="h-8 w-48" />
                     <Skeleton className="h-16 w-full sm:w-40 rounded-xl" />
@@ -61,7 +61,7 @@ const ProfileMyEarnings = () => {
     }
 
     return (
-        <div className="p-0 sm:p-6 space-y-6">
+        <div className="p-0 md:p-6 space-y-6">
             {/* Header & Stats */}
             <div className="p-4 sm:p-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>

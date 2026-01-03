@@ -55,7 +55,7 @@ const ProfileGeneral = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 space-y-6">
+    <form onSubmit={handleSubmit} className="md:p-6 space-y-6">
       {/* Name */}
       <div className="space-y-2">
         <label
