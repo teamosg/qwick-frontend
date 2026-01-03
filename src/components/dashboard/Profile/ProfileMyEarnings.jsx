@@ -137,8 +137,8 @@ const ProfileMyEarnings = () => {
             </div>
 
             {/* Desktop View (Table) - Hidden on mobile */}
-            <div className="hidden lg:block bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-sm">
-                <Table>
+            <div className="hidden lg:block bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl overflow-x-auto shadow-sm">
+                <Table className="min-w-[800px] lg:min-w-full">
                     <TableHeader className="bg-gray-50 dark:bg-zinc-800/50">
                         <TableRow>
                             <TableHead className="w-[80px]">Media</TableHead>

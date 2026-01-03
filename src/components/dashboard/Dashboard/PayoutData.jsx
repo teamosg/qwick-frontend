@@ -145,7 +145,7 @@ const PayoutData = () => {
           </div>
 
           {/* Desktop Table View */}
-          <div className="hidden sm:block">
+          <div className="hidden sm:block overflow-x-auto">
             <div className="p-1">
               <Table>
                 <TableHeader className="">

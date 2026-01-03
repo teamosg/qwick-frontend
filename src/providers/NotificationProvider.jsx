@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
-import { useNotificationStore } from "../store/notificationStore";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNotificationStore } from "../store/notificationStore";
 
 const NotificationProvider = ({ children }) => {
     const ws = useRef(null);
-    const addNotification = useNotificationStore((state) => state.addNotification);
+    const queryClient = useQueryClient();
+    const setHasUnread = useNotificationStore((state) => state.setHasUnread);
     const token = localStorage.getItem("token");
 
     useEffect(() => {
@@ -23,7 +25,10 @@ const NotificationProvider = ({ children }) => {
                 const data = JSON.parse(event.data);
 
                 if (data.type === "send_notification" && data.message) {
-                    addNotification(data);
+                    // Invalidate notifications query to trigger a refetch
+                    queryClient.invalidateQueries({ queryKey: ["notifications"] });
+                    setHasUnread(true);
+
                     toast.info("New Notification", {
                         description: data.message,
                     });
@@ -44,7 +49,7 @@ const NotificationProvider = ({ children }) => {
                 ws.current = null;
             }
         };
-    }, [token, addNotification]);
+    }, [token]);
 
     return children;
 };

@@ -209,12 +209,12 @@ const Profile = () => {
         )}
 
         {/* Tabs Content */}
-        <div className="flex-1 rounded-lg dark:bg-zinc-900 font-medium text-muted-foreground min-h-[600px]">
+        <div className="flex-1 rounded-lg dark:bg-zinc-900 font-medium text-muted-foreground min-h-[300px] md:min-h-[600px]">
           {tabs.map((tab) => (
             <TabsContent
               key={tab.value}
               value={tab.value}
-              className="flex sm:block w-full h-auto p-6"
+              className="flex sm:block w-full h-auto p-4 md:p-6"
             >
               {tab.content}
             </TabsContent>
