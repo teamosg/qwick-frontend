@@ -254,3 +254,71 @@ export const useGetCommunityEarnings = (communityId) => {
     staleTime: 1000 * 60 * 2,
   });
 };
+
+export const useGetCommunityWithdrawals = (communityId) => {
+  return useQuery({
+    queryKey: ["communityWithdrawals", communityId],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/community/${communityId}/withdrawals/`
+        );
+        return res?.data || [];
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch community withdrawals"
+        });
+      }
+    },
+    enabled: !!communityId,
+    staleTime: 1000 * 60 * 2,
+  });
+};
+
+export const useApproveWithdrawal = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id }) => {
+      const res = await axiosPrivate.post(`/v1/withdraw/approve/${id}/`, {
+        action: "approve",
+      });
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Withdrawal approved successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityWithdrawals"] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to approve withdrawal" });
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to approve withdrawal" });
+    },
+  });
+};
+
+export const useRejectWithdrawal = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id }) => {
+      const res = await axiosPrivate.post(`/v1/withdraw/approve/${id}/`, {
+        action: "reject",
+      });
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Withdrawal rejected successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityWithdrawals"] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to reject withdrawal" });
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to reject withdrawal" });
+    },
+  });
+};

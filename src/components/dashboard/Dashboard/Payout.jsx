@@ -2,9 +2,16 @@ import { DollarSign } from "lucide-react";
 import { useState } from "react";
 import PayoutData from "./PayoutData";
 import { PayoutTab } from "./PayoutTab";
+import { useCommunityStore } from "@/store/communityStore";
+import { useGetCommunityWithdrawals } from "@/hooks/community.hook";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Payout = () => {
   const [activeTab, setActiveTab] = useState("withdrawal");
+  const { selectedBrandCommunity } = useCommunityStore();
+  // Using the hook here primarily for loading state check, assuming cards might eventually be dynamic
+  // or simple visual consistency if data is being fetched for the page.
+  const { isLoading } = useGetCommunityWithdrawals(selectedBrandCommunity?.id);
 
   const handleTabChange = (tabValue) => {
     setActiveTab(tabValue);
@@ -19,9 +26,13 @@ const Payout = () => {
           <div className="w-10 h-10 rounded-full bg-[#1BC285] flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
-          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
-            12,489
-          </h2>
+          {isLoading ? (
+            <Skeleton className="h-9 w-24 mb-1" />
+          ) : (
+            <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
+              12,489
+            </h2>
+          )}
           <p className="text-xs text-gray-600 dark:text-zinc-400">
             Total Balance
           </p>
@@ -30,9 +41,13 @@ const Payout = () => {
           <div className="w-10 h-10 rounded-full bg-red-400 flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
-          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
-            12,489
-          </h2>
+          {isLoading ? (
+            <Skeleton className="h-9 w-24 mb-1" />
+          ) : (
+            <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
+              12,489
+            </h2>
+          )}
           <p className="text-xs text-gray-600 dark:text-zinc-400">
             Total Withdrawal
           </p>
@@ -41,9 +56,13 @@ const Payout = () => {
           <div className="w-10 h-10 rounded-full bg-red-400 flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
-          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
-            12,489
-          </h2>
+          {isLoading ? (
+            <Skeleton className="h-9 w-24 mb-1" />
+          ) : (
+            <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
+              12,489
+            </h2>
+          )}
           <p className="text-xs text-gray-600 dark:text-zinc-400">
             Total Transfer
           </p>
@@ -52,9 +71,13 @@ const Payout = () => {
           <div className="w-10 h-10 rounded-full bg-[#1BC285] flex items-center justify-center mb-4">
             <DollarSign color="#fff" size={24} />
           </div>
-          <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
-            12,489
-          </h2>
+          {isLoading ? (
+            <Skeleton className="h-9 w-24 mb-1" />
+          ) : (
+            <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
+              12,489
+            </h2>
+          )}
           <p className="text-xs text-gray-600 dark:text-zinc-400">
             Total Cash in
           </p>
