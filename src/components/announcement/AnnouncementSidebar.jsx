@@ -31,6 +31,10 @@ const items = [
     title: "Community Chat",
     url: "community-chat",
   },
+  {
+    title: "Withdraw",
+    url: "withdraw",
+  },
 ];
 
 export function AnnouncementSidebar() {

@@ -322,3 +322,24 @@ export const useRejectWithdrawal = () => {
     },
   });
 };
+
+export const useWithdrawal = (communityId) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ amount }) => {
+      const res = await axiosPrivate.post(`/v1/community/${communityId}/withdraw/`, { amount });
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Withdrawal request created successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityWithdrawals", communityId] });
+      } else {
+        toast.error(data?.message || "Failed to create withdrawal request");
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to create withdrawal request" });
+    },
+  });
+};

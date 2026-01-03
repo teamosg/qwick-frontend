@@ -1,5 +1,6 @@
 import AnnouncementFeed from "@/components/announcement/AnnouncementFeed";
 import CommunityChat from "@/components/CommunityChat/CommunityChat";
+import Withdraw from "@/components/CommunityChat/Withdraw";
 import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import ContentRewordPublic from "@/components/contentReward/ContentRewordPublic";
@@ -140,6 +141,10 @@ const router = createBrowserRouter([
           {
             path: "community-chat",
             element: <CommunityChat />,
+          },
+          {
+            path: "withdraw",
+            element: <Withdraw />,
           },
         ],
       },
