@@ -508,3 +508,27 @@ export const useToggleTwoFactor = () => {
     }
   })
 }
+
+export const useGetOtherUserProfile = (username) => {
+  return useQuery({
+    queryKey: ["otherUserProfile", username],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(`/v1/account/profile/${username}/`);
+        const user = res?.data?.data;
+        if (user?.avatar && !user.avatar.startsWith("http")) {
+          user.avatar = "https://darrenchua.softvencealpha.com" + user.avatar;
+        }
+        return user;
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: `Failed to fetch profile for ${username}`,
+        });
+      }
+    },
+    enabled: !!username,
+    staleTime: 1000 * 60 * 10,
+  });
+};

@@ -383,3 +383,22 @@ export const useGetCommunityCategories = () => {
     staleTime: 1000 * 60 * 10, // cache for 10 mins
   });
 };
+export const useGetCommunityConversations = (communityUsername) => {
+  return useQuery({
+    queryKey: ["communityConversations", communityUsername],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(`/v1/community/conversations/${communityUsername}/`);
+        return res?.data?.data || {};
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch conversations",
+        });
+      }
+    },
+    enabled: !!communityUsername,
+    staleTime: 1000 * 30, // cache for 30 seconds for quick returns
+  });
+};
