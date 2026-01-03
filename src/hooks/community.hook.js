@@ -343,3 +343,25 @@ export const useWithdrawal = (communityId) => {
     },
   });
 };
+
+export const useGetCampaignBudgets = (communityId) => {
+  return useQuery({
+    queryKey: ["campaignBudgets", communityId],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/communities/${communityId}/campaign-budgets/`
+        );
+        return res?.data;
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch campaign budgets",
+        });
+      }
+    },
+    enabled: !!communityId,
+    staleTime: 1000 * 60 * 2,
+  });
+};
