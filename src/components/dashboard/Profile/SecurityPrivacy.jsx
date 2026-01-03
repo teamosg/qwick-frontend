@@ -3,7 +3,7 @@ import TwoFactorStatus from "./components/TwoFactorStatus";
 
 const SecurityPrivacy = () => {
   return (
-    <div className="p-6 space-y-10">
+    <div className="md:p-6 space-y-10">
       {/* Two-factor authentication section */}
       <TwoFactorStatus />
 

@@ -142,16 +142,16 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
     return <ConversationDetailsSkeleton />;
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-[#171717] max-h-full">
+    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-[#171717] min-h-[calc(100vh-160px)]">
       {/* Messages Area */}
       <div className="flex-1 p-4 overflow-y-auto">
         {/* Message bubbles, colors updated for dark mode */}
-        <GroupChatConversationContainer
+        {/* <GroupChatConversationContainer
           messages={messages}
           sender={sender}
           user={user}
           members={members}
-        />
+        /> */}
       </div>
       {
         isWsError

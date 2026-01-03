@@ -6,6 +6,7 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarProvider,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 import {
@@ -59,10 +60,11 @@ const items = [
 export function DashboardSidebarContent() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const { mutate: editCommunity, isPending } = useEditCommunity();
-  
+  const { setOpenMobile } = useSidebar();
+
   const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore();
   const {
-    data: communityList, 
+    data: communityList,
     isLoading: isLoadingMyCommunityList,
   } = useGetMyCommunityList();
 
@@ -90,7 +92,7 @@ export function DashboardSidebarContent() {
 
   return (
     <>
-      <Sidebar className="sticky md:left-64 left-0">
+      <Sidebar className="sticky top-0 left-0">
         <SidebarHeader
           className="p-0 bg-center bg-cover bg-no-repeat h-[135px] relative"
           style={{ backgroundImage: `url(${bg})` }}
@@ -153,8 +155,9 @@ export function DashboardSidebarContent() {
                       className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
                     >
                       <Link
-                        className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
+                        className="hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full"
                         to={item.url}
+                        onClick={() => setOpenMobile(false)}
                       >
                         <span className="hover:bg-none hover:shadow-none font-medium">
                           {item.title}

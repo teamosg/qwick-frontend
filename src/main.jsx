@@ -10,6 +10,7 @@ import "./index.css";
 import router from "./routes/router";
 import { Toaster } from "./components/ui/sonner";
 import NotificationProvider from "./providers/NotificationProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 AOS.init({
   duration: 1000,
@@ -19,15 +20,17 @@ AOS.init({
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <NotificationProvider>
-          <RouterProvider router={router} />
-        </NotificationProvider>
-        {/* <Toaster position="bottom-right" /> */}
-        <Toaster />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+          <NotificationProvider>
+            <RouterProvider router={router} />
+          </NotificationProvider>
+          {/* <Toaster position="bottom-right" /> */}
+          <Toaster />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </GoogleOAuthProvider>
   </StrictMode>
 );
 

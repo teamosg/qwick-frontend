@@ -14,7 +14,7 @@ const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
 const ContentRewardDetailsEdit = () => {
   const { id } = useParams();
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
-  const { mutate: updateCampaign } = useUpdateCampaign(id);
+  const { mutate: updateCampaign, isPending: isSubmitting } = useUpdateCampaign(id);
   const [showFormModal, setShowFormModal] = useState(false);
 
   const campaign = useMemo(() => {
@@ -305,6 +305,7 @@ const ContentRewardDetailsEdit = () => {
                 onSubmit={handleFormSubmit}
                 onCancel={handleFormCancel}
                 isEditMode={true}
+                isSubmitting={isSubmitting}
               />
             </div>
           </div>

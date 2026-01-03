@@ -14,7 +14,7 @@ const PaymentMethod = () => {
   };
 
   return (
-    <div className="p-4 sm:p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-6">
       {/* Info Box */}
       <div className="text-center text-[#717171] dark:text-white text-sm sm:text-[16px] py-6 sm:py-10 w-full shadow rounded-[16px] sm:rounded-[24px] bg-white dark:bg-[#2E2E2E]">
         <p>No payment method found</p>
@@ -30,7 +30,7 @@ const PaymentMethod = () => {
       {/* ================= MODAL ================= */}
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-[90%] max-w-md bg-white dark:bg-[#2E2E2E] rounded-2xl p-6 space-y-6 shadow-xl">
+          <div className="w-[90%] max-w-md bg-white dark:bg-[#2E2E2E] rounded-2xl md:p-6 space-y-6 shadow-xl">
             {/* Title */}
             <h2 className="text-lg font-semibold text-[#003933] dark:text-white">
               Add Payment Method

@@ -1,110 +1,136 @@
-import { ArrowUpRight, ShoppingCart, Undo2 } from "lucide-react";
-import { AnalyticsChart } from "./AnalyticsChart";
+import { ShoppingBag, TrendingUp, Users, DollarSign, Loader2 } from "lucide-react";
 import ContentRewardNav from "./ContentRewardNav";
 import ContentRewardsTable from "./ContentRewardsTable";
+import { useCommunityStore } from "@/store/communityStore";
+import { useGetCampaignBudgets } from "@/hooks/community.hook";
+import { useGetCommunitySubmissions } from "@/hooks/campaign.hook";
+import { useMemo } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const Analytics = () => {
-  return (
-    <div>
-      <ContentRewardNav />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div className="shadow p-4 rounded-lg bg-white dark:bg-[#2E2E2E]">
-          <div className="flex flex-col gap-3 p-6">
-            <h3 className="flex items-center gap-2">
-              <span className="bg-[#003933] w-8 h-8 rounded-full  flex items-center justify-center">
-                <ShoppingCart className="text-white" size={18} />
-              </span>
-              <span className="text-[#858D9D] font-semibold text-sm dark:text-[#fff]">
-                New users
-              </span>
-            </h3>
+  const { selectedBrandCommunity } = useCommunityStore();
+  const communityId = selectedBrandCommunity?.id;
 
-            <h2 className="text-[#090003] text-2xl font-semibold dark:text-[#fff]">3</h2>
-            <div className="flex items-center gap-2">
-              <span className="flex items-center border-r">
-                <span className="text-sm font-semibold text-primary dark:text-[#fff]">24%</span>
-                <ArrowUpRight />
-              </span>
-              <h3 className="text-[#858D9D] text-sm dark:text-[#fff]">From last week</h3>
-            </div>
-          </div>
-        </div>
+  const { data: budgetData, isLoading: budgetsLoading } = useGetCampaignBudgets(communityId);
+  const { data: submissionData, isLoading: submissionsLoading } = useGetCommunitySubmissions(communityId);
 
-        <div className="shadow p-4 rounded-lg bg-white dark:bg-[#2E2E2E]">
-          <div className="flex flex-col gap-3 p-6">
-            <h3 className="flex items-center gap-2">
-              <span className="bg-[#ec3131] w-8 h-8 rounded-full  flex items-center justify-center">
-                <Undo2 className="text-white" size={18} />
-              </span>
-              <span className="text-[#858D9D] font-semibold text-sm dark:text-[#fff]">
-                Total views
-              </span>
-            </h3>
+  const stats = useMemo(() => {
+    if (!submissionData?.submissions) return { totalViews: 0, totalPayout: 0, totalSubmissions: 0, totalCampaigns: 0 };
 
-            <h2 className="text-[#090003] text-2xl font-semibold dark:text-[#fff]">1.2M</h2>
-            <div className="flex items-center gap-2">
-              <span className="flex items-center border-r">
-                <span className="text-sm font-semibold text-primary">24%</span>
-                <ArrowUpRight />
-              </span>
-              <h3 className="text-[#858D9D] text-sm dark:text-[#fff]">From last week</h3>
-            </div>
-          </div>
-        </div>
+    const submissions = submissionData.submissions;
+    const totalViews = submissions.reduce((acc, sub) => acc + (sub.views || 0), 0);
+    const totalPayout = submissions.reduce((acc, sub) => acc + parseFloat(sub.payout || 0), 0);
+    const totalSubmissions = submissionData.total_submissions || 0;
+    const totalCampaigns = budgetData?.total_campaigns || 0;
 
-        {/* <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="p-5 shadow bg-white rounded-xl">
-            <div className="w-10 h-10 rounded-full bg-[#1BC285] flex items-center justify-center mb-4">
-              <DollarSign color="#fff" size={24} />
-            </div>
-            <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
-              12,489
-            </h2>
-            <p className="text-xs text-gray-600 dark:text-zinc-400">
-              Total Balance
-            </p>
-          </div>
-          <div className="p-5 shadow bg-white rounded-xl">
-            <div className="w-10 h-10 rounded-full bg-[#1BC285] flex items-center justify-center mb-4">
-              <DollarSign color="#fff" size={24} />
-            </div>
-            <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
-              12,489
-            </h2>
-            <p className="text-xs text-gray-600 dark:text-zinc-400">
-              Total Cash in
-            </p>
-          </div>
-        </div> */}
-        {/* <ContentRewardNav />
-      <Card className="bg-white dark:bg-gray-900 border-0 shadow-sm">
-        <CardContent className="p-12 text-center">
-          <div>
-            <div className="overflow-hidden p-10">
-              <h2 className="text-2xl font-bold dark:text-white mb-3.5">
-                No analytics data
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-                Analytics data will appear here once you start creating and
-                managing content rewards.
-              </p>
-            </div>
-            <div className="mt-8 max-w-md text-center mx-auto">
-              <Link
-                to="/dashboard/content-reward"
-                className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer"
-              >
-                Create your first reward
-              </Link>
-            </div>
-          </div>
-        </CardContent>
-      </Card> */}
+    return { totalViews, totalPayout, totalSubmissions, totalCampaigns };
+  }, [submissionData, budgetData]);
+
+  // Map campaign names to submissions for the table
+  const mappedSubmissions = useMemo(() => {
+    if (!submissionData?.submissions || !budgetData?.campaigns) return submissionData?.submissions || [];
+
+    return submissionData.submissions.map(sub => {
+      const campaign = budgetData.campaigns.find(c => c.campaign_id === sub.campaign);
+      return {
+        ...sub,
+        campaign_name: campaign?.campaign_name || `Campaign #${sub.campaign}`
+      };
+    });
+  }, [submissionData, budgetData]);
+
+  const isLoading = budgetsLoading || submissionsLoading;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-[400px] flex flex-col items-center justify-center gap-4">
+        <Loader2 className="w-10 h-10 animate-spin text-[#003933]" />
+        <p className="text-gray-500 dark:text-gray-400 font-medium animate-pulse">Loading analytics...</p>
       </div>
-      <AnalyticsChart />
+    );
+  }
 
-      <div className="mt-10">
-        <ContentRewardsTable />
+  return (
+    <div className="space-y-6 md:space-y-8 animate-in fade-in duration-500">
+      <ContentRewardNav />
+
+      {/* Stats Overview */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* Total Campaigns */}
+        <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
+          <CardContent className="p-4 sm:p-5 md:p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-3 md:gap-4 text-center sm:text-left">
+              <div className="p-2.5 sm:p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform shrink-0">
+                <ShoppingBag size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Campaigns</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tabular-nums leading-tight">
+                  {stats.totalCampaigns}
+                </h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Total Views */}
+        <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
+          <CardContent className="p-4 sm:p-5 md:p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-3 md:gap-4 text-center sm:text-left">
+              <div className="p-2.5 sm:p-3 rounded-xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform shrink-0">
+                <TrendingUp size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Views</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tabular-nums leading-tight">
+                  {stats.totalViews >= 1000000 ? `${(stats.totalViews / 1000000).toFixed(1)}M` : stats.totalViews.toLocaleString()}
+                </h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Total Submissions */}
+        <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
+          <CardContent className="p-4 sm:p-5 md:p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-3 md:gap-4 text-center sm:text-left">
+              <div className="p-2.5 sm:p-3 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0">
+                <Users size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Submissions</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tabular-nums leading-tight">
+                  {stats.totalSubmissions}
+                </h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Total Paid */}
+        <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
+          <CardContent className="p-4 sm:p-5 md:p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-3 md:gap-4 text-center sm:text-left">
+              <div className="p-2.5 sm:p-3 rounded-xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0">
+                <DollarSign size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Payout</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tabular-nums leading-tight">
+                  ${stats.totalPayout.toFixed(0)}
+                </h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="mt-8 md:mt-12">
+        <div className="mb-4">
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">Submission History</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Manage and track all user rewards</p>
+        </div>
+        <ContentRewardsTable data={mappedSubmissions} />
       </div>
     </div>
   );

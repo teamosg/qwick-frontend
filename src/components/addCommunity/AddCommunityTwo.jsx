@@ -13,7 +13,7 @@ const communityTwoData = [
   { id: 9, title: "Ecommerce" },
 ];
 
-const AddCommunityTwo = ({ selectedId, onClick }) => {
+const AddCommunityTwo = ({ selectedId, onClick, subcategories = [] }) => {
   return (
     <motion.div
       className=""
@@ -22,7 +22,7 @@ const AddCommunityTwo = ({ selectedId, onClick }) => {
       transition={{ duration: 0.5 }}
     >
       <div className="grid grid-cols-1 gap-4 sm:grid sm:grid-cols-3 sm:gap-6">
-        {communityTwoData.map((data, index) => (
+        {subcategories.map((data, index) => (
           <motion.div
             key={data.id}
             initial={{ opacity: 0, y: 20 }}
@@ -32,7 +32,10 @@ const AddCommunityTwo = ({ selectedId, onClick }) => {
             <AddCommunityItem
               selected={selectedId === data.id}
               onClick={() => onClick(data.id)}
-              data={data}
+              data={{
+                id: data.id,
+                title: data.name
+              }}
             />
           </motion.div>
         ))}

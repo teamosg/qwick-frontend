@@ -7,9 +7,8 @@ import { useTheme } from "../shared/ThemeProvider";
 
 const NotificationItem = ({ title, time, isRead }) => (
   <div
-    className={`p-4 ${
-      !isRead ? "bg-primary/10" : ""
-    } hover:bg-accent cursor-pointer`}
+    className={`p-4 ${!isRead ? "bg-primary/10" : ""
+      } hover:bg-accent cursor-pointer`}
   >
     <p className="text-sm font-medium text-gray-900 dark:text-white">{title}</p>
     <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">{time}</p>
@@ -140,9 +139,8 @@ const Header = ({ userName, userImage, onMenuClick }) => {
   return (
     <>
       <header
-        className={`${
-          isHome && "block md:hidden"
-        } bg-card py-4 px-6 flex items-center justify-between border-b border-border`}
+        className={`${isHome && "block md:hidden"
+          } bg-card py-4 px-6 flex items-center justify-between border-b border-border`}
       >
         <div className="flex items-center justify-center space-x-2 md:space-x-4">
           {/* Show menu text name based on the router. map will not work here because it needs to show only one name based on the path */}
@@ -152,7 +150,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
           >
             <Menu size={22} className="text-foreground" />
           </button>
-          <h2 className="text-[24px] text-gray-900 dark:text-white font-semibold">
+          <h2 className="text-xl md:text-2xl text-gray-900 dark:text-white font-semibold">
             {menuItems.find((item) => item.path === location.pathname)?.text}
           </h2>
 
@@ -187,11 +185,10 @@ const Header = ({ userName, userImage, onMenuClick }) => {
 
           <Link
             to={`/addcommunity`}
-            type="submit"
-            className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-2.5 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+            className="bg-[#003933] dark:bg-[#003933] text-white px-3 py-2 sm:py-2.5 sm:px-6 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex items-center gap-2 whitespace-nowrap"
           >
-            <Plus />
-            Add Community
+            <Plus size={20} />
+            <span className="hidden sm:inline">Add Community</span>
           </Link>
 
           <div className="relative hidden sm:block">

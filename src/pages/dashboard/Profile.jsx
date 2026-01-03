@@ -4,6 +4,7 @@ import ProfileGeneral from "@/components/dashboard/Profile/General";
 import PaymentMethod from "@/components/dashboard/Profile/PaymentMethod";
 import ProfileBillingHistory from "@/components/dashboard/Profile/ProfileBillingHistory";
 import ProfileDangerZone from "@/components/dashboard/Profile/ProfileDangerZone";
+import ProfileMyEarnings from "@/components/dashboard/Profile/ProfileMyEarnings";
 import ProfileMySubmission from "@/components/dashboard/Profile/ProfileMySubmission";
 import SecurityPrivacy from "@/components/dashboard/Profile/SecurityPrivacy";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,6 +19,7 @@ import {
   Settings,
   X,
   Loader2,
+  Coins,
 } from "lucide-react";
 import { useState } from "react";
 import { FaFileInvoice } from "react-icons/fa";
@@ -72,6 +74,12 @@ const tabs = [
     content: <ProfileMySubmission />,
   },
   {
+    name: "My Earnings",
+    value: "my-earnings",
+    icon: Coins,
+    content: <ProfileMyEarnings />,
+  },
+  {
     name: "Saved Post",
     value: "saved-post",
     icon: Save,
@@ -106,7 +114,7 @@ const Profile = () => {
   const userAvatar = profile?.avatar;
 
   return (
-    <div className="min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
+    <div className="p-2 min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
       {/* Mobile Toggle Button */}
       <div className="md:hidden mb-4">
         <button
@@ -127,7 +135,7 @@ const Profile = () => {
           className={`${isTabsOpen
             ? "translate-x-0 opacity-100"
             : "-translate-x-full opacity-0"
-            }  md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
+            }  md:translate-x-0 md:opacity-100 fixed max-h-dvh overflow-y-auto md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
         >
           {/* Mobile Close Button */}
           <div className="md:hidden flex justify-between items-center p-4 border-b border-gray-200 dark:border-zinc-700">
@@ -201,12 +209,12 @@ const Profile = () => {
         )}
 
         {/* Tabs Content */}
-        <div className="flex-1 rounded-lg dark:bg-zinc-900 font-medium text-muted-foreground min-h-[600px]">
+        <div className="flex-1 rounded-lg dark:bg-zinc-900 font-medium text-muted-foreground min-h-[300px] md:min-h-[600px]">
           {tabs.map((tab) => (
             <TabsContent
               key={tab.value}
               value={tab.value}
-              className="flex sm:block w-full h-auto p-6"
+              className="flex sm:block w-full h-auto p-4 md:p-6"
             >
               {tab.content}
             </TabsContent>

@@ -171,3 +171,33 @@ export const useUpdateCampaign = (campaignId) => {
         },
     });
 };
+
+export const useGetCampaignTypes = () => {
+    return useQuery({
+        queryKey: ["campaignTypes"],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get("/v1/campaign-types/");
+                return res?.data;
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch campaign types" });
+            }
+        },
+        staleTime: 1000 * 60 * 10, // 10 mins
+    });
+};
+
+export const useGetCategories = () => {
+    return useQuery({
+        queryKey: ["categories"],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get("/v1/categories/");
+                return res?.data;
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch categories" });
+            }
+        },
+        staleTime: 1000 * 60 * 10, // 10 mins
+    });
+};

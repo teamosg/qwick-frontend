@@ -5,13 +5,14 @@ import {
   DropzoneEmptyState,
 } from "@/components/ui/shadcn-io/dropzone";
 
-import { CircleAlert, X } from "lucide-react";
+import { CircleAlert, Plus, X } from "lucide-react";
 import { useState, useMemo } from "react";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { toast } from "sonner";
 import { useParams, useNavigate } from "react-router";
 import { useGetAllCampaigns, useSubmitCampaignContent } from "@/hooks/campaign.hook";
 import { useCommunityStore } from "@/store/communityStore";
+import CampaignDetailsSkeleton from "./CampaignDetailsSkeleton";
 
 const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
 
@@ -29,7 +30,6 @@ const ContentRewardDetailsPayment = () => {
   const [files, setFiles] = useState();
   const [showPopup, setShowPopup] = useState(false);
 
-  // Filter available platforms from campaign data
   const availablePlatforms = useMemo(() => {
     return campaign?.platforms?.map(p => p.name?.toLowerCase()) || [];
   }, [campaign]);
@@ -75,14 +75,13 @@ const ContentRewardDetailsPayment = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Check if at least one available platform has a link
     const hasAnyLink = Object.entries(formData).some(([key, val]) => {
       const platformKey = key.replace("_link", "");
       return availablePlatforms.includes(platformKey) && val.trim() !== "";
     });
 
     if (!hasAnyLink && availablePlatforms.length > 0) {
-      newErrors.general = "Please provide at least one social media link for the available platforms.";
+      newErrors.general = "Please provide at least one social media link.";
     }
 
     if (!files || files.length === 0) {
@@ -101,7 +100,6 @@ const ContentRewardDetailsPayment = () => {
       payload.append("file", files[0]);
     }
 
-    // Only append links for available platforms
     if (availablePlatforms.includes("youtube") && formData.youtube_link) payload.append("youtube_link", formData.youtube_link);
     if (availablePlatforms.includes("instagram") && formData.instagram_link) payload.append("instagram_link", formData.instagram_link);
     if (availablePlatforms.includes("tiktok") && formData.tiktok_link) payload.append("tiktok_link", formData.tiktok_link);
@@ -124,24 +122,20 @@ const ContentRewardDetailsPayment = () => {
 
   if (isCreator) {
     return (
-      <div className="flex items-center justify-center p-10 mt-10">
-        <p className="text-gray-500">Access denied for community creators.</p>
+      <div className="flex items-center justify-center p-6 mt-10">
+        <p className="text-gray-500 dark:text-zinc-400">Access denied for community creators.</p>
       </div>
     );
   }
 
   if (isLoadingCampaigns) {
-    return (
-      <div className="flex items-center justify-center p-10 h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#003933]"></div>
-      </div>
-    );
+    return <CampaignDetailsSkeleton />;
   }
 
   if (!campaign) {
     return (
-      <div className="flex items-center justify-center p-10 h-screen">
-        <p>Campaign data not found.</p>
+      <div className="flex items-center justify-center p-10 h-[60vh]">
+        <p className="text-gray-500 dark:text-zinc-400">Campaign data not found.</p>
       </div>
     )
   }
@@ -163,252 +157,203 @@ const ContentRewardDetailsPayment = () => {
 
   return (
     <>
-      <div className="p-6 text-[#717171]">
-        <div className="dark:text-white dark:bg-zinc-900 p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl bg-white">
-          <div className="mb-6">
-            <img
-              src={fullThumbnail || "/confirm-apply.png"}
-              alt={name}
-              className="w-full h-[300px] object-cover mb-7 rounded-xl"
-            />
-            <p className="text-[#717171] text-xs mb-7 dark:text-zinc-400 flex gap-2 items-center">
-              <span>
-                <CircleAlert className="text-[#FEC260]" size={18} />
-              </span>
-              <span>
-                Only views after you submit count towards payout. Submit as soon
-                as you post to get paid for all of your views.
-              </span>
-            </p>
-            <div className="mb-2.5">
-              <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white font-semibold uppercase">
-                Campaign Progress
-              </h4>
-              <p className="text-[#717171] text-xs flex justify-between dark:text-zinc-400">
-                <span className=""> $0.00 of ${budget}</span> <span>0%</span>
-              </p>
-            </div>
-            <Progress value={0} indicatorColor="red" className="mb-3.5" />
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between mb-9">
-            <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Reward
-              </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
-                ${reward_rate}/1k
-              </p>
-            </div>
-            <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Type
-              </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
-                {campaign_type?.name || "N/A"}
-              </p>
-            </div>
-            <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Category
-              </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
-                {category?.name || "N/A"}
-              </p>
-            </div>
-            <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Max Payout
-              </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
-                ${max_payout}
-              </p>
-            </div>
-            <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold  dark:text-white uppercase opacity-70">
-                Platforms
-              </p>
-              <div className="flex gap-3 dark:text-zinc-400 text-[#003933]">
-                {platforms?.map((p, idx) => {
-                  const pName = p.name?.toLowerCase();
-                  if (pName === 'instagram') return <FaInstagram key={idx} size={20} />;
-                  if (pName === 'facebook') return <FaFacebook key={idx} size={20} />;
-                  if (pName === 'youtube') return <FaYoutube key={idx} size={20} />;
-                  if (pName === 'tiktok') return <FaTiktok key={idx} size={20} />;
-                  return null;
-                })}
+      <div className="p-4 sm:p-6 text-[#717171] max-w-5xl mx-auto">
+        <div className="dark:text-white dark:bg-zinc-900 p-4 sm:p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 bg-white">
+          <div className="space-y-6">
+            <div className="relative group overflow-hidden rounded-2xl">
+              <img
+                src={fullThumbnail || "/confirm-apply.png"}
+                alt={name}
+                className="w-full h-48 sm:h-64 md:h-[350px] object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4 sm:p-6">
+                <h3 className="text-white text-xl sm:text-2xl font-bold">{name}</h3>
               </div>
             </div>
-          </div>
-          <div className="text-center flex items-end justify-end ">
-            <button
-              onClick={handleApplyClick}
-              className="w-[200px] mb-2.5 text-white bg-[#003933] hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition shadow-lg"
-            >
-              Submit Content
-            </button>
+
+            <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 p-4 rounded-xl flex gap-3 items-start">
+              <CircleAlert className="text-amber-500 shrink-0 mt-0.5" size={18} />
+              <p className="text-[#003933] dark:text-amber-200 text-xs sm:text-sm font-medium leading-relaxed">
+                Only views after you submit count towards payout. Submit as soon
+                as you post to get paid for all of your views.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex justify-between items-end">
+                <h4 className="text-gray-900 text-sm dark:text-white font-bold uppercase tracking-wider">
+                  Campaign Progress
+                </h4>
+                <p className="text-gray-500 text-xs sm:text-sm dark:text-zinc-400 font-medium">
+                  $0.00 of ${budget} (0%)
+                </p>
+              </div>
+              <Progress value={0} indicatorColor="red" className="h-2.5" />
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-6 py-6 border-y border-gray-50 dark:border-zinc-800/50">
+              {[
+                { label: "Reward", value: `$${reward_rate}/1k` },
+                { label: "Type", value: campaign_type?.name || "N/A" },
+                { label: "Category", value: category?.name || "N/A" },
+                { label: "Max Payout", value: `$${max_payout}` },
+              ].map((stat, i) => (
+                <div key={i}>
+                  <p className="text-[10px] text-gray-400 dark:text-zinc-500 mb-1 font-bold uppercase tracking-wider">
+                    {stat.label}
+                  </p>
+                  <p className="text-gray-900 text-sm font-semibold dark:text-zinc-300">
+                    {stat.value}
+                  </p>
+                </div>
+              ))}
+              <div className="col-span-2 lg:col-span-1">
+                <p className="text-[10px] text-gray-400 dark:text-zinc-500 mb-1 font-bold uppercase tracking-wider">
+                  Platforms
+                </p>
+                <div className="flex gap-3 text-gray-700 dark:text-zinc-300">
+                  {platforms?.map((p, idx) => {
+                    const pName = p.name?.toLowerCase();
+                    if (pName === 'instagram') return <FaInstagram key={idx} size={18} />;
+                    if (pName === 'facebook') return <FaFacebook key={idx} size={18} />;
+                    if (pName === 'youtube') return <FaYoutube key={idx} size={18} />;
+                    if (pName === 'tiktok') return <FaTiktok key={idx} size={18} />;
+                    return null;
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <button
+                onClick={() => navigate(-1)}
+                className="text-gray-500 hover:text-gray-700 dark:text-zinc-400 dark:hover:text-zinc-200 text-sm font-semibold order-2 sm:order-1"
+              >
+                Go Back
+              </button>
+              <button
+                onClick={handleApplyClick}
+                className="w-full sm:w-auto px-10 py-3.5 text-white bg-[#003933] hover:bg-[#002822] text-lg font-bold rounded-2xl transition duration-300 shadow-xl active:scale-[0.98] order-1 sm:order-2"
+              >
+                Submit Content
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Popup Modal */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-          <div className="bg-white dark:bg-zinc-800 rounded-3xl w-full max-w-2xl mx-auto relative overflow-y-auto max-h-[95vh] sm:p-8 p-6 shadow-2xl">
-            {/* Close Button */}
-            <button
-              onClick={handleClosePopup}
-              className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 transition-colors z-10"
-            >
-              <X size={24} />
-            </button>
-
-            <div className="space-y-6">
-              {/* Header */}
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-2 sm:p-4 backdrop-blur-sm">
+          <div className="bg-white dark:bg-zinc-900 rounded-[2rem] w-full max-w-xl mx-auto relative overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            {/* Modal Header */}
+            <div className="p-6 sm:p-8 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
                   Create Submission
                 </h2>
-                <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1">
-                  Share your results for <strong>{name}</strong>
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-zinc-400 mt-1">
+                  Share your results for <span className="text-[#003933] dark:text-[#00b89f] font-semibold">{name}</span>
                 </p>
               </div>
+              <button
+                onClick={handleClosePopup}
+                className="p-2 bg-gray-50 dark:bg-zinc-800 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-full transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
 
-              {/* General Error Message */}
+            {/* Modal Body */}
+            <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6 scrollbar-hide">
+              {/* Errors Container */}
               {(errors.general || errors.non_field_errors) && (
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-3 flex items-start gap-2">
-                  <CircleAlert className="text-red-600 size-4 mt-0.5 flex-shrink-0" />
-                  <div className="text-sm text-red-800 dark:text-red-200">
-                    {errors.general && <p>{errors.general}</p>}
-                    {errors.non_field_errors && (
-                      <ul className="list-disc ml-4">
-                        {Array.isArray(errors.non_field_errors)
-                          ? errors.non_field_errors.map((err, i) => <li key={i}>{err}</li>)
-                          : <li>{errors.non_field_errors}</li>
-                        }
-                      </ul>
-                    )}
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-xl p-4 flex items-start gap-3">
+                  <CircleAlert className="text-red-500 shrink-0 mt-0.5" size={18} />
+                  <div className="text-xs sm:text-sm text-red-800 dark:text-red-200 whitespace-pre-wrap">
+                    {errors.general || (Array.isArray(errors.non_field_errors) ? errors.non_field_errors[0] : errors.non_field_errors)}
                   </div>
                 </div>
               )}
 
-              {/* Info Alert */}
-              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 flex items-start gap-3">
-                <CircleAlert className="text-amber-500 flex-shrink-0 mt-0.5" size={18} />
-                <p className="text-sm text-amber-800 dark:text-amber-200 leading-relaxed">
-                  Only views after you submit count towards payout. Submit as
-                  soon as you post to get paid for all of your views.
-                </p>
-              </div>
-
-              {/* Form Content */}
-              <div className="space-y-6">
-                {/* Link Inputs - Dynamically rendered based on available platforms */}
-                <div className="space-y-5">
-                  {availablePlatforms.includes("youtube") && (
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                        YouTube Link
+              <div className="space-y-5">
+                {/* Dynamically render platform links */}
+                {[
+                  { id: "youtube", label: "YouTube Link", placeholder: "https://www.youtube.com/watch?v=...", icon: <FaYoutube className="text-red-600" /> },
+                  { id: "instagram", label: "Instagram Link", placeholder: "https://www.instagram.com/reels/...", icon: <FaInstagram className="text-pink-600" /> },
+                  { id: "tiktok", label: "TikTok Link", placeholder: "https://www.tiktok.com/@user/video/...", icon: <FaTiktok className="text-black dark:text-white" /> }
+                ].map((input) => (
+                  availablePlatforms.includes(input.id) && (
+                    <div key={input.id} className="space-y-2">
+                      <label className="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white italic">
+                        {input.icon} {input.label}
                       </label>
                       <input
                         type="url"
-                        value={formData.youtube_link}
-                        onChange={(e) => handleInputChange("youtube_link", e.target.value)}
-                        placeholder="https://www.youtube.com/watch?v=..."
-                        className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700/50 dark:text-white outline-none transition-all placeholder:text-gray-400 ${errors.youtube_link ? "border-red-500" : "border-gray-200 dark:border-zinc-700"
+                        value={formData[`${input.id}_link`]}
+                        onChange={(e) => handleInputChange(`${input.id}_link`, e.target.value)}
+                        placeholder={input.placeholder}
+                        className={`w-full px-4 py-3.5 bg-gray-50 dark:bg-zinc-800 border-2 rounded-2xl focus:ring-4 focus:ring-[#3fa796]/20 focus:border-[#3fa796] outline-none transition-all placeholder:text-gray-400 dark:text-white font-medium ${errors[`${input.id}_link`] ? "border-red-400" : "border-transparent"
                           }`}
                       />
-                      {errors.youtube_link && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {Array.isArray(errors.youtube_link) ? errors.youtube_link[0] : errors.youtube_link}
+                      {errors[`${input.id}_link`] && (
+                        <p className="text-red-500 text-[10px] font-bold px-1 uppercase tracking-tight">
+                          {Array.isArray(errors[`${input.id}_link`]) ? errors[`${input.id}_link`][0] : errors[`${input.id}_link`]}
                         </p>
                       )}
                     </div>
-                  )}
+                  )
+                ))}
 
-                  {availablePlatforms.includes("instagram") && (
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                        Instagram Link
-                      </label>
-                      <input
-                        type="url"
-                        value={formData.instagram_link}
-                        onChange={(e) => handleInputChange("instagram_link", e.target.value)}
-                        placeholder="https://www.instagram.com/reels/..."
-                        className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700/50 dark:text-white outline-none transition-all placeholder:text-gray-400 ${errors.instagram_link ? "border-red-500" : "border-gray-200 dark:border-zinc-700"
-                          }`}
-                      />
-                      {errors.instagram_link && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {Array.isArray(errors.instagram_link) ? errors.instagram_link[0] : errors.instagram_link}
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                  {availablePlatforms.includes("tiktok") && (
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                        TikTok Link
-                      </label>
-                      <input
-                        type="url"
-                        value={formData.tiktok_link}
-                        onChange={(e) => handleInputChange("tiktok_link", e.target.value)}
-                        placeholder="https://www.tiktok.com/@user/video/..."
-                        className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700/50 dark:text-white outline-none transition-all placeholder:text-gray-400 ${errors.tiktok_link ? "border-red-500" : "border-gray-200 dark:border-zinc-700"
-                          }`}
-                      />
-                      {errors.tiktok_link && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {Array.isArray(errors.tiktok_link) ? errors.tiktok_link[0] : errors.tiktok_link}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                {/* Media Upload */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                    Media File<span className="text-red-500">*</span>
+                {/* Dropzone Container */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-bold text-gray-900 dark:text-white">
+                    Official Media File <span className="text-red-500">*</span>
                   </label>
-
-                  <div className={`border-2 border-dashed rounded-2xl p-6 transition-all ${errors.files ? 'border-red-400 bg-red-50/50' : 'border-emerald-200 bg-emerald-50/10'}`}>
-                    <div className="flex flex-col items-center">
-                      <Dropzone
-                        maxFiles={1}
-                        onDrop={handleDrop}
-                        onError={(err) => toast.error(err)}
-                        src={files}
-                        className="w-full border-0 bg-transparent"
-                      >
-                        <DropzoneEmptyState className="py-4">
-                          <div className="text-center">
-                            <p className="text-sm font-medium text-emerald-800 dark:text-emerald-400">Click to upload or drag and drop</p>
-                            <p className="text-xs text-gray-500 mt-1">Upload the original media file you posted</p>
+                  <div className={`p-4 rounded-3xl border-2 border-dashed transition-all ${errors.files
+                    ? "border-red-400 bg-red-50/50 dark:bg-red-900/10"
+                    : "border-emerald-200 dark:border-zinc-800 bg-emerald-50/10 dark:bg-zinc-800/20"
+                    }`}>
+                    <Dropzone
+                      maxFiles={1}
+                      onDrop={handleDrop}
+                      onError={(err) => toast.error(err)}
+                      src={files}
+                      className="w-full border-0 bg-transparent min-h-[140px]"
+                    >
+                      <DropzoneEmptyState className="py-4">
+                        <div className="text-center space-y-2">
+                          <div className="mx-auto w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600">
+                            <Plus size={24} />
                           </div>
-                        </DropzoneEmptyState>
-                        <DropzoneContent />
-                      </Dropzone>
-                    </div>
+                          <p className="text-sm font-bold text-emerald-800 dark:text-emerald-400">Click to upload or drag</p>
+                          <p className="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">Maximum file size: 50MB</p>
+                        </div>
+                      </DropzoneEmptyState>
+                      <DropzoneContent />
+                    </Dropzone>
                   </div>
-                  {errors.files && <p className="text-red-500 text-xs mt-2">{errors.files}</p>}
+                  {errors.files && <p className="text-red-500 text-[10px] font-bold px-1 uppercase">{errors.files}</p>}
                 </div>
-
-                {/* Submit Button */}
-                <button
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
-                  className="w-full bg-[#003933] hover:bg-[#002822] disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-4 px-4 rounded-xl transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? (
-                    "Submitting..."
-                  ) : (
-                    "Submit Application"
-                  )}
-                </button>
               </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 sm:p-8 bg-gray-50 dark:bg-zinc-800/50 border-t border-gray-100 dark:border-zinc-800">
+              <button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="w-full h-14 bg-[#003933] hover:bg-[#002822] disabled:bg-gray-400 dark:disabled:bg-zinc-700 text-white font-bold rounded-2xl transition duration-300 shadow-xl flex items-center justify-center gap-3 active:scale-[0.98]"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  "Finalize Submission"
+                )}
+              </button>
             </div>
           </div>
         </div>

@@ -1,141 +1,141 @@
-// import ChatBox from "./ChatBox";
-// import ChatHeader from "./ChatHeader";
-
-// const CommunityChat = () => {
-//   return (
-//     <div>
-//       <ChatHeader />
-//       <ChatBox />
-//     </div>
-//   );
-// };
-
-// export default CommunityChat;
-
-import { useEffect, useRef, useState } from "react";
-
-// framer motion
+import { useEffect, useRef, useState, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
-// react icons
-import { Loader } from "lucide-react";
-import { FiImage } from "react-icons/fi";
-import { LuFile, LuPaperclip, LuSend, LuX } from "react-icons/lu";
 import ChatHeader from "./ChatHeader";
+import { useCommunityStore } from "@/store/communityStore";
+import { useProfile } from "@/hooks/auth.hook";
+import { toast } from "sonner";
+import { useGetCommunityConversations } from "@/hooks/community.hook";
+import { LuSend } from "react-icons/lu";
+import ChatSkeleton from "./ChatSkeleton";
 
 const CommunityChat = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "Hey there! How it going?",
-      sender: "other",
-      senderProfile: { name: "Jane", avatar: "https://i.pravatar.cc/40?img=5" },
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      reaction: null,
-      attachments: [],
-    },
-    {
-      id: 2,
-      text: "How do you handle theming in ZenUI components?",
-      sender: "other",
-      senderProfile: { name: "Jane", avatar: "https://i.pravatar.cc/40?img=5" },
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      reaction: null,
-      attachments: [],
-    },
-    {
-      id: 3,
-      text: "Does ZenUI support responsive design out of the box?",
-      sender: "other",
-      senderProfile: { name: "Jane", avatar: "https://i.pravatar.cc/40?img=5" },
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      reaction: null,
-      attachments: [],
-    },
-  ]);
+  const { selectedCreatorCommunity } = useCommunityStore();
+  const token = localStorage.getItem("token");
+  const { data: user } = useProfile();
 
+  const communityUsername = selectedCreatorCommunity?.username;
+  const { data: conversationData, isLoading: isHistoryLoading } = useGetCommunityConversations(communityUsername);
+
+  const [messages, setMessages] = useState([]);
+  const [isWsError, setIsWsError] = useState(false);
   const [newMessage, setNewMessage] = useState("");
-  const [reactingTo, setReactingTo] = useState(null);
-  const [attachments, setAttachments] = useState([]);
-  const [isUploading, setIsUploading] = useState(false);
-  const [totalAttachments, setTotalAttachments] = useState(0);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredMessages, setFilteredMessages] = useState([]);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-  const fileInputRef = useRef(null);
+  const ws = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = (behavior = "smooth") => {
+    messagesEndRef.current?.scrollIntoView({ behavior });
   };
 
+  const formatTime = (timeStr) => {
+    if (!timeStr) return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    try {
+      return new Date(timeStr).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch (e) {
+      return timeStr;
+    }
+  };
+
+  // Unify history messages with state
   useEffect(() => {
-    // Only scroll to bottom when shouldScrollToBottom is true
+    if (conversationData?.messages) {
+      const mappedHistory = conversationData.messages.map(msg => ({
+        id: msg.id,
+        text: msg.message,
+        sender: msg.sender_username === user?.username ? "me" : "other",
+        senderUsername: msg.sender_username,
+        timestamp: formatTime(msg.timestamp)
+      }));
+      setMessages(mappedHistory);
+      setShouldScrollToBottom(true);
+      // Immediate scroll for history
+      setTimeout(() => scrollToBottom("auto"), 100);
+    }
+  }, [conversationData, user?.username]);
+
+  const handleNewMessages = (data) => {
+    if (!data?.message) return;
+
+    const senderUsername = data.user;
+    const isMe = senderUsername === user?.username;
+
+    const mappedMsg = {
+      id: Date.now() + Math.random(),
+      text: data.message,
+      sender: isMe ? "me" : "other",
+      senderUsername: senderUsername || "Unknown",
+      timestamp: formatTime(data.timestamp),
+    };
+
+    setMessages((prev) => [...prev, mappedMsg]);
+    setShouldScrollToBottom(true);
+  };
+
+  // WebSocket Connection
+  useEffect(() => {
+    if (!communityUsername || !token) return;
+
+    ws.current = new WebSocket(
+      `wss://darrenchua.softvencealpha.com/ws/${communityUsername}/?token=${token}`
+    );
+
+    ws.current.onopen = () => setIsWsError(false);
+
+    ws.current.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        handleNewMessages(data);
+      } catch (error) {
+        console.error("Failed to parse WebSocket message:", error);
+      }
+    };
+
+    ws.current.onclose = () => {
+      if (ws.current?.readyState === WebSocket.CLOSED) {
+        setIsWsError(true);
+      }
+    };
+
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+        ws.current = null;
+      }
+    };
+  }, [communityUsername, token, user?.username]);
+
+  useEffect(() => {
     if (shouldScrollToBottom) {
       scrollToBottom();
       setShouldScrollToBottom(false);
     }
   }, [messages, shouldScrollToBottom]);
 
-  // Filter messages based on search query
-  useEffect(() => {
-    if (searchQuery.trim() === "") {
-      setFilteredMessages(messages);
-    } else {
-      const filtered = messages.filter((message) =>
-        message.text.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredMessages(filtered);
-    }
+  const filteredMessages = useMemo(() => {
+    if (!searchQuery.trim()) return messages;
+    return messages.filter((m) =>
+      m.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      m.senderUsername.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   }, [messages, searchQuery]);
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
-
   const handleSendMessage = () => {
-    if (newMessage.trim() === "" && attachments.length === 0) return;
+    if (!newMessage.trim()) return;
 
-    const newId = messages.length
-      ? Math.max(...messages.map((m) => m.id)) + 1
-      : 1;
-
-    setMessages([
-      ...messages,
-      {
-        id: newId,
-        text: newMessage,
-        sender: "me",
-        senderProfile: {
-          name: "You",
-          avatar: "https://i.pravatar.cc/40?img=1",
-        },
-        timestamp: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        reaction: null,
-        attachments: [...attachments],
-      },
-    ]);
-
-    setNewMessage("");
-    setAttachments([]);
-    setShouldScrollToBottom(true); // Set flag to scroll to bottom after new message
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
+      toast.error("Network error, restoring connection...");
+      return;
     }
+
+    ws.current.send(JSON.stringify({ message: newMessage }));
+    setNewMessage("");
+    inputRef.current?.focus();
   };
 
   const handleKeyPress = (e) => {
@@ -145,320 +145,74 @@ const CommunityChat = () => {
     }
   };
 
-  const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length === 0) return;
-
-    setTotalAttachments(files.length);
-
-    setIsUploading(true);
-
-    // Simulate file upload with timeout
-    setTimeout(() => {
-      const newAttachments = files.map((file) => ({
-        id: Math.random().toString(36).substring(2, 9),
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        url: URL.createObjectURL(file),
-      }));
-
-      setAttachments([...attachments, ...newAttachments]);
-      setIsUploading(false);
-    }, 1500);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  const handleRemoveAttachment = (attachmentId) => {
-    setAttachments(
-      attachments.filter((attachment) => attachment.id !== attachmentId)
-    );
-  };
-
-  const handleAttachmentClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleReaction = (messageId, reaction) => {
-    setMessages(
-      messages.map((message) => {
-        if (message.id === messageId) {
-          const hasReaction = message.reaction === reaction;
-          const updatedReaction = hasReaction ? null : reaction;
-          return { ...message, reaction: updatedReaction };
-        }
-        return message;
-      })
-    );
-    setReactingTo(null);
-  };
-
-  const toggleReactionMenu = (messageId) => {
-    setReactingTo(reactingTo === messageId ? null : messageId);
-  };
-
   const messageVariants = {
     hidden: (message) => ({
       opacity: 0,
-      y: 20,
-      x: message.sender === "me" ? 50 : -50,
-      scale: 0.8,
+      y: 10,
+      scale: 0.95,
     }),
     visible: {
       opacity: 1,
       y: 0,
-      x: 0,
       scale: 1,
-      transition: {
-        type: "spring",
-        damping: 18,
-        stiffness: 220,
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: 10,
-      scale: 0.8,
       transition: { duration: 0.2 },
     },
   };
 
-  // const reactionVariants = {
-  //   hidden: { opacity: 0, y: 10 },
-  //   visible: { opacity: 1, y: 0 },
-  //   exit: { opacity: 0, y: 10 },
-  // };
-
-  // Format file size for display
-  const formatFileSize = (bytes) => {
-    if (bytes < 1024) return bytes + " B";
-    else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
-    else return (bytes / 1048576).toFixed(1) + " MB";
-  };
-
   return (
-    <div className="flex flex-col w-full h-[calc(100vh-80px)] sm:h-[calc(100vh-80px)]">
-      <ChatHeader
-        onSearch={handleSearch}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
-      <div className="flex-1 p-2 md:p-4 overflow-y-auto pb-4">
-        <AnimatePresence>
-          {filteredMessages.map((message) => (
-            <motion.div
-              key={message.id}
-              variants={messageVariants}
-              custom={message}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              layout
-              className={`mb-4 flex ${
-                message.sender === "me" ? "justify-end" : "justify-start"
-              }`}
-            >
-              <div className="relative max-w-md flex items-center gap-5">
-                {message.sender === "other" && (
-                  <img
-                    src={message.senderProfile?.avatar}
-                    alt={message.senderProfile?.name}
-                    className="w-8 h-8 rounded-full"
-                  />
-                )}
-                <div>
-                  <div
-                    className={`py-4 px-5 rounded-high text-black dark:text-[#d2e5f5] text-sm ${
-                      message.sender === "me"
-                        ? "bg-[#5050fa] dark:bg-blue-900/90 rounded-full text-white"
-                        : "bg-[#f0f2f5] dark:bg-slate-800 rounded-full text-[#1D2739]"
-                    }`}
-                  >
-                    {/* File attachments in message */}
-                    {message.attachments && message.attachments.length > 0 && (
-                      <div className="mb-2">
-                        {message.attachments.map((attachment) => (
-                          <div
-                            key={attachment.id}
-                            className="flex items-center p-2 mb-2 bg-white rounded-md border border-gray-200 dark:bg-slate-800 dark:border-slate-700"
-                          >
-                            <div className="p-2 bg-gray-100 dark:bg-slate-900 rounded-md">
-                              {attachment.type.includes("image/") ? (
-                                <FiImage size={16} />
-                              ) : (
-                                <LuFile size={16} />
-                              )}
-                            </div>
-                            <div className="ml-2 flex-1 max-w-[330px]">
-                              <span className="text-xs break-words  font-medium">
-                                {attachment.name}
-                              </span>
-                              <p className="text-xs dark:text-[#d2e5f5]/70 text-gray-500">
-                                {formatFileSize(attachment.size)}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    {message.text}
-                  </div>
-                  <div
-                    className={`${
-                      message.sender === "me" ? "text-right" : "text-left"
-                    } mt-1 text-xs text-gray-500 dark:text-[#abc2d3]/70 mt`}
-                  ></div>
-                </div>
-                {/* {message.sender === "me" && (
-                  <img
-                    src={message.senderProfile?.avatar}
-                    alt={message.senderProfile?.name}
-                    className="w-8 h-8 rounded-full"
-                  />
-                )} */}
-
-                {/* Reaction display */}
-                {/* {message.reaction && (
-                  <span
-                    title={message.reaction}
-                    onClick={() => toggleReactionMenu(message.id)}
-                    className="bg-white absolute -right-2 bottom-2 rounded-full min-h-[25px] min-w-[25px] flex items-center cursor-pointer justify-center shadow-md shadow-gray-100 dark:bg-slate-700 dark:shadow-slate-800"
-                  >
-                    {message.reaction === "love" ? (
-                      <LuHeart size={12} fill="red" color="red" />
-                    ) : null}
-                    {message.reaction === "like" ? (
-                      <LuThumbsUp size={12} fill="blue" color="blue" />
-                    ) : null}
-                    {message.reaction === "smile" ? (
-                      <FaRegSmile size={12} fill="gold" color="gold" />
-                    ) : null}
-                  </span>
-                )} */}
-
-                {/* Reaction button */}
-                {/* {message.sender === "other" && !message.reaction && (
-                  <button
-                    onClick={() => toggleReactionMenu(message.id)}
-                    title="add reaction"
-                    className="absolute bottom-2 -right-2 bg-gray-100 rounded-full p-1 shadow-sm hover:bg-gray-200 dark:bg-slate-700 dark:text-[#d2e5f5] dark:hover:bg-slate-800 transition-colors"
-                  >
-                    <FaRegSmile size={14} />
-                  </button>
-                )} */}
-
-                {/* Reaction menu */}
-                {/* <AnimatePresence>
-                  {reactingTo === message.id && (
-                    <motion.div
-                      variants={reactionVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      className="absolute z-30 -bottom-6 right-0 bg-white rounded-full p-1 flex border border-border dark:bg-slate-800 dark:border-slate-700 shadow-lg"
-                    >
-                      <button
-                        onClick={() => handleReaction(message.id, "love")}
-                        className="min-w-[25px] min-h-[25px] flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-                      >
-                        <LuHeart
-                          size={15}
-                          color={message.reaction === "love" ? "red" : "gray"}
-                          className="dark:!text-[#d2e5f5]"
-                        />
-                      </button>
-                      <button
-                        onClick={() => handleReaction(message.id, "like")}
-                        className="p-1 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-                      >
-                        <LuThumbsUp
-                          size={15}
-                          color={message.reaction === "like" ? "blue" : "gray"}
-                          className="dark:!text-[#d2e5f5]"
-                        />
-                      </button>
-                      <button
-                        onClick={() => handleReaction(message.id, "smile")}
-                        className="p-1 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-                      >
-                        <FaRegSmile
-                          size={16}
-                          color={message.reaction === "smile" ? "gold" : "gray"}
-                          className="dark:!text-[#d2e5f5]"
-                        />
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence> */}
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-        <div ref={messagesEndRef} />
+    <div className="flex flex-col w-full h-[calc(100vh-80px)] bg-gray-50 dark:bg-zinc-950 relative overflow-hidden">
+      <div className="flex-shrink-0">
+        <ChatHeader
+          onSearch={setSearchQuery}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
       </div>
 
-      {/* Message Input */}
-      <div className="sticky bottom-0 bg-white dark:bg-slate-900 dark:border-slate-700 px-6 py-2 border border-border rounded-full shadow mx-2 md:mx-4 mb-2">
-        {/* Attachments preview */}
-        {(attachments.length || isUploading) && (
-          <div className="mb-2 flex flex-wrap gap-2">
-            {isUploading &&
-              Array.from({ length: totalAttachments }).map((_, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-50 dark:bg-slate-800 dark:border-slate-700 dark:text-[#d2e5f5] p-2 rounded-md border border-gray-200 flex items-center gap-2"
-                >
-                  <Loader className="animate-spin" size={16} />
-                  <span className="text-sm">Uploading...</span>
-                </div>
-              ))}
+      <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-4 scrollbar-hide">
+        {isHistoryLoading ? (
+          <ChatSkeleton />
+        ) : (
+          <AnimatePresence initial={false}>
+            {filteredMessages.map((message) => (
+              <motion.div
+                key={message.id}
+                variants={messageVariants}
+                custom={message}
+                initial="hidden"
+                animate="visible"
+                layout
+                className={`flex ${message.sender === "me" ? "justify-end" : "justify-start"}`}
+              >
+                <div className={`flex flex-col ${message.sender === "me" ? "items-end" : "items-start"} max-w-[85%] sm:max-w-md`}>
+                  <span className="text-[10px] font-bold text-gray-400 dark:text-zinc-500 mb-1 px-1 uppercase tracking-tight">
+                    {message.senderUsername}
+                  </span>
 
-            {attachments.map((file) =>
-              file.type.startsWith("image/") ? (
-                <div key={file.id} className="relative group">
-                  <img
-                    src={file.url}
-                    alt={file.name}
-                    className="w-[80px] object-cover h-[60px] dark:border-slate-700 border border-border p-1 rounded-lg"
-                  />
-
-                  <button
-                    onClick={() => handleRemoveAttachment(file.id)}
-                    className="p-1 invisible dark:bg-slate-700 dark:text-[#d2e5f5] group-hover:visible absolute top-0 right-0 bg-gray-100 hover:bg-gray-200 rounded-full scale-[0.8] group-hover:scale-100 transition-all duration-200 ease-in"
+                  <div
+                    className={`py-2 px-4 rounded-2xl text-sm shadow-sm transition-all ${message.sender === "me"
+                      ? "bg-[#003933] text-white rounded-tr-none"
+                      : "bg-white dark:bg-zinc-900 text-gray-800 dark:text-zinc-200 rounded-tl-none border border-gray-100 dark:border-zinc-800"
+                      }`}
                   >
-                    <LuX size={14} />
-                  </button>
-                </div>
-              ) : (
-                <div
-                  key={file.id}
-                  className="pl-2 pr-3.5 py-2 dark:border-slate-700 rounded-lg border border-border flex items-center gap-2 group relative"
-                >
-                  <LuFile className="text-[2.2rem] text-gray-600 dark:text-[#d2e5f5]/70" />
-                  <div>
-                    <p className="text-sm dark:text-[#d2e5f5] max-w-xs truncate">
-                      {file.name}
-                    </p>
-                    <p className="text-xs mt-0.5 dark:text-[#d2e5f5]/70 text-gray-500">
-                      {formatFileSize(file.size)}
+                    <p className="whitespace-pre-wrap break-words leading-relaxed">
+                      {message.text}
                     </p>
                   </div>
-                  <button
-                    onClick={() => handleRemoveAttachment(file.id)}
-                    className="p-1 invisible dark:bg-slate-700 dark:text-[#d2e5f5] group-hover:visible scale-[0.8] group-hover:scale-100 transition-all duration-200 absolute top-0 right-0 bg-gray-100 hover:bg-gray-200 rounded-full ease-in"
-                  >
-                    <LuX size={14} />
-                  </button>
-                </div>
-              )
-            )}
-          </div>
-        )}
 
-        <div className="flex gap-2">
+                  <span className="text-[9px] font-medium text-gray-400 dark:text-zinc-600 mt-1 px-1">
+                    {message.timestamp}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        )}
+        <div ref={messagesEndRef} className="h-2" />
+      </div>
+
+      <div className="p-3 sm:p-4 bg-white dark:bg-zinc-950 border-t border-gray-100 dark:border-zinc-900">
+        <div className="max-w-4xl mx-auto flex gap-2 items-center bg-gray-50 dark:bg-zinc-900 px-4 py-2 rounded-2xl border border-gray-200 dark:border-zinc-800 transition-all focus-within:ring-2 focus-within:ring-[#003933]/10 focus-within:border-[#003933]">
           <input
             ref={inputRef}
             type="text"
@@ -466,32 +220,13 @@ const CommunityChat = () => {
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Type a message..."
-            className="w-[70%] md:flex-1 pr-4 py-1 border-none dark:bg-transparent dark:text-[#d2e5f5] focus:outline-none focus:ring-0"
+            className="flex-1 bg-transparent py-2 text-sm focus:outline-none dark:text-white placeholder:text-gray-400"
           />
-
-          {/* Hidden file input */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileUpload}
-            className="hidden"
-            multiple
-          />
-
-          {/* File attachment button */}
           <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={handleAttachmentClick}
-            className="bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-[#d2e5f5] dark:hover:bg-slate-600/50 min-w-[30px] p-2.5 rounded-full hover:bg-gray-200 flex items-center justify-center focus:outline-none"
-            disabled={isUploading}
-          >
-            <LuPaperclip size={18} />
-          </motion.button>
-
-          <motion.button
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.9 }}
             onClick={handleSendMessage}
-            className="bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-[#d2e5f5] dark:hover:bg-slate-600/50 min-w-[30px] p-2.5 rounded-full hover:bg-gray-200 flex items-center justify-center focus:outline-none"
+            disabled={!newMessage.trim()}
+            className="p-2 sm:p-2.5 bg-[#003933] text-white rounded-xl hover:bg-[#002822] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg active:scale-95"
           >
             <LuSend size={18} />
           </motion.button>

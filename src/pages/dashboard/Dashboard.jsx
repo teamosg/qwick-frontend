@@ -56,7 +56,7 @@ const Dashboard = () => {
   return (
     <SidebarProvider>
       <DashboardSidebarContent />
-      <div className="p-6 w-full bg-[#f9fafb] dark:bg-zinc-950 h-full">
+      <div className="p-4 md:p-6 w-full bg-[#f9fafb] dark:bg-zinc-950 h-full">
         <main className="w-full">
           {/* Mobile toggle button */}
           <div className="md:hidden mb-4">

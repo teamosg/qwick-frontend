@@ -232,3 +232,173 @@ export const useDeleteCommunity = () => {
 }
 
 
+
+export const useGetCommunityEarnings = (communityId) => {
+  return useQuery({
+    queryKey: ["communityEarnings", communityId],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/community/${communityId}/earnings/`
+        );
+        return res?.data || [];
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch community earnings"
+        });
+      }
+    },
+    enabled: !!communityId,
+    staleTime: 1000 * 60 * 2,
+  });
+};
+
+export const useGetCommunityWithdrawals = (communityId) => {
+  return useQuery({
+    queryKey: ["communityWithdrawals", communityId],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/community/${communityId}/withdrawals/`
+        );
+        return res?.data || [];
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch community withdrawals"
+        });
+      }
+    },
+    enabled: !!communityId,
+    staleTime: 1000 * 60 * 2,
+  });
+};
+
+export const useApproveWithdrawal = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id }) => {
+      const res = await axiosPrivate.post(`/v1/withdraw/approve/${id}/`, {
+        action: "approve",
+      });
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Withdrawal approved successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityWithdrawals"] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to approve withdrawal" });
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to approve withdrawal" });
+    },
+  });
+};
+
+export const useRejectWithdrawal = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id }) => {
+      const res = await axiosPrivate.post(`/v1/withdraw/approve/${id}/`, {
+        action: "reject",
+      });
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Withdrawal rejected successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityWithdrawals"] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to reject withdrawal" });
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to reject withdrawal" });
+    },
+  });
+};
+
+export const useWithdrawal = (communityId) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ amount }) => {
+      const res = await axiosPrivate.post(`/v1/community/${communityId}/withdraw/`, { amount });
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Withdrawal request created successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityWithdrawals", communityId] });
+      } else {
+        toast.error(data?.message || "Failed to create withdrawal request");
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to create withdrawal request" });
+    },
+  });
+};
+
+export const useGetCampaignBudgets = (communityId) => {
+  return useQuery({
+    queryKey: ["campaignBudgets", communityId],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/communities/${communityId}/campaign-budgets/`
+        );
+        return res?.data;
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch campaign budgets",
+        });
+      }
+    },
+    enabled: !!communityId,
+    staleTime: 1000 * 60 * 2,
+  });
+};
+export const useGetCommunityCategories = () => {
+  return useQuery({
+    queryKey: ["communityCategories"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/communities/categories/");
+        return res?.data?.data || [];
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch community categories",
+        });
+      }
+    },
+    staleTime: 1000 * 60 * 10, // cache for 10 mins
+  });
+};
+export const useGetCommunityConversations = (communityUsername) => {
+  return useQuery({
+    queryKey: ["communityConversations", communityUsername],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(`/v1/community/conversations/${communityUsername}/`);
+        return res?.data?.data || {};
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch conversations",
+        });
+      }
+    },
+    enabled: !!communityUsername,
+    staleTime: 1000 * 30, // cache for 30 seconds for quick returns
+  });
+};

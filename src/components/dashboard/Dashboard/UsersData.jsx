@@ -99,8 +99,8 @@ const UsersData = () => {
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden sm:block">
-        <div className="p-1">
+      <div className="hidden sm:block overflow-x-auto">
+        <div className="p-1 min-w-[800px]">
           <Table>
             <TableHeader className="">
               <TableRow className="bg-[#f5f5f5] text-gray-900 dark:bg-[#2E2E2E] dark:text-[#fff] border-black rounded-full">
