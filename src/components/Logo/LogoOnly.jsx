@@ -1,12 +1,11 @@
 import logoDefault from '@/assets/logo.svg'
 import logoWhite from '@/assets/logo_white.svg'
-import { Link } from 'react-router';
 import { useTheme } from '../shared/ThemeProvider';
 import { useGetWebsiteSettings } from '@/hooks/settings.hook';
 
 const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
 
-const Logo = () => {
+const LogoOnly = () => {
     const { theme } = useTheme();
     const { data: settings } = useGetWebsiteSettings();
 
@@ -15,14 +14,14 @@ const Logo = () => {
         : (theme === 'light' ? logoDefault : logoWhite);
 
     return (
-        <Link to="/" className="flex items-center gap-2 md:gap-2.5">
+        <div className="flex items-center gap-2 md:gap-2.5">
             <img
                 src={logoSrc}
                 alt={settings?.site_name || "logo"}
-                className="h-8 md:h-10 w-auto object-contain"
+                className="h-10 md:h-12 w-auto object-contain"
             />
-        </Link>
+        </div>
     );
 };
 
-export default Logo;
+export default LogoOnly;
