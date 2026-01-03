@@ -1,3 +1,4 @@
+import { countries } from "@/data/countriesData";
 import { useCreateCommunity } from "@/hooks/community.hook";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
@@ -16,28 +17,12 @@ export default function AddCommunityForm({
   const { mutate: createCommunity, isPending, isSuccess } = useCreateCommunity()
   const navigate = useNavigate()
 
-  const countries = [
-    { label: "United States", value: "us" },
-    { label: "Canada", value: "canada" },
-    { label: "United Kingdom", value: "uk" },
-    { label: "Germany", value: "germany" },
-    { label: "France", value: "france" },
-    { label: "Australia", value: "australia" },
-    { label: "Japan", value: "japan" },
-    { label: "India", value: "india" },
-    { label: "Brazil", value: "brazil" },
-    { label: "Mexico", value: "mexico" },
-    { label: "Spain", value: "spain" },
-    { label: "Italy", value: "italy" },
-    { label: "Netherlands", value: "netherlands" },
-    { label: "Sweden", value: "sweden" },
-    { label: "Norway", value: "norway" },
-    { label: "Denmark", value: "denmark" },
-    { label: "Finland", value: "finland" },
-    { label: "Switzerland", value: "switzerland" },
-    { label: "Austria", value: "austria" },
-    { label: "Belgium", value: "belgium" },
-  ];
+  const [searchQuery, setSearchQuery] = useState("");
+
+
+  const filteredCountries = countries.filter(country =>
+    country.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const valiDateForm = () => {
     if (!formData?.business_name || !formData?.country) {
@@ -158,28 +143,47 @@ export default function AddCommunityForm({
             <AnimatePresence>
               {isDropdownOpen && (
                 <motion.div
-                  className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+                  className="absolute z-10 w-full mt-1 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-zinc-700 rounded-lg shadow-lg max-h-60 overflow-hidden flex flex-col"
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                 >
-                  {countries.map((country, index) => (
-                    <motion.button
-                      key={country.value}
-                      type="button"
-                      onClick={() => {
-                        setFormData({ ...formData, country: country.value })
-                        setIsDropdownOpen(false)
-                      }}
-                      className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.02 }}
-                    >
-                      {country.label}
-                    </motion.button>
-                  ))}
+                  <div className="p-2 border-b border-gray-100 dark:border-zinc-700">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search country..."
+                      className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white"
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  </div>
+                  <div className="overflow-y-auto flex-1">
+                    {filteredCountries.length > 0 ? (
+                      filteredCountries.map((country, index) => (
+                        <motion.button
+                          key={country.value}
+                          type="button"
+                          onClick={() => {
+                            setFormData({ ...formData, country: country.value })
+                            setIsDropdownOpen(false)
+                            setSearchQuery("")
+                          }}
+                          className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-800 focus:outline-none focus:bg-gray-50 dark:focus:bg-zinc-800 transition-colors"
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.01 }}
+                        >
+                          {country.label}
+                        </motion.button>
+                      ))
+                    ) : (
+                      <div className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 text-center">
+                        No countries found
+                      </div>
+                    )}
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
