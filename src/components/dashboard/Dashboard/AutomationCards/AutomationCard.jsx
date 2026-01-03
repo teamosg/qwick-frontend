@@ -40,7 +40,7 @@ const AutomationCard = ({
     }
 
     return (
-        <div className="bg-white dark:bg-zinc-900 rounded-xl shadow p-10 w-full mx-auto relative">
+        <div className="bg-white dark:bg-zinc-900 rounded-xl shadow p-6 md:p-10 w-full mx-auto relative">
             {isPending && (
                 <div className="absolute inset-0 bg-white/50 dark:bg-zinc-900/50 flex items-center justify-center z-10 rounded-xl">
                     <Loader2 className="w-8 h-8 animate-spin text-[#003933] dark:text-white" />

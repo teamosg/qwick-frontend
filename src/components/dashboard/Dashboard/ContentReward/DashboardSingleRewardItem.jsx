@@ -49,7 +49,7 @@ const DashboardSingleRewardItem = ({ reward }) => {
               </p>
             </div>
             <Progress value={0} indicatorColor="red" className="mb-3.5" />
-            <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between">
+            <div className="flex flex-wrap gap-x-8 gap-y-4">
               <div>
                 <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                   Reward

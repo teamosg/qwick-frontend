@@ -112,8 +112,8 @@ const PaymentsData = () => {
           </div>
 
           {/* Desktop Table View */}
-          <div className="hidden sm:block">
-            <div className="p-1">
+          <div className="hidden sm:block overflow-x-auto">
+            <div className="p-1 min-w-[600px]">
               <Table>
                 <TableHeader className="">
                   <TableRow className="bg-[#f5f5f5] text-gray-900 border-black rounded-full dark:bg-[#2E2E2E] dark:text-[#fff] dark:border-[#444]">

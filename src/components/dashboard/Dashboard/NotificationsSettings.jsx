@@ -1,68 +1,87 @@
-import { useState } from "react";
+import { useGetNotificationSettings, useUpdateNotificationSettings } from "@/hooks/notification.hook";
 import ToggleSwitch from "./ToggleSwitch";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const NotificationsSettings = () => {
-  const [joinsEnabled, setJoinsEnabled] = useState(true);
-  const [paymentsEnabled, setPaymentsEnabled] = useState(true);
-  const [waitlistsEnabled, setWaitlistsEnabled] = useState(true);
+  const { data: settings, isLoading } = useGetNotificationSettings();
+  const { mutate: updateSettings, isPending: isUpdating } = useUpdateNotificationSettings();
+
+  const handleToggle = (key, currentValue) => {
+    if (isUpdating) return;
+    updateSettings({ [key]: !currentValue });
+  };
+
+  if (isLoading) {
+    return (
+      <div className="p-6 space-y-4">
+        <Skeleton className="h-8 w-64 mb-6" />
+        {[1, 2, 3].map((i) => (
+          <Skeleton key={i} className="h-24 w-full rounded-xl" />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
-      <h2 className="text-[24px] text-gray-900 dark:text-white font-bold mb-6">
+      <h2 className="text-[20px] md:text-[24px] text-gray-900 dark:text-white font-bold mb-6">
         Notification Settings
       </h2>
 
       <div className="space-y-4">
         {/* Joins Notification */}
-        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between">
+        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
               <h3 className="text-[#003933] dark:text-white text-lg font-semibold mb-2">
                 Joins
               </h3>
-              <p className="text-gray-600 dark:text-white text-sm">
+              <p className="text-gray-600 dark:text-zinc-400 text-sm">
                 Get notification when new members that join your community
               </p>
             </div>
             <ToggleSwitch
-              enabled={joinsEnabled}
-              onToggle={() => setJoinsEnabled(!joinsEnabled)}
+              enabled={settings?.join_notifications}
+              onToggle={() => handleToggle("join_notifications", settings?.join_notifications)}
+              disabled={isUpdating}
             />
           </div>
         </div>
 
         {/* Payments Notification */}
-        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between">
+        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
               <h3 className="text-[#003933] dark:text-white text-lg font-semibold mb-2">
                 Payments
               </h3>
-              <p className="text-gray-600 dark:text-white text-sm">
+              <p className="text-gray-600 dark:text-zinc-400 text-sm">
                 Get notification when Purchases and subscription renewals
               </p>
             </div>
             <ToggleSwitch
-              enabled={paymentsEnabled}
-              onToggle={() => setPaymentsEnabled(!paymentsEnabled)}
+              enabled={settings?.payment_notifications}
+              onToggle={() => handleToggle("payment_notifications", settings?.payment_notifications)}
+              disabled={isUpdating}
             />
           </div>
         </div>
 
         {/* Waitlists Notification */}
-        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between">
+        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
               <h3 className="text-[#003933] dark:text-white text-lg font-semibold mb-2">
                 Waitlists
               </h3>
-              <p className="text-gray-600 dark:text-white text-sm">
+              <p className="text-gray-600 dark:text-zinc-400 text-sm">
                 Get notification when there are New entries
               </p>
             </div>
             <ToggleSwitch
-              enabled={waitlistsEnabled}
-              onToggle={() => setWaitlistsEnabled(!waitlistsEnabled)}
+              enabled={settings?.waitlist_notifications}
+              onToggle={() => handleToggle("waitlist_notifications", settings?.waitlist_notifications)}
+              disabled={isUpdating}
             />
           </div>
         </div>
