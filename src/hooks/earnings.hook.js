@@ -16,3 +16,18 @@ export const useGetMyEarnings = () => {
         staleTime: 1000 * 60 * 2, // cache for 2 mins
     });
 };
+
+export const useGetMyWithdrawals = () => {
+    return useQuery({
+        queryKey: ["myWithdrawals"],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get("/v1/withdrawals/");
+                return res?.data || [];
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch withdrawals" });
+            }
+        },
+        staleTime: 1000 * 60 * 2, // cache for 2 mins
+    });
+};

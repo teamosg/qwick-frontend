@@ -77,7 +77,7 @@ const ProfileMyEarnings = () => {
                         <DollarSign className="h-5 w-5 text-[#002822]" />
                     </div>
                     <div>
-                        <p className="text-[10px] uppercase tracking-wider font-bold text-[#002822]/70">Total Balance</p>
+                        <p className="text-[10px] uppercase tracking-wider font-bold text-[#002822]/70">Total</p>
                         <p className="text-lg font-bold text-[#002822] dark:text-[#002822] leading-none">
                             ${totalEarnings}
                         </p>
