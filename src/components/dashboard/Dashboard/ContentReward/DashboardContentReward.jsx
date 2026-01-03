@@ -10,7 +10,7 @@ import { Spinner } from "@/components/ui/spinner";
 
 const DashboardContentReward = () => {
   const { selectedBrandCommunity } = useCommunityStore();
-  const { mutate: createCampaign } = useCreateCampaign(selectedBrandCommunity?.id);
+  const { mutate: createCampaign, isPending: isSubmitting } = useCreateCampaign(selectedBrandCommunity?.id);
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
 
   const [showForm, setShowForm] = useState(false);
@@ -113,6 +113,7 @@ const DashboardContentReward = () => {
           onSubmit={handleFormSubmit}
           onCancel={handleFormCancel}
           setShowForm={setShowForm}
+          isSubmitting={isSubmitting}
         />
       ) : filteredRewards.length > 0 ? (
         <div className="container mx-auto">

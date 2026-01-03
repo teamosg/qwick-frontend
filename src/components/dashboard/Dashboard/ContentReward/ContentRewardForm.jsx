@@ -3,6 +3,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { useGetCampaignTypes, useGetCategories } from "@/hooks/campaign.hook";
 import { Button } from "../../../ui/button";
 import {
   Popover,
@@ -17,7 +18,17 @@ const CampaignForm = ({
   onSubmit,
   onCancel,
   isEditMode = false,
+  isSubmitting = false,
 }) => {
+  const { data: campaignTypesData, isLoading: isTypesLoading } = useGetCampaignTypes();
+  const { data: categoriesData, isLoading: isCategoriesLoading } = useGetCategories();
+
+  const isInitialLoading = isTypesLoading || isCategoriesLoading;
+  const isFormDisabled = isInitialLoading || isSubmitting;
+
+  const campaignTypes = campaignTypesData?.data || [];
+  const categories = categoriesData?.data || [];
+
   const [formData, setFormData] = useState({
     thumbnailPreview: initialData?.thumbnailPreview || null,
     thumbnailFile: null,
@@ -28,6 +39,7 @@ const CampaignForm = ({
     currency: initialData?.currency || "USD",
     rewardRate: initialData?.rewardRate || "",
     minPayout: initialData?.minPayout || "",
+    
     maxPayout: initialData?.maxPayout || "",
     flatFeeBonus: initialData?.flatFeeBonus || "",
     platforms: initialData?.platforms || [],
@@ -176,17 +188,19 @@ const CampaignForm = ({
               <div className="flex flex-col sm:flex-row gap-3 mt-4">
                 <button
                   type="button"
+                  disabled={isFormDisabled}
                   onClick={() =>
                     document.getElementById("thumbnail-upload").click()
                   }
-                  className="px-4 py-2 text-sm bg-gray-100 dark:bg-[#2E2E2E] text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2E2E2E] transition-colors"
+                  className="px-4 py-2 text-sm bg-gray-100 dark:bg-[#2E2E2E] text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2E2E2E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Change Image
                 </button>
                 <button
                   type="button"
+                  disabled={isFormDisabled}
                   onClick={removeThumbnail}
-                  className="px-4 py-2 text-sm bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors"
+                  className="px-4 py-2 text-sm bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Remove
                 </button>
@@ -205,10 +219,11 @@ const CampaignForm = ({
                 <div className="">
                   <button
                     type="button"
+                    disabled={isFormDisabled}
                     onClick={() =>
                       document.getElementById("thumbnail-upload").click()
                     }
-                    className="dark:bg-[#2E2E2E]  text-sm font-medium text-black dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex gap-3 px-5 py-2 bg-white rounded-lg"
+                    className="dark:bg-[#2E2E2E]  text-sm font-medium text-black dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex gap-3 px-5 py-2 bg-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Upload className="w-5 h-5 text-black dark:text-gray-400" />
                     Upload thumbnail
@@ -233,10 +248,11 @@ const CampaignForm = ({
           </label>
           <input
             type="text"
+            disabled={isFormDisabled}
             value={formData.campaignName}
             onChange={(e) => handleInputChange("campaignName", e.target.value)}
             placeholder="Enter campaign"
-            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none dark:text-white placeholder:text-[#697586]"
+            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none dark:text-white placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -249,18 +265,19 @@ const CampaignForm = ({
             <div className="relative w-full">
               <select
                 value={formData.type}
+                disabled={isFormDisabled}
                 onChange={(e) => handleInputChange("type", e.target.value)}
                 className="w-full px-3 py-3 pr-10 bg-white dark:text-white dark:bg-[#2E2E2E] 
                border border-gray-200 dark:border-gray-700 rounded-lg
                focus:ring-2 focus:ring-[#364152] focus:border-transparent
-               transition-all outline-none appearance-none"
+               transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <option value="">Select Type</option>
-                <option value="UGC">UGC</option>
-                <option value="Sponsored">Sponsored</option>
-                <option value="Review">Review</option>
-                <option value="Tutorial">Tutorial</option>
-                <option value="Unboxing">Unboxing</option>
+                <option value="">{isTypesLoading ? "Loading types..." : "Select Type"}</option>
+                {campaignTypes.map((type) => (
+                  <option key={type.name} value={type.name}>
+                    {type.name}
+                  </option>
+                ))}
               </select>
 
               {/* Custom arrow */}
@@ -277,19 +294,19 @@ const CampaignForm = ({
             <div className="relative w-full">
               <select
                 value={formData.category}
+                disabled={isFormDisabled}
                 onChange={(e) => handleInputChange("category", e.target.value)}
                 className="w-full px-3 py-3 pr-10 bg-white dark:text-white dark:bg-[#2E2E2E]
                border border-gray-200 dark:border-gray-700 rounded-lg
                focus:ring-2 focus:ring-[#364152] focus:border-transparent
-               transition-all outline-none appearance-none"
+               transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <option value="">Select Category</option>
-                <option value="Personal brand">Personal brand</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Products">Products</option>
-                <option value="Music">Music</option>
-                <option value="Logo">Logo</option>
-                <option value="Other">Other</option>
+                <option value="">{isCategoriesLoading ? "Loading categories..." : "Select Category"}</option>
+                {categories.map((cat) => (
+                  <option key={cat.name} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
               </select>
 
               {/* Custom dropdown icon */}
@@ -311,22 +328,24 @@ const CampaignForm = ({
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400"></span>
               <input
                 type="number"
+                disabled={isFormDisabled}
                 value={formData.campaignBudget}
                 onChange={(e) =>
                   handleInputChange("campaignBudget", e.target.value)
                 }
                 placeholder="10000"
-                className="w-full px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
             <div className="relative">
               <select
                 value={formData.currency}
+                disabled={isFormDisabled}
                 onChange={(e) => handleInputChange("currency", e.target.value)}
                 className="px-3 py-3 pr-10 bg-white dark:text-white dark:bg-[#2E2E2E]
                border border-gray-200 dark:border-gray-700 rounded-lg
                focus:ring-2 focus:ring-[#364152] focus:border-transparent
-               transition-all outline-none appearance-none"
+               transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <option value="USD">USD</option>
               </select>
@@ -351,10 +370,11 @@ const CampaignForm = ({
             </span>
             <input
               type="number"
+              disabled={isFormDisabled}
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
               placeholder="3"
-              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -382,10 +402,11 @@ const CampaignForm = ({
               </span>
               <input
                 type="number"
+                disabled={isFormDisabled}
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
                 placeholder="3"
-                className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -411,10 +432,11 @@ const CampaignForm = ({
               </span>
               <input
                 type="number"
+                disabled={isFormDisabled}
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
                 placeholder="100"
-                className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+                className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -442,12 +464,13 @@ const CampaignForm = ({
             </span>
             <input
               type="number"
+              disabled={isFormDisabled}
               value={formData.flatFeeBonus}
               onChange={(e) =>
                 handleInputChange("flatFeeBonus", e.target.value)
               }
               placeholder="10"
-              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -465,11 +488,12 @@ const CampaignForm = ({
               >
                 <input
                   type="checkbox"
+                  disabled={isFormDisabled}
                   checked={formData.platforms.includes(platform)}
                   onChange={(e) =>
                     handlePlatformChange(platform, e.target.checked)
                   }
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   {platform}
@@ -491,12 +515,13 @@ const CampaignForm = ({
           <div className="relative">
             <input
               type="number"
+              disabled={isFormDisabled}
               value={formData.availableContent}
               onChange={(e) =>
                 handleInputChange("availableContent", e.target.value)
               }
               placeholder="3"
-              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -511,12 +536,13 @@ const CampaignForm = ({
           </p>
           <textarea
             value={formData.contentRequirement}
+            disabled={isFormDisabled}
             onChange={(e) =>
               handleInputChange("contentRequirement", e.target.value)
             }
             placeholder="Enter campaign"
             rows={4}
-            className="w-full px-3 dark:text-white  py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586]"
+            className="w-full px-3 dark:text-white  py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -547,6 +573,7 @@ const CampaignForm = ({
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
+                    disabled={isFormDisabled}
                     className={cn(
                       "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
                       !formData.startDate && "text-gray-500 dark:text-gray-400"
@@ -589,6 +616,7 @@ const CampaignForm = ({
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
+                    disabled={isFormDisabled}
                     className={cn(
                       "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
                       !formData.endDate && "text-gray-500 dark:text-gray-400"
@@ -647,19 +675,20 @@ const CampaignForm = ({
         <div className="flex flex-col sm:flex-row gap-4 pt-4">
           <Button
             type="submit"
-            disabled={!isFormValid}
-            className={`transition font-medium px-6 py-4 rounded-lg text-white ${isFormValid
+            disabled={!isFormValid || isFormDisabled}
+            className={`transition font-medium px-6 py-4 rounded-lg text-white ${isFormValid && !isFormDisabled
               ? "bg-[#003933] dark:bg-[#003933] hover:bg-[#002822] dark:hover:bg-primary/90"
-              : "bg-gray-300 dark:bg-gray-700 cursor-not-allowed"
+              : "bg-gray-300 dark:bg-gray-700 cursor-not-allowed opacity-50"
               }`}
           >
-            {isEditMode ? "Update Campaign" : "Create Campaign"}
+            {isSubmitting ? "Processing..." : isEditMode ? "Update Campaign" : "Create Campaign"}
           </Button>
           <Button
             type="button"
             variant="outline"
+            disabled={isFormDisabled}
             onClick={handleCancel}
-            className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 px-6 py-4 rounded-lg"
+            className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 px-6 py-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancel
           </Button>
