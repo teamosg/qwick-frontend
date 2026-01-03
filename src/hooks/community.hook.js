@@ -365,3 +365,21 @@ export const useGetCampaignBudgets = (communityId) => {
     staleTime: 1000 * 60 * 2,
   });
 };
+export const useGetCommunityCategories = () => {
+  return useQuery({
+    queryKey: ["communityCategories"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/communities/categories/");
+        return res?.data?.data || [];
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch community categories",
+        });
+      }
+    },
+    staleTime: 1000 * 60 * 10, // cache for 10 mins
+  });
+};

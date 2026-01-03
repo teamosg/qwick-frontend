@@ -2,19 +2,23 @@ import AddCommunityForm from "@/components/addCommunity/AddCommunityForm";
 import AddCommunityOne from "@/components/addCommunity/AddCommunityOne";
 import CommunityStepper from "@/components/addCommunity/AddCommunityStepper";
 import AddCommunityTwo from "@/components/addCommunity/AddCommunityTwo";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "framer-motion";
+import { useGetCommunityCategories } from "@/hooks/community.hook";
 
 
 const AddCommunity = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const { data: categories = [], isLoading: isCategoriesLoading } = useGetCommunityCategories();
+
   const [formData, setFormData] = useState({
     business_name: "",
     country: "",
     category: null,
     subcategory: null
   });
+
   const [formStatus, setFormStatus] = useState({
     errors: {},
     isLoading: false,
@@ -23,14 +27,20 @@ const AddCommunity = () => {
 
   const handleCategoryClick = (id) => {
     if (!id) return
-    setFormData({ ...formData, category: id });
+    setFormData({ ...formData, category: id, subcategory: null });
     setCurrentStep(2)
   };
+
   const handleSubCategoryClick = (id) => {
     if (!id) return
     setFormData({ ...formData, subcategory: id });
     setCurrentStep(3)
   };
+
+  const currentSubcategories = useMemo(() => {
+    const selectedCategory = categories.find(cat => cat.id === formData.category);
+    return selectedCategory?.subcategories || [];
+  }, [categories, formData.category]);
 
 
   // Animation variants
@@ -68,6 +78,7 @@ const AddCommunity = () => {
             <AddCommunityOne
               selectedId={formData?.category}
               onClick={handleCategoryClick}
+              categories={categories}
             />
           </motion.div>
         );
@@ -90,6 +101,7 @@ const AddCommunity = () => {
             <AddCommunityTwo
               selectedId={formData?.subcategory}
               onClick={handleSubCategoryClick}
+              subcategories={currentSubcategories}
             />
           </motion.div>
         );
@@ -123,26 +135,28 @@ const AddCommunity = () => {
     }
   };
 
+  const isLoading = isCategoriesLoading || formStatus.isLoading;
+
   return (
     <div className="p-4 md:p-6 h-screen max-w-5xl mx-auto">
       <CommunityStepper
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
-        isLoading={formStatus.isLoading}
+        isLoading={isLoading}
       />
 
       <AnimatePresence mode="wait">{renderContent()}</AnimatePresence>
 
       {/* Loading overlay */}
-      {formStatus?.isLoading && (
+      {isLoading && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
         >
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#003933] mx-auto"></div>
+          <div className="bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-lg">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#003933] dark:border-white mx-auto"></div>
             <p className="mt-2 text-sm text-gray-600 dark:text-zinc-400">
               Loading...
             </p>

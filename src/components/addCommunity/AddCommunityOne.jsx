@@ -13,7 +13,7 @@ const communityOneData = [
   { id: 9, title: "Other" },
 ];
 
-const AddCommunityOne = ({ selectedId, onClick }) => {
+const AddCommunityOne = ({ selectedId, onClick, categories = [] }) => {
   return (
     <motion.div
       className=""
@@ -22,7 +22,7 @@ const AddCommunityOne = ({ selectedId, onClick }) => {
       transition={{ duration: 0.5 }}
     >
       <div className="grid grid-cols-1 gap-4 sm:grid sm:grid-cols-3 sm:gap-6">
-        {communityOneData.map((data, index) => (
+        {categories.map((data, index) => (
           <motion.div
             key={data.id}
             initial={{ opacity: 0, y: 20 }}
@@ -32,7 +32,10 @@ const AddCommunityOne = ({ selectedId, onClick }) => {
             <AddCommunityItem
               selected={selectedId === data.id}
               onClick={() => onClick(data.id)}
-              data={data}
+              data={{
+                id: data.id,
+                title: data.name
+              }}
             />
           </motion.div>
         ))}

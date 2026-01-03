@@ -17,26 +17,26 @@ export default function AddCommunityForm({
   const navigate = useNavigate()
 
   const countries = [
-    "UnitedState",
-    "Canada",
-    "UnitedKingdom",
-    "Germany",
-    "France",
-    "Australia",
-    "Japan",
-    "India",
-    "Brazil",
-    "Mexico",
-    "Spain",
-    "Italy",
-    "Netherlands",
-    "Sweden",
-    "Norway",
-    "Denmark",
-    "Finland",
-    "Switzerland",
-    "Austria",
-    "Belgium",
+    { label: "United States", value: "us" },
+    { label: "Canada", value: "canada" },
+    { label: "United Kingdom", value: "uk" },
+    { label: "Germany", value: "germany" },
+    { label: "France", value: "france" },
+    { label: "Australia", value: "australia" },
+    { label: "Japan", value: "japan" },
+    { label: "India", value: "india" },
+    { label: "Brazil", value: "brazil" },
+    { label: "Mexico", value: "mexico" },
+    { label: "Spain", value: "spain" },
+    { label: "Italy", value: "italy" },
+    { label: "Netherlands", value: "netherlands" },
+    { label: "Sweden", value: "sweden" },
+    { label: "Norway", value: "norway" },
+    { label: "Denmark", value: "denmark" },
+    { label: "Finland", value: "finland" },
+    { label: "Switzerland", value: "switzerland" },
+    { label: "Austria", value: "austria" },
+    { label: "Belgium", value: "belgium" },
   ];
 
   const valiDateForm = () => {
@@ -144,9 +144,9 @@ export default function AddCommunityForm({
                 }`}
             >
               <span
-                className={formData?.country ? "text-gray-900" : "text-gray-400"}
+                className={formData?.country ? "text-gray-900 dark:text-white" : "text-gray-400"}
               >
-                {formData?.country || "Select"}
+                {countries.find(c => c.value === formData?.country)?.label || "Select"}
               </span>
               <ChevronDown
                 className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isDropdownOpen ? "transform rotate-180" : ""
@@ -166,10 +166,10 @@ export default function AddCommunityForm({
                 >
                   {countries.map((country, index) => (
                     <motion.button
-                      key={country}
+                      key={country.value}
                       type="button"
                       onClick={() => {
-                        setFormData({ ...formData, country })
+                        setFormData({ ...formData, country: country.value })
                         setIsDropdownOpen(false)
                       }}
                       className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 first:rounded-t-lg last:rounded-b-lg"
@@ -177,7 +177,7 @@ export default function AddCommunityForm({
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.02 }}
                     >
-                      {country.split(/(?=[A-Z])/).join(" ")}
+                      {country.label}
                     </motion.button>
                   ))}
                 </motion.div>
