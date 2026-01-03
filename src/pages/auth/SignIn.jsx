@@ -25,7 +25,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className={`min-h-screen flex ${darkMode ? "dark" : ""}`}>
+    <div className="min-h-screen flex bg-white dark:bg-gray-900">
       {/* Left side - Form */}
       <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-white dark:bg-gray-900 ">
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
@@ -102,12 +102,12 @@ const SignIn = () => {
           </button> */}
         </div>
 
-        <div className="max-w-md mx-auto w-full flex flex-col h-full justify-center">
+        <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
           <div className="mb-10 text-center">
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-[30px] sm:text-[24px] md:text-[28px] lg:text-[30px] not-italic font-medium leading-[120%] uppercase mb-2">
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
               SIGN IN
             </h2>
-            <p className="dark:text-gray-400 text-center font-[Inter] text-[15px] md:text-[16px] not-italic font-normal leading-[140%]">
+            <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
               Start earning rewards for your content
             </p>
           </div>
@@ -201,7 +201,7 @@ const SignIn = () => {
             </div>
 
             {/* Remember me & Forgot password */}
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row items-center justify-between">
               <div className="flex items-center">
                 <input
                   id="remember-me"
