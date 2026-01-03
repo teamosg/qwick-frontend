@@ -134,7 +134,7 @@ const SignUp = () => {
               </div>
               <img src={arrowRight} alt="arrow" className="dark:invert" />
             </button>
-            <button className="w-full py-4 px-4 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-gray-800 transition cursor-pointer bg-[#f9f9f9]">
+            {/* <button className="w-full py-4 px-4 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-gray-800 transition cursor-pointer bg-[#f9f9f9]">
               <div className="flex items-center gap-2">
                 <FaFacebook className="text-lg text-blue-600" />
                 <span className="text-gray-800 dark:text-gray-200">
@@ -142,7 +142,7 @@ const SignUp = () => {
                 </span>
               </div>
               <img src={arrowRight} alt="arrow" className="dark:invert" />
-            </button>
+            </button> */}
           </div>
 
           {/* Divider */}
