@@ -10,7 +10,7 @@ import { useState, useMemo } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import DashboardSkeleton from "@/components/dashboard/Dashboard/skeletons/DashboardSkeleton";
+import DiscoverSkeleton from "@/components/discover/DiscoverSkeleton";
 
 const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
 
@@ -138,7 +138,7 @@ const Discover = () => {
   if (isLoadingCampaigns || isLoadingMyCommunities || isLoadingAllCommunities) {
     return (
       <div className="p-4">
-        <DashboardSkeleton />
+        <DiscoverSkeleton />
       </div>
     );
   }

@@ -33,9 +33,9 @@ const SingleRewardItem = ({ campaign }) => {
   return (
     <div
       onClick={handleNavigate}
-      className="dark:text-white dark:bg-zinc-900 p-4 rounded-xl shadow mb-4 bg-white cursor-pointer hover:shadow-md transition-shadow transition-transform hover:scale-[1.01]"
+      className=" dark:text-white dark:bg-zinc-900 p-4 rounded-xl shadow mb-4 bg-white cursor-pointer hover:shadow-md transition-shadow transition-transform hover:scale-[1.01]"
     >
-      <div className="flex flex-col sm:flex-row gap-4 w-full">
+      <div className="overflow-hidden flex flex-col sm:flex-row gap-4 w-full">
         <img
           src={thumbnail ? fullThumbnail : "https://placehold.co/150x150"}
           alt={name}
