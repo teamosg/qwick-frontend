@@ -232,3 +232,25 @@ export const useDeleteCommunity = () => {
 }
 
 
+
+export const useGetCommunityEarnings = (communityId) => {
+  return useQuery({
+    queryKey: ["communityEarnings", communityId],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get(
+          `/v1/community/${communityId}/earnings/`
+        );
+        return res?.data || [];
+      } catch (error) {
+        handleApiError({
+          error,
+          throwError: true,
+          errorMessage: "Failed to fetch community earnings"
+        });
+      }
+    },
+    enabled: !!communityId,
+    staleTime: 1000 * 60 * 2,
+  });
+};

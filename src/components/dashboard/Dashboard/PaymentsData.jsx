@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { useCommunityStore } from "@/store/communityStore";
+import { useGetCommunityEarnings } from "@/hooks/community.hook";
 import { EllipsisVertical } from "lucide-react";
 // Table components (inline implementation)
 const Table = ({ children, className = "" }) => (
@@ -23,71 +25,9 @@ const TableCell = ({ children, className = "" }) => (
 );
 
 const PaymentsData = () => {
-  const users = [
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "paid",
-      contact: "0191-392912",
-      total_amount: "12345",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "paid",
-      contact: "0191-392912",
-      total_amount: "12345",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "paid",
-      contact: "0191-392912",
-      total_amount: "12345",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "paid",
-      contact: "0191-392912",
-      total_amount: "12345",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "paid",
-      contact: "0191-392912",
-      total_amount: "12345",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "paid",
-      contact: "0191-392912",
-      total_amount: "12345",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "paid",
-      contact: "0191-392912",
-      total_amount: "12345",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "pending",
-      contact: "0191-392912",
-      total_amount: "12345",
-    },
-    {
-      name: "Adam smith",
-      email: "adam@gmail.com",
-      status: "paid",
-      contact: "0191-392912",
-      total_amount: "12345",
-    },
-  ];
+  const { selectedBrandCommunity } = useCommunityStore();
+  const { data: earnings = [] } = useGetCommunityEarnings(selectedBrandCommunity?.id);
+
   const getStatusBadge = (status) => {
     const variants = {
       paid: "bg-green-100 text-green-800 border-green-200",
@@ -95,16 +35,24 @@ const PaymentsData = () => {
       cancel: "bg-red-100 text-red-800 border-red-200",
     };
 
+    const statusKey = status?.toLowerCase() || "pending";
+    const variantClass = variants[statusKey] || variants.pending;
+
     return (
       <Badge
         variant="outline"
-        className={`${
-          variants[status.toLowerCase()]
-        } rounded-full px-3 py-1 text-xs font-medium`}
+        className={`${variantClass} rounded-full px-3 py-1 text-xs font-medium`}
       >
-        {status}
+        {status || "Pending"}
       </Badge>
     );
+  };
+
+  const getDisplayName = (user) => {
+    if (user.first_name || user.last_name) {
+      return `${user.first_name || ""} ${user.last_name || ""}`.trim();
+    }
+    return user.username || "Unknown User";
   };
 
   return (
@@ -114,29 +62,36 @@ const PaymentsData = () => {
         <TabsContent value="withdraw" className="p-0">
           {/* Mobile Card View */}
           <div className="block sm:hidden space-y-3">
-            {users.map((user, index) => (
+            {earnings.map((user, index) => (
               <div
                 key={index}
                 className="bg-white border rounded-lg p-4 shadow-sm dark:bg-[#2E2E2E] dark:border-[#444] dark:text-[#fff]"
               >
                 <div className="flex justify-between items-start mb-2">
                   <div className="font-semibold text-[#25324B] dark:text-[#fff]">
-                    {user.name}
+                    {getDisplayName(user)}
                   </div>
                 </div>
-                <div className="text-sm text-[#25324B] dark:text-[#fff] p-1">{user.email}</div>
+                <div className="text-sm text-[#25324B] dark:text-[#fff] p-1">
+                  {user.email}
+                </div>
                 <div className="text-sm text-[#25324B] dark:text-[#fff] p-1">
                   {" "}
                   {getStatusBadge(user.status)}
                 </div>
                 <div className="font-semibold text-[#25324B] dark:text-[#fff] p-1">
-                  {user.contact}
+                  {user.contact || "N/A"}
                 </div>
                 <div className="font-semibold text-[#25324B] dark:text-[#fff] p-1">
-                  {user.total_amount}
+                  ${user.total_earned}
                 </div>
               </div>
             ))}
+            {earnings.length === 0 && (
+              <div className="text-center p-4 text-gray-500 dark:text-gray-400">
+                No attributes found.
+              </div>
+            )}
           </div>
 
           {/* Desktop Table View */}
@@ -157,22 +112,22 @@ const PaymentsData = () => {
                     <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
                       Total amount
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    {/* <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
                       Contact
                     </TableHead>
                     <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
                       Actions
-                    </TableHead>
+                    </TableHead> */}
                   </TableRow>
                 </TableHeader>
                 <TableBody className="rounded-xl">
-                  {users.map((user, index) => (
+                  {earnings.map((user, index) => (
                     <TableRow
                       key={index}
                       className="border-none hover:bg-white dark:hover:bg-[#2E2E2E] dark:text-[#fff]"
                     >
                       <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
-                        {user.name}
+                        {getDisplayName(user)}
                       </TableCell>
                       <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
                         {user.email}
@@ -181,18 +136,25 @@ const PaymentsData = () => {
                         {getStatusBadge(user.status)}
                       </TableCell>
                       <TableCell className="py-4 px-6 dark:text-[#fff]">
-                        $ {user.total_amount}
+                        $ {user.total_earned}
                       </TableCell>
-                      <TableCell className="py-4 px-6 dark:text-[#fff]">
-                        {user.contact}
+                      {/* <TableCell className="py-4 px-6 dark:text-[#fff]">
+                        {user.contact || "N/A"}
                       </TableCell>
                       <TableCell className="py-4 px-6 flex gap-2">
                         <button className="cursor-pointer">
                           <EllipsisVertical />
                         </button>
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   ))}
+                  {earnings.length === 0 && (
+                    <TableRow>
+                      <TableCell className="text-center py-4 text-gray-500 dark:text-gray-400" colSpan={6}>
+                        No records found.
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </div>
@@ -204,3 +166,4 @@ const PaymentsData = () => {
 };
 
 export default PaymentsData;
+
