@@ -509,6 +509,48 @@ export const useToggleTwoFactor = () => {
   })
 }
 
+// Google Sign In Hook
+export const useGoogleSignInHook = () => {
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+  const redirectUrl = params.get("redirect");
+
+  return useMutation({
+    mutationFn: async (accessToken) => {
+      const res = await axiosPublic.post("/v1/account/google/", {
+        access_token: accessToken,
+      });
+      return res.data;
+    },
+    onSuccess: (data) => {
+      if (data?.access) {
+        toast.success(data?.message || "Login successful");
+        const token = data?.access;
+        const refresh = data?.refresh;
+        const user = data?.user;
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("refresh", refresh);
+        if (user) {
+          localStorage.setItem("user", JSON.stringify(user));
+        }
+
+        navigate(redirectUrl || "/");
+      } else {
+        toast.error(data?.message || "Failed to sign in with Google");
+      }
+    },
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message ||
+        error?.response?.data?.error ||
+        error.message ||
+        "Failed to sign in with Google";
+      toast.error(message);
+    },
+  });
+};
+
 export const useGetOtherUserProfile = (username) => {
   return useQuery({
     queryKey: ["otherUserProfile", username],

@@ -11,9 +11,10 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import arrowRight from "../../assets/arrow-right.svg";
 import commonAuthLogo from "../../assets/authImg.png";
-import { useSignUp } from "../../hooks/auth.hook.js";
+import { useSignUp, useGoogleSignInHook } from "../../hooks/auth.hook.js";
 import { useNavigate } from "react-router";
 import LogoOnly from "@/components/Logo/LogoOnly";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -23,6 +24,16 @@ const SignUp = () => {
   // Use the new auth hook
   const { form, mutate, isPending } = useSignUp();
   const { register, handleSubmit, formState: { errors } } = form;
+
+  const { mutate: googleSignIn, isPending: googlePending } = useGoogleSignInHook();
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+
+      googleSignIn(tokenResponse.access_token);
+    },
+    onError: (error) => console.log("Google Login Failed:", error),
+  });
 
   const onSubmit = (data) => {
     // Data already matches API schema since we're using the correct field names
@@ -60,10 +71,17 @@ const SignUp = () => {
 
           {/* Social Buttons */}
           <div className="flex md:flex-row flex-col items-center gap-2 md:gap-3.5">
-            <button className="w-full py-4 px-5 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-zinc-900 transition cursor-pointer bg-[#f9f9f9]">
+            <button
+              type="button"
+              onClick={() => handleGoogleLogin()}
+              disabled={googlePending}
+              className="w-full py-4 px-5 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-zinc-900 transition cursor-pointer bg-[#f9f9f9]"
+            >
               <div className="flex items-center gap-2">
                 <FcGoogle className="text-lg" />
-                <span className="text-gray-800 dark:text-gray-200">Google</span>
+                <span className="text-gray-800 dark:text-gray-200">
+                  {googlePending ? "Signing in..." : "Google"}
+                </span>
               </div>
               <img src={arrowRight} alt="arrow" className="dark:invert" />
             </button>
