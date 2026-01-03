@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import { ChevronDown } from "lucide-react";
+import { useGetCampaignTypes, useGetCategories } from "@/hooks/campaign.hook";
 
 export default function DiscoverFilter({
   selectedType,
@@ -15,16 +15,12 @@ export default function DiscoverFilter({
   sortOpen,
   setSortOpen
 }) {
-  const types = ["All", "Clipping", "UGC", "Audio", "Other"];
-  const categories = [
-    "All",
-    "Personal Brand",
-    "Entertainment",
-    "Products",
-    "Music",
-    "Logo",
-    "Other",
-  ];
+  const { data: campaignTypesData } = useGetCampaignTypes();
+  const { data: categoriesData } = useGetCategories();
+
+  const types = ["All", ...(campaignTypesData?.data?.map(t => t.name) || [])];
+  const categories = ["All", ...(categoriesData?.data?.map(c => c.name) || [])];
+
   const sortOptions = [
     "Highest available budget",
     "Most Paid Out",
