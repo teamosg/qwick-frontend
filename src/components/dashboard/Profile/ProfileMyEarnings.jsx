@@ -37,7 +37,7 @@ const ProfileMyEarnings = () => {
     const getImageUrl = (path) => {
         if (!path) return "/submission.png";
         if (path.startsWith("http")) return path;
-        const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://darrenchua.softvencealpha.com/api";
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
         const origin = baseUrl.replace(/\/api$/, "");
         return `${origin}${path}`;
     };

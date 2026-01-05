@@ -14,7 +14,7 @@ import { useGetAllCampaigns, useSubmitCampaignContent } from "@/hooks/campaign.h
 import { useCommunityStore } from "@/store/communityStore";
 import CampaignDetailsSkeleton from "./CampaignDetailsSkeleton";
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetailsPayment = () => {
   const { campaignId } = useParams();

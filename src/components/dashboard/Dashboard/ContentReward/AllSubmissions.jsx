@@ -25,7 +25,7 @@ const AllSubmissions = () => {
   const getImageUrl = (path) => {
     if (!path) return "/submission.png";
     if (path.startsWith("http")) return path;
-    const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://darrenchua.softvencealpha.com/api";
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
     // Remove /api from end if present to get root
     const origin = baseUrl.replace(/\/api$/, "");
     return `${origin}${path}`;

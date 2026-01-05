@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { useGetAllCampaigns, useUpdateCampaign } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetailsEdit = () => {
   const { id } = useParams();

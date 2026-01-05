@@ -3,7 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { Link } from "react-router";
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const DashboardSingleRewardItem = ({ reward }) => {
   if (!reward) return null;

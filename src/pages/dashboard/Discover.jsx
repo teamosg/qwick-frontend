@@ -12,7 +12,7 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import DiscoverSkeleton from "@/components/discover/DiscoverSkeleton";
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const Discover = () => {
   const navigate = useNavigate();

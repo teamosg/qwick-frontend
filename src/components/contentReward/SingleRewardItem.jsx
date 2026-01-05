@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { Progress } from "../ui/progress";
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const SingleRewardItem = ({ campaign }) => {
   const navigate = useNavigate();

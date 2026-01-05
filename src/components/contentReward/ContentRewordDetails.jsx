@@ -7,7 +7,7 @@ import { useCommunityStore } from "@/store/communityStore";
 import { useMemo } from "react";
 import CampaignDetailsSkeleton from "./CampaignDetailsSkeleton";
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetails = () => {
   const { campaignId } = useParams();

@@ -2,9 +2,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 // Base URL from Postman collection: https://qwick.softvencealpha.com/api
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://darrenchua.softvencealpha.com/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const axiosPublic = axios.create({
   baseURL: API_BASE_URL,
