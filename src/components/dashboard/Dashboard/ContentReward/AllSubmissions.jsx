@@ -63,7 +63,7 @@ const AllSubmissions = () => {
           {[1, 2, 3].map((i) => (
             <Card
               key={i}
-              className="overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
+              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
             >
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -105,7 +105,7 @@ const AllSubmissions = () => {
           submissions.map((submission) => (
             <Card
               key={submission.id}
-              className="overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
+              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
             >
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row gap-4">
