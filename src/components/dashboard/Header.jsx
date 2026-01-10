@@ -191,7 +191,9 @@ const Header = ({ userName, userImage, onMenuClick }) => {
             <span className="hidden sm:inline">Add Community</span>
           </Link>
 
-          <div className="relative hidden sm:block">
+
+          {/* search option  */}
+          {/* <div className="relative hidden sm:block">
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <Search className="h-4 w-4 text-primary" />
             </div>
@@ -200,7 +202,7 @@ const Header = ({ userName, userImage, onMenuClick }) => {
               placeholder="Search"
               className="pr-10 pl-4 py-2 text-primary font-[poppins] text-[14px] font-medium border border-border bg-popover rounded-full focus:ring-2 focus:ring-primary focus:outline-none"
             />
-          </div>
+          </div> */}
 
           {/* <div className="sm:hidden">
             <button

@@ -39,7 +39,7 @@ const CampaignForm = ({
     currency: initialData?.currency || "USD",
     rewardRate: initialData?.rewardRate || "",
     minPayout: initialData?.minPayout || "",
-    
+
     maxPayout: initialData?.maxPayout || "",
     flatFeeBonus: initialData?.flatFeeBonus || "",
     platforms: initialData?.platforms || [],
@@ -252,7 +252,7 @@ const CampaignForm = ({
             value={formData.campaignName}
             onChange={(e) => handleInputChange("campaignName", e.target.value)}
             placeholder="Enter campaign"
-            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none dark:text-white placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none text-gray-900 dark:text-white placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -334,7 +334,7 @@ const CampaignForm = ({
                   handleInputChange("campaignBudget", e.target.value)
                 }
                 placeholder="10000"
-                className="w-full px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
             <div className="relative">
@@ -374,7 +374,7 @@ const CampaignForm = ({
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
               placeholder="3"
-              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -406,7 +406,7 @@ const CampaignForm = ({
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
                 placeholder="3"
-                className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -436,7 +436,7 @@ const CampaignForm = ({
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
                 placeholder="100"
-                className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -470,7 +470,7 @@ const CampaignForm = ({
                 handleInputChange("flatFeeBonus", e.target.value)
               }
               placeholder="10"
-              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -521,7 +521,7 @@ const CampaignForm = ({
                 handleInputChange("availableContent", e.target.value)
               }
               placeholder="3"
-              className="w-full pl-8 px-3 py-3 dark:text-white  bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -542,7 +542,7 @@ const CampaignForm = ({
             }
             placeholder="Enter campaign"
             rows={4}
-            className="w-full px-3 dark:text-white  py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-[#697586] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-3 text-gray-900 dark:text-white py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -575,8 +575,8 @@ const CampaignForm = ({
                     variant="outline"
                     disabled={isFormDisabled}
                     className={cn(
-                      "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
-                      !formData.startDate && "text-gray-500 dark:text-gray-400"
+                      "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white",
+                      !formData.startDate && "text-gray-400 dark:text-gray-500"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
@@ -618,8 +618,8 @@ const CampaignForm = ({
                     variant="outline"
                     disabled={isFormDisabled}
                     className={cn(
-                      "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700",
-                      !formData.endDate && "text-gray-500 dark:text-gray-400"
+                      "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white",
+                      !formData.endDate && "text-gray-400 dark:text-gray-500"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
