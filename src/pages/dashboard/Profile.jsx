@@ -49,12 +49,12 @@ const tabs = [
     icon: Lock,
     content: <SecurityPrivacy />,
   },
-  {
-    name: "Payment method",
-    value: "payment-method",
-    icon: CreditCard,
-    content: <PaymentMethod />,
-  },
+  // {
+  //   name: "Payment method",
+  //   value: "payment-method",
+  //   icon: CreditCard,
+  //   content: <PaymentMethod />,
+  // },
   {
     name: "Balance",
     value: "balance",
