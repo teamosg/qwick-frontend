@@ -4,6 +4,7 @@ import { useGetMyEarnings } from "@/hooks/earnings.hook";
 import { ExternalLink, DollarSign, Calendar, TrendingUp, Hash } from "lucide-react";
 import { format } from "date-fns";
 import { FaYoutube, FaTiktok, FaInstagram } from "react-icons/fa";
+import { formatViewCount } from "@/lib/utils";
 import {
     Table,
     TableBody,
@@ -37,7 +38,7 @@ const ProfileMyEarnings = () => {
     const getImageUrl = (path) => {
         if (!path) return "/submission.png";
         if (path.startsWith("http")) return path;
-        const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://darrenchua.softvencealpha.com/api";
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
         const origin = baseUrl.replace(/\/api$/, "");
         return `${origin}${path}`;
     };
@@ -124,7 +125,7 @@ const ProfileMyEarnings = () => {
                             <div className="grid grid-cols-2 gap-4 pt-3 border-t border-gray-100 dark:border-zinc-800">
                                 <div className="flex items-center gap-2">
                                     <TrendingUp className="h-3.5 w-3.5 text-gray-400" />
-                                    <span className="text-xs text-gray-600 dark:text-zinc-400">{item.views.toLocaleString()} Views</span>
+                                    <span className="text-xs text-gray-600 dark:text-zinc-400">{formatViewCount(item.views)} Views</span>
                                 </div>
                                 <div className="flex items-center gap-2 justify-end">
                                     <Calendar className="h-3.5 w-3.5 text-gray-400" />
@@ -206,7 +207,7 @@ const ProfileMyEarnings = () => {
                                         {getStatusBadge(item.status)}
                                     </TableCell>
                                     <TableCell className="text-gray-600 dark:text-zinc-400">
-                                        {item.views.toLocaleString()}
+                                        {formatViewCount(item.views)}
                                     </TableCell>
                                     <TableCell className="text-gray-600 dark:text-zinc-400 whitespace-nowrap">
                                         {format(new Date(item.created_at), "MMM d, yyyy")}

@@ -3,7 +3,7 @@ import logoWhite from '@/assets/logo_white.svg'
 import { useTheme } from '../shared/ThemeProvider';
 import { useGetWebsiteSettings } from '@/hooks/settings.hook';
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const LogoOnly = () => {
     const { theme } = useTheme();

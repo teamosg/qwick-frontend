@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { Progress } from "../ui/progress";
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const SingleRewardItem = ({ campaign }) => {
   const navigate = useNavigate();
@@ -20,7 +20,13 @@ const SingleRewardItem = ({ campaign }) => {
     platforms,
     budget,
     max_payout,
+    total_users_earning,
+    initial_budget,
   } = campaign;
+
+  const progress = initial_budget > 0
+    ? Math.min(Math.max((parseFloat(total_users_earning || 0) / parseFloat(initial_budget)) * 100, 0), 100)
+    : 0;
 
   const handleNavigate = () => {
     navigate(`/content-reward/reward-details/${id}`);
@@ -53,10 +59,10 @@ const SingleRewardItem = ({ campaign }) => {
               </span>
             </p>
             <div className="text-xs flex justify-between dark:text-zinc-400 mb-1">
-              <span>$0.00 of ${budget}</span>
-              <span>0%</span>
+              <span>${total_users_earning || "0.00"} of ${initial_budget || budget}</span>
+              <span>{progress.toFixed(0)}%</span>
             </div>
-            <Progress value={0} indicatorColor="red" className="mb-3.5" />
+            <Progress value={progress} indicatorColor="bg-[#003933]" className="mb-3.5" />
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

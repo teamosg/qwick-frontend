@@ -3,7 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { Link } from "react-router";
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const DashboardSingleRewardItem = ({ reward }) => {
   if (!reward) return null;
@@ -18,7 +18,13 @@ const DashboardSingleRewardItem = ({ reward }) => {
     platforms,
     budget,
     max_payout,
+    total_users_earning,
+    initial_budget,
   } = reward;
+
+  const progress = initial_budget > 0
+    ? Math.min(Math.max((parseFloat(total_users_earning || 0) / parseFloat(initial_budget)) * 100, 0), 100)
+    : 0;
 
   const fullThumbnail = thumbnail?.startsWith("http")
     ? thumbnail
@@ -45,10 +51,10 @@ const DashboardSingleRewardItem = ({ reward }) => {
                 </span>
               </p>
               <p className="text-xs flex justify-between dark:text-zinc-400">
-                <span className=""> $0.00 of ${budget}</span> <span>0%</span>
+                <span className=""> ${total_users_earning || "0.00"} of ${initial_budget || budget}</span> <span>{progress.toFixed(0)}%</span>
               </p>
             </div>
-            <Progress value={0} indicatorColor="red" className="mb-3.5" />
+            <Progress value={progress} indicatorColor="bg-[#003933]" className="mb-3.5" />
             <div className="flex flex-wrap gap-x-8 gap-y-4">
               <div>
                 <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">

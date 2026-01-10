@@ -361,7 +361,7 @@ export const useProfile = () => {
     queryFn: async () => {
       const res = await axiosPrivate.get("/v1/account/profile/");
       const user = res?.data?.data;
-      user.avatar = "https://darrenchua.softvencealpha.com" + user.avatar;
+      user.avatar = import.meta.env.VITE_MEDIA_BASE_URL + user.avatar;
       localStorage.setItem("user", JSON.stringify(user));
       return user;
     },
@@ -559,7 +559,7 @@ export const useGetOtherUserProfile = (username) => {
         const res = await axiosPrivate.get(`/v1/account/profile/${username}/`);
         const user = res?.data?.data;
         if (user?.avatar && !user.avatar.startsWith("http")) {
-          user.avatar = "https://darrenchua.softvencealpha.com" + user.avatar;
+          user.avatar = import.meta.env.VITE_MEDIA_BASE_URL + user.avatar;
         }
         return user;
       } catch (error) {

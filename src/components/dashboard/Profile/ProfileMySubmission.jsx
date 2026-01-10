@@ -15,8 +15,7 @@ const ProfileMySubmission = () => {
     const statusType = status?.toLowerCase() || "pending";
     const variants = {
       pending: "bg-[#FEF9C3] text-[#A16207] border-[#A16207]",
-      accepted: "bg-[#F0FDF4] text-[#15803D] border-[#15803D]",
-      reject: "bg-[#FEE2E2] text-[#CA6377] border-[#CA6377]",
+      approved: "bg-[#F0FDF4] text-[#15803D] border-[#15803D]",
       rejected: "bg-[#FEE2E2] text-[#CA6377] border-[#CA6377]",
     };
 
@@ -34,7 +33,7 @@ const ProfileMySubmission = () => {
   const getImageUrl = (path) => {
     if (!path) return "/submission.png";
     if (path.startsWith("http")) return path;
-    const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://darrenchua.softvencealpha.com/api";
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
     // Remove /api from end if present to get root
     const origin = baseUrl.replace(/\/api$/, "");
     return `${origin}${path}`;
@@ -48,7 +47,7 @@ const ProfileMySubmission = () => {
           {[1, 2, 3].map((i) => (
             <Card
               key={i}
-              className="overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
+              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
             >
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -94,7 +93,7 @@ const ProfileMySubmission = () => {
           submissions.map((submission) => (
             <Card
               key={submission.id}
-              className="overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
+              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
             >
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row gap-4">

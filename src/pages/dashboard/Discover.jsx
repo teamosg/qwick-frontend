@@ -11,8 +11,9 @@ import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import DiscoverSkeleton from "@/components/discover/DiscoverSkeleton";
+import { formatViewCount } from "@/lib/utils";
 
-const MEDIA_BASE_URL = "https://darrenchua.softvencealpha.com";
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const Discover = () => {
   const navigate = useNavigate();
@@ -193,7 +194,7 @@ const Discover = () => {
                   name: campaign.category?.name || "No Category",
                   meta: campaign.campaign_type?.name || "Campaign",
                   type: campaign.campaign_type?.name,
-                  views: campaign.views,
+                  views: formatViewCount(campaign.total_content_views),
                   title: campaign.name,
                   socials: campaign.platforms?.map(p => {
                     if (p.name?.toLowerCase() === 'instagram') return { name: 'Instagram', icon: FaInstagram };
@@ -201,7 +202,9 @@ const Discover = () => {
                     if (p.name?.toLowerCase() === 'youtube') return { name: 'YouTube', icon: FaYoutube };
                     return null;
                   }).filter(Boolean),
-                  progress: 0,
+                  progress: campaign.initial_budget > 0
+                    ? Math.min(Math.max((parseFloat(campaign.total_users_earning || 0) / parseFloat(campaign.initial_budget)) * 100, 0), 100)
+                    : 0,
                   compensation: {
                     label: "Compensation",
                     details: `$${campaign.reward_rate} per 1k views`,
