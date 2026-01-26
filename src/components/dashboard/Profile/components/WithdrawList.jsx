@@ -171,8 +171,6 @@ const WithdrawList = () => {
             </TableHeader>
             <TableBody className="bg-white dark:bg-[#2E2E2E] rounded-xl">
               {transactions?.map((transaction, index) => {
-                const normalizedStatus = transaction.status?.toLowerCase() || "";
-                const isFailed = ["failed", "cancel", "cancelled"].includes(normalizedStatus);
 
                 return (
                   <TableRow
@@ -192,7 +190,7 @@ const WithdrawList = () => {
                       {getStatusBadge(transaction.status)}
                     </TableCell>
                     <TableCell className="py-4 px-6 dark:text-white">
-                      {!isFailed && (
+                      {transaction.status?.toLowerCase() === "pending" && (
                         <DropdownMenu>
                           <DropdownMenuTrigger className="focus:outline-none p-2 hover:bg-gray-100 rounded-full dark:hover:bg-gray-700 transition-colors">
                             <MoreVertical className="h-4 w-4 text-gray-500 dark:text-gray-300" />
