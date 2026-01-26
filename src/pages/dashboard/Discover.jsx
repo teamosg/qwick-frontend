@@ -85,6 +85,15 @@ const Discover = () => {
 
     // Check if user is the creator
     const communityAsCreator = createdCommunities.find(c => c.id === communityId);
+
+    // Check if campaign has ended
+    const isEnded = campaign.end_date && new Date(campaign.end_date) < new Date();
+
+    if (isEnded && !communityAsCreator) {
+      toast.error("This campaign has ended.");
+      return;
+    }
+
     if (communityAsCreator) {
       toast.info("As the creator of this community, you cannot join as a member.");
       return;
@@ -209,7 +218,9 @@ const Discover = () => {
                     label: "Compensation",
                     details: `$${campaign.reward_rate} per 1k views`,
                   },
-                  cta: "Apply"
+                  cta: "Apply",
+                  isEnded: campaign.end_date && new Date(campaign.end_date) < new Date(),
+                  endDate: campaign.end_date,
                 }}
                 onApply={() => handleCampaignClick(campaign)}
               />

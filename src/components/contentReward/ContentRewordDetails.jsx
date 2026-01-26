@@ -57,11 +57,21 @@ const ContentRewardDetails = () => {
     ? thumbnail
     : `${MEDIA_BASE_URL}${thumbnail}`;
 
+  const isEnded = campaign?.end_date && new Date(campaign.end_date) < new Date();
+
   return (
     <div className="p-4 sm:p-6 text-[#717171] max-w-4xl mx-auto">
-      <h2 className="text-xl sm:text-2xl text-[#191919] dark:text-white font-bold mb-4 sm:mb-6">
-        Content Reward Details
-      </h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-6">
+        <h2 className="text-xl sm:text-2xl text-[#191919] dark:text-white font-bold">
+          Content Reward Details
+        </h2>
+        {isEnded && (
+          <div className="px-3 py-1 bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 rounded-full text-xs font-bold flex items-center gap-1.5 border border-red-200 dark:border-red-900/50">
+            <div className="size-1.5 rounded-full bg-red-600 animate-pulse" />
+            CAMPAIGN EXPIRED
+          </div>
+        )}
+      </div>
 
       <div className="space-y-6">
         {/* Main Details Card */}
@@ -196,13 +206,14 @@ const ContentRewardDetails = () => {
                 {[
                   `Verified campaign for ${category?.name}`,
                   "Fast approval process",
-                  `Support for ${platforms?.map(p => p.name).join(", ")}`
-                ].map((item, i) => (
+                  `Support for ${platforms?.map(p => p.name).join(", ")}`,
+                  campaign.end_date ? `Campaign ${isEnded ? "expired" : "ends"} on ${campaign.end_date}` : null
+                ].filter(Boolean).map((item, i) => (
                   <li key={i} className="flex gap-2.5 items-center">
                     <div className="bg-[#003933]/10 p-1 rounded-full">
                       <DollarSign className="text-[#003933] dark:text-[#00b89f]" size={14} />
                     </div>
-                    <span className="text-gray-700 dark:text-zinc-300 text-xs font-medium">
+                    <span className={`text-gray-700 dark:text-zinc-300 text-xs font-medium ${item.includes("expired") ? "text-red-600 dark:text-red-400" : ""}`}>
                       {item}
                     </span>
                   </li>
@@ -212,10 +223,14 @@ const ContentRewardDetails = () => {
 
             <div className="flex flex-col gap-3">
               <Link
-                to={`/content-reward/reward-details-payment/${campaignId}`}
-                className="w-full text-center text-white bg-[#003933] hover:bg-[#002822] text-lg font-bold py-3.5 rounded-2xl transition duration-300 shadow-lg active:scale-[0.98]"
+                to={isEnded ? "#" : `/content-reward/reward-details-payment/${campaignId}`}
+                onClick={(e) => isEnded && e.preventDefault()}
+                className={`w-full text-center text-white text-lg font-bold py-3.5 rounded-2xl transition duration-300 shadow-lg ${isEnded
+                  ? "bg-gray-400 cursor-not-allowed opacity-50"
+                  : "bg-[#003933] hover:bg-[#002822] active:scale-[0.98]"
+                  }`}
               >
-                Apply Now
+                {isEnded ? "Campaign Ended" : "Apply Now"}
               </Link>
               <button
                 onClick={() => navigate(-1)}

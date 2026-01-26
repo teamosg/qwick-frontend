@@ -9,18 +9,18 @@ const Card = ({ content, onApply }) => {
     meta,
     type,
     views,
-    // timeAgo,
     title,
     socials,
     progress,
     compensation,
-    // link,
     cta,
+    isEnded,
+    endDate,
   } = content || {};
 
   const handleAction = (e) => {
+    e.stopPropagation();
     if (onApply) {
-      e.preventDefault();
       onApply();
     }
   };
@@ -28,17 +28,21 @@ const Card = ({ content, onApply }) => {
   const displayViews = views ?? 0;
 
   return (
-    <div onClick={handleAction} className="block w-full h-full focus:outline-none group cursor-pointer">
+    <div
+      onClick={handleAction}
+      className={`block w-full h-full focus:outline-none group ${isEnded ? "cursor-default" : "cursor-pointer"}`}
+    >
       <motion.div
-        className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-zinc-700 shadow-sm w-full transition-colors p-5 sm:p-6 flex flex-col gap-5 h-full"
+        className={`bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-zinc-700 shadow-sm w-full transition-colors p-5 sm:p-6 flex flex-col gap-5 h-full ${isEnded ? "opacity-90 grayscale-[0.3]" : ""
+          }`}
         initial={{ opacity: 0, scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
-        whileHover={{
+        whileHover={!isEnded ? {
           boxShadow: "0 8px 36px 0 rgba(0,0,0,.08)",
           scale: 1.01,
           transition: { duration: 0.17 },
-        }}
+        } : {}}
       >
         {/* Header */}
         <div className="flex items-center justify-between gap-4 mb-1">
@@ -52,9 +56,16 @@ const Card = ({ content, onApply }) => {
               <p className="text-base font-semibold text-[#090003] dark:text-white mb-1">
                 {name}
               </p>
-              <p className="text-xs text-gray-600 dark:text-zinc-400">
-                {meta}
-              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray-600 dark:text-zinc-400">
+                  {meta}
+                </p>
+                {isEnded && (
+                  <span className="text-[10px] bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 px-1.5 py-0.5 rounded font-bold">
+                    ENDED
+                  </span>
+                )}
+              </div>
             </div>
           </div>
           {/* Views & Post Type */}
@@ -72,16 +83,20 @@ const Card = ({ content, onApply }) => {
                 {displayViews >= 1000 ? `${(displayViews / 1000).toFixed(1)}k` : displayViews}
               </span>
             </div>
-            {/* <div className="text-[#003933] text-xs dark:text-zinc-400 mt-1">
-              48m
-            </div> */}
           </div>
         </div>
 
         {/* Title */}
-        <h3 className="font-semibold text-[#090003] dark:text-white text-base sm:text-lg mb-1 leading-tight">
-          {title}
-        </h3>
+        <div className="space-y-1">
+          <h3 className="font-semibold text-[#090003] dark:text-white text-base sm:text-lg leading-tight">
+            {title}
+          </h3>
+          {endDate && (
+            <p className={`text-[11px] font-medium ${isEnded ? "text-red-500" : "text-gray-500 dark:text-zinc-400"}`}>
+              {isEnded ? "Ended on" : "Ends on"} {endDate}
+            </p>
+          )}
+        </div>
 
         {/* Social Media Tags */}
         <div className="flex flex-row gap-2 mb-1">
@@ -110,11 +125,14 @@ const Card = ({ content, onApply }) => {
               {compensation?.details}
             </p>
           </div>
-          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }}>
+          <motion.div whileHover={!isEnded ? { scale: 1.04 } : {}} whileTap={!isEnded ? { scale: 0.98 } : {}}>
             <span
               onClick={handleAction}
-              className="inline-block  hover:bg-[#002822] bg-[#003933] hover:dark:bg-emerald-700 text-white text-xs font-semibold py-2 px-5 rounded-full transition-colors cursor-pointer shadow-sm">
-              {cta}
+              className={`inline-block text-xs font-semibold py-2 px-5 rounded-full transition-colors shadow-sm ${isEnded
+                ? "bg-gray-200 dark:bg-zinc-800 text-gray-500 dark:text-zinc-500 cursor-not-allowed"
+                : "bg-[#003933] dark:bg-[#003933] hover:bg-[#002822] text-white cursor-pointer"
+                }`}>
+              {isEnded ? "Ended" : cta}
             </span>
           </motion.div>
         </div>
