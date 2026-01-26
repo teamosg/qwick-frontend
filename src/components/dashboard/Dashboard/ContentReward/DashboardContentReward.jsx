@@ -9,8 +9,10 @@ import { format } from "date-fns";
 import { Spinner } from "@/components/ui/spinner";
 
 const DashboardContentReward = () => {
+  const [alert, setAlert] = useState(null);
+
   const { selectedBrandCommunity } = useCommunityStore();
-  const { mutate: createCampaign, isPending: isSubmitting } = useCreateCampaign(selectedBrandCommunity?.id);
+  const { mutate: createCampaign, isPending: isSubmitting } = useCreateCampaign(selectedBrandCommunity?.id, setAlert);
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
 
   const [showForm, setShowForm] = useState(false);
@@ -116,6 +118,8 @@ const DashboardContentReward = () => {
             onCancel={handleFormCancel}
             setShowForm={setShowForm}
             isSubmitting={isSubmitting}
+            alert={alert}
+            setAlert={setAlert}
           />
         </div>
       ) : filteredRewards.length > 0 ? (

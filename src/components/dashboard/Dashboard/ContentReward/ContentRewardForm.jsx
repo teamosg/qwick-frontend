@@ -12,14 +12,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ChevronDown } from "lucide-react";
+import CommonAlert from "@/components/Alerts/CommonAlert";
 
 const CampaignForm = ({
-  setShowForm,
   initialData,
   onSubmit,
   onCancel,
   isEditMode = false,
   isSubmitting = false,
+  alert,
+  setAlert,
 }) => {
   const { data: campaignTypesData, isLoading: isTypesLoading } = useGetCampaignTypes();
   const { data: categoriesData, isLoading: isCategoriesLoading } = useGetCategories();
@@ -683,7 +685,9 @@ const CampaignForm = ({
             </div>
           )}
         </div>
-
+        {alert && (
+          <CommonAlert alert={alert} onClose={() => setAlert(null)} />
+        )}
         {/* Form Actions */}
         <div className="flex flex-col sm:flex-row gap-4 pt-4">
           <Button
