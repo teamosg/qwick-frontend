@@ -197,3 +197,24 @@ export const useProcessWithdrawal = () => {
     },
   });
 };
+
+export const useGetCurrencies = () => {
+  return useQuery({
+    queryKey: ["currencies"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/payment/currencies/");
+        return res?.data?.data || [];
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error.message ||
+          "Failed to fetch currencies";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    staleTime: 1000 * 60 * 60, // 1 hour stale time
+  });
+};

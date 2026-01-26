@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useGetCampaignTypes, useGetCategories } from "@/hooks/campaign.hook";
+import { useGetCurrencies } from "@/hooks/payment.hook";
 import { Button } from "../../../ui/button";
 import {
   Popover,
@@ -22,12 +23,14 @@ const CampaignForm = ({
 }) => {
   const { data: campaignTypesData, isLoading: isTypesLoading } = useGetCampaignTypes();
   const { data: categoriesData, isLoading: isCategoriesLoading } = useGetCategories();
+  const { data: currenciesData, isLoading: isCurrenciesLoading } = useGetCurrencies();
 
-  const isInitialLoading = isTypesLoading || isCategoriesLoading;
+  const isInitialLoading = isTypesLoading || isCategoriesLoading || isCurrenciesLoading;
   const isFormDisabled = isInitialLoading || isSubmitting;
 
   const campaignTypes = campaignTypesData?.data || [];
   const categories = categoriesData?.data || [];
+  const currencies = currenciesData || [];
 
   const [formData, setFormData] = useState({
     thumbnailPreview: initialData?.thumbnailPreview || null,
@@ -48,6 +51,11 @@ const CampaignForm = ({
     startDate: initialData?.startDate || undefined,
     endDate: initialData?.endDate || undefined,
   });
+
+  const selectedCurrency = currencies.find(
+    (c) => c.code.toUpperCase() === (formData?.currency?.toUpperCase() || "USD")
+  );
+  const currencySymbol = selectedCurrency?.symbol || "$";
 
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
@@ -347,7 +355,12 @@ const CampaignForm = ({
                focus:ring-2 focus:ring-[#364152] focus:border-transparent
                transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <option value="USD">USD</option>
+                <option value="">{isCurrenciesLoading ? "Loading..." : "Select Currency"}</option>
+                {currencies.map((currency) => (
+                  <option key={currency.code} value={currency.code.toUpperCase()}>
+                    {currency.code.toUpperCase()} ({currency.symbol})
+                  </option>
+                ))}
               </select>
 
               {/* Custom dropdown icon */}
@@ -366,7 +379,7 @@ const CampaignForm = ({
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-              $
+              {currencySymbol}
             </span>
             <input
               type="number"
@@ -398,7 +411,7 @@ const CampaignForm = ({
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-                $
+                {currencySymbol}
               </span>
               <input
                 type="number"
@@ -428,7 +441,7 @@ const CampaignForm = ({
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-                $
+                {currencySymbol}
               </span>
               <input
                 type="number"
@@ -460,7 +473,7 @@ const CampaignForm = ({
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-              $
+              {currencySymbol}
             </span>
             <input
               type="number"

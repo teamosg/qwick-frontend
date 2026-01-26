@@ -60,6 +60,7 @@ const DashboardContentReward = () => {
     payload.append("campaign_type_id", typeMap[formData.type] || 1);
     payload.append("category_id", categoryMap[formData.category] || 1);
     payload.append("budget", Number(formData.campaignBudget) || 0);
+    payload.append("currency", formData.currency || "USD");
     payload.append("reward_rate", Number(formData.rewardRate) || 0);
     payload.append("min_payout", Number(formData.minPayout) || 0);
     payload.append("max_payout", Number(formData.maxPayout) || 0);
