@@ -122,7 +122,7 @@ const ContentRewardDetailsEdit = () => {
     payload.append("reward_rate", Number(formData.rewardRate) || 0);
     payload.append("min_payout", Number(formData.minPayout) || 0);
     payload.append("max_payout", Number(formData.maxPayout) || 0);
-    payload.append("available_content", parseInt(formData.availableContent) || 1);
+    payload.append("available_content", parseInt(formData.availableContent));
     payload.append("content_requirement", formData.contentRequirement);
 
     // Check if flatFeeBonus exists in formData and append if necessary (optional in form)
@@ -185,7 +185,6 @@ const ContentRewardDetailsEdit = () => {
     platforms,
     budget,
     max_payout,
-    content_requirement,
   } = campaign;
 
   const fullThumbnail = thumbnail?.startsWith("http")

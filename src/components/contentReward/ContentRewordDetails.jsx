@@ -1,6 +1,6 @@
 import { Progress } from "@/components/ui/progress";
-import { DollarSign, Users } from "lucide-react";
-import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
+import { DollarSign, Users, ExternalLink, FileText } from "lucide-react";
+import { FaFacebook, FaInstagram, FaYoutube, FaTiktok, FaGoogleDrive } from "react-icons/fa";
 import { Link, useParams, useNavigate } from "react-router";
 import { useGetAllCampaigns } from "@/hooks/campaign.hook";
 import { useCommunityStore } from "@/store/communityStore";
@@ -50,6 +50,7 @@ const ContentRewardDetails = () => {
     platforms,
     budget,
     content_requirement,
+    available_content,
   } = campaign;
 
   const fullThumbnail = thumbnail?.startsWith("http")
@@ -135,14 +136,14 @@ const ContentRewardDetails = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-900 dark:text-emerald-400 rounded-2xl border border-emerald-100 dark:border-emerald-900/20">
+              <div className="p-4 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-900 dark:text-emerald-400 rounded-2xl border border-emerald-100 dark:border-emerald-900/40">
                 <div className="mb-2 flex items-center gap-2">
                   <Users size={18} />
                   <h2 className="text-sm font-bold">Applications Process</h2>
                 </div>
                 <p className="text-xs opacity-80 leading-relaxed font-medium">Quick approval, usually within 24 hours</p>
               </div>
-              <div className="p-4 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-900 dark:text-emerald-400 rounded-2xl border border-emerald-100 dark:border-emerald-900/20">
+              <div className="p-4 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-900 dark:text-emerald-400 rounded-2xl border border-emerald-100 dark:border-emerald-900/40">
                 <div className="mb-2 flex items-center gap-2">
                   <DollarSign size={18} />
                   <h2 className="text-sm font-bold">Payment Terms</h2>
@@ -154,6 +155,35 @@ const ContentRewardDetails = () => {
             </div>
           </div>
         </div>
+
+        {/* Campaign Assets Box */}
+        {available_content && (
+          <div className="bg-indigo-50 dark:bg-indigo-950/20 text-indigo-900 dark:text-indigo-400 p-5 sm:p-6 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 shadow-sm transition-all hover:bg-indigo-100/50 dark:hover:bg-indigo-950/30">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div className="flex items-start sm:items-center gap-4">
+                <div className="bg-indigo-500/10 dark:bg-indigo-500/20 p-3 rounded-2xl text-indigo-600 dark:text-indigo-400 shrink-0">
+                  <FaGoogleDrive size={24} />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-base font-bold text-gray-900 dark:text-white leading-tight">Campaign Assets & Resources</h4>
+                  <p className="text-xs text-indigo-700/70 dark:text-indigo-400/70 max-w-sm font-medium">
+                    Download raw footage, brand logos, and creative guidelines to help you create your video.
+                  </p>
+                </div>
+              </div>
+
+              <Link
+                to={available_content}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-indigo-200 dark:shadow-none active:scale-95 group"
+              >
+                Access Materials
+                <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        )}
 
         {/* Summary Card */}
         <div className="dark:text-white bg-white dark:bg-zinc-900 p-5 sm:p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800">
