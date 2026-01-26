@@ -52,6 +52,7 @@ const CampaignForm = ({
     contentRequirement: initialData?.contentRequirement || "",
     startDate: initialData?.startDate || undefined,
     endDate: initialData?.endDate || undefined,
+    termsAccepted: isEditMode, // Always true in edit mode since it's already accepted or not needed
   });
 
   const selectedCurrency = currencies.find(
@@ -108,6 +109,7 @@ const CampaignForm = ({
       };
 
       const isContentLinkValid = isGoogleDriveLink(formData.availableContent);
+      const isTermsAccepted = formData.termsAccepted;
 
       setIsFormValid(
         isBasicAndNumericValid &&
@@ -115,7 +117,8 @@ const CampaignForm = ({
         isPlatformsValid &&
         isBudgetValid &&
         isRewardRateValid &&
-        isContentLinkValid
+        isContentLinkValid &&
+        isTermsAccepted
       );
     };
 
@@ -701,6 +704,38 @@ const CampaignForm = ({
             <CommonAlert alert={alert} onClose={() => setAlert(null)} />
           )
         }
+        {/* Terms and Conditions */}
+        {!isEditMode && (
+          <div className="flex items-start space-x-3 p-4 bg-gray-50 dark:bg-[#2E2E2E] rounded-xl border border-gray-100 dark:border-gray-800 transition-colors">
+            <div className="flex items-center h-5">
+              <input
+                id="terms"
+                type="checkbox"
+                checked={formData.termsAccepted}
+                onChange={(e) => handleInputChange("termsAccepted", e.target.checked)}
+                className="size-4 rounded border-gray-300 text-[#003933] focus:ring-[#003933] dark:bg-zinc-800 dark:border-zinc-700 cursor-pointer"
+              />
+            </div>
+            <div className="text-sm">
+              <label htmlFor="terms" className="font-medium text-gray-700 dark:text-zinc-300 cursor-pointer">
+                I agree to the{" "}
+                <a
+                  href="/terms-and-conditions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#003933] dark:text-[#00b89f] hover:underline font-bold"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  Terms & Conditions
+                </a>
+              </label>
+              <p className="text-gray-500 dark:text-zinc-400 mt-1 text-xs">
+                You must accept the terms before creating a new content reward campaign.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Form Actions */}
         <div className="flex flex-col sm:flex-row gap-4 pt-4">
           <Button
