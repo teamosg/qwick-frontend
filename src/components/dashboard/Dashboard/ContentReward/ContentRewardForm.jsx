@@ -48,7 +48,7 @@ const CampaignForm = ({
     maxPayout: initialData?.maxPayout || "",
     flatFeeBonus: initialData?.flatFeeBonus || "",
     platforms: initialData?.platforms || [],
-    availableContent: initialData?.availableContent || 1,
+    availableContent: initialData?.availableContent,
     contentRequirement: initialData?.contentRequirement || "",
     startDate: initialData?.startDate || undefined,
     endDate: initialData?.endDate || undefined,
@@ -102,12 +102,20 @@ const CampaignForm = ({
       const isBudgetValid = Number(formData.campaignBudget) > 0;
       const isRewardRateValid = Number(formData.rewardRate) > 0;
 
+      const isGoogleDriveLink = (url) => {
+        if (!url) return true; // Optional field
+        return /^(https?:\/\/)?(www\.)?(drive|docs)\.google\.com\/.+$/.test(url);
+      };
+
+      const isContentLinkValid = isGoogleDriveLink(formData.availableContent);
+
       setIsFormValid(
         isBasicAndNumericValid &&
         isDurationValid &&
         isPlatformsValid &&
         isBudgetValid &&
-        isRewardRateValid
+        isRewardRateValid &&
+        isContentLinkValid
       );
     };
 
@@ -261,7 +269,7 @@ const CampaignForm = ({
             disabled={isFormDisabled}
             value={formData.campaignName}
             onChange={(e) => handleInputChange("campaignName", e.target.value)}
-            placeholder="Enter campaign"
+            placeholder="e.g. Summer UGC Challenge"
             className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none text-gray-900 dark:text-white placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
@@ -343,7 +351,7 @@ const CampaignForm = ({
                 onChange={(e) =>
                   handleInputChange("campaignBudget", e.target.value)
                 }
-                placeholder="10000"
+                placeholder="e.g. 1000"
                 className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
@@ -388,7 +396,7 @@ const CampaignForm = ({
               disabled={isFormDisabled}
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
-              placeholder="3"
+              placeholder="e.g. 5"
               className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
@@ -420,7 +428,7 @@ const CampaignForm = ({
                 disabled={isFormDisabled}
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
-                placeholder="3"
+                placeholder="e.g. 10"
                 className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
@@ -450,7 +458,7 @@ const CampaignForm = ({
                 disabled={isFormDisabled}
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
-                placeholder="100"
+                placeholder="e.g. 500"
                 className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
@@ -484,7 +492,7 @@ const CampaignForm = ({
               onChange={(e) =>
                 handleInputChange("flatFeeBonus", e.target.value)
               }
-              placeholder="10"
+              placeholder="e.g. 20"
               className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
@@ -529,15 +537,18 @@ const CampaignForm = ({
           </p>
           <div className="relative">
             <input
-              type="number"
+              type="text"
               disabled={isFormDisabled}
               value={formData.availableContent}
               onChange={(e) =>
                 handleInputChange("availableContent", e.target.value)
               }
-              placeholder="3"
-              className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              placeholder="e.g. https://drive.google.com/drive/folders/..."
+              className="w-full px-4 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
+            {formData.availableContent && !/^(https?:\/\/)?(www\.)?(drive|docs)\.google\.com\/.+$/.test(formData.availableContent) && (
+              <p className="text-xs text-red-500 mt-1">Please enter a valid Google Drive link</p>
+            )}
           </div>
         </div>
 
@@ -555,7 +566,7 @@ const CampaignForm = ({
             onChange={(e) =>
               handleInputChange("contentRequirement", e.target.value)
             }
-            placeholder="Enter campaign"
+            placeholder="e.g. Video must be at least 30 seconds long, include the brand logo..."
             rows={4}
             className="w-full px-3 text-gray-900 dark:text-white py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
           />
@@ -685,9 +696,11 @@ const CampaignForm = ({
             </div>
           )}
         </div>
-        {alert && (
-          <CommonAlert alert={alert} onClose={() => setAlert(null)} />
-        )}
+        {
+          alert && (
+            <CommonAlert alert={alert} onClose={() => setAlert(null)} />
+          )
+        }
         {/* Form Actions */}
         <div className="flex flex-col sm:flex-row gap-4 pt-4">
           <Button
@@ -710,8 +723,8 @@ const CampaignForm = ({
             Cancel
           </Button>
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 };
 

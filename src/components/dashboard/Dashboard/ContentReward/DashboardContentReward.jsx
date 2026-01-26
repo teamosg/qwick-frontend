@@ -66,7 +66,7 @@ const DashboardContentReward = () => {
     payload.append("reward_rate", Number(formData.rewardRate) || 0);
     payload.append("min_payout", Number(formData.minPayout) || 0);
     payload.append("max_payout", Number(formData.maxPayout) || 0);
-    payload.append("available_content", parseInt(formData.availableContent) || 1);
+    payload.append("available_content", formData.availableContent || "");
     payload.append("content_requirement", formData.contentRequirement);
 
     if (formData.startDate) {
