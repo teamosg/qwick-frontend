@@ -33,6 +33,7 @@ import DynamicHelpPage from "@/pages/help/DynamicHelpPage";
 import NeedHelp from "@/pages/help/NeedHelp";
 import Message from "@/pages/Message/Message";
 import Notifications from "@/pages/notifications/Notifications";
+import TermsAndConditions from "@/pages/TermsAndConditions";
 import NotFound from "@/shared/NotFound";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
@@ -221,6 +222,10 @@ const router = createBrowserRouter([
       {
         path: "/feedback",
         element: <Feedback />,
+      },
+      {
+        path: "/terms-and-conditions",
+        element: <TermsAndConditions />,
       },
       // if page now found
       {
