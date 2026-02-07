@@ -180,10 +180,10 @@ const router = createBrowserRouter([
             path: "payments",
             element: <Payments />,
           },
-          {
-            path: "payout",
-            element: <Payout />,
-          },
+          // {
+          //   path: "payout",
+          //   element: <Payout />,
+          // },
           {
             path: "automated-message",
             element: <AutomatedMessage />,

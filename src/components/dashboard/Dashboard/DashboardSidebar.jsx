@@ -42,10 +42,10 @@ const items = [
     title: "Payments",
     url: "payments",
   },
-  {
-    title: "Payout",
-    url: "payout",
-  },
+  // {
+  //   title: "Payout",
+  //   url: "payout",
+  // },
   {
     title: "Automated Message",
     url: "automated-message",
