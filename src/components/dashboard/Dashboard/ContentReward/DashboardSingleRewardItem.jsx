@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Progress } from "@/components/ui/progress";
+import CampaignProgress from "./CampaignProgress";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { Link } from "react-router";
 
@@ -20,11 +20,10 @@ const DashboardSingleRewardItem = ({ reward }) => {
     max_payout,
     total_users_earning,
     initial_budget,
+    end_date,
   } = reward;
 
-  const progress = initial_budget > 0
-    ? Math.min(Math.max((parseFloat(total_users_earning || 0) / parseFloat(initial_budget)) * 100, 0), 100)
-    : 0;
+  const isEnded = end_date ? new Date(end_date) < new Date() : false;
 
   const fullThumbnail = thumbnail?.startsWith("http")
     ? thumbnail
@@ -50,11 +49,19 @@ const DashboardSingleRewardItem = ({ reward }) => {
                   soon as you post to get paid for all of your views.
                 </span>
               </p>
-              <p className="text-xs flex justify-between dark:text-zinc-400">
-                <span className=""> ${total_users_earning || "0.00"} of ${initial_budget || budget}</span> <span>{progress.toFixed(0)}%</span>
-              </p>
+              {end_date && (
+                <p className={`text-[11px] mt-2 font-medium ${isEnded ? "text-red-500" : "text-gray-500 dark:text-zinc-400"}`}>
+                  {isEnded ? "Ended on" : "Ends on"} {end_date}
+                </p>
+              )}
             </div>
-            <Progress value={progress} indicatorColor="bg-[#003933]" className="mb-3.5" />
+            {/* Progress Bar */}
+            <CampaignProgress
+              totalUsersEarning={total_users_earning}
+              initialBudget={initial_budget}
+              budget={budget}
+              showTitle={false}
+            />
             <div className="flex flex-wrap gap-x-8 gap-y-4">
               <div>
                 <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">

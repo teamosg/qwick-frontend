@@ -213,3 +213,52 @@ export const useGetCategories = () => {
         staleTime: 1000 * 60 * 10, // 10 mins
     });
 };
+
+export const useExtendCampaign = (campaignId) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationKey: ["extendCampaign", campaignId],
+        mutationFn: async (payload) => {
+            const res = await axiosPrivate.post(
+                `/v1/campaigns/${campaignId}/extend/`,
+                payload
+            );
+            return res?.data;
+        },
+        onSuccess: (data) => {
+            if (data?.success || data?.status === 200) {
+                toast.success(data?.message || "Campaign extended successfully");
+                queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+            } else {
+                toast.error(data?.message || "Failed to extend campaign");
+            }
+        },
+        onError: (error) => {
+            handleApiError({ error, errorMessage: "Failed to extend campaign" });
+        },
+    });
+};
+
+export const useWithdrawCampaign = (campaignId) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationKey: ["withdrawCampaign", campaignId],
+        mutationFn: async () => {
+            const res = await axiosPrivate.post(`/v1/campaigns/${campaignId}/withdraw/`);
+            return res?.data;
+        },
+        onSuccess: (data) => {
+            if (data?.success || data?.status === 200) {
+                toast.success(data?.message || "Remaining balance withdrawn successfully");
+                queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+            } else {
+                toast.error(data?.message || "Failed to withdraw balance");
+            }
+        },
+        onError: (error) => {
+            handleApiError({ error, errorMessage: "Failed to withdraw balance" });
+        },
+    });
+};
