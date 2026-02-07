@@ -82,7 +82,7 @@ const DepositList = () => {
   return (
     <>
       {/* Mobile Card View */}
-      <div className="block sm:hidden space-y-3">
+      <div className="block md:hidden space-y-3">
         {transactions?.map((transaction, index) => (
           <div
             key={index}
@@ -97,8 +97,14 @@ const DepositList = () => {
             <div className="text-sm text-[#25324B] dark:text-white">
               {formatDate(transaction.created_at || transaction.date)}
             </div>
+            <div className="text-sm text-[#25324B] dark:text-white">
+
+            </div>
             <div className="font-semibold text-[#25324B] dark:text-white mt-1">
-              {formatAmount(transaction.amount)}
+              {formatAmount(transaction.amount)} {" "}
+              <span>
+                {transaction.stripe_info.currency}
+              </span>
             </div>
           </div>
         ))}
@@ -107,7 +113,7 @@ const DepositList = () => {
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden sm:block">
+      <div className="hidden md:block">
         <div className="p-1">
           <Table>
             <TableHeader>
@@ -141,6 +147,9 @@ const DepositList = () => {
                   </TableCell>
                   <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                     {formatAmount(transaction.amount)}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                    {transaction.stripe_info.currency}
                   </TableCell>
                   <TableCell className="py-4 px-6 dark:text-white">
                     {getStatusBadge(transaction.status)}

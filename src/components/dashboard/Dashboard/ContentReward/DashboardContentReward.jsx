@@ -9,8 +9,10 @@ import { format } from "date-fns";
 import { Spinner } from "@/components/ui/spinner";
 
 const DashboardContentReward = () => {
+  const [alert, setAlert] = useState(null);
+
   const { selectedBrandCommunity } = useCommunityStore();
-  const { mutate: createCampaign, isPending: isSubmitting } = useCreateCampaign(selectedBrandCommunity?.id);
+  const { mutate: createCampaign, isPending: isSubmitting } = useCreateCampaign(selectedBrandCommunity?.id, setAlert);
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
 
   const [showForm, setShowForm] = useState(false);
@@ -60,10 +62,11 @@ const DashboardContentReward = () => {
     payload.append("campaign_type_id", typeMap[formData.type] || 1);
     payload.append("category_id", categoryMap[formData.category] || 1);
     payload.append("budget", Number(formData.campaignBudget) || 0);
+    payload.append("currency", formData.currency || "USD");
     payload.append("reward_rate", Number(formData.rewardRate) || 0);
     payload.append("min_payout", Number(formData.minPayout) || 0);
     payload.append("max_payout", Number(formData.maxPayout) || 0);
-    payload.append("available_content", parseInt(formData.availableContent) || 1);
+    payload.append("available_content", formData.availableContent || "");
     payload.append("content_requirement", formData.contentRequirement);
 
     if (formData.startDate) {
@@ -115,6 +118,8 @@ const DashboardContentReward = () => {
             onCancel={handleFormCancel}
             setShowForm={setShowForm}
             isSubmitting={isSubmitting}
+            alert={alert}
+            setAlert={setAlert}
           />
         </div>
       ) : filteredRewards.length > 0 ? (

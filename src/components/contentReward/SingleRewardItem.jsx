@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import { Progress } from "../ui/progress";
+import CampaignProgress from "../dashboard/Dashboard/ContentReward/CampaignProgress";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
@@ -9,6 +8,8 @@ const SingleRewardItem = ({ campaign }) => {
   const navigate = useNavigate();
 
   if (!campaign) return null;
+
+
 
   const {
     id,
@@ -23,10 +24,6 @@ const SingleRewardItem = ({ campaign }) => {
     total_users_earning,
     initial_budget,
   } = campaign;
-
-  const progress = initial_budget > 0
-    ? Math.min(Math.max((parseFloat(total_users_earning || 0) / parseFloat(initial_budget)) * 100, 0), 100)
-    : 0;
 
   const handleNavigate = () => {
     navigate(`/content-reward/reward-details/${id}`);
@@ -49,6 +46,7 @@ const SingleRewardItem = ({ campaign }) => {
         />
         <div className="flex-1">
           <div className="mb-2.5">
+
             <h4 className="text-[#090003] text-lg font-semibold mb-1.5 dark:text-white">
               {name}
             </h4>
@@ -58,11 +56,12 @@ const SingleRewardItem = ({ campaign }) => {
                 as you post to get paid for all of your views.
               </span>
             </p>
-            <div className="text-xs flex justify-between dark:text-zinc-400 mb-1">
-              <span>${total_users_earning || "0.00"} of ${initial_budget || budget}</span>
-              <span>{progress.toFixed(0)}%</span>
-            </div>
-            <Progress value={progress} indicatorColor="bg-[#003933]" className="mb-3.5" />
+            <CampaignProgress
+              totalUsersEarning={total_users_earning}
+              initialBudget={initial_budget}
+              budget={budget}
+              showTitle={false}
+            />
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

@@ -13,6 +13,7 @@ import { useParams, useNavigate } from "react-router";
 import { useGetAllCampaigns, useSubmitCampaignContent } from "@/hooks/campaign.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import CampaignDetailsSkeleton from "./CampaignDetailsSkeleton";
+import CampaignProgress from "@/components/dashboard/Dashboard/ContentReward/CampaignProgress";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
@@ -147,7 +148,7 @@ const ContentRewardDetailsPayment = () => {
     campaign_type,
     category,
     platforms,
-    budget,
+    // budget,
     max_payout
   } = campaign;
 
@@ -179,17 +180,12 @@ const ContentRewardDetailsPayment = () => {
               </p>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex justify-between items-end">
-                <h4 className="text-gray-900 text-sm dark:text-white font-bold uppercase tracking-wider">
-                  Campaign Progress
-                </h4>
-                <p className="text-gray-500 text-xs sm:text-sm dark:text-zinc-400 font-medium">
-                  $0.00 of ${budget} (0%)
-                </p>
-              </div>
-              <Progress value={0} indicatorColor="red" className="h-2.5" />
-            </div>
+            <CampaignProgress
+              totalUsersEarning={campaign?.total_users_earning}
+              initialBudget={campaign?.initial_budget}
+              budget={campaign?.budget}
+              showTitle={true}
+            />
 
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-6 py-6 border-y border-gray-50 dark:border-zinc-800/50">
               {[

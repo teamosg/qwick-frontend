@@ -19,7 +19,7 @@ export const useGetAllCampaigns = () => {
 };
 
 
-export const useCreateCampaign = (communityId) => {
+export const useCreateCampaign = (communityId, setAlert) => {
     const queryClient = useQueryClient();
 
     return useMutation({
@@ -39,14 +39,26 @@ export const useCreateCampaign = (communityId) => {
         onSuccess: (data) => {
             if (data?.success) {
                 toast.success(data?.message || "Campaign created successfully");
+                if (setAlert) setAlert({ type: "success", message: data.message });
                 queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
-                // Invalidate relevant queries if needed, e.g., fetching campaigns list
-                // queryClient.invalidateQueries({ queryKey: ["campaigns", communityId] });
             } else {
                 toast.error(data?.message || "Failed to create campaign");
+                if (setAlert) setAlert({
+                    type: "error",
+                    message: data.message || "Failed to create campaign",
+                    errors: data.details || null
+                });
             }
         },
         onError: (error) => {
+            const errorData = error?.response?.data;
+            if (setAlert && errorData) {
+                setAlert({
+                    type: "error",
+                    message: errorData.message || "Invalid Data",
+                    errors: errorData.details || null
+                });
+            }
             handleApiError({ error, errorMessage: "Failed to create campaign" });
         },
     });
@@ -199,5 +211,54 @@ export const useGetCategories = () => {
             }
         },
         staleTime: 1000 * 60 * 10, // 10 mins
+    });
+};
+
+export const useExtendCampaign = (campaignId) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationKey: ["extendCampaign", campaignId],
+        mutationFn: async (payload) => {
+            const res = await axiosPrivate.post(
+                `/v1/campaigns/${campaignId}/extend/`,
+                payload
+            );
+            return res?.data;
+        },
+        onSuccess: (data) => {
+            if (data?.success || data?.status === 200) {
+                toast.success(data?.message || "Campaign extended successfully");
+                queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+            } else {
+                toast.error(data?.message || "Failed to extend campaign");
+            }
+        },
+        onError: (error) => {
+            handleApiError({ error, errorMessage: "Failed to extend campaign" });
+        },
+    });
+};
+
+export const useWithdrawCampaign = (campaignId) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationKey: ["withdrawCampaign", campaignId],
+        mutationFn: async () => {
+            const res = await axiosPrivate.post(`/v1/campaigns/${campaignId}/withdraw/`);
+            return res?.data;
+        },
+        onSuccess: (data) => {
+            if (data?.success || data?.status === 200) {
+                toast.success(data?.message || "Remaining balance withdrawn successfully");
+                queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+            } else {
+                toast.error(data?.message || "Failed to withdraw balance");
+            }
+        },
+        onError: (error) => {
+            handleApiError({ error, errorMessage: "Failed to withdraw balance" });
+        },
     });
 };

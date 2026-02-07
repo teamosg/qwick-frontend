@@ -1,163 +1,86 @@
-import { Progress } from "@/components/ui/progress";
-import { CircleAlert, X } from "lucide-react";
+import { CircleAlert, X, ExternalLink, Calendar as LucideCalendar, Wallet, CalendarIcon, Pencil } from "lucide-react";
 import { useState, useMemo } from "react";
-import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
-import { useParams } from "react-router-dom";
-import ContentRewardForm from "./ContentRewardForm";
-import ContentRewardNav from "./ContentRewardNav";
+import { FaFacebook, FaInstagram, FaYoutube, FaTiktok, FaGoogleDrive } from "react-icons/fa";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { useGetAllCampaigns, useUpdateCampaign } from "@/hooks/campaign.hook";
+import ContentRewardNav from "./ContentRewardNav";
+import { useGetAllCampaigns, useExtendCampaign, useWithdrawCampaign, useUpdateCampaign } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
+import CampaignProgress from "./CampaignProgress";
+import { format } from "date-fns";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetailsEdit = () => {
   const { id } = useParams();
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
-  const { mutate: updateCampaign, isPending: isSubmitting } = useUpdateCampaign(id);
-  const [showFormModal, setShowFormModal] = useState(false);
+
+  const { mutate: extendCampaign, isPending: isExtending } = useExtendCampaign(id);
+  const { mutate: withdrawCampaign, isPending: isWithdrawing } = useWithdrawCampaign(id);
+  const { mutate: updateCampaign, isPending: isUpdating } = useUpdateCampaign(id);
+
+  const [showExtendModal, setShowExtendModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [showContentModal, setShowContentModal] = useState(false);
+  const [newEndDate, setNewEndDate] = useState("");
+  const [contentLink, setContentLink] = useState("");
 
   const campaign = useMemo(() => {
     return campaignRes?.campaigns?.find(c => c.id === parseInt(id));
   }, [campaignRes, id]);
 
-  const initialFormData = useMemo(() => {
-    if (!campaign) return null;
 
-    // Helper to normalize platform names to match Form expectations ("Instagram", "Tiktok", "Youtube")
-    const normalizePlatform = (pName) => {
-      const lower = pName?.toLowerCase();
-      if (lower === 'instagram') return 'Instagram';
-      if (lower === 'tiktok') return 'Tiktok';
-      if (lower === 'youtube') return 'Youtube';
-      return pName; // Fallback
-    };
-
-    // Helper to normalize Type
-    const normalizeType = (tName) => {
-      // Map API response to Form Options
-      // Form Options: UGC, Sponsored, Review, Tutorial, Unboxing
-      // Assuming API might return them differently, but if they match, we just ensure casing if needed.
-      // If API returns "Ugc", we need "UGC".
-      if (!tName) return "";
-      const lower = tName.toLowerCase();
-      if (lower === 'ugc') return 'UGC';
-      return tName.charAt(0).toUpperCase() + tName.slice(1).toLowerCase(); // Standardize Capitalized
-    };
-
-    // Helper to normalize Category
-    const normalizeCategory = (cName) => {
-      // Form Options: Personal brand, Entertainment, Products, Music, Logo, Other
-      if (!cName) return "";
-      // Ensure "Personal brand" has lowercase 'b' if that's what form expects
-      // Form options: "Personal brand"
-      if (cName.toLowerCase() === 'personal brand') return 'Personal brand';
-      return cName.charAt(0).toUpperCase() + cName.slice(1).toLowerCase();
-    };
-
-    return {
-      thumbnailPreview: campaign.thumbnail
-        ? (campaign.thumbnail.startsWith("http") ? campaign.thumbnail : `${MEDIA_BASE_URL}${campaign.thumbnail}`)
-        : null,
-      campaignName: campaign.name || "",
-      type: normalizeType(campaign.campaign_type?.name),
-      category: normalizeCategory(campaign.category?.name),
-      campaignBudget: campaign.budget,
-      currency: "USD",
-      rewardRate: campaign.reward_rate,
-      minPayout: campaign.min_payout,
-      maxPayout: campaign.max_payout,
-      flatFeeBonus: campaign.flat_fee || "",
-      platforms: campaign.platforms?.map(p => normalizePlatform(p.name)) || [],
-      availableContent: campaign.available_content,
-      contentRequirement: campaign.content_requirement || "",
-      startDate: campaign.start_date ? new Date(campaign.start_date) : undefined,
-      endDate: campaign.end_date ? new Date(campaign.end_date) : undefined,
-    };
-  }, [campaign]);
-
-
-  const handleEditClick = () => {
-    setShowFormModal(true);
+  const handleExtendSubmit = () => {
+    if (!newEndDate) return;
+    extendCampaign({ end_date: newEndDate }, {
+      onSuccess: () => setShowExtendModal(false)
+    });
   };
 
-  const handleCloseFormModal = () => {
-    setShowFormModal(false);
+  const handleWithdrawClick = () => {
+    setShowWithdrawModal(true);
   };
 
-  const handleFormSubmit = (formData) => {
-    const typeMap = {
-      "UGC": 1,
-      "Sponsored": 2,
-      "Review": 3,
-      "Tutorial": 4,
-      "Unboxing": 5
-    };
+  const handleWithdrawConfirm = () => {
+    withdrawCampaign(null, {
+      onSuccess: () => setShowWithdrawModal(false)
+    });
+  };
 
-    const categoryMap = {
-      "Personal brand": 1,
-      "Entertainment": 2,
-      "Products": 3,
-      "Music": 4,
-      "Logo": 5,
-      "Other": 6
-    };
+  const handleContentEditClick = () => {
+    if (campaign?.available_content) {
+      setContentLink(campaign.available_content);
+    }
+    setShowContentModal(true);
+  };
 
-    const platformMap = {
-      "Instagram": 2,
-      "Tiktok": 3,
-      "Youtube": 1
-    };
+  const handleContentSubmit = () => {
+    if (!contentLink) return;
 
-    const payload = new FormData();
-
-    if (formData.thumbnailFile) {
-      payload.append("thumbnail", formData.thumbnailFile);
+    if (!contentLink.includes("drive.google.com")) {
+      toast.error("Please provide a valid Google Drive link");
+      return;
     }
 
-    payload.append("name", formData.campaignName);
-    payload.append("campaign_type_id", typeMap[formData.type] || 1);
-    payload.append("category_id", categoryMap[formData.category] || 1);
-    payload.append("budget", Number(formData.campaignBudget) || 0);
-    payload.append("reward_rate", Number(formData.rewardRate) || 0);
-    payload.append("min_payout", Number(formData.minPayout) || 0);
-    payload.append("max_payout", Number(formData.maxPayout) || 0);
-    payload.append("available_content", parseInt(formData.availableContent) || 1);
-    payload.append("content_requirement", formData.contentRequirement);
+    const formData = new FormData();
+    formData.append("available_content", contentLink);
 
-    // Check if flatFeeBonus exists in formData and append if necessary (optional in form)
-    if (formData.flatFeeBonus) {
-      payload.append("flat_fee", Number(formData.flatFeeBonus));
-    }
-
-    if (formData.startDate) {
-      const date = new Date(formData.startDate);
-      payload.append("start_date", date.toISOString().split('T')[0]);
-    }
-    if (formData.endDate) {
-      const date = new Date(formData.endDate);
-      payload.append("end_date", date.toISOString().split('T')[0]);
-    }
-
-    const platforms = formData.platforms || [];
-    platforms.forEach((p) => {
-      const id = platformMap[p];
-      if (id) {
-        payload.append("platform_ids", id);
+    updateCampaign(formData, {
+      onSuccess: () => {
+        setShowContentModal(false);
+        window.location.reload();
       }
     });
-
-    updateCampaign(payload, {
-      onSuccess: () => {
-        setShowFormModal(false);
-        // toast.success handled in hook
-      },
-      // onError handled in hook
-    });
-  };
-
-  const handleFormCancel = () => {
-    setShowFormModal(false);
   };
 
   if (isLoading) {
@@ -185,8 +108,13 @@ const ContentRewardDetailsEdit = () => {
     platforms,
     budget,
     max_payout,
-    content_requirement,
+    total_users_earning,
+    initial_budget,
+    available_content,
+    end_date,
   } = campaign;
+
+  const isEnded = end_date ? new Date(end_date) < new Date() : false;
 
   const fullThumbnail = thumbnail?.startsWith("http")
     ? thumbnail
@@ -213,15 +141,17 @@ const ContentRewardDetailsEdit = () => {
                 as you post to get paid for all of your views.
               </span>
             </p>
-            <div className="mb-2.5">
-              <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white uppercase font-semibold">
-                Campaign Progress
-              </h4>
-              <p className="text-[#717171] text-xs flex justify-between dark:text-zinc-400">
-                <span className=""> $0.00 of ${budget}</span> <span>0%</span>
+            <CampaignProgress
+              totalUsersEarning={total_users_earning}
+              initialBudget={initial_budget}
+              budget={budget}
+              showTitle={true}
+            />
+            {end_date && (
+              <p className={`text-xs mt-3 font-medium ${isEnded ? "text-red-500" : "text-gray-500 dark:text-zinc-400"}`}>
+                {isEnded ? "Ended on" : "Ends on"} {end_date}
               </p>
-            </div>
-            <Progress value={0} indicatorColor="red" className="mb-3.5" />
+            )}
           </div>
           <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between mb-9">
             <div>
@@ -272,41 +202,248 @@ const ContentRewardDetailsEdit = () => {
               </p>
             </div>
           </div>
-          <div className="text-center flex items-end justify-end ">
-            <button
-              onClick={handleEditClick}
-              className="w-full mb-2.5 text-white bg-[#003933] hover:bg-[#002822] dark:hover:bg-[#0dc4a5]  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition"
-            >
-              Edit
-            </button>
+
+          {/* Campaign Assets Box */}
+          <div className="bg-indigo-50 dark:bg-zinc-800/50 text-indigo-900 dark:text-indigo-400 p-5 sm:p-6 rounded-2xl border border-indigo-100 dark:border-zinc-700 shadow-sm transition-all hover:bg-indigo-100/50 dark:hover:bg-zinc-800/80 mb-9 relative group">
+            <div className="absolute top-4 right-4">
+              <button
+                onClick={handleContentEditClick}
+                className="p-2 bg-white dark:bg-zinc-700 text-indigo-600 dark:text-indigo-400 rounded-full shadow-sm hover:scale-110 transition-transform cursor-pointer border border-indigo-100 dark:border-zinc-600"
+                title="Edit Assets"
+              >
+                <Pencil size={16} />
+              </button>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div className="flex items-start sm:items-center gap-4">
+                <div className="bg-indigo-500/10 dark:bg-indigo-500/20 p-3 rounded-2xl text-indigo-600 dark:text-indigo-400 shrink-0">
+                  <FaGoogleDrive size={24} />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-base font-bold text-gray-900 dark:text-white leading-tight">Campaign Assets & Resources</h4>
+                  <p className="text-xs text-indigo-700/70 dark:text-indigo-400/70 max-w-sm font-medium">
+                    {available_content
+                      ? "Download raw footage, brand logos, and creative guidelines to help you create your video."
+                      : "No assets added yet. Click edit to add resources."}
+                  </p>
+                </div>
+              </div>
+
+              {available_content && (
+                <Link
+                  to={available_content}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-indigo-200 dark:shadow-none active:scale-95 group"
+                >
+                  Access Materials
+                  <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </Link>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-end">
+            {isEnded ? (
+              <>
+                <button
+                  onClick={() => setShowExtendModal(true)}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-[#003933] hover:bg-[#002822] text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-emerald-900/10"
+                >
+                  <LucideCalendar size={18} />
+                  Extend Date
+                </button>
+                <button
+                  onClick={handleWithdrawClick}
+                  disabled={isWithdrawing}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-[#003933] bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition"
+                >
+                  <Wallet size={18} />
+                  {isWithdrawing ? "Withdrawing..." : "Withdraw Remaining"}
+                </button>
+              </>
+            ) : (
+              <div className="px-6 py-2 bg-emerald-50 text-[#003933] rounded-full text-sm font-bold border border-emerald-100">
+                Active Campaign
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Form Modal */}
-      {showFormModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-2xl w-full max-w-4xl mx-auto relative overflow-y-auto max-h-[90vh]">
-            {/* Close Button */}
-            <button
-              onClick={handleCloseFormModal}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 transition-colors z-10"
-            >
-              <X size={24} />
-            </button>
-
-            {/* Form Content */}
-            <div className="p-6">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
-                Edit Content Reward
+      {/* Extend Date Modal */}
+      {showExtendModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+            <div className="p-6 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center bg-gray-50/50 dark:bg-zinc-800/20">
+              <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
+                <LucideCalendar className="text-[#003933] dark:text-[#0dc4a5]" size={22} />
+                Extend Campaign
               </h2>
-              <ContentRewardForm
-                initialData={initialFormData}
-                onSubmit={handleFormSubmit}
-                onCancel={handleFormCancel}
-                isEditMode={true}
-                isSubmitting={isSubmitting}
-              />
+              <button
+                onClick={() => setShowExtendModal(false)}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="p-8 space-y-6">
+              <div className="space-y-3">
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                  Select New End Date
+                </label>
+
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]",
+                        !newEndDate && "text-gray-400 dark:text-gray-500"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-5 w-5 text-gray-400" />
+                      {newEndDate ? (
+                        format(new Date(newEndDate), "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={newEndDate ? new Date(newEndDate) : undefined}
+                      onSelect={(date) => setNewEndDate(date ? format(date, 'yyyy-MM-dd') : "")}
+                      disabled={(date) => {
+                        const today = new Date()
+                        today.setHours(0, 0, 0, 0)
+                        return date < today
+                      }}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="flex gap-4 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100/50 dark:border-blue-900/20">
+                <CircleAlert className="text-blue-500 shrink-0" size={20} />
+                <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed font-medium">
+                  Extending the date allows creators to continue applying and submitting content for this campaign.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-6 flex gap-3 bg-gray-50/50 dark:bg-zinc-800/20 mt-2">
+              <button
+                onClick={() => setShowExtendModal(false)}
+                className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-all border border-gray-200 dark:border-zinc-700"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleExtendSubmit}
+                disabled={isExtending || !newEndDate}
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-[#003933] hover:bg-[#002822] shadow-lg shadow-emerald-900/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              >
+                {isExtending ? "Extending..." : "Confirm Extension"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Content Modal */}
+      {showContentModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+            <div className="p-6 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center bg-gray-50/50 dark:bg-zinc-800/20">
+              <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
+                <FaGoogleDrive className="text-[#003933] dark:text-[#0dc4a5]" size={22} />
+                Update Assets
+              </h2>
+              <button
+                onClick={() => setShowContentModal(false)}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="p-8 space-y-6">
+              <div className="space-y-3">
+                <Label className="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                  Assets URL (Google Drive/Dropbox)
+                </Label>
+                <Input
+                  type="url"
+                  placeholder="https://drive.google.com/..."
+                  value={contentLink || ""}
+                  onChange={(e) => setContentLink(e.target.value)}
+                  className="h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]"
+                />
+              </div>
+
+              <div className="flex gap-4 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100/50 dark:border-blue-900/20">
+                <CircleAlert className="text-blue-500 shrink-0" size={20} />
+                <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed font-medium">
+                  Provide a direct link to a folder where influencers can download the necessary assets for this campaign.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-6 flex gap-3 bg-gray-50/50 dark:bg-zinc-800/20 mt-2">
+              <button
+                onClick={() => setShowContentModal(false)}
+                className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-all border border-gray-200 dark:border-zinc-700"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleContentSubmit}
+                disabled={isUpdating || !contentLink}
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-[#003933] hover:bg-[#002822] shadow-lg shadow-emerald-900/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              >
+                {isUpdating ? "Updating..." : "Update Assets"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Withdraw Confirmation Modal */}
+      {showWithdrawModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+            <div className="p-8 text-center space-y-6">
+              <div className="mx-auto w-20 h-20 bg-red-50 dark:bg-red-900/10 rounded-full flex items-center justify-center text-red-600 border border-red-100 dark:border-red-900/20 animate-bounce">
+                <Wallet size={40} />
+              </div>
+
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold dark:text-white">Withdraw Balance?</h2>
+                <p className="text-gray-500 dark:text-zinc-400 text-sm leading-relaxed px-4">
+                  Are you sure you want to withdraw the remaining balance from this campaign? This action will transfer unspent funds back to your wallet.
+                </p>
+              </div>
+
+              <div className="flex gap-4 pt-4">
+                <button
+                  onClick={() => setShowWithdrawModal(false)}
+                  className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-all border border-gray-200 dark:border-zinc-700"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleWithdrawConfirm}
+                  disabled={isWithdrawing}
+                  className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-red-600 hover:bg-red-700 shadow-lg shadow-red-900/20 disabled:opacity-50 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  {isWithdrawing ? "Processing..." : "Yes, Withdraw"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
