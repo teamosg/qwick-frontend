@@ -1,12 +1,15 @@
-import { CircleAlert, X, ExternalLink, Calendar as LucideCalendar, Wallet, CalendarIcon } from "lucide-react";
+import { CircleAlert, X, ExternalLink, Calendar as LucideCalendar, Wallet, CalendarIcon, Pencil } from "lucide-react";
 import { useState, useMemo } from "react";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok, FaGoogleDrive } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "sonner";
 import ContentRewardNav from "./ContentRewardNav";
-import { useGetAllCampaigns, useExtendCampaign, useWithdrawCampaign } from "@/hooks/campaign.hook";
+import { useGetAllCampaigns, useExtendCampaign, useWithdrawCampaign, useUpdateCampaign } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
 import CampaignProgress from "./CampaignProgress";
 import { format } from "date-fns";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -24,16 +27,18 @@ const ContentRewardDetailsEdit = () => {
 
   const { mutate: extendCampaign, isPending: isExtending } = useExtendCampaign(id);
   const { mutate: withdrawCampaign, isPending: isWithdrawing } = useWithdrawCampaign(id);
+  const { mutate: updateCampaign, isPending: isUpdating } = useUpdateCampaign(id);
 
   const [showExtendModal, setShowExtendModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [showContentModal, setShowContentModal] = useState(false);
   const [newEndDate, setNewEndDate] = useState("");
+  const [contentLink, setContentLink] = useState("");
 
   const campaign = useMemo(() => {
     return campaignRes?.campaigns?.find(c => c.id === parseInt(id));
   }, [campaignRes, id]);
 
-  console.log(campaign);
 
   const handleExtendSubmit = () => {
     if (!newEndDate) return;
@@ -49,6 +54,32 @@ const ContentRewardDetailsEdit = () => {
   const handleWithdrawConfirm = () => {
     withdrawCampaign(null, {
       onSuccess: () => setShowWithdrawModal(false)
+    });
+  };
+
+  const handleContentEditClick = () => {
+    if (campaign?.available_content) {
+      setContentLink(campaign.available_content);
+    }
+    setShowContentModal(true);
+  };
+
+  const handleContentSubmit = () => {
+    if (!contentLink) return;
+
+    if (!contentLink.includes("drive.google.com")) {
+      toast.error("Please provide a valid Google Drive link");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("available_content", contentLink);
+
+    updateCampaign(formData, {
+      onSuccess: () => {
+        setShowContentModal(false);
+        window.location.reload();
+      }
     });
   };
 
@@ -173,21 +204,33 @@ const ContentRewardDetailsEdit = () => {
           </div>
 
           {/* Campaign Assets Box */}
-          {available_content && (
-            <div className="bg-indigo-50 dark:bg-zinc-800/50 text-indigo-900 dark:text-indigo-400 p-5 sm:p-6 rounded-2xl border border-indigo-100 dark:border-zinc-700 shadow-sm transition-all hover:bg-indigo-100/50 dark:hover:bg-zinc-800/80 mb-9">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                <div className="flex items-start sm:items-center gap-4">
-                  <div className="bg-indigo-500/10 dark:bg-indigo-500/20 p-3 rounded-2xl text-indigo-600 dark:text-indigo-400 shrink-0">
-                    <FaGoogleDrive size={24} />
-                  </div>
-                  <div className="space-y-1">
-                    <h4 className="text-base font-bold text-gray-900 dark:text-white leading-tight">Campaign Assets & Resources</h4>
-                    <p className="text-xs text-indigo-700/70 dark:text-indigo-400/70 max-w-sm font-medium">
-                      Download raw footage, brand logos, and creative guidelines to help you create your video.
-                    </p>
-                  </div>
-                </div>
+          <div className="bg-indigo-50 dark:bg-zinc-800/50 text-indigo-900 dark:text-indigo-400 p-5 sm:p-6 rounded-2xl border border-indigo-100 dark:border-zinc-700 shadow-sm transition-all hover:bg-indigo-100/50 dark:hover:bg-zinc-800/80 mb-9 relative group">
+            <div className="absolute top-4 right-4">
+              <button
+                onClick={handleContentEditClick}
+                className="p-2 bg-white dark:bg-zinc-700 text-indigo-600 dark:text-indigo-400 rounded-full shadow-sm hover:scale-110 transition-transform cursor-pointer border border-indigo-100 dark:border-zinc-600"
+                title="Edit Assets"
+              >
+                <Pencil size={16} />
+              </button>
+            </div>
 
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div className="flex items-start sm:items-center gap-4">
+                <div className="bg-indigo-500/10 dark:bg-indigo-500/20 p-3 rounded-2xl text-indigo-600 dark:text-indigo-400 shrink-0">
+                  <FaGoogleDrive size={24} />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-base font-bold text-gray-900 dark:text-white leading-tight">Campaign Assets & Resources</h4>
+                  <p className="text-xs text-indigo-700/70 dark:text-indigo-400/70 max-w-sm font-medium">
+                    {available_content
+                      ? "Download raw footage, brand logos, and creative guidelines to help you create your video."
+                      : "No assets added yet. Click edit to add resources."}
+                  </p>
+                </div>
+              </div>
+
+              {available_content && (
                 <Link
                   to={available_content}
                   target="_blank"
@@ -197,9 +240,9 @@ const ContentRewardDetailsEdit = () => {
                   Access Materials
                   <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </Link>
-              </div>
+              )}
             </div>
-          )}
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-end">
             {isEnded ? (
@@ -277,10 +320,6 @@ const ContentRewardDetailsEdit = () => {
                       disabled={(date) => {
                         const today = new Date()
                         today.setHours(0, 0, 0, 0)
-
-                        // Minimum 30 days from current end date or today?
-                        // User request for extension usually implies adding more time.
-                        // For now, let's just disable past dates.
                         return date < today
                       }}
                       initialFocus
@@ -310,6 +349,64 @@ const ContentRewardDetailsEdit = () => {
                 className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-[#003933] hover:bg-[#002822] shadow-lg shadow-emerald-900/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isExtending ? "Extending..." : "Confirm Extension"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Content Modal */}
+      {showContentModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+            <div className="p-6 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center bg-gray-50/50 dark:bg-zinc-800/20">
+              <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
+                <FaGoogleDrive className="text-[#003933] dark:text-[#0dc4a5]" size={22} />
+                Update Assets
+              </h2>
+              <button
+                onClick={() => setShowContentModal(false)}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="p-8 space-y-6">
+              <div className="space-y-3">
+                <Label className="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                  Assets URL (Google Drive/Dropbox)
+                </Label>
+                <Input
+                  type="url"
+                  placeholder="https://drive.google.com/..."
+                  value={contentLink || ""}
+                  onChange={(e) => setContentLink(e.target.value)}
+                  className="h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]"
+                />
+              </div>
+
+              <div className="flex gap-4 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100/50 dark:border-blue-900/20">
+                <CircleAlert className="text-blue-500 shrink-0" size={20} />
+                <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed font-medium">
+                  Provide a direct link to a folder where influencers can download the necessary assets for this campaign.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-6 flex gap-3 bg-gray-50/50 dark:bg-zinc-800/20 mt-2">
+              <button
+                onClick={() => setShowContentModal(false)}
+                className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-all border border-gray-200 dark:border-zinc-700"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleContentSubmit}
+                disabled={isUpdating || !contentLink}
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-[#003933] hover:bg-[#002822] shadow-lg shadow-emerald-900/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              >
+                {isUpdating ? "Updating..." : "Update Assets"}
               </button>
             </div>
           </div>
