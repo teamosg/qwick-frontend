@@ -6,6 +6,7 @@ import { useGetAllCampaigns } from "@/hooks/campaign.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import { useMemo } from "react";
 import CampaignDetailsSkeleton from "./CampaignDetailsSkeleton";
+import CampaignProgress from "@/components/dashboard/Dashboard/ContentReward/CampaignProgress";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
@@ -48,7 +49,7 @@ const ContentRewardDetails = () => {
     campaign_type,
     category,
     platforms,
-    budget,
+    // budget,
     content_requirement,
     available_content,
   } = campaign;
@@ -103,11 +104,12 @@ const ContentRewardDetails = () => {
               </p>
 
               <div className="space-y-2">
-                <div className="text-xs sm:text-sm flex justify-between font-medium text-gray-500 dark:text-zinc-400">
-                  <span>$0.00 of ${budget}</span>
-                  <span>0%</span>
-                </div>
-                <Progress value={0} indicatorColor="red" className="h-2" />
+                <CampaignProgress
+                  totalUsersEarning={campaign?.total_users_earning}
+                  initialBudget={campaign?.initial_budget}
+                  budget={campaign?.budget}
+                  showTitle={false}
+                />
               </div>
             </div>
 

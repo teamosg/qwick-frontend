@@ -2,10 +2,8 @@ import { useCommunityStore } from "@/store/communityStore";
 import SingleRewardItem from "./SingleRewardItem";
 import { useGetAllCampaigns } from "@/hooks/campaign.hook";
 import { useMemo } from "react";
-import { useNavigate } from "react-router";
 
 const ContentRewordPublic = () => {
-  const navigate = useNavigate();
   const { selectedCreatorCommunity } = useCommunityStore()
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
 
