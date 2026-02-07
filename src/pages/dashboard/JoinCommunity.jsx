@@ -2,11 +2,13 @@ import { motion } from "framer-motion";
 import { Link, useParams } from "react-router";
 
 import JoinCommunityImage from '@/assets/JoinCommunityImage.png'
-import { useJoinCommunity } from "@/hooks/community.hook";
+import { useJoinCommunity, useGetCommunityByUsername } from "@/hooks/community.hook";
 import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const JoinCommunity = () => {
   const { communityUsername } = useParams();
+  const { data: community, isLoading, isError } = useGetCommunityByUsername(communityUsername);
   const { mutate: joinCommunity, isPending: isJoining } = useJoinCommunity()
 
 
@@ -44,6 +46,48 @@ const JoinCommunity = () => {
     }
   }
 
+  if (isLoading) {
+    return (
+      <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen p-6">
+        <div className="mb-9 inline-block">
+          <Skeleton className="h-8 w-48 mb-4 shadow" />
+        </div>
+        <div className="bg-gray-100 dark:bg-zinc-900 p-6 rounded-xl max-w-3xl items-center justify-center mx-auto border border-gray-200 dark:border-zinc-700">
+          <Skeleton className="h-[400px] w-full rounded-xl mb-6 shadow-sm" />
+          <div className="max-w-md mx-auto space-y-6 flex flex-col items-center py-4">
+            <Skeleton className="h-8 w-64 shadow-sm" />
+            <Skeleton className="h-4 w-full shadow-sm" />
+            <div className="w-full pt-4">
+              <Skeleton className="h-12 w-full rounded-full shadow-sm" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError || (!isLoading && !community)) {
+    return (
+      <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen flex items-center justify-center p-6 shadow-xl rounded-xl">
+        <div className="text-center max-w-lg p-10 bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl border border-gray-100 dark:border-zinc-800">
+          <div className="w-20 h-20 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span className="text-4xl text-red-500 font-bold">!</span>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Community Doesn't Exist</h2>
+          <p className="text-[#717171] dark:text-zinc-400 mb-8 leading-relaxed">
+            The community you are looking for was not found. It might have been deleted or the username is incorrect.
+          </p>
+          <Link
+            to="/discover"
+            className="inline-block text-white bg-[#003933] hover:bg-[#002822] px-8 py-3 rounded-full font-semibold transition shadow-lg active:scale-95"
+          >
+            Go to Discover
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <motion.div
       className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen"
@@ -63,16 +107,16 @@ const JoinCommunity = () => {
       </motion.div>
 
       <motion.div
-        className="bg-gray-100 dark:bg-zinc-900 p-6 rounded-xl max-w-3xl items-center justify-center mx-auto border border-gray-200 dark:border-zinc-700"
+        className="bg-gray-100 dark:bg-zinc-900 p-6 rounded-xl max-w-3xl items-center justify-center mx-auto border border-gray-200 dark:border-zinc-700 shadow-sm"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="max-h-100 overflow-hidden rounded-xl mb-6">
+        <div className="max-h-100 overflow-hidden rounded-xl mb-6 shadow-sm border border-gray-200 dark:border-zinc-800">
           <motion.img
             src={JoinCommunityImage}
             alt=""
-            className="max-w-full object-cover "
+            className="max-w-full object-cover"
             variants={itemVariants}
             whileHover={{
               scale: 1.02,
@@ -85,33 +129,11 @@ const JoinCommunity = () => {
           className="max-w-md mx-auto text-center"
           variants={itemVariants}
         >
-          {/* <motion.div
-            className="flex items-center justify-center gap-3 mb-3"
-            variants={itemVariants}
-          >
-            <motion.img
-              src={""}
-              alt="Profile"
-              className="w-6 h-6 rounded-full"
-              whileHover={{ scale: 1.2 }}
-              transition={{ duration: 0.2 }}
-            />
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Link to="">
-                <span className="text-sm font-medium text-[#717171] dark:text-white capitalize">
-                  {communityUsername || "Community"}
-                </span>
-              </Link>
-            </motion.div>
-          </motion.div> */}
           <motion.h2
             className="text-2xl text-[#090003] dark:text-white font-semibold mb-6"
             variants={itemVariants}
           >
-            Welcome to {communityUsername || "our community"}
+            Welcome to {community?.business_name || communityUsername}
           </motion.h2>
           <motion.p
             className="text-[18px] text-[#717171] dark:text-zinc-400 mb-11"
@@ -125,12 +147,12 @@ const JoinCommunity = () => {
             whileTap={{ scale: 0.95 }}
           >
             <button
-              disabled={isJoining}
+              disabled={isJoining || community?.is_member}
               onClick={handleJoinCommunity}
-              className="mx-auto max-w-sm flex items-center justify-center w-full text-white bg-[#003933] hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition"
+              className="mx-auto max-w-sm flex items-center justify-center w-full text-white bg-[#003933] hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition shadow-xl disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               {
-                isJoining ? <Spinner className={'text-white size-6'} /> : 'Join Community'
+                isJoining ? <Spinner className={'text-white size-6'} /> : (community?.is_member ? 'Already joined' : 'Join Community')
               }
             </button>
           </motion.div>
