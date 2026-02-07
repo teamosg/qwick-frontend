@@ -391,16 +391,13 @@ const CampaignForm = ({
             Reward rate* (per 1k views)
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-              {currencySymbol}
-            </span>
             <input
               type="number"
               disabled={isFormDisabled}
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
               placeholder="e.g. 5"
-              className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -423,16 +420,13 @@ const CampaignForm = ({
               </Popover>
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-                {currencySymbol}
-              </span>
               <input
                 type="number"
                 disabled={isFormDisabled}
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
                 placeholder="e.g. 10"
-                className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -453,16 +447,13 @@ const CampaignForm = ({
               </Popover>
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-                {currencySymbol}
-              </span>
               <input
                 type="number"
                 disabled={isFormDisabled}
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
                 placeholder="e.g. 500"
-                className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -485,9 +476,6 @@ const CampaignForm = ({
             </Popover>
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-              {currencySymbol}
-            </span>
             <input
               type="number"
               disabled={isFormDisabled}
@@ -496,7 +484,7 @@ const CampaignForm = ({
                 handleInputChange("flatFeeBonus", e.target.value)
               }
               placeholder="e.g. 20"
-              className="w-full pl-8 px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
