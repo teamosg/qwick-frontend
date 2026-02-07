@@ -142,10 +142,10 @@ const router = createBrowserRouter([
             path: "community-chat",
             element: <CommunityChat />,
           },
-          {
-            path: "withdraw",
-            element: <Withdraw />,
-          },
+          // {
+          //   path: "withdraw",
+          //   element: <Withdraw />,
+          // },
         ],
       },
       {
