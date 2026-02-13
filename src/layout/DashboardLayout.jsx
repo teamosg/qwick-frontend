@@ -28,16 +28,21 @@ function DashboardLayout() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-[#f9fafb] dark:bg-zinc-950 ">
-        <Header onMenuClick={() => setSidebarOpen(true)} />
-        <main className="flex-1 flex flex-col overflow-auto">
-          <div className="flex-1">
+      {/* DashboardLayout.jsx */}
+      <div className="flex h-screen overflow-hidden w-full">
+        {/* ... Sidebar Code ... */}
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#f9fafb]">
+          <Header onMenuClick={() => setSidebarOpen(true)} />
+
+          {/* CRITICAL: This main must be flex-1 and min-h-0 */}
+          <main className="flex-1 min-h-0 flex flex-col relative">
             <Outlet />
-          </div>
-        </main>
+          </main>
+        </div>
       </div>
     </div>
   );
 }
 
 export default DashboardLayout;
+
