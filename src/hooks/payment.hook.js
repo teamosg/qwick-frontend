@@ -122,11 +122,11 @@ export const useDeposit = () => {
       return res?.data;
     },
     onSuccess: (data) => {
-      if (data?.status) {
-        const redirect = data?.deposit_url
+      if (data?.success) {
+        const redirect = data?.checkout_url
         window.open(redirect, "_blank", "noopener,noreferrer");
 
-        toast.success(data?.message);
+        toast.success(data?.message || "Redirecting to payment gateway...");
         queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
         queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
         queryClient.invalidateQueries({ queryKey: ["depositTransactions"] });
