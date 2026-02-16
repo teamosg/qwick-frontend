@@ -11,9 +11,9 @@ const Home = () => {
 
   return (
     <div
-      className="p-4"
+      className="p-4 min-h-0 flex-1"
     >
-      <div className="w-full border rounded-2xl mx-auto p-2 md:p-6 space-y-6 bg-[#F5F5F5] dark:bg-transparent c h-full max-w-5xl">
+      <div className="w-full border rounded-2xl mx-auto p-2 md:p-6 space-y-6 bg-[#F5F5F5] dark:bg-transparent c h-full max-w-5xl min-h-0 flex-1 overflow-y-auto no-scrollbar ">
         <PostForm />
         {
           isFeedLoading ? (
