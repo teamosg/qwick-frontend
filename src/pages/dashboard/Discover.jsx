@@ -155,7 +155,7 @@ const Discover = () => {
 
   return (
     <motion.div
-      className=" p-4 bg-[#f9fafb] dark:bg-zinc-950 "
+      className=" p-4 bg-[#f9fafb] dark:bg-zinc-950 min-h-0 flex-1 overflow-y-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}

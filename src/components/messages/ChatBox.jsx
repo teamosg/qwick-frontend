@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetConversationDetails } from "@/hooks/conversations.hook";
 import ConversationDetailsSkeleton from "./skeletonns/ConversationDetailsSkeleton";
 import { useProfile } from "@/hooks/auth.hook";
@@ -43,16 +43,8 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
 
 
 
-  const handleNewMessages = (data) => {
+  const handleNewMessages = useCallback((data) => {
     if (!data?.message) return;
-
-    //! do not use the below set function 
-    // const receivedMessage = {
-    //   ...data.message,
-    //   sender_id,
-    //   sender_username,
-    // };
-    // setMessages((prevMessages) => [...prevMessages, receivedMessage]);
 
     queryClient.invalidateQueries({
       queryKey: ["conversationList"],
@@ -61,7 +53,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
     queryClient.invalidateQueries({
       queryKey: ["conversationDetails"],
     });
-  };
+  }, [queryClient]);
 
   const handleSendMessage = ({ content }) => {
     if (!content || !ws.current || ws.current.readyState !== WebSocket.OPEN) {
@@ -114,7 +106,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
         ws.current = null;
       }
     };
-  }, [sender_username, token, conversationDetails]); // remove conversationDetails
+  }, [sender_username, token, conversationDetails, handleNewMessages]); // remove conversationDetails
 
 
   // skeleton
@@ -127,9 +119,9 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
 
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-[#171717] min-h-[calc(100vh-160px)]">
+    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-[#171717] h-full min-h-0">
       {/* Messages Area */}
-      <div className="flex-1 p-2 overflow-y-auto">
+      <div className="flex-1 p-2 overflow-y-auto no-scrollbar">
         {/* Message bubbles, colors updated for dark mode */}
         <ChatConversationContainer
           messages={messages}

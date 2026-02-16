@@ -114,9 +114,8 @@ const Profile = () => {
   const userAvatar = profile?.avatar;
 
   return (
-    <div className="p-2 min-h-screen bg-[#f9fafb] dark:bg-zinc-950">
-      {/* Mobile Toggle Button */}
-      <div className="md:hidden mb-4">
+    <div className="flex-1 flex flex-col min-h-0 bg-[#f9fafb] dark:bg-zinc-950 overflow-hidden relative">
+      <div className="md:hidden p-4 bg-white dark:bg-zinc-900 border-b dark:border-zinc-800">
         <button
           onClick={() => setIsTabsOpen(!isTabsOpen)}
           className="text-gray-700 dark:text-white p-2 rounded-md border border-gray-300 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors"
@@ -128,14 +127,14 @@ const Profile = () => {
       <Tabs
         orientation="vertical"
         defaultValue={tabs[0].value}
-        className="w-full flex flex-col md:flex-row gap-6 h-auto"
+        className="flex-1 flex flex-col md:flex-row gap-6 min-h-0 overflow-hidden"
       >
         {/* Tabs Sidebar */}
         <div
           className={`${isTabsOpen
             ? "translate-x-0 opacity-100"
             : "-translate-x-full opacity-0"
-            }  md:translate-x-0 md:opacity-100 fixed max-h-dvh overflow-y-auto md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out`}
+            } md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out flex flex-col min-h-0`}
         >
           {/* Mobile Close Button */}
           <div className="md:hidden flex justify-between items-center p-4 border-b border-gray-200 dark:border-zinc-700">
@@ -150,8 +149,8 @@ const Profile = () => {
             </button>
           </div>
 
-          {/* Profile Avatar + Name */}
-          <div className="p-6 md:p-0">
+          <div className="flex-1 overflow-y-auto p-6 md:p-0 no-scrollbar">
+            {/* Profile Avatar + Name */}
             <div className="p-4 relative group text-center">
               <div className="relative inline-block">
                 <Avatar className="h-20 w-20 rounded-full object-cover border border-border transition-all">
@@ -185,7 +184,7 @@ const Profile = () => {
             </div>
 
             {/* Tabs Menu */}
-            <TabsList className="shrink-0 grid grid-cols-1 gap-2 h-full p-0 bg-transparent w-full">
+            <TabsList className="shrink-0 grid grid-cols-1 gap-2 h-auto p-0 bg-transparent w-full">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
@@ -193,7 +192,7 @@ const Profile = () => {
                   className="cursor-pointer !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
                   onClick={() => setIsTabsOpen(false)}
                 >
-                  <tab.icon /> {tab.name}
+                  <tab.icon className="mr-2 h-4 w-4" /> {tab.name}
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -209,16 +208,18 @@ const Profile = () => {
         )}
 
         {/* Tabs Content */}
-        <div className="flex-1 rounded-lg dark:bg-zinc-900 font-medium text-muted-foreground min-h-[300px] md:min-h-[600px]">
-          {tabs.map((tab) => (
-            <TabsContent
-              key={tab.value}
-              value={tab.value}
-              className="flex sm:block w-full h-auto p-4 md:p-6"
-            >
-              {tab.content}
-            </TabsContent>
-          ))}
+        <div className="flex-1 overflow-y-auto min-h-0 bg-white dark:bg-zinc-900/50 p-4 md:p-6 lg:p-8">
+          <div className="max-w-4xl">
+            {tabs.map((tab) => (
+              <TabsContent
+                key={tab.value}
+                value={tab.value}
+                className="mt-0 focus-visible:outline-none focus-visible:ring-0"
+              >
+                {tab.content}
+              </TabsContent>
+            ))}
+          </div>
         </div>
       </Tabs>
     </div>

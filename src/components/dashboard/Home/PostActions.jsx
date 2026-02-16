@@ -49,7 +49,7 @@ const PostActions = ({ post }) => {
                     <Comment />
                 </button>
 
-                <PostShare />
+                {/* <PostShare /> */}
 
                 <button
                     onClick={handleSave}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetGroupConversationDetails } from "@/hooks/conversations.hook";
 import ConversationDetailsSkeleton from "./skeletonns/ConversationDetailsSkeleton";
 import { useProfile } from "@/hooks/auth.hook";
@@ -16,12 +16,7 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
   const ws = useRef();
   const queryClient = useQueryClient();
 
-  // sender information
-  const sender_id = selectedChat?.user_id || selectedChat?.sender_id;
-  const sender_username =
-    selectedChat?.username || selectedChat?.sender_username;
-  const sender_avatar = selectedChat?.avatar;
-  const sender = { sender_avatar, sender_id, sender_username };
+  // const sender = { sender_avatar, sender_id, sender_username };
 
   const token = localStorage.getItem("token");
   const group_id = selectedChat?.group_id;
@@ -49,16 +44,8 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
 
 
 
-  const handleNewMessages = (data) => {
+  const handleNewMessages = useCallback((data) => {
     if (!data?.message) return;
-
-    //! do not use the below set function 
-    // const receivedMessage = {
-    //   ...data.message,
-    //   sender_id,
-    //   sender_username,
-    // };
-    // setMessages((prevMessages) => [...prevMessages, receivedMessage]);
 
     queryClient.invalidateQueries({
       queryKey: ["conversationList"],
@@ -67,7 +54,7 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
     queryClient.invalidateQueries({
       queryKey: ["conversationDetails", group_id],
     });
-  };
+  }, [queryClient, group_id]);
 
 
   const handleSendMessage = ({ content }) => {
@@ -88,7 +75,7 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
       setMessages(conversationDetails?.messages || []);
       setSelectedChat({ ...selectedChat, members: conversationDetails?.group?.members || [], name: conversationDetails?.group?.name, avatar: conversationDetails?.group?.avatar || selectedChat?.group_avatar })
     }
-  }, [conversationDetails]);
+  }, [conversationDetails, selectedChat, setSelectedChat]);
 
 
   // Load messages whenever chat changes
@@ -130,7 +117,7 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
         ws.current = null;
       }
     };
-  }, [sender_username, token, conversationDetails]); // remove conversationDetails
+  }, [group_id, token, conversationDetails, handleNewMessages]); // remove conversationDetails
 
   // skeleton
   if (
@@ -142,16 +129,15 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
     return <ConversationDetailsSkeleton />;
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-[#171717] min-h-[calc(100vh-160px)]">
+    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-[#171717] h-full min-h-0">
       {/* Messages Area */}
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 p-4 overflow-y-auto no-scrollbar">
         {/* Message bubbles, colors updated for dark mode */}
-        {/* <GroupChatConversationContainer
+        <GroupChatConversationContainer
           messages={messages}
-          sender={sender}
           user={user}
           members={members}
-        /> */}
+        />
       </div>
       {
         isWsError

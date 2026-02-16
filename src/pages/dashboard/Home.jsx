@@ -10,28 +10,16 @@ const Home = () => {
 
 
   return (
-    <div
-      className="p-4"
-    >
-      <div className="w-full border rounded-2xl mx-auto p-2 md:p-6 space-y-6 bg-[#F5F5F5] dark:bg-transparent c h-full max-w-5xl">
+    <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+      <div className="max-w-5xl mx-auto space-y-6">
         <PostForm />
-        {
-          isFeedLoading ? (
-            <PostSkeletonList />
-          ) : (
-            /* Show NoPostsState when there are no posts */
-            posts.length === 0 ? (
-              <NoPostsState />
-            ) : (
-              posts.map((post) => (
-                <Post
-                  key={post.id}
-                  post={post}
-                />
-              ))
-            )
-          )
-        }
+        {isFeedLoading ? (
+          <PostSkeletonList />
+        ) : posts.length === 0 ? (
+          <NoPostsState />
+        ) : (
+          posts.map((post) => <Post key={post.id} post={post} />)
+        )}
       </div>
     </div>
   );

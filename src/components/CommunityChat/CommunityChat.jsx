@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ChatHeader from "./ChatHeader";
 import { useCommunityStore } from "@/store/communityStore";
@@ -37,7 +37,7 @@ const CommunityChat = () => {
         hour: "2-digit",
         minute: "2-digit",
       });
-    } catch (e) {
+    } catch {
       return timeStr;
     }
   };
@@ -59,7 +59,7 @@ const CommunityChat = () => {
     }
   }, [conversationData, user?.username]);
 
-  const handleNewMessages = (data) => {
+  const handleNewMessages = useCallback((data) => {
     if (!data?.message) return;
 
     const senderUsername = data.user;
@@ -75,7 +75,7 @@ const CommunityChat = () => {
 
     setMessages((prev) => [...prev, mappedMsg]);
     setShouldScrollToBottom(true);
-  };
+  }, [user?.username]);
 
   // WebSocket Connection
   useEffect(() => {
@@ -108,7 +108,7 @@ const CommunityChat = () => {
         ws.current = null;
       }
     };
-  }, [communityUsername, token, user?.username]);
+  }, [communityUsername, token, user?.username, handleNewMessages]);
 
   useEffect(() => {
     if (shouldScrollToBottom) {
@@ -145,8 +145,16 @@ const CommunityChat = () => {
     }
   };
 
+  // Auto-resize textarea
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.height = 'auto';
+      inputRef.current.style.height = `${Math.min(inputRef.current.scrollHeight, 128)}px`;
+    }
+  }, [newMessage]);
+
   const messageVariants = {
-    hidden: (message) => ({
+    hidden: () => ({
       opacity: 0,
       y: 10,
       scale: 0.95,
@@ -160,8 +168,9 @@ const CommunityChat = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[calc(100vh-80px)] bg-gray-50 dark:bg-zinc-950 relative overflow-hidden">
-      <div className="flex-shrink-0">
+    <div className="flex-1 flex flex-col w-full min-h-0 bg-white dark:bg-[#101010] relative overflow-hidden">
+      {/* Header Area */}
+      <div className="flex-none sticky top-0 z-10 bg-white/80 dark:bg-[#101010]/80 backdrop-blur-md border-b border-gray-100 dark:border-zinc-800">
         <ChatHeader
           onSearch={setSearchQuery}
           searchQuery={searchQuery}
@@ -169,7 +178,8 @@ const CommunityChat = () => {
         />
       </div>
 
-      <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-4 scrollbar-hide">
+      {/* Messages Area - flex-1 with its own scrollbar */}
+      <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 no-scrollbar bg-gray-50/30 dark:bg-transparent">
         {isHistoryLoading ? (
           <ChatSkeleton />
         ) : (
@@ -184,14 +194,16 @@ const CommunityChat = () => {
                 layout
                 className={`flex ${message.sender === "me" ? "justify-end" : "justify-start"}`}
               >
-                <div className={`flex flex-col ${message.sender === "me" ? "items-end" : "items-start"} max-w-[85%] sm:max-w-md`}>
-                  <span className="text-[10px] font-bold text-gray-400 dark:text-zinc-500 mb-1 px-1 uppercase tracking-tight">
-                    {message.senderUsername}
-                  </span>
+                <div className={`flex flex-col ${message.sender === "me" ? "items-end" : "items-start"} max-w-[85%] sm:max-w-[70%]`}>
+                  {message.sender !== "me" && (
+                    <span className="text-[10px] font-bold text-gray-400 dark:text-zinc-500 mb-1 px-1 uppercase tracking-tight">
+                      {message.senderUsername}
+                    </span>
+                  )}
 
                   <div
-                    className={`py-2 px-4 rounded-2xl text-sm shadow-sm transition-all ${message.sender === "me"
-                      ? "bg-[#003933] text-white rounded-tr-none"
+                    className={`py-2.5 px-4 rounded-2xl text-sm shadow-sm transition-all ${message.sender === "me"
+                      ? "bg-[#003933] text-white rounded-tr-none shadow-emerald-900/10"
                       : "bg-white dark:bg-zinc-900 text-gray-800 dark:text-zinc-200 rounded-tl-none border border-gray-100 dark:border-zinc-800"
                       }`}
                   >
@@ -208,28 +220,35 @@ const CommunityChat = () => {
             ))}
           </AnimatePresence>
         )}
-        <div ref={messagesEndRef} className="h-2" />
+        <div ref={messagesEndRef} className="h-4" />
       </div>
 
-      <div className="p-3 sm:p-4 bg-white dark:bg-zinc-950 border-t border-gray-100 dark:border-zinc-900">
-        <div className="max-w-4xl mx-auto flex gap-2 items-center bg-gray-50 dark:bg-zinc-900 px-4 py-2 rounded-2xl border border-gray-200 dark:border-zinc-800 transition-all focus-within:ring-2 focus-within:ring-[#003933]/10 focus-within:border-[#003933]">
-          <input
-            ref={inputRef}
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Type a message..."
-            className="flex-1 bg-transparent py-2 text-sm focus:outline-none dark:text-white placeholder:text-gray-400"
-          />
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={handleSendMessage}
-            disabled={!newMessage.trim()}
-            className="p-2 sm:p-2.5 bg-[#003933] text-white rounded-xl hover:bg-[#002822] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg active:scale-95"
-          >
-            <LuSend size={18} />
-          </motion.button>
+      {/* Input Area - Fixed at bottom */}
+      <div className="flex-none p-4 sm:p-6 bg-white dark:bg-[#101010] border-t border-gray-100 dark:border-zinc-800">
+        <div className="max-w-4xl mx-auto">
+          <div className="relative flex items-center bg-gray-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-gray-200 dark:border-zinc-800 focus-within:ring-2 focus-within:ring-[#003933]/20 focus-within:border-[#003933] transition-all duration-300">
+            <textarea
+              ref={inputRef}
+              rows={1}
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Type a message..."
+              className="flex-1 bg-transparent py-2.5 px-3 text-sm focus:outline-none dark:text-white placeholder:text-gray-400 resize-none min-h-[44px] max-h-32 custom-scrollbar"
+              style={{ height: 'auto' }}
+            />
+            <motion.button
+              whileTap={{ scale: 0.92 }}
+              onClick={handleSendMessage}
+              disabled={!newMessage.trim()}
+              className="ml-2 p-3 bg-[#003933] text-white rounded-xl hover:bg-[#002822] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md active:scale-95"
+            >
+              <LuSend size={20} />
+            </motion.button>
+          </div>
+          <p className="mt-2 text-[10px] text-center text-gray-400 dark:text-zinc-500">
+            Press Enter to send, Shift + Enter for new line
+          </p>
         </div>
       </div>
     </div>

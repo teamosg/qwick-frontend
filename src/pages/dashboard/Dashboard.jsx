@@ -40,7 +40,7 @@ const Dashboard = () => {
         setSelectedBrandCommunity(null);
       }
     }
-  }, [createdCommunityList]);
+  }, [createdCommunityList, isLoadingMyCommunityList, isErrorMyCommunityList, selectedBrandCommunityExist, setSelectedBrandCommunity]);
 
 
 
@@ -54,20 +54,21 @@ const Dashboard = () => {
   }
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="flex-1 flex min-h-0 overflow-hidden">
       <DashboardSidebarContent />
-      <div className="p-4 md:p-6 w-full bg-[#f9fafb] dark:bg-zinc-950 h-full">
-        <main className="w-full">
-          {/* Mobile toggle button */}
-          <div className="md:hidden mb-4">
-            <SidebarTrigger className="flex items-center justify-center rounded-lg border px-4 py-2 text-sm font-medium"></SidebarTrigger>
-          </div>
 
-          <div className="w-full">
+      <main className="flex-1 flex flex-col min-h-0 bg-[#f9fafb] dark:bg-zinc-950 overflow-hidden relative">
+        {/* Mobile toggle button */}
+        <div className="flex-none md:hidden p-4 border-b dark:border-zinc-800">
+          <SidebarTrigger />
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto w-full">
             <Outlet />
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </SidebarProvider>
   );
 };
