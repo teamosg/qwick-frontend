@@ -2,7 +2,7 @@ import React from "react";
 
 const EmptyChatBox = () => {
   return (
-    <div className="flex-1 flex items-center justify-center bg-gray-50 dark:bg-[#171717]">
+    <div className="flex-1 py-20 flex items-center justify-center bg-gray-50 dark:bg-[#171717]">
       <div className="text-center">
         <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 dark:bg-[#282828] rounded-full flex items-center justify-center">
           <svg

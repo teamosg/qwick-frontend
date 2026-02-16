@@ -14,7 +14,7 @@ const ChatList = ({
   setSelectedChat,
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 overflow-y-auto no-scrollbar">
       {showRequestsOnly ? (
         /* Only Requests Chats Section */
         <div className="p-4 animate-fadeIn">

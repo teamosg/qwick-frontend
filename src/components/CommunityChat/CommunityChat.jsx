@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ChatHeader from "./ChatHeader";
 import { useCommunityStore } from "@/store/communityStore";
@@ -37,7 +37,7 @@ const CommunityChat = () => {
         hour: "2-digit",
         minute: "2-digit",
       });
-    } catch (e) {
+    } catch {
       return timeStr;
     }
   };
@@ -59,7 +59,7 @@ const CommunityChat = () => {
     }
   }, [conversationData, user?.username]);
 
-  const handleNewMessages = (data) => {
+  const handleNewMessages = useCallback((data) => {
     if (!data?.message) return;
 
     const senderUsername = data.user;
@@ -75,7 +75,7 @@ const CommunityChat = () => {
 
     setMessages((prev) => [...prev, mappedMsg]);
     setShouldScrollToBottom(true);
-  };
+  }, [user?.username]);
 
   // WebSocket Connection
   useEffect(() => {
@@ -108,7 +108,7 @@ const CommunityChat = () => {
         ws.current = null;
       }
     };
-  }, [communityUsername, token, user?.username]);
+  }, [communityUsername, token, user?.username, handleNewMessages]);
 
   useEffect(() => {
     if (shouldScrollToBottom) {
@@ -146,7 +146,7 @@ const CommunityChat = () => {
   };
 
   const messageVariants = {
-    hidden: (message) => ({
+    hidden: () => ({
       opacity: 0,
       y: 10,
       scale: 0.95,
@@ -160,7 +160,7 @@ const CommunityChat = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[calc(100vh-80px)] bg-gray-50 dark:bg-zinc-950 relative overflow-hidden">
+    <div className="flex flex-col w-full h-full bg-gray-50 dark:bg-zinc-950 relative overflow-hidden">
       <div className="flex-shrink-0">
         <ChatHeader
           onSearch={setSearchQuery}
@@ -169,7 +169,7 @@ const CommunityChat = () => {
         />
       </div>
 
-      <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-4 scrollbar-hide">
+      <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-4 no-scrollbar">
         {isHistoryLoading ? (
           <ChatSkeleton />
         ) : (
