@@ -95,7 +95,7 @@ export function AnnouncementSidebar() {
 
   return (
     <>
-      <Sidebar className="sticky md:left-64 left-0">
+      <Sidebar className="relative h-full inset-auto md:w-64 border-r dark:border-zinc-800">
         <SidebarHeader
           className="p-0 bg-center bg-cover bg-no-repeat h-[135px] relative"
           style={{ backgroundImage: `url(${bg})` }}
