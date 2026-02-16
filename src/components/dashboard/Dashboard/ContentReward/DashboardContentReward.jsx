@@ -5,7 +5,6 @@ import DashboardContentRewardBlank from "./DashboardContentRewardBlank";
 import DashboardSingleRewardItem from "./DashboardSingleRewardItem";
 import { useCommunityStore } from "@/store/communityStore";
 import { useCreateCampaign, useGetAllCampaigns } from "@/hooks/campaign.hook";
-import { format } from "date-fns";
 import { Spinner } from "@/components/ui/spinner";
 
 const DashboardContentReward = () => {
@@ -112,7 +111,7 @@ const DashboardContentReward = () => {
       <ContentRewardNav />
 
       {showForm ? (
-        <div className="p-4 sm:p-6">
+        <div className="mt-6">
           <ContentRewardForm
             onSubmit={handleFormSubmit}
             onCancel={handleFormCancel}
@@ -136,14 +135,14 @@ const DashboardContentReward = () => {
               Create New Reward
             </button>
           </div>
-          <div className="space-y-4 px-4 sm:px-6 pb-6">
+          <div className="space-y-4 pb-6 mt-6">
             {filteredRewards.map((reward) => (
               <DashboardSingleRewardItem key={reward.id} reward={reward} />
             ))}
           </div>
         </div>
       ) : (
-        <div className="p-4 sm:p-6 mt-6">
+        <div className="mt-6">
           <DashboardContentRewardBlank onCreateReward={handleCreateReward} />
         </div>
       )}

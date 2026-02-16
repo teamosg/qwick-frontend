@@ -13,7 +13,7 @@ const NotificationsSettings = () => {
 
   if (isLoading) {
     return (
-      <div className="p-6 space-y-4">
+      <div className="space-y-4">
         <Skeleton className="h-8 w-64 mb-6" />
         {[1, 2, 3].map((i) => (
           <Skeleton key={i} className="h-24 w-full rounded-xl" />
@@ -23,7 +23,7 @@ const NotificationsSettings = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="">
       <h2 className="text-[20px] md:text-[24px] text-gray-900 dark:text-white font-bold mb-6">
         Notification Settings
       </h2>
