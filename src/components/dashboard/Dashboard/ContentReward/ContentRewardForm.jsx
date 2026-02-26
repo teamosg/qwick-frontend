@@ -463,6 +463,7 @@ const CampaignForm = ({
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
             Flat fee bonus (optional)
+            <i>Max 10% of the total budget</i>
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
