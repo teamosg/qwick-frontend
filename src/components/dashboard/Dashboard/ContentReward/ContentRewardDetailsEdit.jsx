@@ -119,6 +119,7 @@ const ContentRewardDetailsEdit = () => {
     initial_budget,
     available_content,
     end_date,
+    is_withdrawn,
   } = campaign;
 
   const isEnded = end_date ? new Date(end_date) < new Date() : false;
@@ -252,7 +253,12 @@ const ContentRewardDetailsEdit = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-end">
-            {isEnded ? (
+            {is_withdrawn ? (
+              <div className="px-6 py-2 bg-red-50 text-red-600 rounded-full text-sm font-bold border border-red-100 flex items-center gap-2">
+                <Wallet size={16} />
+                Campaign Withdrawn
+              </div>
+            ) : isEnded ? (
               <>
                 <button
                   onClick={() => setShowExtendModal(true)}

@@ -21,6 +21,7 @@ const DashboardSingleRewardItem = ({ reward }) => {
     total_users_earning,
     initial_budget,
     end_date,
+    is_withdrawn,
   } = reward;
 
   const isEnded = end_date ? new Date(end_date) < new Date() : false;
@@ -49,7 +50,11 @@ const DashboardSingleRewardItem = ({ reward }) => {
                   soon as you post to get paid for all of your views.
                 </span>
               </p>
-              {end_date && (
+              {is_withdrawn ? (
+                <p className="text-[11px] mt-2 font-bold text-red-600 flex items-center gap-1">
+                  <span>Withdrawn</span>
+                </p>
+              ) : end_date && (
                 <p className={`text-[11px] mt-2 font-medium ${isEnded ? "text-red-500" : "text-gray-500 dark:text-zinc-400"}`}>
                   {isEnded ? "Ended on" : "Ends on"} {end_date}
                 </p>
