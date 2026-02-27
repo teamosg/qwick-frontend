@@ -110,6 +110,7 @@ const CampaignForm = ({
 
       const isContentLinkValid = isGoogleDriveLink(formData.availableContent);
       const isTermsAccepted = formData.termsAccepted;
+      const isFlatFeeValid = !formData.flatFeeBonus || Number(formData.flatFeeBonus) <= (Number(formData.campaignBudget) * 0.1);
 
       setIsFormValid(
         isBasicAndNumericValid &&
@@ -118,7 +119,8 @@ const CampaignForm = ({
         isBudgetValid &&
         isRewardRateValid &&
         isContentLinkValid &&
-        isTermsAccepted
+        isTermsAccepted &&
+        isFlatFeeValid
       );
     };
 
@@ -462,7 +464,8 @@ const CampaignForm = ({
         {/* Flat fee bonus */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-            Flat fee bonus (optional)
+            Flat fee bonus (optional) -
+            Max 10% of the total budget
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
@@ -484,8 +487,16 @@ const CampaignForm = ({
                 handleInputChange("flatFeeBonus", e.target.value)
               }
               placeholder="e.g. 20"
-              className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              className={cn(
+                "w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed",
+                formData.flatFeeBonus && Number(formData.flatFeeBonus) > (Number(formData.campaignBudget) * 0.1) && "border-red-500 focus:ring-red-500"
+              )}
             />
+            {formData.flatFeeBonus && Number(formData.flatFeeBonus) > (Number(formData.campaignBudget) * 0.1) && (
+              <p className="text-xs text-red-500 mt-1">
+                Flat fee bonus cannot exceed 10% of the total budget (${(Number(formData.campaignBudget) * 0.1).toFixed(2)})
+              </p>
+            )}
           </div>
         </div>
 

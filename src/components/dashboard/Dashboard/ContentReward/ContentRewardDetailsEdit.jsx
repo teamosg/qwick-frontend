@@ -33,6 +33,7 @@ const ContentRewardDetailsEdit = () => {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showContentModal, setShowContentModal] = useState(false);
   const [newEndDate, setNewEndDate] = useState("");
+  const [addBudget, setAddBudget] = useState("");
   const [contentLink, setContentLink] = useState("");
 
   const campaign = useMemo(() => {
@@ -41,8 +42,14 @@ const ContentRewardDetailsEdit = () => {
 
 
   const handleExtendSubmit = () => {
-    if (!newEndDate) return;
-    extendCampaign({ end_date: newEndDate }, {
+    if (!newEndDate || !addBudget) return;
+
+    if (Number(addBudget) < (budget * 0.5)) {
+      toast.error(`Minimum additional budget required is $${(budget * 0.5).toFixed(2)}`);
+      return;
+    }
+
+    extendCampaign({ end_date: newEndDate, add_budget: addBudget }, {
       onSuccess: () => setShowExtendModal(false)
     });
   };
@@ -112,6 +119,7 @@ const ContentRewardDetailsEdit = () => {
     initial_budget,
     available_content,
     end_date,
+    is_withdrawn,
   } = campaign;
 
   const isEnded = end_date ? new Date(end_date) < new Date() : false;
@@ -245,7 +253,12 @@ const ContentRewardDetailsEdit = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-end">
-            {isEnded ? (
+            {is_withdrawn ? (
+              <div className="px-6 py-2 bg-red-50 text-red-600 rounded-full text-sm font-bold border border-red-100 flex items-center gap-2">
+                <Wallet size={16} />
+                Campaign Withdrawn
+              </div>
+            ) : isEnded ? (
               <>
                 <button
                   onClick={() => setShowExtendModal(true)}
@@ -328,6 +341,19 @@ const ContentRewardDetailsEdit = () => {
                 </Popover>
               </div>
 
+              <div className="space-y-3">
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                  Add Budget (Must be ≥ 50% of budget: ${(budget * 0.5).toFixed(2)})
+                </label>
+                <Input
+                  type="number"
+                  placeholder="Enter additional budget"
+                  value={addBudget}
+                  onChange={(e) => setAddBudget(e.target.value)}
+                  className="h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]"
+                />
+              </div>
+
               <div className="flex gap-4 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100/50 dark:border-blue-900/20">
                 <CircleAlert className="text-blue-500 shrink-0" size={20} />
                 <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed font-medium">
@@ -345,7 +371,7 @@ const ContentRewardDetailsEdit = () => {
               </button>
               <button
                 onClick={handleExtendSubmit}
-                disabled={isExtending || !newEndDate}
+                disabled={isExtending || !newEndDate || !addBudget}
                 className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-[#003933] hover:bg-[#002822] shadow-lg shadow-emerald-900/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isExtending ? "Extending..." : "Confirm Extension"}

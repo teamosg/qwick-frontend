@@ -39,6 +39,7 @@ const ContentRewardDetailsPayment = () => {
     youtube_link: "",
     instagram_link: "",
     tiktok_link: "",
+    termsAccepted: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -59,6 +60,7 @@ const ContentRewardDetailsPayment = () => {
       youtube_link: "",
       instagram_link: "",
       tiktok_link: "",
+      termsAccepted: false,
     });
     setErrors({});
   };
@@ -281,7 +283,7 @@ const ContentRewardDetailsPayment = () => {
                 ].map((input) => (
                   availablePlatforms.includes(input.id) && (
                     <div key={input.id} className="space-y-2">
-                      <label className="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white italic">
+                      <label className="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white">
                         {input.icon} {input.label}
                       </label>
                       <input
@@ -332,13 +334,43 @@ const ContentRewardDetailsPayment = () => {
                   {errors.files && <p className="text-red-500 text-[10px] font-bold px-1 uppercase">{errors.files}</p>}
                 </div>
               </div>
+
+              {/* Terms and Conditions */}
+              <div className="flex items-start space-x-3 p-4 bg-gray-50 dark:bg-[#2E2E2E] rounded-xl border border-gray-100 dark:border-gray-800 transition-colors">
+                <div className="flex items-center h-5">
+                  <input
+                    id="terms"
+                    type="checkbox"
+                    checked={formData.termsAccepted}
+                    onChange={(e) => handleInputChange("termsAccepted", e.target.checked)}
+                    className="size-4 rounded border-gray-300 text-[#003933] focus:ring-[#003933] dark:bg-zinc-800 dark:border-zinc-700 cursor-pointer"
+                  />
+                </div>
+                <div className="text-sm">
+                  <label htmlFor="terms" className="font-medium text-gray-700 dark:text-zinc-300 cursor-pointer">
+                    I agree to the{" "}
+                    <a
+                      href="/terms-and-conditions"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#003933] dark:text-[#00b89f] hover:underline font-bold"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Terms & Conditions
+                    </a>
+                  </label>
+                  <p className="text-gray-500 dark:text-zinc-400 mt-1 text-xs">
+                    You must accept the terms before submitting your content for reward.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Modal Footer */}
             <div className="p-6 sm:p-8 bg-gray-50 dark:bg-zinc-800/50 border-t border-gray-100 dark:border-zinc-800">
               <button
                 onClick={handleSubmit}
-                disabled={isSubmitting}
+                disabled={isSubmitting || !formData.termsAccepted}
                 className="w-full h-14 bg-[#003933] hover:bg-[#002822] disabled:bg-gray-400 dark:disabled:bg-zinc-700 text-white font-bold rounded-2xl transition duration-300 shadow-xl flex items-center justify-center gap-3 active:scale-[0.98]"
               >
                 {isSubmitting ? (
