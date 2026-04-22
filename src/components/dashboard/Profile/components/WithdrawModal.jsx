@@ -12,12 +12,14 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { CheckCircle2, HelpCircle } from "lucide-react";
+import { CheckCircle2, HelpCircle, Trash2, Landmark } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useWithdraw } from "@/hooks/payment.hook";
+import { useWithdraw, useGetSavedMethods, useDeleteSavedMethod } from "@/hooks/payment.hook";
 
 const WithdrawModal = ({ open, setOpen }) => {
     const { mutate: withdraw, isPending: withdrawLoading } = useWithdraw();
+    const { data: savedMethods, isLoading: savedMethodsLoading } = useGetSavedMethods();
+    const { mutate: deleteSavedMethod, isPending: deletingMethod } = useDeleteSavedMethod();
 
     const [amount, setAmount] = useState("");
     const [connectedAccountId, setConnectedAccountId] = useState("");
@@ -28,6 +30,14 @@ const WithdrawModal = ({ open, setOpen }) => {
         account_holder_name: ""
     });
     const [withdrawalData, setWithdrawalData] = useState(null);
+
+    const handleSelectSavedMethod = (m) => {
+        setBankData({
+            bank_name: m.bank_name,
+            bank_account_number: m.last4,
+            account_holder_name: m.account_holder_name
+        });
+    };
 
     // Reset state whenever the modal is closed
     useEffect(() => {
@@ -151,6 +161,60 @@ const WithdrawModal = ({ open, setOpen }) => {
                                     <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed font-medium">
                                         Your account needs to be connected with Stripe even for bank transfers to process your payout securely.
                                     </p>
+                                </div>
+
+                                {/* Saved Methods Section */}
+                                {savedMethodsLoading ? (
+                                    <div className="flex items-center justify-center py-4">
+                                        <Spinner className="w-5 h-5 text-[#003933]" />
+                                    </div>
+                                ) : (
+                                    savedMethods && savedMethods.length > 0 && (
+                                        <div className="space-y-2">
+                                            <div className="flex items-center justify-between">
+                                                <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Saved Methods</label>
+                                            </div>
+                                            <div className="grid gap-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
+                                                {savedMethods.map((m) => (
+                                                    <div
+                                                        key={m.id}
+                                                        onClick={() => handleSelectSavedMethod(m)}
+                                                        className="group relative flex items-center justify-between p-3 bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 rounded-xl hover:border-[#003933] dark:hover:border-[#00b89f]/50 transition-all cursor-pointer"
+                                                    >
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-zinc-700 flex items-center justify-center text-[#003933] dark:text-[#00b89f]">
+                                                                <Landmark size={16} />
+                                                            </div>
+                                                            <div className="text-left">
+                                                                <p className="text-xs font-bold text-gray-900 dark:text-white leading-none">{m.bank_name}</p>
+                                                                <p className="text-[10px] text-gray-500 mt-1 font-medium">**** {m.last4} • {m.account_holder_name}</p>
+                                                            </div>
+                                                        </div>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                if (window.confirm("Delete this saved method?")) {
+                                                                    deleteSavedMethod(m.id);
+                                                                }
+                                                            }}
+                                                            className="p-2 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+                                                        >
+                                                            <Trash2 size={14} />
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )
+                                )}
+
+                                <div className="relative py-2">
+                                    <div className="absolute inset-0 flex items-center">
+                                        <span className="w-full border-t border-gray-100 dark:border-zinc-800" />
+                                    </div>
+                                    <div className="relative flex justify-center text-[10px] uppercase tracking-tighter">
+                                        <span className="bg-white dark:bg-[#1C1C1C] px-2 text-gray-400 font-bold">Manual Entry</span>
+                                    </div>
                                 </div>
                                 <div>
                                     <label className="text-sm font-bold text-gray-700 dark:text-zinc-300">Bank Name</label>
