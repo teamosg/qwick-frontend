@@ -38,6 +38,10 @@ export const useCreateCampaign = (communityId, setAlert) => {
         },
         onSuccess: (data) => {
             if (data?.success) {
+                if (data.requires_payment && data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                    return;
+                }
                 toast.success(data?.message || "Campaign created successfully");
                 if (setAlert) setAlert({ type: "success", message: data.message });
                 queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });

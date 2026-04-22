@@ -34,17 +34,21 @@ const CommonAlert = ({ alert, onClose }) => {
                     {message}
                 </h5>
 
-                {errors && Object.keys(errors).length > 0 && (
+                {errors && (
                     <div className="text-sm opacity-90">
-                        <ul className="list-disc list-inside space-y-0.5">
-                            {Object.entries(errors).map(([key, value]) => (
-                                <li key={key}>
-                                    <span className="capitalize">{key.replace(/_/g, ' ')}</span>: {
-                                        Array.isArray(value) ? value.join(", ") : value
-                                    }
-                                </li>
-                            ))}
-                        </ul>
+                        {typeof errors === "object" ? (
+                            <ul className="list-disc list-inside space-y-0.5">
+                                {Object.entries(errors).map(([key, value]) => (
+                                    <li key={key}>
+                                        <span className="capitalize">{key.replace(/_/g, ' ')}</span>: {
+                                            Array.isArray(value) ? value.join(", ") : value
+                                        }
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>{errors}</p>
+                        )}
                     </div>
                 )}
             </div>
