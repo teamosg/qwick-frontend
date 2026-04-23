@@ -159,6 +159,7 @@ export const useWithdraw = () => {
         queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
         queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
         queryClient.invalidateQueries({ queryKey: ["depositTransactions"] });
+        queryClient.invalidateQueries({ queryKey: ["savedMethods"] });
       } else {
         toast.error(data?.error || "Failed to withdraw");
       }
@@ -185,6 +186,7 @@ export const useProcessWithdrawal = () => {
         toast.error(data?.reason || data?.error || "Failed to process withdrawal");
       }
       queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
+      queryClient.invalidateQueries({ queryKey: ["savedMethods"] });
     },
     onError: (error) => {
       const responseData = error?.response?.data;
@@ -252,6 +254,7 @@ export const useDeleteSavedMethod = () => {
       if (data?.success) {
         toast.success(data?.message || "Deleted successfully");
         queryClient.invalidateQueries({ queryKey: ["savedMethods"] });
+        queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
       }
     },
     onError: (error) => {
