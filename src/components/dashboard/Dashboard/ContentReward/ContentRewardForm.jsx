@@ -698,11 +698,15 @@ const CampaignForm = ({
             </div>
           )}
         </div>
-        {
-          alert && (
+        {alert && (
+          typeof alert === 'object' ? (
             <CommonAlert alert={alert} onClose={() => setAlert(null)} />
+          ) : (
+            <div className="text-sm text-red-500 p-3 bg-red-50 dark:bg-red-950/20 rounded-lg">
+              {alert}
+            </div>
           )
-        }
+        )}
         {/* Terms and Conditions */}
         {!isEditMode && (
           <div className="flex items-start space-x-3 p-4 bg-gray-50 dark:bg-[#2E2E2E] rounded-xl border border-gray-100 dark:border-gray-800 transition-colors">

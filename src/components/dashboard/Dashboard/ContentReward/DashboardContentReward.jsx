@@ -67,6 +67,7 @@ const DashboardContentReward = () => {
     payload.append("max_payout", Number(formData.maxPayout) || 0);
     payload.append("available_content", formData.availableContent || "");
     payload.append("content_requirement", formData.contentRequirement);
+    payload.append("flat_fee_bonus", Number(formData.flatFeeBonus) || 0);
 
     if (formData.startDate) {
       const date = new Date(formData.startDate);

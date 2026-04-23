@@ -218,3 +218,44 @@ export const useGetCurrencies = () => {
     staleTime: 1000 * 60 * 60, // 1 hour stale time
   });
 };
+
+export const useGetSavedMethods = () => {
+  return useQuery({
+    queryKey: ["savedMethods"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/payment/saved-methods/");
+        return res?.data?.data || [];
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error.message ||
+          "Failed to fetch saved methods";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    staleTime: 1000 * 60 * 5, // 5 mins
+  });
+};
+
+export const useDeleteSavedMethod = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["deleteSavedMethod"],
+    mutationFn: async (id) => {
+      const res = await axiosPrivate.delete(`/v1/payment/saved-methods/${id}/`);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message || "Deleted successfully");
+        queryClient.invalidateQueries({ queryKey: ["savedMethods"] });
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to delete saved method" });
+    },
+  });
+};
