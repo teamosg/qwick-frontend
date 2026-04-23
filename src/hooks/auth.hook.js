@@ -29,6 +29,7 @@ export const useSignUp = () => {
       email: "",
       password: "",
       confirm_password: "",
+      accepted_terms: false,
     },
   });
 

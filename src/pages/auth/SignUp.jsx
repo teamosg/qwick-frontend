@@ -23,7 +23,9 @@ const SignUp = () => {
 
   // Use the new auth hook
   const { form, mutate, isPending } = useSignUp();
-  const { register, handleSubmit, formState: { errors } } = form;
+  const { register, handleSubmit, formState: { errors }, watch } = form;
+
+  const acceptedTerms = watch("accepted_terms");
 
   const { mutate: googleSignIn, isPending: googlePending } = useGoogleSignInHook();
 
@@ -61,12 +63,21 @@ const SignUp = () => {
 
         <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
           <div className="mb-8 text-center">
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
-              SIGN UP
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
+              Sign up
             </h2>
-            <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
-              Start your journey with us today
-            </p>
+            {/* Sign In link */}
+            <div className="mt-6 text-center">
+              <p className="text-gray-600 dark:text-gray-400">
+                Already have an account?{" "}
+                <Link
+                  to="/sign-in"
+                  className="text-[#003933] dark:text-white font-medium hover:underline"
+                >
+                  Sign In
+                </Link>
+              </p>
+            </div>
           </div>
 
           {/* Social Buttons */}
@@ -120,7 +131,7 @@ const SignUp = () => {
                   <input
                     type="text"
                     {...register("first_name")}
-                    placeholder="Enter your first name"
+                    placeholder="First name"
                     className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                   />
                 </div>
@@ -161,7 +172,7 @@ const SignUp = () => {
                 <input
                   type="email"
                   {...register("email")}
-                  placeholder="Veren@gmail.com"
+                  placeholder="Email"
                   className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
               </div>
@@ -184,7 +195,7 @@ const SignUp = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
-                  placeholder="Your password"
+                  placeholder="Password"
                   className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
                 <button
@@ -218,7 +229,7 @@ const SignUp = () => {
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   {...register("confirm_password")}
-                  placeholder="Your password"
+                  placeholder="Confirm password"
                   className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
                 <button
@@ -240,32 +251,47 @@ const SignUp = () => {
               )}
             </div>
 
+            {/* Terms and Conditions Checkbox */}
+            <div className="flex items-start gap-2 py-2">
+              <input
+                type="checkbox"
+                {...register("accepted_terms")}
+                id="accepted_terms"
+                className="mt-1 w-4 h-4 text-[#003933] border-gray-300 rounded focus:ring-[#003933] cursor-pointer"
+              />
+              <label htmlFor="accepted_terms" className="text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
+                By signing up, I agree to{" "}
+                <Link to="/terms-and-conditions" className="text-[#003933] dark:text-white font-medium hover:underline">
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link to="/terms-and-conditions" className="text-[#003933] dark:text-white font-medium hover:underline">
+                  Privacy Policy
+                </Link>
+                .
+              </label>
+            </div>
+            {errors.accepted_terms && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                {errors.accepted_terms.message}
+              </p>
+            )}
+
             <button
               type="submit"
-              disabled={isPending}
+              disabled={isPending || !acceptedTerms}
               className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPending ? "Creating Account..." : "Sign Up"}
             </button>
           </form>
 
-          {/* Sign In link */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-600 dark:text-gray-400">
-              Already have an account?{" "}
-              <Link
-                to="/sign-in"
-                className="text-[#003933] dark:text-white font-medium hover:underline"
-              >
-                Sign In
-              </Link>
-            </p>
-          </div>
+
         </div>
       </div >
 
       {/* Right side - Image (hidden on mobile) */}
-      < div className="hidden md:block md:w-1/2 bg-white dark:bg-gray-800" >
+      <div className="hidden md:block md:w-1/2 bg-white dark:bg-gray-800">
         <div className="h-full w-full flex items-center justify-center p-2.5 rounded-[30px] overflow-hidden">
           <img
             src={commonAuthLogo}
@@ -273,7 +299,7 @@ const SignUp = () => {
             className="h-full w-full object-cover rounded-[30px]"
           />
         </div>
-      </div >
+      </div>
     </div >
   );
 };

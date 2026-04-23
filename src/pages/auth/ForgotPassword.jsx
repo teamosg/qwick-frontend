@@ -52,11 +52,11 @@ const ForgotPassword = () => {
 
         <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
           <div className="mb-8 text-center">
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
-              FORGOT PASSWORD
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
+              Forgot Password
             </h2>
             <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
-              No worries, we'll send you reset instructions
+              No worries. Reset instructions are on the way.
             </p>
           </div>
 
@@ -74,7 +74,7 @@ const ForgotPassword = () => {
                 <input
                   type="email"
                   {...register("email")}
-                  placeholder="Enter email"
+                  placeholder="Email"
                   className="w-full px-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
               </div>
