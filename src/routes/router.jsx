@@ -86,6 +86,10 @@ const router = createBrowserRouter([
         path: "/successfully-updated",
         element: <SuccessfullyUpdated />,
       },
+      {
+        path: "/terms-and-conditions",
+        element: <TermsAndConditions />,
+      },
     ],
   },
 
@@ -222,10 +226,6 @@ const router = createBrowserRouter([
       {
         path: "/feedback",
         element: <Feedback />,
-      },
-      {
-        path: "/terms-and-conditions",
-        element: <TermsAndConditions />,
       },
       // if page now found
       {
