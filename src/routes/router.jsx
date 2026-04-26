@@ -38,12 +38,17 @@ import NotFound from "@/shared/NotFound";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import SignIn from "../pages/auth/SignIn";
+import Landing from "../pages/landing/Landing";
 import Home from "../pages/dashboard/Home";
 import DashboardLayout from "./../layout/DashboardLayout";
 import VerifyTwoAuth from "@/pages/auth/VerifyTwoAuth";
 import DepositSuccess from "@/pages/deposit/DepositSuccess";
 const router = createBrowserRouter([
-  //Admin Dashboard layout
+  // Landing Page
+  {
+    path: "/",
+    element: <Landing />,
+  },
 
   {
     path: "/",
@@ -94,7 +99,7 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       {
-        index: true,
+        path: "/home",
         element: <Home />,
       },
       {
