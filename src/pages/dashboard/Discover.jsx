@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Card from "@/components/dashboard/Card";
 import DiscoverFilter from "@/components/discover/Filter";
 import Pagination from "@/components/discover/Pagination";
