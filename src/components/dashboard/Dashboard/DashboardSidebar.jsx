@@ -59,7 +59,6 @@ const items = [
 // Main sidebar content component
 export function DashboardSidebarContent() {
   const { communityUsername } = useParams()
-  console.log(communityUsername);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const { mutate: editCommunity, isPending } = useEditCommunity();
   const { setOpenMobile } = useSidebar();
@@ -158,7 +157,7 @@ export function DashboardSidebarContent() {
                     >
                       <Link
                         className="hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full"
-                        to={item.url}
+                        to={`${communityUsername}/${item.url}`}
                         onClick={() => setOpenMobile(false)}
                       >
                         <span className="hover:bg-none hover:shadow-none font-medium">
