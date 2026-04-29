@@ -1,11 +1,11 @@
-/* eslint-disable react/prop-types */
 import CampaignProgress from "./CampaignProgress";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const DashboardSingleRewardItem = ({ reward }) => {
+  const { communityUsername } = useParams();
   if (!reward) return null;
 
   const {
@@ -31,7 +31,7 @@ const DashboardSingleRewardItem = ({ reward }) => {
     : `${MEDIA_BASE_URL}${thumbnail}`;
 
   return (
-    <Link to={`/dashboard/content-reward/edit/${id}`}>
+    <Link to={`/dashboard/${communityUsername}/content-reward/edit/${id}`}>
       <div className="hover:scale-101 hover:shadow-lg transition-all duration-300 ease-in-out dark:text-white dark:bg-zinc-900 p-4 rounded-xl items-center justify-center mx-auto shadow mb-4 bg-white">
         <div className="flex flex-col sm:flex-row gap-4 w-full">
           <img
