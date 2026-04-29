@@ -118,7 +118,7 @@ const AddCommunity = () => {
             className="space-y-6"
           >
             <h1 className="my-8 text-3xl md:text-4xl font-bold text-[#15161E] dark:text-white text-center">
-              Name your business
+              Name Your Community
             </h1>
 
             <AddCommunityForm
