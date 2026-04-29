@@ -138,7 +138,7 @@ const AddCommunity = () => {
   const isLoading = isCategoriesLoading || formStatus.isLoading;
 
   return (
-    <div className="p-4 md:p-6 h-screen max-w-5xl mx-auto">
+    <div className="p-4 md:p-6 flex-1 overflow-y-auto max-w-5xl mx-auto">
       <CommunityStepper
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
