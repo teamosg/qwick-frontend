@@ -23,7 +23,10 @@ const SingleRewardItem = ({ campaign }) => {
     max_payout,
     total_users_earning,
     initial_budget,
+    end_date,
   } = campaign;
+
+  const isEnded = end_date ? new Date(end_date) < new Date() : false;
 
   const handleNavigate = () => {
     navigate(`/announcement/${communityUsername}/content-reward/reward-details/${id}`);
@@ -50,12 +53,17 @@ const SingleRewardItem = ({ campaign }) => {
             <h4 className="text-[#090003] text-lg font-semibold mb-1.5 dark:text-white">
               {name}
             </h4>
-            <p className="text-xs dark:text-zinc-400 flex gap-2 items-center mb-3.5">
+            <p className="text-xs dark:text-zinc-400 flex gap-2 items-center mb-2">
               <span>
                 Only views after you submit count towards payout. Submit as soon
                 as you post to get paid for all of your views.
               </span>
             </p>
+            {end_date && (
+              <p className={`text-[11px] mb-3.5 font-medium ${isEnded ? "text-red-500" : "text-gray-500 dark:text-zinc-400"}`}>
+                {isEnded ? "Ended on" : "Ends on"} {end_date}
+              </p>
+            )}
             <CampaignProgress
               totalUsersEarning={total_users_earning}
               initialBudget={initial_budget}
