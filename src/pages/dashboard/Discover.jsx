@@ -24,7 +24,7 @@ const Discover = () => {
 
   const [selectedType, setSelectedType] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedSort, setSelectedSort] = useState("Highest available budget");
+  const [selectedSort, setSelectedSort] = useState("Newest");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
@@ -53,16 +53,19 @@ const Discover = () => {
 
     // Sort
     list = [...list].sort((a, b) => {
-      if (selectedSort === "Highest available budget") {
+      if (selectedSort === "Highest Available Budget") {
         return parseFloat(b.budget || 0) - parseFloat(a.budget || 0);
       }
+      if (selectedSort === "Highest Budget") {
+        return parseFloat(b.initial_budget || 0) - parseFloat(a.initial_budget || 0);
+      }
       if (selectedSort === "Most Paid Out") {
-        return parseFloat(b.max_payout || 0) - parseFloat(a.max_payout || 0);
+        return parseFloat(b.total_users_earning || 0) - parseFloat(a.total_users_earning || 0);
       }
       if (selectedSort === "Highest CPM") {
         return parseFloat(b.reward_rate || 0) - parseFloat(a.reward_rate || 0);
       }
-      if (selectedSort === "Nearest") {
+      if (selectedSort === "Newest" || selectedSort === "Most Creators") {
         return b.id - a.id;
       }
       return 0;

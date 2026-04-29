@@ -22,10 +22,12 @@ export default function DiscoverFilter({
   const categories = ["All", ...(categoriesData?.data?.map(c => c.name) || [])];
 
   const sortOptions = [
-    "Highest available budget",
-    "Most Paid Out",
+    "Newest",
+    "Highest Budget",
+    "Highest Available Budget",
     "Highest CPM",
-    "Nearest",
+    "Most Paid Out",
+    "Most Creators",
   ];
 
   const Dropdown = ({ label, value, options, isOpen, setIsOpen, onSelect }) => (
