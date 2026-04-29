@@ -158,7 +158,7 @@ const router = createBrowserRouter([
         element: <Dashboard />,
         children: [
           {
-            index: true,
+            path: ":communityUsername",
             element: <DashboardContentReward />,
           },
           {
