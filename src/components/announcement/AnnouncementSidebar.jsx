@@ -23,11 +23,11 @@ import { useCommunityStore } from "@/store/communityStore";
 // Menu items.
 const items = [
   {
-    title: "Announcement",
+    title: "Announcements",
     url: "",
   },
   {
-    title: "Content Reward",
+    title: "Campaigns",
     url: "content-reward",
   },
   {
