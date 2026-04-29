@@ -26,7 +26,6 @@ const DashboardContentReward = () => {
   };
 
   const handleFormSubmit = async (formData) => {
-    // Mappings
     const typeMap = {
       "UGC": 1,
       "Sponsored": 2,
@@ -49,7 +48,6 @@ const DashboardContentReward = () => {
       "Tiktok": 3,
       "Youtube": 1
     };
-
 
     const payload = new FormData();
 
@@ -78,7 +76,6 @@ const DashboardContentReward = () => {
       payload.append("end_date", date.toISOString().split('T')[0]);
     }
 
-    // Platforms
     const platforms = formData.platforms || [];
     platforms.forEach((p) => {
       const id = platformMap[p];

@@ -1,54 +1,62 @@
-// Announcement.jsx
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useParams, useNavigate } from "react-router";
 import { AnnouncementSidebar } from "../../components/announcement/AnnouncementSidebar";
 import { useCommunityStore } from "@/store/communityStore";
+import { useGetMyCommunityList } from "@/hooks/community.hook";
 import DashboardSkeleton from "@/components/dashboard/Dashboard/skeletons/DashboardSkeleton";
 import NoAnnouncementDashboardPage from "@/components/dashboard/Dashboard/EmptyPages/NoAnnoouncementDashboardPage";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 
 const Announcement = () => {
+  const { communityUsername } = useParams();
+  const navigate = useNavigate();
+  const { selectedCreatorCommunity, setSelectedCreatorCommunity } = useCommunityStore();
+
   const {
-    isLoadingCommunityList,
-    myCommunityList,
-    selectedCreatorCommunity,
-    setSelectedCreatorCommunity
-  } = useCommunityStore()
+    data: communityList,
+    isLoading,
+  } = useGetMyCommunityList();
+
   const location = useLocation();
   const isChat = location.pathname.includes("community-chat");
 
-
-  const selectedCreatorCommunityExist = myCommunityList?.find(
-    community => community.id === selectedCreatorCommunity?.id
-  )
-
+  // Combine created and joined communities for the creator view
+  const myCommunityList = useMemo(() => [
+    ...(communityList?.created_communities || []),
+    ...(communityList?.joined_communities || [])
+  ], [communityList]);
 
   useEffect(() => {
-    if (!myCommunityList?.length) return
+    if (isLoading) return;
 
-
-    if (selectedCreatorCommunityExist) {
-      setSelectedCreatorCommunity(selectedCreatorCommunityExist)
-    } else {
-      if (myCommunityList?.length && !isLoadingCommunityList) {
-        setSelectedCreatorCommunity(myCommunityList[0])
-      } else {
-        setSelectedCreatorCommunity(null)
+    if (myCommunityList.length > 0) {
+      // If no communityUsername in params, redirect to the first one
+      if (!communityUsername) {
+        navigate(`/announcement/${myCommunityList[0].username}`, { replace: true });
+        return;
       }
+
+      // Find the community that matches the username in URL, fallback to the first one
+      const targetCommunity = myCommunityList.find((c) => c.username === communityUsername) || myCommunityList[0];
+
+      // Update store only if different
+      if (selectedCreatorCommunity?.id !== targetCommunity.id) {
+        setSelectedCreatorCommunity(targetCommunity);
+      }
+    } else if (selectedCreatorCommunity !== null) {
+      setSelectedCreatorCommunity(null);
     }
-  }, [myCommunityList, isLoadingCommunityList, selectedCreatorCommunityExist, setSelectedCreatorCommunity])
+  }, [communityUsername, myCommunityList, isLoading, setSelectedCreatorCommunity, selectedCreatorCommunity?.id, navigate]);
 
 
-
-
-  if (isLoadingCommunityList) {
+  if (isLoading) {
     return <DashboardSkeleton />
   }
 
 
 
-  if (!myCommunityList?.length) {
+  if (myCommunityList.length === 0) {
     return <NoAnnouncementDashboardPage />;
   }
 

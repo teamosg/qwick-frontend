@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sidebar";
 import { PencilIcon } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
 import { useEditCommunity, useGetMyCommunityList } from "@/hooks/community.hook";
@@ -58,6 +58,7 @@ const items = [
 
 // Main sidebar content component
 export function DashboardSidebarContent() {
+  const { communityUsername } = useParams()
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const { mutate: editCommunity, isPending } = useEditCommunity();
   const { setOpenMobile } = useSidebar();
@@ -156,7 +157,7 @@ export function DashboardSidebarContent() {
                     >
                       <Link
                         className="hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full"
-                        to={item.url}
+                        to={`/dashboard/${communityUsername}/${item.url}`}
                         onClick={() => setOpenMobile(false)}
                       >
                         <span className="hover:bg-none hover:shadow-none font-medium">

@@ -5,51 +5,47 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useGetMyCommunityList } from "@/hooks/community.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import { useEffect } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useParams, useNavigate } from "react-router";
 
 const Dashboard = () => {
-  const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore((state) => state);
+  const { communityUsername } = useParams();
+  const navigate = useNavigate();
+  const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore();
+
   const {
     data: communityList,
-    isLoading: isLoadingMyCommunityList,
-    isError: isErrorMyCommunityList,
+    isLoading,
   } = useGetMyCommunityList();
-  const createdCommunityList = communityList?.created_communities
 
-
-
-  const selectedBrandCommunityExist = createdCommunityList?.find(
-    (community) => community?.id === selectedBrandCommunity?.id
-  );
+  const createdCommunityList = communityList?.created_communities || [];
 
   useEffect(() => {
-    if (!selectedBrandCommunityExist) setSelectedBrandCommunity(null)
-    if (!createdCommunityList?.length) return
+    if (isLoading) return;
 
-
-    if (selectedBrandCommunityExist) {
-      setSelectedBrandCommunity(selectedBrandCommunityExist);
-    } else {
-      if (
-        createdCommunityList?.length &&
-        !isLoadingMyCommunityList &&
-        !isErrorMyCommunityList
-      ) {
-        setSelectedBrandCommunity(createdCommunityList[0]);
-      } else {
-        setSelectedBrandCommunity(null);
+    if (createdCommunityList.length > 0) {
+      // If no communityUsername in params, redirect to the first one
+      if (!communityUsername) {
+        navigate(`/dashboard/${createdCommunityList[0].username}`, { replace: true });
+        return;
       }
+
+      // Find the community that matches the username in URL, fallback to the first one
+      const targetCommunity = createdCommunityList.find((c) => c.username === communityUsername) || createdCommunityList[0];
+
+      // Update store only if different
+      if (selectedBrandCommunity?.id !== targetCommunity.id) {
+        setSelectedBrandCommunity(targetCommunity);
+      }
+    } else if (selectedBrandCommunity !== null) {
+      setSelectedBrandCommunity(null);
     }
-  }, [createdCommunityList, isLoadingMyCommunityList, isErrorMyCommunityList, selectedBrandCommunityExist, setSelectedBrandCommunity]);
+  }, [communityUsername, createdCommunityList, isLoading, setSelectedBrandCommunity, selectedBrandCommunity?.id, navigate]);
 
-
-
-  if (isLoadingMyCommunityList) {
-    return <DashboardSkeleton />
+  if (isLoading) {
+    return <DashboardSkeleton />;
   }
 
-
-  if (!selectedBrandCommunity) {
+  if (createdCommunityList.length === 0) {
     return <NoCommunityDashboardPage />;
   }
 

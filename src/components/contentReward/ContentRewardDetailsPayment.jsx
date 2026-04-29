@@ -18,7 +18,7 @@ import CampaignProgress from "@/components/dashboard/Dashboard/ContentReward/Cam
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetailsPayment = () => {
-  const { campaignId } = useParams();
+  const { campaignId, communityUsername } = useParams();
   const navigate = useNavigate();
   const { selectedCreatorCommunity } = useCommunityStore();
   const { data: campaignRes, isLoading: isLoadingCampaigns } = useGetAllCampaigns();
@@ -111,7 +111,7 @@ const ContentRewardDetailsPayment = () => {
       onSuccess: (data) => {
         if (data?.success || data?.status === 200 || data?.status === 201) {
           handleClosePopup();
-          navigate("/content-reward");
+          navigate(`/announcement/${communityUsername}/content-reward`);
         }
       },
       onError: (error) => {

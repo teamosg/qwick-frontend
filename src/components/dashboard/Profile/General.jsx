@@ -123,7 +123,7 @@ const ProfileGeneral = () => {
           type="tel"
           value={formData.phone}
           onChange={(e) => handleInputChange("phone", e.target.value)}
-          placeholder="Phone number"
+          placeholder="Phone Number"
           className="w-full mt-2 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>

@@ -11,7 +11,7 @@ import CampaignProgress from "@/components/dashboard/Dashboard/ContentReward/Cam
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetails = () => {
-  const { campaignId } = useParams();
+  const { campaignId, communityUsername } = useParams();
   const navigate = useNavigate();
   const { selectedCreatorCommunity } = useCommunityStore();
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
@@ -225,7 +225,7 @@ const ContentRewardDetails = () => {
 
             <div className="flex flex-col gap-3">
               <Link
-                to={isEnded ? "#" : `/content-reward/reward-details-payment/${campaignId}`}
+                to={isEnded ? "#" : `/announcement/${communityUsername}/content-reward/reward-details-payment/${campaignId}`}
                 onClick={(e) => isEnded && e.preventDefault()}
                 className={`w-full text-center text-white text-lg font-bold py-3.5 rounded-2xl transition duration-300 shadow-lg ${isEnded
                   ? "bg-gray-400 cursor-not-allowed opacity-50"

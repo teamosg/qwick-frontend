@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
@@ -23,22 +22,34 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     if (totalPages <= maxVisiblePages) {
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
-      if (currentPage <= 3) {
-        for (let i = 1; i <= 4; i++) pages.push(i);
-        pages.push("...");
+      // Strictly 5 columns in the middle section
+      if (currentPage <= 2) {
+        // Near start: [1, 2, 3, "...", totalPages]
+        pages.push(1, 2, 3, "...");
         pages.push(totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1);
-        pages.push("...");
-        for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i);
+      } else if (currentPage >= totalPages - 1) {
+        // Near end: [1, "...", totalPages-2, totalPages-1, totalPages]
+        pages.push(1, "...");
+        pages.push(totalPages - 2);
+        pages.push(totalPages - 1);
+        pages.push(totalPages);
       } else {
-        pages.push(1);
-        pages.push("...");
-        pages.push(currentPage - 1);
-        pages.push(currentPage);
-        pages.push(currentPage + 1);
-        pages.push("...");
-        pages.push(totalPages);
+        // Middle pages: ensure current is visible with one gap
+        if (currentPage < totalPages / 2) {
+          // [1, current, current+1, "...", totalPages]
+          pages.push(1);
+          pages.push(currentPage);
+          pages.push(currentPage + 1);
+          pages.push("...");
+          pages.push(totalPages);
+        } else {
+          // [1, "...", current-1, current, totalPages]
+          pages.push(1);
+          pages.push("...");
+          pages.push(currentPage - 1);
+          pages.push(currentPage);
+          pages.push(totalPages);
+        }
       }
     }
     return pages;
