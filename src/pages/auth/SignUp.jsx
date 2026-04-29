@@ -46,7 +46,7 @@ const SignUp = () => {
             state: { email: form.getValues("email"), data: data },
           });
         }
-      }
+      } 
     });
   };
 
@@ -63,11 +63,11 @@ const SignUp = () => {
 
         <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
           <div className="mb-8 text-center">
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
-              Sign up
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight ">
+              Sign Up
             </h2>
             {/* Sign In link */}
-            <div className="mt-6 text-center">
+            <div className="mt-2 text-center">
               <p className="text-gray-600 dark:text-gray-400">
                 Already have an account?{" "}
                 <Link
@@ -81,7 +81,7 @@ const SignUp = () => {
           </div>
 
           {/* Social Buttons */}
-          <div className="flex md:flex-row flex-col items-center gap-2 md:gap-3.5">
+          <div className="flex md:flex-row flex-col items-center gap-2">
             <button
               type="button"
               onClick={() => handleGoogleLogin()}
@@ -108,7 +108,7 @@ const SignUp = () => {
           </div>
 
           {/* Divider */}
-          <div className="my-6 md:my-7.5 flex items-center">
+          <div className="my-3 flex items-center">
             <div className="flex-1 border-t border-dashed border-gray-300 dark:border-gray-700"></div>
             <span className="px-3 text-gray-500 dark:text-gray-400 text-sm">
               or
@@ -117,7 +117,7 @@ const SignUp = () => {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
             {/* Name Row */}
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1">

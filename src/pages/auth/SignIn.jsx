@@ -63,7 +63,7 @@ const SignIn = () => {
         <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
           <div className="mb-10 text-center">
             <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
-              Sign in
+              Sign In
             </h2>
             {/* Sign up link */}
             <div className="mt-6 sm:mt-10 text-center">
@@ -73,7 +73,7 @@ const SignIn = () => {
                   to="/sign-up"
                   className="text-[#003933] dark:text-white font-medium hover:underline"
                 >
-                  Sign up
+                  Sign Up
                 </Link>
               </p>
             </div>
@@ -206,7 +206,7 @@ const SignIn = () => {
               disabled={isPending}
               className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isPending ? "Signing in..." : "Sign in"}
+              {isPending ? "Signing In..." : "Sign In"}
             </button>
           </form>
 
