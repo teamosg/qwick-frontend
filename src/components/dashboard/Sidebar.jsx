@@ -78,7 +78,10 @@ const Sidebar = ({ onClose }) => {
 
 
   useEffect(() => {
-    const myCommunityList = [...createdCommunityList, ...joinedCommunityList]
+    const myCommunityList = {
+      createdCommunities: [...createdCommunityList],
+      joinedCommunities: [...joinedCommunityList]
+    }
     setMyCommunityList(myCommunityList)
   }, [communityList])
 
