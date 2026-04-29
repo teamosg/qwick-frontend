@@ -1,7 +1,4 @@
-import Comment from "@/assets/svg/Comment";
-import Like from "@/assets/svg/Like";
-import Save from "@/assets/svg/Save";
-import { PostShare } from "./PostShare";
+import { Heart, MessageCircle, Bookmark } from "lucide-react";
 import { useDislikeAnnouncement, useLikeAnnouncement, useSaveAnnouncement, useUnsaveAnnouncement } from "@/hooks/announcement.hook";
 
 
@@ -20,7 +17,7 @@ const PostActions = ({ post }) => {
     };
 
     const handleSave = () => {
-        if (post?.isSaved) {
+        if (post?.is_saved) {
             unsaveAnnouncement(post?.id);
         } else {
             saveAnnouncement(post?.id);
@@ -28,37 +25,50 @@ const PostActions = ({ post }) => {
     };
 
     return (
-        <div className="border-t border-b border-gray-200 dark:border-gray-700 py-2 mb-3 sm:mb-4 font-semibold bg-white dark:bg-zinc-900">
-            <div className="flex justify-between gap-2">
-                <button
-                    onClick={handlePostLike}
-                    disabled={isLiking || isDisliking}
-                    className={`flex items-center disabled:cursor-progress space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors
-                    ${post?.is_liked
-                            ? "text-[#003933] dark:text-emerald-400"
-                            : "text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300"
-                        }`}
-                >
-                    <Like isLiked={post?.is_liked} />
-                    <span className="sm:hidden">
-                        {post?.is_liked ? "Liked" : "Like"}
+        <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 mb-4">
+            <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-2">
+                    <button
+                        onClick={handlePostLike}
+                        disabled={isLiking || isDisliking}
+                        className="disabled:cursor-progress cursor-pointer text-gray-600 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors group"
+                    >
+                        <Heart
+                            className={`w-5 h-5 ${post?.is_liked
+                                ? "fill-red-500 text-red-500"
+                                : "group-hover:text-red-500 dark:group-hover:text-red-400"
+                                }`}
+                        />
+                    </button>
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {post?.like_count || 0} Likes
                     </span>
-                </button>
+                </div>
 
-                <button className="flex items-center space-x-1 px-2 sm:px-3 py-2 sm:py-1 rounded-md text-sm sm:text-base text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300 transition-colors">
-                    <Comment />
-                </button>
-
-                {/* <PostShare /> */}
-
-                <button
-                    onClick={handleSave}
-                    disabled={isSaving || isUnsaving}
-                    className={`flex items-center px-2 sm:px-3 py-2 sm:py-1 rounded-md cursor-pointer text-sm sm:text-base transition-colors disabled:cursor-progress text-gray-500 dark:text-gray-400 hover:text-[#003933] hover:dark:text-emerald-300`}
-                >
-                    <Save isSaved={post?.is_saved} />
-                </button>
+                <div className="flex items-center space-x-2">
+                    <button 
+                        className="cursor-pointer flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors group"
+                    >
+                        <MessageCircle className="w-5 h-5 group-hover:text-blue-500 dark:group-hover:text-blue-400" />
+                    </button>
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {post?.comment_count || 0} comments
+                    </span>
+                </div>
             </div>
+
+            <button
+                onClick={handleSave}
+                disabled={isSaving || isUnsaving}
+                className="disabled:cursor-progress cursor-pointer text-gray-600 dark:text-gray-400 hover:text-[#003933] dark:hover:text-emerald-400 transition-colors group"
+            >
+                <Bookmark
+                    className={`w-5 h-5 ${post?.is_saved
+                        ? "fill-[#003933] text-[#003933] dark:fill-emerald-400 dark:text-emerald-400"
+                        : "group-hover:text-[#003933] dark:group-hover:text-emerald-400"
+                        }`}
+                />
+            </button>
         </div>
     );
 };
