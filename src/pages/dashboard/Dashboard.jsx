@@ -5,10 +5,11 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useGetMyCommunityList } from "@/hooks/community.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import { useEffect } from "react";
-import { Outlet, useParams } from "react-router";
+import { Outlet, useParams, useNavigate } from "react-router";
 
 const Dashboard = () => {
   const { communityUsername } = useParams();
+  const navigate = useNavigate();
   const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore();
 
   const {
@@ -22,10 +23,14 @@ const Dashboard = () => {
     if (isLoading) return;
 
     if (createdCommunityList.length > 0) {
+      // If no communityUsername in params, redirect to the first one
+      if (!communityUsername) {
+        navigate(`/dashboard/${createdCommunityList[0].username}`, { replace: true });
+        return;
+      }
+
       // Find the community that matches the username in URL, fallback to the first one
-      const targetCommunity = communityUsername
-        ? createdCommunityList.find((c) => c.username === communityUsername) || createdCommunityList[0]
-        : createdCommunityList[0];
+      const targetCommunity = createdCommunityList.find((c) => c.username === communityUsername) || createdCommunityList[0];
 
       // Update store only if different
       if (selectedBrandCommunity?.id !== targetCommunity.id) {
@@ -34,7 +39,7 @@ const Dashboard = () => {
     } else if (selectedBrandCommunity !== null) {
       setSelectedBrandCommunity(null);
     }
-  }, [communityUsername, createdCommunityList, isLoading, setSelectedBrandCommunity, selectedBrandCommunity?.id]);
+  }, [communityUsername, createdCommunityList, isLoading, setSelectedBrandCommunity, selectedBrandCommunity?.id, navigate]);
 
   if (isLoading) {
     return <DashboardSkeleton />;

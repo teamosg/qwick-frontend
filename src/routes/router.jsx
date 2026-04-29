@@ -158,53 +158,55 @@ const router = createBrowserRouter([
         element: <Dashboard />,
         children: [
           {
-            path: ":communityUsername",
-            element: <DashboardContentReward />,
-          },
-          {
-            path: "content-payout",
-            element: <DashboardContentReward />,
-          },
-          {
-            path: "all-submissions",
-            element: <MySubmissions />,
-          },
-          {
-            path: "analytics",
-            element: <Analytics />,
-          },
-          {
-            path: "users",
-            element: <Users />,
-          },
-          {
-            path: "wait-list",
-            element: <WaitList />,
-          },
-          {
-            path: "payments",
-            element: <Payments />,
-          },
-          // {
-          //   path: "payout",
-          //   element: <Payout />,
-          // },
-          {
-            path: "automated-message",
-            element: <AutomatedMessage />,
-          },
-          {
-            path: "dashboard-settings",
-            element: <DashboardSettings />,
-          },
-          {
-            path: "dashboard-settings/notifications",
-            element: <NotificationsSettings />,
-          },
-          {
-            path: "content-reward/edit/:id",
-            element: <ContentRewardDetailsEdit />,
-          },
+            path: ':communityUsername',
+            element: <Outlet />,
+            children: [
+              {
+                index: true,
+                element: <DashboardContentReward />,
+              },
+              {
+                path: "content-payout",
+                element: <DashboardContentReward />,
+              },
+              {
+                path: "all-submissions",
+                element: <MySubmissions />,
+              },
+              {
+                path: "analytics",
+                element: <Analytics />,
+              },
+              {
+                path: "users",
+                element: <Users />,
+              },
+              {
+                path: "wait-list",
+                element: <WaitList />,
+              },
+              {
+                path: "payments",
+                element: <Payments />,
+              },
+              {
+                path: "automated-message",
+                element: <AutomatedMessage />,
+              },
+              {
+                path: "dashboard-settings",
+                element: <DashboardSettings />,
+              },
+              {
+                path: "dashboard-settings/notifications",
+                element: <NotificationsSettings />,
+              },
+              {
+                path: "content-reward/edit/:id",
+                element: <ContentRewardDetailsEdit />,
+              },
+            ]
+          }
         ],
       },
       {
