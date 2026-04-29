@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import DiscoverSkeleton from "@/components/discover/DiscoverSkeleton";
 import { formatViewCount } from "@/lib/utils";
+import { format } from "date-fns";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
@@ -187,47 +188,48 @@ const Discover = () => {
         animate="visible"
       >
         <AnimatePresence mode="popLayout">
-          {currentCampaigns.map((campaign) => (
-            <motion.div
-              key={campaign.id}
-              variants={cardVariants}
-              whileHover={{
-                scale: 1.02,
-                y: -5,
-                transition: { duration: 0.2 },
-              }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full"
-            >
-              <Card
-                content={{
-                  thumbnail: campaign?.thumbnail ? (campaign.thumbnail.startsWith('http') ? campaign.thumbnail : `${MEDIA_BASE_URL}${campaign.thumbnail}`) : null,
-                  name: campaign.category?.name || "No Category",
-                  meta: campaign.campaign_type?.name || "Campaign",
-                  type: campaign.campaign_type?.name,
-                  views: formatViewCount(campaign.total_content_views),
-                  title: campaign.name,
-                  socials: campaign.platforms?.map(p => {
-                    if (p.name?.toLowerCase() === 'instagram') return { name: 'Instagram', icon: FaInstagram };
-                    if (p.name?.toLowerCase() === 'facebook') return { name: 'Facebook', icon: FaFacebook };
-                    if (p.name?.toLowerCase() === 'youtube') return { name: 'YouTube', icon: FaYoutube };
-                    return null;
-                  }).filter(Boolean),
-                  progress: campaign.initial_budget > 0
-                    ? Math.min(Math.max((parseFloat(campaign.total_users_earning || 0) / parseFloat(campaign.initial_budget)) * 100, 0), 100)
-                    : 0,
-                  compensation: {
-                    label: "Compensation",
-                    details: `$${campaign.reward_rate} per 1k views`,
-                  },
-                  cta: "Apply",
-                  isEnded: campaign.end_date && new Date(campaign.end_date) < new Date(),
-                  endDate: campaign.end_date,
-                }}
-                onApply={() => handleCampaignClick(campaign)}
-              />
-            </motion.div>
-          ))}
+          {currentCampaigns.map((campaign) => {
+            const community = allCommunities?.find(c => c.id === campaign.community) || {};
+            const isEnded = campaign.end_date && new Date(campaign.end_date) < new Date();
+
+            return (
+              <motion.div
+                key={campaign.id}
+                variants={cardVariants}
+                whileHover={!isEnded ? {
+                  scale: 1.02,
+                  y: -5,
+                  transition: { duration: 0.2 },
+                } : {}}
+                whileTap={!isEnded ? { scale: 0.98 } : {}}
+                className="w-full"
+              >
+                <Card
+                  content={{
+                    thumbnail: campaign?.thumbnail ? (campaign.thumbnail.startsWith('http') ? campaign.thumbnail : `${MEDIA_BASE_URL}${campaign.thumbnail}`) : null,
+                    communityName: community.business_name || "Community",
+                    communityAvatar: community.avatar ? (community.avatar.startsWith('http') ? community.avatar : `${MEDIA_BASE_URL}${community.avatar}`) : null,
+                    postedDate: campaign.created_at ? format(new Date(campaign.created_at), 'MMM dd, yyyy') : "N/A",
+                    views: campaign.total_content_views,
+                    title: campaign.name,
+                    socials: campaign.platforms?.map(p => {
+                      if (p.name?.toLowerCase() === 'instagram') return { name: 'Instagram', icon: FaInstagram };
+                      if (p.name?.toLowerCase() === 'facebook') return { name: 'Facebook', icon: FaFacebook };
+                      if (p.name?.toLowerCase() === 'youtube') return { name: 'YouTube', icon: FaYoutube };
+                      return null;
+                    }).filter(Boolean),
+                    progress: campaign.initial_budget > 0
+                      ? Math.min(Math.max((parseFloat(campaign.total_users_earning || 0) / parseFloat(campaign.initial_budget)) * 100, 0), 100)
+                      : 0,
+                    compensation: `$${campaign.reward_rate} / 1K VIEWS`,
+                    isEnded: isEnded,
+                    endDate: campaign.end_date,
+                  }}
+                  onApply={() => handleCampaignClick(campaign)}
+                />
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </motion.div>
 

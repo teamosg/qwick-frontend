@@ -1,12 +1,12 @@
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import CampaignProgress from "../dashboard/Dashboard/ContentReward/CampaignProgress";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const SingleRewardItem = ({ campaign }) => {
   const navigate = useNavigate();
-
+  const { communityUsername } = useParams()
   if (!campaign) return null;
 
 
@@ -26,7 +26,7 @@ const SingleRewardItem = ({ campaign }) => {
   } = campaign;
 
   const handleNavigate = () => {
-    navigate(`/content-reward/reward-details/${id}`);
+    navigate(`/announcement/${communityUsername}/content-reward/reward-details/${id}`);
   };
 
   const fullThumbnail = thumbnail?.startsWith("http")
