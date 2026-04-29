@@ -45,7 +45,7 @@ export function AnnouncementSidebar() {
 
     const {
         isLoadingCommunityList,
-        myCommunityList,
+        myCommunityListAnnouncement,
         selectedCreatorCommunity,
         setSelectedCreatorCommunity
     } = useCommunityStore();
@@ -101,7 +101,7 @@ export function AnnouncementSidebar() {
                     <div className="absolute inset-0 bg-black/30"></div>
 
                     <CommunitySwitcher
-                        data={myCommunityList}
+                        data={myCommunityListAnnouncement}
                         isLoading={isLoadingCommunityList}
                         selectedCommunity={selectedCreatorCommunity}
                         setSelectedCommunity={setSelectedCreatorCommunity}
