@@ -101,9 +101,9 @@ const JoinCommunity = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <h1 className="text-[#191919] dark:text-white text-2xl font-semibold">
+        {/* <h1 className="text-[#191919] dark:text-white text-2xl font-semibold">
           Join Community
-        </h1>
+        </h1> */}
       </motion.div>
 
       <motion.div
