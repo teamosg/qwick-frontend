@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import { useState } from "react";
 import { Copy, Check, Link as LinkIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -24,7 +24,7 @@ import { useCommunityStore } from "@/store/communityStore";
 const items = [
   {
     title: "Announcement",
-    url: "announcement",
+    url: "",
   },
   {
     title: "Content Reward",
@@ -41,101 +41,99 @@ const items = [
 ];
 
 export function AnnouncementSidebar() {
-  const {
-    isLoadingCommunityList,
-    myCommunityList,
-    selectedCreatorCommunity,
-    setSelectedCreatorCommunity
-  } = useCommunityStore();
-  const [copied, setCopied] = useState(false);
+    const { communityUsername } = useParams();
 
-  const bg = selectedCreatorCommunity?.banner_image || "/communityBG.png";
+    const {
+        isLoadingCommunityList,
+        myCommunityList,
+        selectedCreatorCommunity,
+        setSelectedCreatorCommunity
+    } = useCommunityStore();
+    const [copied, setCopied] = useState(false);
 
-  const handleMenuItemClick = () => {
-    // Close the sidebar on mobile when a menu item is clicked
-    // Use a more reliable method by dispatching a keyboard event
-    setTimeout(() => {
-      // Simulate pressing Escape key to close sidebar
-      const escapeEvent = new KeyboardEvent("keydown", {
-        key: "Escape",
-        keyCode: 27,
-        which: 27,
-        bubbles: true,
-        cancelable: true,
-      });
-      document.dispatchEvent(escapeEvent);
+    const bg = selectedCreatorCommunity?.banner_image || "/communityBG.png";
 
-      // Also try clicking the trigger button
-      const trigger = document.querySelector('button[aria-expanded="true"]');
-      if (trigger) {
-        trigger.click();
-      }
-    }, 150);
-  };
+    const handleMenuItemClick = () => {
+        // ... same logic ...
+        setTimeout(() => {
+            const escapeEvent = new KeyboardEvent("keydown", {
+                key: "Escape",
+                keyCode: 27,
+                which: 27,
+                bubbles: true,
+                cancelable: true,
+            });
+            document.dispatchEvent(escapeEvent);
 
-  const handleCopyLink = () => {
-    if (!selectedCreatorCommunity?.username) {
-      toast.error("No community selected");
-      return;
-    }
+            const trigger = document.querySelector('button[aria-expanded="true"]');
+            if (trigger) {
+                trigger.click();
+            }
+        }, 150);
+    };
 
-    const domain = import.meta.env.DEV
-      ? window.location.origin
-      : (import.meta.env.VITE_DOMAIN_NAME || window.location.origin);
+    const handleCopyLink = () => {
+        if (!selectedCreatorCommunity?.username) {
+            toast.error("No community selected");
+            return;
+        }
 
-    // Ensure domain doesn't end with slash if we're adding one
-    const cleanDomain = domain.endsWith('/') ? domain.slice(0, -1) : domain;
-    const shareLink = `${cleanDomain}/join-community/${selectedCreatorCommunity.username}`;
+        const domain = import.meta.env.DEV
+            ? window.location.origin
+            : (import.meta.env.VITE_DOMAIN_NAME || window.location.origin);
 
-    navigator.clipboard.writeText(shareLink);
-    setCopied(true);
-    toast.success("Community link copied!");
-    setTimeout(() => setCopied(false), 2000);
-  };
+        const cleanDomain = domain.endsWith('/') ? domain.slice(0, -1) : domain;
+        const shareLink = `${cleanDomain}/join-community/${selectedCreatorCommunity.username}`;
 
-  return (
-    <>
-      <Sidebar className="relative h-full inset-auto md:w-64 border-r dark:border-zinc-800">
-        <SidebarHeader
-          className="p-0 bg-center bg-cover bg-no-repeat h-[135px] relative"
-          style={{ backgroundImage: `url(${bg})` }}
-        >
-          <div className="absolute inset-0 bg-black/30"></div>
+        navigator.clipboard.writeText(shareLink);
+        setCopied(true);
+        toast.success("Community link copied!");
+        setTimeout(() => setCopied(false), 2000);
+    };
 
-          <CommunitySwitcher
-            data={myCommunityList}
-            isLoading={isLoadingCommunityList}
-            selectedCommunity={selectedCreatorCommunity}
-            setSelectedCommunity={setSelectedCreatorCommunity}
-          />
-        </SidebarHeader>
+    return (
+        <>
+            <Sidebar className="relative h-full inset-auto md:w-64 border-r dark:border-zinc-800">
+                <SidebarHeader
+                    className="p-0 bg-center bg-cover bg-no-repeat h-[135px] relative"
+                    style={{ backgroundImage: `url(${bg})` }}
+                >
+                    <div className="absolute inset-0 bg-black/30"></div>
 
-        <SidebarContent>
-          <SidebarGroup className="p-0">
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem
-                    key={item.title}
-                    className="hover:hover:bg-none h-auto hover:shadow-none"
-                  >
-                    <SidebarMenuButton
-                      asChild
-                      className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
-                    >
-                      <Link
-                        className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
-                        to={item.url}
-                        onClick={handleMenuItemClick}
-                      >
-                        <span className="hover:bg-none hover:shadow-none font-medium">
-                          {item.title}
-                        </span>
-                      </Link>
-                    </SidebarMenuButton>
-                    <hr />
-                  </SidebarMenuItem>
-                ))}
+                    <CommunitySwitcher
+                        data={myCommunityList}
+                        isLoading={isLoadingCommunityList}
+                        selectedCommunity={selectedCreatorCommunity}
+                        setSelectedCommunity={setSelectedCreatorCommunity}
+                    />
+                </SidebarHeader>
+
+                <SidebarContent>
+                    <SidebarGroup className="p-0">
+                        <SidebarGroupContent>
+                            <SidebarMenu>
+                                {items.map((item) => (
+                                    <SidebarMenuItem
+                                        key={item.title}
+                                        className="hover:hover:bg-none h-auto hover:shadow-none"
+                                    >
+                                        <SidebarMenuButton
+                                            asChild
+                                            className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
+                                        >
+                                            <Link
+                                                className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
+                                                to={`/announcement/${communityUsername}/${item.url}`}
+                                                onClick={handleMenuItemClick}
+                                            >
+                                                <span className="hover:bg-none hover:shadow-none font-medium">
+                                                    {item.title}
+                                                </span>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                        <hr />
+                                    </SidebarMenuItem>
+                                ))}
 
                 {/* Copy Link Button */}
                 <SidebarMenuItem className="hover:hover:bg-none h-auto hover:shadow-none">

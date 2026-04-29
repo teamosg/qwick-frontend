@@ -118,39 +118,45 @@ const router = createBrowserRouter([
         element: <AddCommunity />,
       },
       {
+        path: "announcement",
         element: <Announcement />,
         children: [
           {
-            path: "/announcement",
-            index: true,
-            element: <AnnouncementFeed />,
-          },
-          {
-            path: "/content-reward",
+            path: ":communityUsername",
             element: <Outlet />,
             children: [
               {
                 index: true,
-                element: <ContentRewordPublic />,
+                element: <AnnouncementFeed />,
               },
               {
-                path: "reward-details/:campaignId",
-                element: <ContentRewardDetails />,
+                path: "announcement",
+                element: <AnnouncementFeed />,
               },
               {
-                path: "reward-details-payment/:campaignId",
-                element: <ContentRewardDetailsPayment />,
+                path: "content-reward",
+                element: <Outlet />,
+                children: [
+                  {
+                    index: true,
+                    element: <ContentRewordPublic />,
+                  },
+                  {
+                    path: "reward-details/:campaignId",
+                    element: <ContentRewardDetails />,
+                  },
+                  {
+                    path: "reward-details-payment/:campaignId",
+                    element: <ContentRewardDetailsPayment />,
+                  },
+                ],
+              },
+              {
+                path: "community-chat",
+                element: <CommunityChat />,
               },
             ],
           },
-          {
-            path: "community-chat",
-            element: <CommunityChat />,
-          },
-          // {
-          //   path: "withdraw",
-          //   element: <Withdraw />,
-          // },
         ],
       },
       {

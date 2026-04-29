@@ -157,7 +157,7 @@ export function DashboardSidebarContent() {
                     >
                       <Link
                         className="hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full"
-                        to={`${communityUsername}/${item.url}`}
+                        to={`/dashboard/${communityUsername}/${item.url}`}
                         onClick={() => setOpenMobile(false)}
                       >
                         <span className="hover:bg-none hover:shadow-none font-medium">
