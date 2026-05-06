@@ -72,11 +72,15 @@ export function DashboardSidebarContent() {
   const myCommunityList = communityList?.created_communities
 
 
-  const handleImageUpload = (imageFile) => {
-    if (!imageFile) return;
+  const handleImageUpload = (file, type) => {
+    if (!file) return;
 
     const formData = new FormData();
-    formData.append("banner_image", imageFile);
+    if (type === "banner") {
+      formData.append("banner_image", file);
+    } else if (type === "profile") {
+      formData.append("profile_image", file);
+    }
 
     editCommunity({
       communityUsername: selectedBrandCommunity?.username,
@@ -106,7 +110,7 @@ export function DashboardSidebarContent() {
               disabled={isPending}
               onClick={openImageModal}
               className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
-              title="Edit banner"
+              title="Edit community images"
             >
               {
                 isPending
