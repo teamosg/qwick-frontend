@@ -28,12 +28,11 @@ export default function DashboardSwitcher({
     )
   }
 
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="z-40 flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg text-white focus-visible:outline-none">
         <AvatarUser
-          src={selectedCommunity?.avatar}
+          src={selectedCommunity?.profile_image}
           alt={selectedCommunity?.business_name}
           className="h-8 w-8"
         />
@@ -59,7 +58,7 @@ export default function DashboardSwitcher({
             <Link to={`/dashboard/${community.username}`} className="w-full">
               <div className="flex items-center gap-2">
                 <AvatarUser
-                  src={community?.avatar}
+                  src={community?.profile_image}
                   alt={community?.business_name}
                   className="h-8 w-8"
                 />

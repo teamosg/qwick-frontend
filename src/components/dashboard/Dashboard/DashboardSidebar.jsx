@@ -85,6 +85,12 @@ export function DashboardSidebarContent() {
     editCommunity({
       communityUsername: selectedBrandCommunity?.username,
       payload: formData,
+    }, {
+      onSuccess: (response) => {
+        if (response?.status && response?.data) {
+          setSelectedBrandCommunity(response.data);
+        }
+      }
     });
   };
 
