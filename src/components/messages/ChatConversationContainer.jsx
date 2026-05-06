@@ -40,7 +40,7 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                 )}
                 <div>
                   <div
-                    className={`py-3 px-4 rounded-2xl text-sm ${message.sender_id !== sender_id
+                    className={`py-3 px-4 rounded-2xl text-sm break-words whitespace-pre-wrap ${message.sender_id !== sender_id
                       ? "bg-blue-500 text-white"
                       : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
                       } ${message.isCard ? "border border-blue-300" : ""}`}

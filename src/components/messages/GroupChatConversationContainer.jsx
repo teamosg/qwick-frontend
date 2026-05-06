@@ -43,7 +43,7 @@ const GroupChatConversationContainer = ({ messages, user, members }) => {
 
                                 <div>
                                     <div
-                                        className={`py-3 px-4 rounded-2xl text-sm ${isCurrentUser
+                                        className={`py-3 px-4 rounded-2xl text-sm break-words whitespace-pre-wrap ${isCurrentUser
                                             ? "bg-blue-500 text-white"
                                             : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
                                             } ${message.isCard ? "border border-blue-300" : ""}`}
