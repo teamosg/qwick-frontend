@@ -30,7 +30,7 @@ const GroupChatConversationContainer = ({ messages, user, members }) => {
                             transition={{ duration: 0.3 }}
                             className={`mb-4 flex ${isCurrentUser ? "justify-end" : "justify-start"}`}
                         >
-                            <div className="relative max-w-[85%] sm:max-w-md flex items-center gap-2 sm:gap-3">
+                            <div className="relative max-w-[75%] sm:max-w-[400px] flex items-center gap-2 sm:gap-3">
 
                                 {/* LEFT avatar */}
                                 {!isCurrentUser && (
@@ -43,7 +43,7 @@ const GroupChatConversationContainer = ({ messages, user, members }) => {
 
                                 <div>
                                     <div
-                                        className={`py-3 px-4 rounded-2xl text-sm break-words whitespace-pre-wrap ${isCurrentUser
+                                        className={`py-3 px-4 rounded-2xl text-sm break-all whitespace-pre-wrap ${isCurrentUser
                                             ? "bg-blue-500 text-white"
                                             : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
                                             } ${message.isCard ? "border border-blue-300" : ""}`}
