@@ -111,7 +111,7 @@ const GroupChatConversationContainer = ({ messages, user, members }) => {
                                 {isCurrentUser && (
                                     <AvatarUser
                                         src={user?.avatar}
-                                        alt={user?.first_name}
+                                        alt={user?.full_name}
                                         className="w-8 h-8"
                                     />
                                 )}

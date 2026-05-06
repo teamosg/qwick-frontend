@@ -47,12 +47,12 @@ export default function FeedSinglePost({ post }) {
       <div className="flex items-center space-x-3 mb-4">
         <AvatarUser
           src={post?.author?.avatar}
-          alt={post?.author?.first_name}
+          alt={post?.author?.full_name}
           className="w-12 h-12"
         />
         <div className="min-w-0 flex-1">
           <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
-            {post?.author?.first_name} {post?.author?.last_name}
+            {post?.author?.full_name}
           </h3>
           <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
             <Clock size={10} className="mr-1" />

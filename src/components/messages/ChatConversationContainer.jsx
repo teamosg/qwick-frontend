@@ -110,7 +110,7 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                 {message.sender_id !== sender_id && (
                   <AvatarUser
                     src={user?.avatar}
-                    alt={user?.first_name}
+                    alt={user?.full_name}
                     className="w-8 h-8"
                   />
                 )}

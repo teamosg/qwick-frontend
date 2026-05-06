@@ -39,7 +39,7 @@ const AnnouncementComment = ({ comment, AnnouncementId }) => {
         <div className="flex gap-2 sm:gap-3 group">
             <AvatarUser
                 src={comment?.author?.avatar}
-                alt={comment?.author?.first_name}
+                alt={comment?.author?.full_name}
                 className="w-8 h-8 sm:w-9 sm:h-9"
             />
 
@@ -47,7 +47,7 @@ const AnnouncementComment = ({ comment, AnnouncementId }) => {
                 <div className="w-full">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-1">
                         <div className="font-medium text-sm sm:text-base text-black dark:text-white truncate">
-                            {comment?.author?.first_name} {comment?.author?.last_name}
+                            {comment?.author?.full_name}
                         </div>
                         <div className="text-[10px] text-gray-500 dark:text-zinc-400">
                             {new Date(comment?.created_at)?.toLocaleString()}

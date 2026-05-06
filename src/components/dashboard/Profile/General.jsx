@@ -18,7 +18,7 @@ const ProfileGeneral = () => {
   useEffect(() => {
     if (data) {
       setFormData({
-        name: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
+        name: data.full_name || "",
         bio: data.bio || "",
         username: data.username || "",
         phone: data.phone_number || "",
@@ -36,12 +36,8 @@ const ProfileGeneral = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Split the name field before sending
-    const [first_name = "", last_name = ""] = formData.name.trim().split(" ");
-
     const payload = {
-      first_name,
-      last_name,
+      full_name: formData.name,
       bio: formData.bio,
       username: formData.username,
       phone_number: formData.phone,

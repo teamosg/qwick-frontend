@@ -110,7 +110,7 @@ const Profile = () => {
     editProfile(formData);
   };
 
-  const userName = profile?.first_name || "User Name";
+  const userName = profile?.full_name || "User Name";
   const userAvatar = profile?.avatar;
 
   return (

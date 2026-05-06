@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 // Sign Up Schema
 export const signUpSchema = z.object({
-  first_name: z.string().min(1, 'First name is required').max(50, 'First name must be less than 50 characters'),
-  last_name: z.string().min(1, 'Last name is required').max(50, 'Last name must be less than 50 characters'),
+  full_name: z.string().min(1, 'Full name is required').max(100, 'Full name must be less than 100 characters'),
+  username: z.string().min(1, 'Username is required').max(50, 'Username must be less than 50 characters'),
   email: z.string().email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirm_password: z.string().min(8, 'Confirm password must be at least 8 characters'),
@@ -80,8 +80,7 @@ export const authResponseSchema = z.object({
   data: z.object({
     id: z.number(),
     email: z.string(),
-    first_name: z.string(),
-    last_name: z.string(),
+    full_name: z.string(),
     username: z.string().optional(),
     avatar: z.string().optional(),
     is_verified: z.boolean().optional(),
@@ -95,8 +94,7 @@ export const profileResponseSchema = z.object({
   data: z.object({
     id: z.number(),
     email: z.string(),
-    first_name: z.string(),
-    last_name: z.string(),
+    full_name: z.string(),
     username: z.string().optional(),
     avatar: z.string().optional(),
     is_verified: z.boolean().optional(),
