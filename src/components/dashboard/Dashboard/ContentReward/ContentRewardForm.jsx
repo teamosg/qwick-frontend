@@ -202,20 +202,22 @@ const CampaignForm = ({
         {/* Upload Thumbnail */}
         <div className="space-y-3">
           {formData.thumbnailPreview ? (
-            <div className="relative border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <img
-                src={formData.thumbnailPreview}
-                alt="Thumbnail preview"
-                className="w-full h-40 object-cover rounded-lg"
-              />
-              <div className="flex flex-col sm:flex-row gap-3 mt-4">
+            <div className="relative border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden group">
+              <div className="aspect-[16/9] w-full">
+                <img
+                  src={formData.thumbnailPreview}
+                  alt="Thumbnail preview"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                 <button
                   type="button"
                   disabled={isFormDisabled}
                   onClick={() =>
                     document.getElementById("thumbnail-upload").click()
                   }
-                  className="px-4 py-2 text-sm bg-gray-100 dark:bg-[#2E2E2E] text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2E2E2E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-colors font-medium"
                 >
                   Change Image
                 </button>
@@ -223,11 +225,12 @@ const CampaignForm = ({
                   type="button"
                   disabled={isFormDisabled}
                   onClick={removeThumbnail}
-                  className="px-4 py-2 text-sm bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
                 >
                   Remove
                 </button>
               </div>
+
               <input
                 id="thumbnail-upload"
                 type="file"
@@ -237,21 +240,19 @@ const CampaignForm = ({
               />
             </div>
           ) : (
-            <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 sm:p-10 text-center hover:border-gray-300 dark:hover:border-gray-600 transition-colors cursor-pointer">
-              <div className="flex flex-col items-center space-y-3">
-                <div className="">
-                  <button
-                    type="button"
-                    disabled={isFormDisabled}
-                    onClick={() =>
-                      document.getElementById("thumbnail-upload").click()
-                    }
-                    className="dark:bg-[#2E2E2E]  text-sm font-medium text-black dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex gap-3 px-5 py-2 bg-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Upload className="w-5 h-5 text-black dark:text-gray-400" />
-                    Upload thumbnail
-                  </button>
+            <div 
+              onClick={() => document.getElementById("thumbnail-upload").click()}
+              className="border-2 border-dashed border-gray-200 dark:border-zinc-800 rounded-2xl aspect-[16/9] w-full flex items-center justify-center bg-gray-50/50 dark:bg-zinc-900/30 hover:bg-gray-50 dark:hover:bg-zinc-900/50 hover:border-gray-300 dark:hover:border-zinc-700 transition-all cursor-pointer group"
+            >
+              <div className="flex flex-col items-center space-y-4">
+                <div className="p-4 rounded-full bg-white dark:bg-zinc-800 shadow-sm border border-gray-100 dark:border-zinc-700 group-hover:scale-110 transition-transform">
+                  <Upload className="w-6 h-6 text-[#003933] dark:text-emerald-500" />
                 </div>
+                <div className="text-center px-4">
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">Upload thumbnail</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Recommended size: 1280x720 (16:9)</p>
+                </div>
+
                 <input
                   id="thumbnail-upload"
                   type="file"
