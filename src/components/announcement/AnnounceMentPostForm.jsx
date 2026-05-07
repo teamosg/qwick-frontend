@@ -96,7 +96,7 @@ const AnnouncementPostForm = ({
         <div className="flex items-start space-x-3">
           <AvatarUser
             src={user?.avatar}
-            alt={user?.first_name}
+            alt={user?.full_name}
             className="w-10 h-10 rounded-full object-cover"
           />
           <div className="flex-1">

@@ -99,7 +99,7 @@ const PostForm = () => {
         <div className="flex items-start space-x-2 sm:space-x-3">
           <AvatarUser
             src={profileData?.avatar}
-            alt={profileData?.first_name}
+            alt={profileData?.full_name}
             className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover flex-shrink-0"
           />
           <div className="flex-1 min-w-0">

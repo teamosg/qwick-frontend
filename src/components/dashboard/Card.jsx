@@ -82,7 +82,7 @@ const Card = ({ content, onApply }) => {
             </div>
           </div>
 
-          {/* Row 2: Campaign Name */}
+          {/* Row 2: Camp1aign Name */}
           <h3 className="text-[20px] font-medium text-[#090003] dark:text-white leading-[1.2] tracking-tight">
             {title}
           </h3>

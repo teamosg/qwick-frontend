@@ -47,12 +47,12 @@ export default function FeedSinglePost({ post }) {
       <div className="flex items-center space-x-3 mb-4">
         <AvatarUser
           src={post?.author?.avatar}
-          alt={post?.author?.first_name}
+          alt={post?.author?.full_name}
           className="w-12 h-12"
         />
         <div className="min-w-0 flex-1">
           <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
-            {post?.author?.first_name} {post?.author?.last_name}
+            {post?.author?.full_name}
           </h3>
           <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
             <Clock size={10} className="mr-1" />
@@ -95,7 +95,7 @@ export default function FeedSinglePost({ post }) {
                   <img 
                     src={files[0].file} 
                     alt="Post image" 
-                    className="w-full h-auto max-h-[600px] object-contain mx-auto transition-all duration-300 hover:brightness-95" 
+                    className="w-full h-auto max-h-[280px] object-contain mx-auto transition-all duration-300 hover:brightness-95" 
                   />
                 </div>
               );
@@ -108,12 +108,12 @@ export default function FeedSinglePost({ post }) {
                     <div 
                       key={i} 
                       onClick={() => handleOpenImage(i)} 
-                      className="aspect-[4/5] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                      className="aspect-[21/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
                     >
                       <img 
                         src={file.file} 
                         alt="" 
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                        className="w-full h-full object-contain transition-all duration-300 hover:brightness-95" 
                       />
                     </div>
                   ))}
@@ -126,17 +126,17 @@ export default function FeedSinglePost({ post }) {
                 <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800">
                   <div 
                     onClick={() => handleOpenImage(0)} 
-                    className="col-span-2 aspect-[16/10] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                    className="col-span-2 aspect-[21/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
                   >
                     <img 
                       src={files[0].file} 
                       alt="" 
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-contain transition-all duration-300 hover:brightness-95" 
                     />
                   </div>
                   <div 
                     onClick={() => handleOpenImage(1)} 
-                    className="aspect-square cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                    className="aspect-[16/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
                   >
                     <img 
                       src={files[1].file} 
@@ -146,7 +146,7 @@ export default function FeedSinglePost({ post }) {
                   </div>
                   <div 
                     onClick={() => handleOpenImage(2)} 
-                    className="aspect-square cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                    className="aspect-[16/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
                   >
                     <img 
                       src={files[2].file} 
@@ -164,12 +164,12 @@ export default function FeedSinglePost({ post }) {
                   <div 
                     key={i} 
                     onClick={() => handleOpenImage(i)} 
-                    className="relative aspect-square cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                    className="relative aspect-[16/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
                   >
                     <img 
                       src={file.file} 
                       alt="" 
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-contain transition-all duration-300 hover:brightness-95" 
                     />
                     {i === 3 && count > 4 && (
                       <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">

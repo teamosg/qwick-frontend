@@ -38,12 +38,12 @@ const SignUp = () => {
   });
 
   const onSubmit = (data) => {
-    // Data already matches API schema since we're using the correct field names
-    mutate(data, {
+    const { accepted_terms, ...payload } = data;
+    mutate(payload, {
       onSuccess: res => {
         if (res?.status) {
           navigate("/verify-account", {
-            state: { email: form.getValues("email"), data: data },
+            state: { email: form.getValues("email"), data: payload },
           });
         }
       } 
@@ -118,11 +118,11 @@ const SignUp = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-            {/* Name Row */}
+            {/* Name and Username Row */}
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1">
                 <label className="text-black dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
-                  First Name
+                  Name
                 </label>
                 <div className="relative flex">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -130,33 +130,38 @@ const SignUp = () => {
                   </div>
                   <input
                     type="text"
-                    {...register("first_name")}
-                    placeholder="First name"
+                    {...register("full_name")}
+                    placeholder="Name"
                     className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                   />
                 </div>
-                {errors.first_name && (
+                {errors.full_name && (
                   <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                    {errors.first_name.message}
+                    {errors.full_name.message}
                   </p>
                 )}
               </div>
 
               <div className="flex-1">
                 <label className="text-black dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
-                  Last Name
+                  Username
                 </label>
-                <div className="relative">
+                <div className="relative flex">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <FaUser className="text-gray-400" />
                   </div>
                   <input
                     type="text"
-                    {...register("last_name")}
-                    placeholder="Last Name"
+                    {...register("username")}
+                    placeholder="Username"
                     className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                   />
                 </div>
+                {errors.username && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                    {errors.username.message}
+                  </p>
+                )}
               </div>
             </div>
 

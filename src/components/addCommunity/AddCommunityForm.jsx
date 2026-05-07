@@ -66,7 +66,7 @@ export default function AddCommunityForm({
 
   return (
     <motion.div
-      className="mx-auto p-6 bg-white dark:bg-zinc-900 dark:text-white"
+      className="mx-auto p-6 bg-white dark:bg-zinc-900 dark:text-white w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

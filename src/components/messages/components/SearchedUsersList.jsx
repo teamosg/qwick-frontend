@@ -20,7 +20,7 @@ const SearchedUsersList = ({ usersList, handleUserSelect }) => {
                             <div className="relative">
                                 <AvatarUser
                                     src={user?.avatar}
-                                    alt={user?.first_name}
+                                    alt={user?.full_name}
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
                                 {user?.isOnline && (
@@ -28,7 +28,7 @@ const SearchedUsersList = ({ usersList, handleUserSelect }) => {
                                 )}
                             </div>
                             <div className="flex-1 text-left">
-                                <h4 className="font-medium text-sm text-gray-900 dark:text-white">{user?.first_name} {user?.last_name}</h4>
+                                <h4 className="font-medium text-sm text-gray-900 dark:text-white">{user?.full_name}</h4>
                                 <p className="text-xs text-gray-500 dark:text-gray-400">@{user?.username}</p>
                             </div>
                         </motion.button>

@@ -126,66 +126,92 @@ const AllSubmissions = () => {
                     <div className="space-y-4">
                       {/* User Info and Status */}
                       <div className="flex items-start justify-between">
-                        <div className="space-y-1">
-                          <div className="text-sm font-medium text-[#15161E] dark:text-white">
-                            Submission #{submission.id}
+                          <div className="space-y-1">
+                            <div className="text-sm font-bold text-[#15161E] dark:text-white">
+                              {submission.campaign?.name || "Untitled Campaign"}
+                            </div>
+                            <div className="flex flex-col gap-0.5">
+                              <span className="text-xs font-medium text-gray-700 dark:text-gray-200">
+                                Creator: {submission.member?.username}
+                              </span>
+                              <span className="text-[10px] text-gray-500 dark:text-gray-400">
+                                {submission.member?.email}
+                              </span>
+                            </div>
+                            <span className="text-[10px] text-gray-400 dark:text-gray-500 block pt-1">
+                              ID: #{submission.id} • Submitted on{" "}
+                              {submission.created_at
+                                ? format(new Date(submission.created_at), "PPP p")
+                                : "N/A"}
+                            </span>
                           </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 block">
-                            Submitted on{" "}
-                            {submission.created_at
-                              ? format(new Date(submission.created_at), "PPP")
-                              : "N/A"}
-                          </span>
-                        </div>
                         <div className="flex items-center gap-2">
                           {getStatusBadge(submission.status)}
                         </div>
                       </div>
 
-                      {/* Links */}
-                      <div className="space-y-2">
-                        {submission.youtube_link && (
-                          <a
-                            href={submission.youtube_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm text-[#15161E] dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                          >
-                            <FaYoutube className="text-red-600 size-5" />
-                            <span className="truncate max-w-[200px] sm:max-w-md">
-                              {submission.youtube_link}
-                            </span>
-                            <ExternalLink className="size-3 shrink-0 opacity-50" />
-                          </a>
-                        )}
-                        {submission.tiktok_link && (
-                          <a
-                            href={submission.tiktok_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm text-[#15161E] dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                          >
-                            <FaTiktok className="text-black dark:text-white size-5" />
-                            <span className="truncate max-w-[200px] sm:max-w-md">
-                              {submission.tiktok_link}
-                            </span>
-                            <ExternalLink className="size-3 shrink-0 opacity-50" />
-                          </a>
-                        )}
-                        {submission.instagram_link && (
-                          <a
-                            href={submission.instagram_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm text-[#15161E] dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                          >
-                            <FaInstagram className="text-pink-600 size-5" />
-                            <span className="truncate max-w-[200px] sm:max-w-md">
-                              {submission.instagram_link}
-                            </span>
-                            <ExternalLink className="size-3 shrink-0 opacity-50" />
-                          </a>
-                        )}
+                      {/* Campaign Stats & Links */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50/50 dark:bg-zinc-800/50 p-3 rounded-lg border border-gray-100 dark:border-zinc-700">
+                        {/* Important Info */}
+                        <div className="space-y-1.5">
+                          <p className="text-[10px] uppercase tracking-wider font-semibold text-gray-400 dark:text-zinc-500">Campaign Details</p>
+                          <div className="flex flex-wrap gap-2">
+                            <Badge variant="secondary" className="text-[10px] bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 border-none">
+                              Rate: {submission.campaign?.reward_rate} {submission.campaign?.currency}
+                            </Badge>
+                            <Badge variant="secondary" className="text-[10px] bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 border-none">
+                              Budget: {submission.campaign?.budget_remaining} {submission.campaign?.currency}
+                            </Badge>
+                          </div>
+                          <div className="flex flex-wrap gap-2 mt-1">
+                            <span className="text-[10px] text-gray-500 dark:text-gray-400">Min Payout: {submission.campaign?.min_payout}</span>
+                            <span className="text-gray-300 dark:text-zinc-700">•</span>
+                            <span className="text-[10px] text-gray-500 dark:text-gray-400">Max Payout: {submission.campaign?.max_payout}</span>
+                          </div>
+                        </div>
+
+                        {/* Social Links */}
+                        <div className="space-y-2 border-t md:border-t-0 md:border-l border-gray-200 dark:border-zinc-700 pt-2 md:pt-0 md:pl-4">
+                          <p className="text-[10px] uppercase tracking-wider font-semibold text-gray-400 dark:text-zinc-500">Submission Links</p>
+                          <div className="space-y-1.5">
+                            {submission.links?.youtube && (
+                              <a
+                                href={submission.links.youtube}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-[11px] text-[#15161E] dark:text-white hover:text-blue-600 transition-colors"
+                              >
+                                <FaYoutube className="text-red-600 size-3.5" />
+                                <span className="truncate max-w-[120px]">YouTube</span>
+                                <ExternalLink className="size-2.5 opacity-50" />
+                              </a>
+                            )}
+                            {submission.links?.tiktok && (
+                              <a
+                                href={submission.links.tiktok}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-[11px] text-[#15161E] dark:text-white hover:text-blue-600 transition-colors"
+                              >
+                                <FaTiktok className="text-black dark:text-white size-3.5" />
+                                <span className="truncate max-w-[120px]">TikTok</span>
+                                <ExternalLink className="size-2.5 opacity-50" />
+                              </a>
+                            )}
+                            {submission.links?.instagram && (
+                              <a
+                                href={submission.links.instagram}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-[11px] text-[#15161E] dark:text-white hover:text-blue-600 transition-colors"
+                              >
+                                <FaInstagram className="text-pink-600 size-3.5" />
+                                <span className="truncate max-w-[120px]">Instagram</span>
+                                <ExternalLink className="size-2.5 opacity-50" />
+                              </a>
+                            )}
+                          </div>
+                        </div>
                       </div>
 
                       {/* Action Buttons */}

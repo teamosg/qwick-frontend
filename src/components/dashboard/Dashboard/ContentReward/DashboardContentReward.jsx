@@ -130,7 +130,7 @@ const DashboardContentReward = () => {
               onClick={handleCreateReward}
               className="w-full sm:w-auto bg-[#003933] text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-[#002822] transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/10"
             >
-              Create New Reward
+              Create Campaign
             </button>
           </div>
           <div className="space-y-4 pb-6 mt-6">

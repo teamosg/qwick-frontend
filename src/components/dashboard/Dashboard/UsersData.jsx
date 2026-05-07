@@ -139,11 +139,11 @@ const UsersData = () => {
                   <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
                     {getStatusBadge(user?.status)}
                   </TableCell>
-                  <TableCell className="py-4 px-6 font-semibold text-sm text-gray-500 dark:text-[#fff]">
-                    {user?.joined_at?.substring(0, 10)}
-                  </TableCell>
                   <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
                     {getStatusBadge(user?.is_moderator ? 'moderator' : 'user')}
+                  </TableCell>
+                  <TableCell className="py-4 px-6 font-semibold text-sm text-gray-500 dark:text-[#fff]">
+                    {user?.joined_at?.substring(0, 10)}
                   </TableCell>
                   <TableCell className="py-4 px-6 flex gap-2">
                     {

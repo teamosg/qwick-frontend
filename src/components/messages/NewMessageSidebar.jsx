@@ -157,7 +157,7 @@ const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onCl
                             />
                           )
                           : (
-                            <NoDataAlert message="No users found" />
+                            <NoDataAlert message="No user found" />
                           )
                       )
                   )

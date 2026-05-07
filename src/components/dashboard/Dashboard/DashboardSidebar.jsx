@@ -27,7 +27,7 @@ import { useCommunityStore } from "@/store/communityStore";
 // Menu items.
 const items = [
   {
-    title: "Content Payout",
+    title: "My Campaigns",
     url: "content-payout",
   },
   {
@@ -35,7 +35,7 @@ const items = [
     url: "users",
   },
   {
-    title: "Wait list",
+    title: "Waitlist",
     url: "wait-list",
   },
   {
@@ -72,15 +72,25 @@ export function DashboardSidebarContent() {
   const myCommunityList = communityList?.created_communities
 
 
-  const handleImageUpload = (imageFile) => {
-    if (!imageFile) return;
+  const handleImageUpload = (file, type) => {
+    if (!file) return;
 
     const formData = new FormData();
-    formData.append("banner_image", imageFile);
+    if (type === "banner") {
+      formData.append("banner_image", file);
+    } else if (type === "profile") {
+      formData.append("profile_image", file);
+    }
 
     editCommunity({
       communityUsername: selectedBrandCommunity?.username,
       payload: formData,
+    }, {
+      onSuccess: (response) => {
+        if (response?.status && response?.data) {
+          setSelectedBrandCommunity(response.data);
+        }
+      }
     });
   };
 
@@ -106,7 +116,7 @@ export function DashboardSidebarContent() {
               disabled={isPending}
               onClick={openImageModal}
               className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
-              title="Edit banner"
+              title="Edit community images"
             >
               {
                 isPending

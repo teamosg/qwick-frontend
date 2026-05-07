@@ -36,7 +36,7 @@ export function SidebarJoinedCommunity({ onClose, joinedCommunityList, isLoading
                         className="flex items-center gap-2 dark:text-white cursor-pointer transition duration-300 hover:text-[#17173c]"
                       >
                         <AvatarUser
-                          src={community?.avatar}
+                          src={community?.profile_image}
                           alt={community?.business_name}
                           className="h-8 w-8"
                         />

@@ -10,15 +10,18 @@ import {
   Shield,
   Sun,
   Users,
+  LogOut,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../shared/ThemeProvider";
 import { Link } from "react-router";
+import { useLogout } from "../../hooks/auth.hook";
 
 const SettingsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { theme, setTheme } = useTheme();
+  const { mutate: logOut, isPending } = useLogout();
 
   const toggleTheme = (selectedTheme) => setTheme(selectedTheme);
 
@@ -120,6 +123,16 @@ const SettingsMenu = () => {
                   </button>
                 </Link>
               ))}
+              <button
+                onClick={() => logOut()}
+                disabled={isPending}
+                className="cursor-pointer w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors border-t border-gray-100 dark:border-zinc-800 mt-1"
+              >
+                <LogOut size={18} className="text-red-500" />
+                <span className="text-sm font-medium text-red-500">
+                  {isPending ? "Logging out..." : "Logout"}
+                </span>
+              </button>
             </div>
           </motion.div>
         )}

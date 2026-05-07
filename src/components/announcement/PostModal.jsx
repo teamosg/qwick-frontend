@@ -30,13 +30,13 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                         <div className="flex items-center gap-3 mb-4">
                             <AvatarUser
                                 src={post?.author?.avatar}
-                                alt={post?.author?.first_name}
+                                alt={post?.author?.full_name}
                                 className="w-10 h-10 sm:w-12 sm:h-12"
                             />
 
                             <div className="min-w-0 flex-1">
                                 <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
-                                    {post?.author?.first_name} {post?.author?.last_name}
+                                    {post?.author?.full_name}
                                 </h3>
 
                                 <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
