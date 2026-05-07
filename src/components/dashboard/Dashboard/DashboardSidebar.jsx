@@ -27,7 +27,7 @@ import { useCommunityStore } from "@/store/communityStore";
 // Menu items.
 const items = [
   {
-    title: "Content Payout",
+    title: "My Campaigns",
     url: "content-payout",
   },
   {
@@ -35,7 +35,7 @@ const items = [
     url: "users",
   },
   {
-    title: "Wait list",
+    title: "Waitlist",
     url: "wait-list",
   },
   {

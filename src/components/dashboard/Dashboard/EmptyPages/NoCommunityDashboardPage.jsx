@@ -22,11 +22,11 @@ const NoCommunityDashboardPage = () => {
                 </motion.div>
 
                 <h2 className="text-xl font-semibold text-[#090003] dark:text-white mb-3">
-                    No Community Created Yet
+                    No Community Yet
                 </h2>
 
                 <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">
-                    You haven't created a community for your brand. Create one to engage your audience and unlock more features.
+                    You haven’t created a community for your brand. Start one to engage your audience and unlock more features.
                 </p>
 
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
