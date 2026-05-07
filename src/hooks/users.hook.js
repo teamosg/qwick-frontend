@@ -17,11 +17,11 @@ export const useGetOtherUser = ({ userName, enabled }) => {
                 );
                 return res?.data?.data || {};
             } catch (error) {
-                handleApiError({
-                    error,
-                    throwError: true,
-                    errorMessage: "Failed to search user",
-                });
+                // handleApiError({
+                //     error,
+                //     throwError: true,
+                //     errorMessage: "Failed to search user",
+                // });
             }
         },
 
