@@ -283,7 +283,7 @@ const CampaignForm = ({
             disabled={isFormDisabled}
             value={formData.campaignName}
             onChange={(e) => handleInputChange("campaignName", e.target.value)}
-            placeholder="e.g. Summer UGC Challenge"
+            placeholder="Campaign Name"
             className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none text-gray-900 dark:text-white placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
@@ -353,7 +353,7 @@ const CampaignForm = ({
         {/* Campaign budget */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Campaign budget*
+            Campaign Budget*
           </label>
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
@@ -365,7 +365,7 @@ const CampaignForm = ({
                 onChange={(e) =>
                   handleInputChange("campaignBudget", e.target.value)
                 }
-                placeholder="e.g. 1000"
+                placeholder="0.00"
                 className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
@@ -399,7 +399,7 @@ const CampaignForm = ({
         {/* Reward rate */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Reward rate* (per 1k views)
+            Reward Rate* (per 1k views)
           </label>
           <div className="relative">
             <input
@@ -407,7 +407,7 @@ const CampaignForm = ({
               disabled={isFormDisabled}
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
-              placeholder="e.g. 5"
+              placeholder="0.00"
               className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
@@ -417,7 +417,7 @@ const CampaignForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-2 flex items-center gap-2">
-              Minimum payout*
+              Minimum Payout*
               <Popover>
                 <PopoverTrigger asChild>
                   <button type="button" tabIndex={-1}>
@@ -436,7 +436,7 @@ const CampaignForm = ({
                 disabled={isFormDisabled}
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
-                placeholder="e.g. 10"
+                placeholder="0.00"
                 className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
@@ -449,7 +449,7 @@ const CampaignForm = ({
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-2 flex items-center gap-2">
-              Maximum payout*
+              Maximum Payout*
               <Popover>
                 <PopoverTrigger asChild>
                   <button type="button" tabIndex={-1}>
@@ -468,7 +468,7 @@ const CampaignForm = ({
                 disabled={isFormDisabled}
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
-                placeholder="e.g. 500"
+                placeholder="0.00"
                 className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
@@ -483,8 +483,7 @@ const CampaignForm = ({
         {/* Flat fee bonus */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-            Flat fee bonus (optional) -
-            Max 10% of the total budget
+            Flat Fee Bonus (Optional) - Max 10% of the Total Budget
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
@@ -505,7 +504,7 @@ const CampaignForm = ({
               onChange={(e) =>
                 handleInputChange("flatFeeBonus", e.target.value)
               }
-              placeholder="e.g. 20"
+              placeholder="0.00"
               className={cn(
                 "w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed",
                 formData.flatFeeBonus && Number(formData.flatFeeBonus) > (Number(formData.campaignBudget) * 0.1) && "border-red-500 focus:ring-red-500"
@@ -525,7 +524,7 @@ const CampaignForm = ({
             Platform*
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {["Instagram", "Tiktok", "Youtube"].map((platform) => (
+            {["Instagram", "TikTok", "Youtube"].map((platform) => (
               <label
                 key={platform}
                 className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-[#2E2E2E] hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
@@ -550,7 +549,7 @@ const CampaignForm = ({
         {/* Available content */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Available content
+            Available Content
           </label>
           <p className="text-xs text-gray-500 dark:text-gray-400">
             We suggest adding your guides, raw footage, and other materials for
@@ -576,7 +575,7 @@ const CampaignForm = ({
         {/* Content requirement */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Content requirement*
+            Content Requirement*
           </label>
           <p className="text-xs text-gray-500 dark:text-gray-400">
             We recommend including content guidelines for users to follow.
@@ -587,7 +586,7 @@ const CampaignForm = ({
             onChange={(e) =>
               handleInputChange("contentRequirement", e.target.value)
             }
-            placeholder="e.g. Video must be at least 30 seconds long, include the brand logo..."
+            placeholder="Enter Requirement"
             rows={4}
             className="w-full px-3 text-gray-900 dark:text-white py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
           />
@@ -596,7 +595,7 @@ const CampaignForm = ({
         {/* Campaign Duration */}
         <div className="space-y-3">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-            Campaign duration* (Min 30days)
+            Campaign Duration (Min 30 Days)
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
