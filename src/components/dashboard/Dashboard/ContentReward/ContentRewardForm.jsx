@@ -140,6 +140,14 @@ const CampaignForm = ({
     }
   };
 
+  const calculateViews = (payout, rate) => {
+    if (!payout || !rate || Number(rate) === 0) return null;
+    const views = (Number(payout) / Number(rate)) * 1000;
+    if (views >= 1000000) return `~${(views / 1000000).toFixed(1)}M views`;
+    if (views >= 1000) return `~${Math.round(views / 1000)}k views`;
+    return `~${Math.round(views)} views`;
+  };
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -406,9 +414,9 @@ const CampaignForm = ({
         </div>
 
         {/* Min and Max payout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-2 flex items-center gap-2">
               Minimum payout*
               <Popover>
                 <PopoverTrigger asChild>
@@ -432,10 +440,15 @@ const CampaignForm = ({
                 className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
+            {formData.minPayout && formData.rewardRate && (
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 ml-1 font-medium italic">
+                {calculateViews(formData.minPayout, formData.rewardRate)}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
+            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-2 flex items-center gap-2">
               Maximum payout*
               <Popover>
                 <PopoverTrigger asChild>
@@ -459,6 +472,11 @@ const CampaignForm = ({
                 className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
+            {formData.maxPayout && formData.rewardRate && (
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 ml-1 font-medium italic">
+                {calculateViews(formData.maxPayout, formData.rewardRate)}
+              </p>
+            )}
           </div>
         </div>
 
