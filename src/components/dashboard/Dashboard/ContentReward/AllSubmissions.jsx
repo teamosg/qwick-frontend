@@ -16,7 +16,7 @@ const AllSubmissions = () => {
   const { mutate: reviewSubmission, isPending: isReviewing } = useReviewSubmission();
 
   const submissions = data?.submissions || [];
-  const totalSubmissions = data?.total_submissions || submissions.length;
+  const totalSubmissions = data?.total_submissions || submissions?.length;
 
   const handleReview = (submissionId, action) => {
     reviewSubmission({ submissionId, action });
@@ -111,7 +111,7 @@ const AllSubmissions = () => {
                   {/* Image Section */}
                   <div className="w-full sm:w-48 h-48 sm:h-40 flex-shrink-0 bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden relative">
                     <img
-                      src={getImageUrl(submission.file)}
+                      src={getImageUrl(submission?.file)}
                       className="h-full w-full object-cover"
                       alt="Submission"
                       onError={(e) => {
@@ -120,7 +120,7 @@ const AllSubmissions = () => {
                     />
                     <div className="absolute top-2 left-2">
                        <Badge className="bg-black/60 backdrop-blur-md text-white border-none text-[10px]">
-                         #{submission.id}
+                         #{submission?.id}
                        </Badge>
                     </div>
                   </div>
@@ -132,21 +132,21 @@ const AllSubmissions = () => {
                       <div className="flex items-start justify-between">
                           <div className="space-y-1">
                             <div className="text-sm font-bold text-[#15161E] dark:text-white leading-tight">
-                              {submission.campaign?.name || "Untitled Campaign"}
+                              {submission?.campaign?.name || "Untitled Campaign"}
                             </div>
                             <div className="flex flex-col gap-0.5">
                               <span className="text-xs font-medium text-gray-600 dark:text-gray-300">
-                                Creator: {submission.member?.username || "Anonymous"}
+                                Creator: {submission?.member?.username || "Anonymous"}
                               </span>
                             </div>
-                            {submission.created_at && (
+                            {submission?.created_at && (
                               <span className="text-[10px] text-gray-400 dark:text-gray-500 block">
-                                Submitted {format(new Date(submission.created_at), "PPP")}
+                                Submitted {format(new Date(submission?.created_at), "PPP")}
                               </span>
                             )}
                           </div>
                         <div className="flex items-center gap-2">
-                          {getStatusBadge(submission.status)}
+                          {getStatusBadge(submission?.status)}
                         </div>
                       </div>
 
@@ -158,17 +158,17 @@ const AllSubmissions = () => {
                           <div className="flex flex-wrap gap-3">
                             <div className="flex flex-col">
                               <span className="text-[10px] text-gray-500 flex items-center gap-1"><TrendingUp className="size-3" /> Total Views</span>
-                              <span className="text-sm font-bold text-[#15161E] dark:text-white">{submission.views?.toLocaleString()}</span>
+                              <span className="text-sm font-bold text-[#15161E] dark:text-white">{submission?.views?.toLocaleString()}</span>
                             </div>
                             <div className="h-8 w-[1px] bg-gray-200 dark:bg-zinc-700" />
                             <div className="flex flex-col">
                               <span className="text-[10px] text-gray-500 flex items-center gap-1"><DollarSign className="size-3" /> Payout</span>
-                              <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">${submission.payout?.toFixed(2)}</span>
+                              <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">${submission?.payout?.total_earned?.toFixed(2)}</span>
                             </div>
                           </div>
                           <div className="pt-1">
                              <Badge variant="outline" className="text-[10px] font-normal border-gray-200 dark:border-zinc-700">
-                               Campaign Budget: ${submission.campaign?.budget_remaining?.toLocaleString()}
+                               Campaign Budget: ${submission?.campaign?.budget_remaining?.toLocaleString()}
                              </Badge>
                           </div>
                         </div>
@@ -177,31 +177,31 @@ const AllSubmissions = () => {
                         <div className="space-y-3 border-t md:border-t-0 md:border-l border-gray-200 dark:border-zinc-700 pt-3 md:pt-0 md:pl-6">
                           <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 dark:text-zinc-500">Platform Breakdown</p>
                           <div className="grid grid-cols-1 gap-2">
-                            {submission.views_breakdown?.youtube > 0 && (
+                            {submission?.platform_stats?.youtube?.baseline > 0 && (
                               <div className="flex items-center justify-between text-[11px]">
                                 <span className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
                                   <FaYoutube className="text-red-600 size-3" /> YouTube
                                 </span>
-                                <span className="font-semibold">{submission.views_breakdown.youtube.toLocaleString()}</span>
+                                <span className="font-semibold">{submission?.platform_stats?.youtube?.baseline?.toLocaleString()}</span>
                               </div>
                             )}
-                            {submission.views_breakdown?.tiktok > 0 && (
+                            {submission?.platform_stats?.tiktok?.baseline > 0 && (
                               <div className="flex items-center justify-between text-[11px]">
                                 <span className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
                                   <FaTiktok className="text-black dark:text-white size-3" /> TikTok
                                 </span>
-                                <span className="font-semibold">{submission.views_breakdown.tiktok.toLocaleString()}</span>
+                                <span className="font-semibold">{submission?.platform_stats?.tiktok?.baseline?.toLocaleString()}</span>
                               </div>
                             )}
-                            {submission.views_breakdown?.instagram > 0 && (
+                            {submission?.platform_stats?.instagram?.baseline > 0 && (
                               <div className="flex items-center justify-between text-[11px]">
                                 <span className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
                                   <FaInstagram className="text-pink-600 size-3" /> Instagram
                                 </span>
-                                <span className="font-semibold">{submission.views_breakdown.instagram.toLocaleString()}</span>
+                                <span className="font-semibold">{submission?.platform_stats?.instagram?.baseline?.toLocaleString()}</span>
                               </div>
                             )}
-                            {(!submission.views_breakdown || Object.values(submission.views_breakdown).every(v => v === 0)) && (
+                            {(!submission?.platform_stats || Object.values(submission?.platform_stats).every(v => (v?.baseline || 0) === 0)) && (
                               <span className="text-[10px] text-gray-400 italic">No breakdown available</span>
                             )}
                           </div>
@@ -209,11 +209,11 @@ const AllSubmissions = () => {
                       </div>
 
                       {/* Action Buttons */}
-                      {(submission.status === 'pending' || submission.status === 'reviewed') && (
+                      {(submission?.status === 'pending' || submission?.status === 'reviewed') && (
                         <div className="flex gap-4 pt-2">
                           <Button
                             variant="ghost"
-                            onClick={() => handleReview(submission.id, "approve")}
+                            onClick={() => handleReview(submission?.id, "approve")}
                             disabled={isReviewing}
                             className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-[#15803D] hover:text-[#15803D]/80 text-xs font-semibold flex items-center gap-1.5"
                           >
@@ -223,7 +223,7 @@ const AllSubmissions = () => {
 
                           <Button
                             variant="ghost"
-                            onClick={() => handleReview(submission.id, "reject")}
+                            onClick={() => handleReview(submission?.id, "reject")}
                             disabled={isReviewing}
                             className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-[#DC2626] hover:text-[#DC2626]/80 text-xs font-semibold flex items-center gap-1.5"
                           >
