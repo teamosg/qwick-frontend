@@ -42,6 +42,15 @@ const ContentRewardDetailsPayment = () => {
     termsAccepted: false,
   });
 
+  const currentBudget = campaign?.initial_budget || campaign?.budget || 0;
+  const earning = parseFloat(campaign?.total_users_earning || 0);
+  const progress = currentBudget > 0
+    ? Math.min(Math.max((earning / parseFloat(currentBudget)) * 100, 0), 100)
+    : 0;
+
+  const isEnded = campaign?.end_date && new Date(campaign.end_date) < new Date();
+  const isFull = progress >= 100;
+
   const [errors, setErrors] = useState({});
 
   const isCreator = selectedCreatorCommunity?.can_edit;
@@ -163,6 +172,21 @@ const ContentRewardDetailsPayment = () => {
       <div className="p-4 sm:p-6 text-[#717171] max-w-5xl mx-auto">
         <div className="dark:text-white dark:bg-zinc-900 p-4 sm:p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 bg-white">
           <div className="space-y-6">
+            {(isEnded || isFull) && (
+              <div className="flex justify-end">
+                {isEnded ? (
+                  <div className="px-3 py-1 bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 rounded-full text-xs font-bold flex items-center gap-1.5 border border-red-200 dark:border-red-900/50">
+                    <div className="size-1.5 rounded-full bg-red-600 animate-pulse" />
+                    CAMPAIGN EXPIRED
+                  </div>
+                ) : (
+                  <div className="px-3 py-1 bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400 rounded-full text-xs font-bold flex items-center gap-1.5 border border-amber-200 dark:border-amber-900/50">
+                    <div className="size-1.5 rounded-full bg-amber-600 animate-pulse" />
+                    BUDGET REACHED
+                  </div>
+                )}
+              </div>
+            )}
             <div className="relative group overflow-hidden rounded-2xl">
               <img
                 src={fullThumbnail || "/confirm-apply.png"}
@@ -231,9 +255,13 @@ const ContentRewardDetailsPayment = () => {
               </button>
               <button
                 onClick={handleApplyClick}
-                className="w-full sm:w-auto px-10 py-3.5 text-white bg-[#003933] hover:bg-[#002822] text-lg font-bold rounded-2xl transition duration-300 shadow-xl active:scale-[0.98] order-1 sm:order-2"
+                disabled={isEnded || isFull}
+                className={`w-full sm:w-auto px-10 py-3.5 text-white text-lg font-bold rounded-2xl transition duration-300 shadow-xl order-1 sm:order-2 ${isEnded || isFull
+                  ? "bg-gray-400 cursor-not-allowed opacity-50"
+                  : "bg-[#003933] hover:bg-[#002822] active:scale-[0.98]"
+                  }`}
               >
-                Submit Content
+                {isEnded ? "Campaign Ended" : isFull ? "Budget Reached" : "Submit Content"}
               </button>
             </div>
           </div>
