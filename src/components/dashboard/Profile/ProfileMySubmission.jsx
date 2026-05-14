@@ -6,10 +6,25 @@ import { useGetMySubmissions } from "@/hooks/campaign.hook";
 import { Loader2, ExternalLink, TrendingUp, DollarSign, Calendar, CheckCircle2 } from "lucide-react";
 import { format } from "date-fns";
 import { FaYoutube, FaTiktok, FaInstagram } from "react-icons/fa";
+import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const ProfileMySubmission = () => {
   const { data, isLoading } = useGetMySubmissions();
+  const [selectedStatus, setSelectedStatus] = useState("all");
+
   const submissions = data?.submissions || [];
+
+  const filteredSubmissions = submissions.filter((submission) => {
+    if (selectedStatus === "all") return true;
+    return submission.status?.toLowerCase() === selectedStatus.toLowerCase();
+  });
 
   const getStatusBadge = (status) => {
     const statusType = status?.toLowerCase() || "pending";
@@ -41,7 +56,10 @@ const ProfileMySubmission = () => {
   if (isLoading) {
     return (
       <div className="p-4 md:p-6 space-y-4 sm:space-y-6">
-        <Skeleton className="h-7 w-48 mb-6" />
+      <div className="flex items-center justify-between mb-6">
+        <Skeleton className="h-7 w-48" />
+        <Skeleton className="h-10 w-[180px] rounded-full" />
+      </div>
         <div className="space-y-4 sm:space-y-6">
           {[1, 2, 3].map((i) => (
             <Card
@@ -73,21 +91,40 @@ const ProfileMySubmission = () => {
   return (
     <div className="md:p-6 space-y-4 sm:space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-[#15161E] dark:text-white">
-          My Submissions
-        </h1>
-        <Badge variant="secondary" className="px-4 py-1.5 rounded-lg bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 border-none font-medium">
-          Total {data?.total || submissions.length}
-        </Badge>
+        <div className="flex items-center gap-4">
+          <h1 className="text-xl sm:text-2xl font-bold text-[#15161E] dark:text-white">
+            My Submissions
+          </h1>
+          <Badge
+            variant="secondary"
+            className="px-4 py-1.5 rounded-lg bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 border-none font-medium"
+          >
+            Total {filteredSubmissions.length}
+          </Badge>
+        </div>
+
+        <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+          <SelectTrigger className="w-[180px] rounded-full bg-gray-50 dark:bg-zinc-800 border-gray-200 dark:border-zinc-700">
+            <SelectValue placeholder="All Statuses" />
+          </SelectTrigger>
+          <SelectContent className="rounded-xl border-gray-200 dark:border-zinc-700 shadow-lg">
+            <SelectItem value="all">All Statuses</SelectItem>
+            <SelectItem value="approved">Approved</SelectItem>
+            <SelectItem value="pending">Pending</SelectItem>
+            <SelectItem value="rejected">Rejected</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="space-y-4 sm:space-y-6">
-        {submissions.length === 0 ? (
+        {filteredSubmissions.length === 0 ? (
           <div className="text-center py-16 bg-gray-50 dark:bg-zinc-900/50 rounded-2xl border border-dashed border-gray-300 dark:border-zinc-700 text-gray-500 dark:text-gray-400">
-            No submissions found. Start a campaign to see them here!
+            {selectedStatus === "all"
+              ? "No submissions found. Start a campaign to see them here!"
+              : `No ${selectedStatus} submissions found.`}
           </div>
         ) : (
-          submissions.map((submission) => (
+          filteredSubmissions.map((submission) => (
             <Card
               key={submission.id}
               className="p-0! group overflow-hidden transition-all duration-300 hover:shadow-md border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
