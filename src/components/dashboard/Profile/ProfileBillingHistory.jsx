@@ -59,7 +59,7 @@ const ProfileBillingHistory = () => {
     <div className="p-4 md:p-6 space-y-4 sm:space-y-6">
       {/* Header */}
       <h1 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4 sm:mb-6">
-        Billing history
+        Billing History
       </h1>
 
       {/* Search Bar */}
@@ -67,7 +67,7 @@ const ProfileBillingHistory = () => {
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
         <Input
           type="text"
-          placeholder="Search by community or amount..."
+          placeholder="Search by community or amount"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pl-10 pr-4 py-2 w-full rounded-lg border-gray-300 dark:border-zinc-800 dark:bg-[#2E2E2E] dark:text-white focus:border-[#003933] focus:ring-1 focus:ring-[#003933]"
@@ -115,7 +115,7 @@ const ProfileBillingHistory = () => {
           ))
         ) : (
           <div className="text-center py-10 text-gray-500 dark:text-zinc-500">
-            No billing history found.
+            No Billing History
           </div>
         )}
       </div>
