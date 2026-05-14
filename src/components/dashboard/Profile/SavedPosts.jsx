@@ -16,7 +16,7 @@ const SavedPosts = () => {
   if (!savedPosts?.length) {
     return (
       <div className="text-center text-gray-500 py-10">
-        No saved posts found.
+        No Saved Posts
       </div>
     );
   }
