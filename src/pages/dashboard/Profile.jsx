@@ -111,7 +111,7 @@ const Profile = () => {
     editProfile(formData);
   };
 
-  const userName = profile?.full_name || "User Name";
+  const userName = profile?.username || "User Name";
   const userAvatar = profile?.avatar;
 
   return (
