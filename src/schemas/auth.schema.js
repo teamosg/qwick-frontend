@@ -1,9 +1,14 @@
 import { z } from 'zod';
+import { isValidUsername, usernameValidationMessage } from '@/utils/usernameUtils';
 
 // Sign Up Schema
 export const signUpSchema = z.object({
   full_name: z.string().min(1, 'Full name is required').max(100, 'Full name must be less than 100 characters'),
-  username: z.string().min(1, 'Username is required').max(50, 'Username must be less than 50 characters'),
+  username: z
+    .string()
+    .min(1, 'Username is required')
+    .max(50, 'Username must be less than 50 characters')
+    .refine(isValidUsername, usernameValidationMessage),
   email: z.string().email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirm_password: z.string().min(8, 'Confirm password must be at least 8 characters'),
