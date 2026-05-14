@@ -69,7 +69,7 @@ const tabs = [
     content: <ProfileBillingHistory />,
   },
   {
-    name: "My submission",
+    name: "My Submissions",
     value: "my-submission",
     icon: Captions,
     content: <ProfileMySubmission />,
@@ -81,7 +81,7 @@ const tabs = [
     content: <ProfileMyEarnings />,
   },
   {
-    name: "Saved Post",
+    name: "Saved Posts",
     value: "saved-post",
     icon: Save,
     content: <SavedPosts />,
