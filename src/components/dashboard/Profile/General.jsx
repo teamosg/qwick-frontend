@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useEditProfile, useProfile } from "@/hooks/auth.hook";
 import { useEffect, useState } from "react";
 import ProfileInfoSkeleton from "./components/ProfileInfoSkeleton";
+import { formatUsername } from "@/utils/usernameUtils";
 
 const ProfileGeneral = () => {
   const { data, isLoading: isProfileLoading } = useProfile();
@@ -27,23 +28,27 @@ const ProfileGeneral = () => {
   }, [data]);
 
   const handleInputChange = (field, value) => {
+    let processedValue = value;
+    if (field === "username") {
+      processedValue = formatUsername(value);
+    }
     setFormData((prev) => ({
       ...prev,
-      [field]: value,
+      [field]: processedValue,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const payload = {
-      full_name: formData.name,
-      bio: formData.bio,
-      username: formData.username,
-      phone_number: formData.phone,
-    };
+    // Create FormData for multipart submission
+    const formDataPayload = new FormData();
+    formDataPayload.append("full_name", formData.name);
+    formDataPayload.append("bio", formData.bio);
+    formDataPayload.append("username", formatUsername(formData.username));
+    formDataPayload.append("phone_number", formData.phone);
 
-    editProfile(payload);
+    editProfile(formDataPayload);
   };
 
   if (isProfileLoading) {

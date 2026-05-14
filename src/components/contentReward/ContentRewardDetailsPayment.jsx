@@ -431,7 +431,7 @@ const ContentRewardDetailsPayment = () => {
                     <span>Processing...</span>
                   </>
                 ) : (
-                  "Finalize Submission"
+                  "Submit for approval"
                 )}
               </button>
             </div>

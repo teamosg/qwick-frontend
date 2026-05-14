@@ -20,6 +20,7 @@ import {
   X,
   Loader2,
   Coins,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
 import { FaFileInvoice } from "react-icons/fa";
@@ -38,7 +39,7 @@ const tabs = [
     content: <ProfileGeneral />,
   },
   {
-    name: "Connected accounts",
+    name: "Connected Accounts",
     value: "connected-accounts",
     icon: Link2,
     content: <ConnectedAccounts />,
@@ -63,12 +64,12 @@ const tabs = [
   },
   {
     name: "Billing history",
-    value: "billing-history",
+    value: "Billing History",
     icon: FaFileInvoice,
     content: <ProfileBillingHistory />,
   },
   {
-    name: "My submission",
+    name: "My Submissions",
     value: "my-submission",
     icon: Captions,
     content: <ProfileMySubmission />,
@@ -80,17 +81,17 @@ const tabs = [
     content: <ProfileMyEarnings />,
   },
   {
-    name: "Saved Post",
+    name: "Saved Posts",
     value: "saved-post",
     icon: Save,
     content: <SavedPosts />,
   },
-  {
-    name: "Delete Account",
-    value: "delete-account",
-    icon: CircleAlert,
-    content: <ProfileDangerZone />,
-  },
+  // {
+  //   name: "Sign Out",
+  //   value: "sign-out",
+  //   icon: LogOut,
+  //   content: <ProfileDangerZone />,
+  // },
 ];
 
 const Profile = () => {
@@ -110,7 +111,7 @@ const Profile = () => {
     editProfile(formData);
   };
 
-  const userName = profile?.full_name || "User Name";
+  const userName = profile?.username || "User Name";
   const userAvatar = profile?.avatar;
 
   return (
@@ -189,10 +190,10 @@ const Profile = () => {
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="cursor-pointer !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
+                  className="cursor-pointer flex items-center gap-x-2 !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
                   onClick={() => setIsTabsOpen(false)}
                 >
-                  <tab.icon className="mr-2 h-4 w-4" /> {tab.name}
+                  <tab.icon /> {tab.name}
                 </TabsTrigger>
               ))}
             </TabsList>

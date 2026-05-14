@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Instagram,
-  Music,
   Plus,
   Youtube,
   Facebook,
@@ -20,6 +19,20 @@ import { useState } from "react";
 import { useProfile } from "@/hooks/auth.hook";
 import { useAddSocialMedia, useVerifySocialMedia } from "@/hooks/social.hook";
 
+const TikTokIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    fill="currentColor"
+    className="bi bi-tiktok"
+    viewBox="0 0 16 16"
+    {...props}
+  >
+    <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z" />
+  </svg>
+);
+
 const ConnectedAccounts = () => {
   const { data: profile } = useProfile();
   const { mutate: addAccount, isPending } = useAddSocialMedia();
@@ -36,7 +49,7 @@ const ConnectedAccounts = () => {
     // { id: "facebook", name: "Facebook", icon: Facebook },
     { id: "youtube", name: "YouTube", icon: Youtube },
     { id: "instagram", name: "Instagram", icon: Instagram },
-    { id: "tiktok", name: "TikTok", icon: Music },
+    { id: "tiktok", name: "TikTok", icon: TikTokIcon },
   ];
 
   const handleConnectClick = (platform) => {
@@ -109,7 +122,7 @@ const ConnectedAccounts = () => {
         </h2>
         {connectedList.length === 0 ? (
           <div className="text-center text-[#717171] dark:text-white text-[16px] py-10 px-4 w-full shadow rounded-[24px]">
-            <p>No Accounts connected yet</p>
+            <p>No Accounts Connected</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -143,7 +156,7 @@ const ConnectedAccounts = () => {
       {unconnectedList.length > 0 && (
         <div className="space-y-4">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Add new account
+            Connect Your Accounts
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {unconnectedList.map((account) => (

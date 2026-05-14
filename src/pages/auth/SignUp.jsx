@@ -15,6 +15,7 @@ import { useSignUp, useGoogleSignInHook } from "../../hooks/auth.hook.js";
 import { useNavigate } from "react-router";
 import LogoOnly from "@/components/Logo/LogoOnly";
 import { useGoogleLogin } from "@react-oauth/google";
+import { formatUsername } from "@/utils/usernameUtils";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -39,6 +40,9 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     const { accepted_terms, ...payload } = data;
+    if (payload.username) {
+      payload.username = formatUsername(payload.username);
+    }
     mutate(payload, {
       onSuccess: res => {
         if (res?.status) {
@@ -153,6 +157,10 @@ const SignUp = () => {
                   <input
                     type="text"
                     {...register("username")}
+                    onChange={(e) => {
+                      const formatted = formatUsername(e.target.value);
+                      form.setValue("username", formatted);
+                    }}
                     placeholder="Username"
                     className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                   />
