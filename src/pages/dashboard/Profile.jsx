@@ -20,6 +20,7 @@ import {
   X,
   Loader2,
   Coins,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
 import { FaFileInvoice } from "react-icons/fa";
@@ -85,12 +86,12 @@ const tabs = [
     icon: Save,
     content: <SavedPosts />,
   },
-  {
-    name: "Delete Account",
-    value: "delete-account",
-    icon: CircleAlert,
-    content: <ProfileDangerZone />,
-  },
+  // {
+  //   name: "Sign Out",
+  //   value: "sign-out",
+  //   icon: LogOut,
+  //   content: <ProfileDangerZone />,
+  // },
 ];
 
 const Profile = () => {
