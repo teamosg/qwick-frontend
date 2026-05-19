@@ -1,6 +1,6 @@
 const PostSkeleton = () => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-4 animate-pulse">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-4 animate-pulse max-w-2xl mx-auto">
       {/* Header */}
       <div className="flex items-center space-x-3 mb-4">
         {/* Avatar */}
