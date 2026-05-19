@@ -8,7 +8,7 @@ import PostActions from "./PostActions";
 const Post = ({ post }) => {
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow p-3 sm:p-6">
+    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow p-3 sm:p-6 max-w-2xl mx-auto">
       {/* ================= POST HEADER ================= */}
       <div className="flex justify-between items-start mb-3 sm:mb-4">
         <div className="flex items-center space-x-2 sm:space-x-3">

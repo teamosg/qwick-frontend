@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaEnvelope,
   FaEye,
@@ -20,13 +20,17 @@ import { formatUsername } from "@/utils/usernameUtils";
 const SignUp = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Use the new auth hook
   const { form, mutate, isPending } = useSignUp();
-  const { register, handleSubmit, formState: { errors }, watch } = form;
+  const { register, handleSubmit, formState: { errors }, watch, setValue } = form;
 
   const acceptedTerms = watch("accepted_terms");
+  const passwordValue = watch("password");
+
+  useEffect(() => {
+    setValue("confirm_password", passwordValue || "");
+  }, [passwordValue, setValue]);
 
   const { mutate: googleSignIn, isPending: googlePending } = useGoogleSignInHook();
 
@@ -230,39 +234,7 @@ const SignUp = () => {
               )}
             </div>
 
-            {/* Confirm Password */}
-            <div>
-              <label className="text-black dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
-                Confirm Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="text-gray-400" />
-                </div>
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  {...register("confirm_password")}
-                  placeholder="Confirm password"
-                  className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <FaEyeSlash className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
-                  ) : (
-                    <FaEye className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
-                  )}
-                </button>
-              </div>
-              {errors.confirm_password && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
-                  {errors.confirm_password.message}
-                </p>
-              )}
-            </div>
+
 
             {/* Terms and Conditions Checkbox */}
             <div className="flex items-start gap-2 py-2">

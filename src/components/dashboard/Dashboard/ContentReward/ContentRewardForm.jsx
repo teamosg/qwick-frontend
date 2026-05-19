@@ -441,7 +441,7 @@ const CampaignForm = ({
               />
             </div>
             {formData.minPayout && formData.rewardRate && (
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 ml-1 font-medium italic">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 ml-1 font-medium">
                 {calculateViews(formData.minPayout, formData.rewardRate)}
               </p>
             )}
@@ -473,7 +473,7 @@ const CampaignForm = ({
               />
             </div>
             {formData.maxPayout && formData.rewardRate && (
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 ml-1 font-medium italic">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 ml-1 font-medium">
                 {calculateViews(formData.maxPayout, formData.rewardRate)}
               </p>
             )}

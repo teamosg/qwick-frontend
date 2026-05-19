@@ -114,9 +114,9 @@ const JoinCommunity = () => {
       >
         <div className="max-h-100 overflow-hidden rounded-xl mb-6 shadow-sm border border-gray-200 dark:border-zinc-800">
           <motion.img
-            src={JoinCommunityImage}
+            src={community?.banner_image || JoinCommunityImage}
             alt=""
-            className="max-w-full object-cover"
+            className="max-w-full object-cover w-full h-full"
             variants={itemVariants}
             whileHover={{
               scale: 1.02,

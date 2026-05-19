@@ -16,43 +16,42 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   const getPageNumbers = () => {
-    const pages = [];
-    const maxVisiblePages = 5;
+    const siblingCount = 1;
+    const totalPageNumbers = siblingCount + 5;
 
-    if (totalPages <= maxVisiblePages) {
+    if (totalPages <= totalPageNumbers) {
+      const pages = [];
       for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      // Strictly 5 columns in the middle section
-      if (currentPage <= 2) {
-        // Near start: [1, 2, 3, "...", totalPages]
-        pages.push(1, 2, 3, "...");
-        pages.push(totalPages);
-      } else if (currentPage >= totalPages - 1) {
-        // Near end: [1, "...", totalPages-2, totalPages-1, totalPages]
-        pages.push(1, "...");
-        pages.push(totalPages - 2);
-        pages.push(totalPages - 1);
-        pages.push(totalPages);
-      } else {
-        // Middle pages: ensure current is visible with one gap
-        if (currentPage < totalPages / 2) {
-          // [1, current, current+1, "...", totalPages]
-          pages.push(1);
-          pages.push(currentPage);
-          pages.push(currentPage + 1);
-          pages.push("...");
-          pages.push(totalPages);
-        } else {
-          // [1, "...", current-1, current, totalPages]
-          pages.push(1);
-          pages.push("...");
-          pages.push(currentPage - 1);
-          pages.push(currentPage);
-          pages.push(totalPages);
-        }
-      }
+      return pages;
     }
-    return pages;
+
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);
+
+    const shouldShowLeftDots = leftSiblingIndex > 2;
+    const shouldShowRightDots = rightSiblingIndex < totalPages - 1;
+
+    if (!shouldShowLeftDots && shouldShowRightDots) {
+      const leftItemCount = 3 + 2 * siblingCount;
+      const leftRange = [];
+      for (let i = 1; i <= leftItemCount; i++) leftRange.push(i);
+      return [...leftRange, "...", totalPages];
+    }
+
+    if (shouldShowLeftDots && !shouldShowRightDots) {
+      const rightItemCount = 3 + 2 * siblingCount;
+      const rightRange = [];
+      for (let i = totalPages - rightItemCount + 1; i <= totalPages; i++) rightRange.push(i);
+      return [1, "...", ...rightRange];
+    }
+
+    if (shouldShowLeftDots && shouldShowRightDots) {
+      const middleRange = [];
+      for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) middleRange.push(i);
+      return [1, "...", ...middleRange, "...", totalPages];
+    }
+
+    return [];
   };
 
   return (

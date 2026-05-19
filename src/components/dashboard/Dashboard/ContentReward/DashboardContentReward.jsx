@@ -45,7 +45,7 @@ const DashboardContentReward = () => {
 
     const platformMap = {
       "Instagram": 2,
-      "Tiktok": 3,
+      "TikTok": 3,
       "Youtube": 1
     };
 

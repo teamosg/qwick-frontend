@@ -417,7 +417,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                     </div>
                                     <div className="pt-2 border-t border-gray-200 dark:border-zinc-700 flex justify-between items-center text-sm">
                                         <span className="text-gray-500 font-medium">Estimated Time</span>
-                                        <span className="text-gray-900 dark:text-white font-bold">1-3 Business Days</span>
+                                        <span className="text-gray-900 dark:text-white font-bold">7 - 10 Business Days</span>
                                     </div>
                                 </div>
                             </div>

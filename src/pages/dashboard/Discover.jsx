@@ -98,7 +98,8 @@ const Discover = () => {
     }
 
     if (communityAsCreator) {
-      toast.info("As the creator of this community, you cannot join as a member.");
+      navigate(`/announcement/${communityAsCreator?.username}/content-reward`);
+      // toast.info("As the creator of this community, you cannot join as a member.");
       return;
     }
 
@@ -108,7 +109,7 @@ const Discover = () => {
     if (communityAsMember) {
       // Already joined
       setSelectedCreatorCommunity(communityAsMember);
-      navigate("/content-reward");
+      navigate(`/announcement/${communityAsMember?.username}/content-reward`);
     } else {
       // Find community username from all communities to navigate to join page
       const targetCommunity = allCommunities?.find(c => c.id === communityId);
