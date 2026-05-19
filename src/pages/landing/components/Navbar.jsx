@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Zap } from "lucide-react";
-import logo from "../../../assets/qwick_logo.webp"
+import logo from "../../../assets/qwick_logo.webp";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,18 +40,21 @@ const Navbar = () => {
         {/* Logo section */}
         <div className="flex-1 flex justify-start">
           <Link to="/" className="flex items-center gap-2 group">
-            <img src={logo} alt="Logo" className="w-36 h-8 object-contain transition-transform duration-300 group-hover:scale-105" />
+            <img
+              src={logo}
+              alt="Logo"
+              className="w-36 h-8 object-contain transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
         </div>
 
-       
         {/* Center Links */}
         <div className="hidden md:flex items-center gap-1 bg-slate-50/80 backdrop-blur-lg px-1.5 py-1.5 rounded-full border border-slate-200/60 shadow-sm">
           <Link
             to="/#creators"
             className="text-[14px] font-medium text-slate-600 px-7 py-2.5 rounded-full hover:bg-white hover:text-black hover:shadow-sm transition-all duration-300 font-inter"
           >
-            Creators  
+            Creators
           </Link>
           <Link
             to="/#brand"
@@ -59,17 +62,17 @@ const Navbar = () => {
           >
             Brand
           </Link>
-            <Link
+          <Link
             to="/#video-guides"
             className="text-[14px] font-medium text-slate-600 px-7 py-2.5 rounded-full hover:bg-white hover:text-black hover:shadow-sm transition-all duration-300 font-inter"
           >
             Guide
           </Link>
           <Link
-            to="/sign-in"
+            to="/home"
             className="text-[14px] font-medium text-slate-600 px-7 py-2.5 rounded-full bg-gray-200 hover:bg-white hover:text-black hover:shadow-sm transition-all duration-300 font-inter"
           >
-            Sign in
+            Dashboard
           </Link>
         </div>
 
@@ -77,7 +80,6 @@ const Navbar = () => {
         <div className="flex-1 flex justify-end">
           {/* Balanced layout container */}
         </div>
-
       </div>
     </motion.nav>
   );

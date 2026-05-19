@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@300..700&display=swap');
-
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@300..700&display=swap");
 @custom-variant dark (&:is(.dark *));
 
 /* Hide scrollbars globally */
@@ -13,23 +11,6 @@
 
 *::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
-/* Hide scrollbar globally but maintain functionality */
-::-webkit-scrollbar {
-  display: none;
-}
-
-* {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-/* Hide scrollbar utility */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 @theme inline {
@@ -166,8 +147,3 @@ html,
 #root {
   overflow: auto;
 }
-
-
-
-
-
