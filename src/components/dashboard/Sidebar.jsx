@@ -104,7 +104,7 @@ const Sidebar = ({ onClose }) => {
 
             <div className="flex-1 px-3 py-2 space-y-1">
               {[
-                { icon: <Home />, text: "Home", to: "/" },
+                { icon: <Home />, text: "Home", to: "/home" },
                 { icon: <DiscoverySVG />, text: "Discover", to: "/discover" },
                 // { icon: <Megaphone />, text: "Announcement", to: "/announcement" },
                 { icon: <MessageSVG />, text: "Messages", to: "/messages" },
