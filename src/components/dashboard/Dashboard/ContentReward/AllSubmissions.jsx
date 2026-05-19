@@ -176,32 +176,84 @@ const AllSubmissions = () => {
                         {/* Performance Breakdown */}
                         <div className="space-y-3 border-t md:border-t-0 md:border-l border-gray-200 dark:border-zinc-700 pt-3 md:pt-0 md:pl-6">
                           <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 dark:text-zinc-500">Platform Breakdown</p>
-                          <div className="grid grid-cols-1 gap-2">
-                            {submission?.platform_stats?.youtube?.baseline > 0 && (
+                          <div className="grid grid-cols-1 gap-2.5">
+                            {(submission?.platform_stats?.youtube?.link || submission?.platform_stats?.youtube?.baseline > 0) && (
                               <div className="flex items-center justify-between text-[11px]">
-                                <span className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-                                  <FaYoutube className="text-red-600 size-3" /> YouTube
+                                {submission?.platform_stats?.youtube?.link ? (
+                                  <a
+                                    href={submission.platform_stats.youtube.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-[#003933] dark:hover:text-emerald-400 transition-colors font-medium group cursor-pointer"
+                                  >
+                                    <FaYoutube className="text-red-600 size-3.5" />
+                                    <span>YouTube</span>
+                                    <ExternalLink className="size-3 text-gray-400 group-hover:text-current transition-colors" />
+                                  </a>
+                                ) : (
+                                  <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 font-medium">
+                                    <FaYoutube className="text-red-600 size-3.5" />
+                                    <span>YouTube</span>
+                                  </span>
+                                )}
+                                <span className="font-semibold text-gray-900 dark:text-white">
+                                  {submission?.platform_stats?.youtube?.baseline?.toLocaleString() || 0}
                                 </span>
-                                <span className="font-semibold">{submission?.platform_stats?.youtube?.baseline?.toLocaleString()}</span>
                               </div>
                             )}
-                            {submission?.platform_stats?.tiktok?.baseline > 0 && (
+
+                            {(submission?.platform_stats?.tiktok?.link || submission?.platform_stats?.tiktok?.baseline > 0) && (
                               <div className="flex items-center justify-between text-[11px]">
-                                <span className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-                                  <FaTiktok className="text-black dark:text-white size-3" /> TikTok
+                                {submission?.platform_stats?.tiktok?.link ? (
+                                  <a
+                                    href={submission.platform_stats.tiktok.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-[#003933] dark:hover:text-emerald-400 transition-colors font-medium group cursor-pointer"
+                                  >
+                                    <FaTiktok className="text-black dark:text-white size-3.5" />
+                                    <span>TikTok</span>
+                                    <ExternalLink className="size-3 text-gray-400 group-hover:text-current transition-colors" />
+                                  </a>
+                                ) : (
+                                  <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 font-medium">
+                                    <FaTiktok className="text-black dark:text-white size-3.5" />
+                                    <span>TikTok</span>
+                                  </span>
+                                )}
+                                <span className="font-semibold text-gray-900 dark:text-white">
+                                  {submission?.platform_stats?.tiktok?.baseline?.toLocaleString() || 0}
                                 </span>
-                                <span className="font-semibold">{submission?.platform_stats?.tiktok?.baseline?.toLocaleString()}</span>
                               </div>
                             )}
-                            {submission?.platform_stats?.instagram?.baseline > 0 && (
+
+                            {(submission?.platform_stats?.instagram?.link || submission?.platform_stats?.instagram?.baseline > 0) && (
                               <div className="flex items-center justify-between text-[11px]">
-                                <span className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-                                  <FaInstagram className="text-pink-600 size-3" /> Instagram
+                                {submission?.platform_stats?.instagram?.link ? (
+                                  <a
+                                    href={submission.platform_stats.instagram.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-[#003933] dark:hover:text-emerald-400 transition-colors font-medium group cursor-pointer"
+                                  >
+                                    <FaInstagram className="text-pink-600 size-3.5" />
+                                    <span>Instagram</span>
+                                    <ExternalLink className="size-3 text-gray-400 group-hover:text-current transition-colors" />
+                                  </a>
+                                ) : (
+                                  <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 font-medium">
+                                    <FaInstagram className="text-pink-600 size-3.5" />
+                                    <span>Instagram</span>
+                                  </span>
+                                )}
+                                <span className="font-semibold text-gray-900 dark:text-white">
+                                  {submission?.platform_stats?.instagram?.baseline?.toLocaleString() || 0}
                                 </span>
-                                <span className="font-semibold">{submission?.platform_stats?.instagram?.baseline?.toLocaleString()}</span>
                               </div>
                             )}
-                            {(!submission?.platform_stats || Object.values(submission?.platform_stats).every(v => (v?.baseline || 0) === 0)) && (
+
+                            {(!submission?.platform_stats || 
+                              Object.values(submission?.platform_stats).every(v => !v?.link && (v?.baseline || 0) === 0)) && (
                               <span className="text-[10px] text-gray-400 italic">No breakdown available</span>
                             )}
                           </div>
