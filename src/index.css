@@ -1,35 +1,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@300..700&display=swap');
 
 
 @custom-variant dark (&:is(.dark *));
 
-/* Width */
+/* Hide scrollbar globally but maintain functionality */
 ::-webkit-scrollbar {
-  width: 10px;
+  display: none;
 }
 
-/* Track (background) */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle (thumb) — SQUARE */
-::-webkit-scrollbar-thumb {
-  background: #003933;
-  border-radius: 0;
-  /* ✅ makes it square */
-}
-
-/* active effect */
-::-webkit-scrollbar-thumb:active {
-  background: #7F9C99;
-}
-
-/* Hover effect */
-::-webkit-scrollbar-thumb:hover {
-  cursor: pointer;
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Hide scrollbar utility */
@@ -77,7 +60,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-outfit: "Outfit", sans-serif;
+  --font-inter: "Inter", sans-serif;
   --font-silkscreen: "Silkscreen", cursive;
   --font-space: "Space Grotesk", sans-serif;
 }
@@ -161,8 +144,12 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: var(--font-outfit);
+  font-family: var(--font-inter);
   color: #717171;
 }
 
@@ -171,3 +158,8 @@ html,
 #root {
   overflow: auto;
 }
+
+
+
+
+

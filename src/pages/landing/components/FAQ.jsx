@@ -5,33 +5,30 @@ import * as Accordion from '@radix-ui/react-accordion';
 
 const faqs = [
   {
-    question: "How do I get started?",
-    answer: "Install the app from the app store and follow the on-screen instructions to create your account and start earning today."
+    question: "Who can use Qwick?",
+    answer: "Anyone! Whether you’re a creator looking to earn or a brand looking to scale content. "
   },
   {
-    question: "Does Qwick cost money?",
-    answer: "No, Qwick is free for creators to use. We earn by taking a small platform fee from the rewards provided by brands."
+    question: "Does it cost anything to join?",
+    answer: "Signing up is free."
   },
   {
-    question: "Who is Qwick for?",
-    answer: "Qwick is for anyone who creates short-form content on platforms like TikTok, Reels, and YouTube Shorts."
+    question: "How much can I actually earn?",
+    answer: "Earnings vary based on your content’s performance, the better it performs, the more you make. "
   },
   {
-    question: "What creators are on Qwick?",
-    answer: "We have creators ranging from micro-influencers to massive stars with millions of followers. Anyone can join!"
+    question: "Do I need a big following to earn?",
+    answer: "Nope. Qwick is built for creators of all sizes. Strong content matter more than follower count. "
   },
   {
-    question: "Is it influencer marketing... what's the difference?",
-    answer: "Influencer marketing often involves one-off deals. Qwick is a platform for ongoing rewards based on performance."
+    question: "How do I create a campaign as a brand?",
+    answer: "Set up your community, create your campaign, define your budget, complete payment, and launch all in just a few simple steps."
   },
   {
-    question: "What should I expect if I'm a brand?",
-    answer: "Brands can expect high-quality content, transparent tracking, and a scalable way to reach their target audience."
+    question: "How many creators can join one campaign?",
+    answer: "By default, campaigns are open to unlimited creators, just set your budget and let them start creating. You can also switch to a waitlist mode, where you handpick which creators are allowed to join. Only content that meets your criteria qualifies for rewards, so you only pay for what performs."
   },
-  {
-    question: "Managed vs Self-Serve... what's the difference?",
-    answer: "Self-serve gives you full control, while managed services provide expert help to run and optimize your campaigns."
-  }
+
 ];
 
 const FAQ = () => {
@@ -39,8 +36,8 @@ const FAQ = () => {
     <section className="py-24 bg-white">
       <div className="container mx-auto px-6 max-w-3xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4 font-outfit">Have Questions?</h2>
-          <h3 className="text-4xl font-bold text-slate-900 font-outfit">We Have Answers</h3>
+          <h2 className="text-4xl font-bold text-slate-900 mb-4 font-inter">Frequently Asked Questions</h2>
+          
         </div>
 
         <Accordion.Root type="single" collapsible className="space-y-4">
@@ -52,7 +49,7 @@ const FAQ = () => {
             >
               <Accordion.Header>
                 <Accordion.Trigger className="w-full py-6 flex items-center justify-between text-left group">
-                  <span className="font-bold text-slate-900 font-outfit group-hover:text-primary transition-colors">
+                  <span className="font-bold text-slate-900 font-inter group-hover:text-primary transition-colors">
                     {faq.question}
                   </span>
                   <div className="w-6 h-6 flex items-center justify-center">
@@ -62,7 +59,7 @@ const FAQ = () => {
                 </Accordion.Trigger>
               </Accordion.Header>
               <Accordion.Content className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-                <div className="pb-6 text-slate-500 font-outfit text-sm leading-relaxed">
+                <div className="pb-6 text-slate-500 font-inter text-sm leading-relaxed">
                   {faq.answer}
                 </div>
               </Accordion.Content>

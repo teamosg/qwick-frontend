@@ -9,10 +9,13 @@ import HowItWorks from './components/HowItWorks';
 import FAQ from './components/FAQ';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
+import SubmitClipsAnother from './components/SubmitClipsAnother';
+import CampaignDropsAnother from './components/CampaignDropsAnother';
+import EarningsSectionAnother from './components/EarningsSectionAnother';
 
 const Landing = () => {
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-outfit selection:bg-black selection:text-white">
+    <div className="min-h-screen bg-white text-slate-900 font-inter selection:bg-black selection:text-white">
       <Navbar />
       <main>
         <LandingHero />
@@ -25,13 +28,13 @@ const Landing = () => {
         <ImpactDivider />
 
         {/* Second Set of Features (as seen in image) */}
-        <CampaignDrops />
-        <SubmitClips />
-        <EarningsSection />
+       <CampaignDropsAnother />
+        <SubmitClipsAnother />
+        <EarningsSectionAnother />
 
         <HowItWorks />
         <FAQ />
-        <CTA />
+        {/* <CTA /> */}
       </main>
       <Footer />
     </div>

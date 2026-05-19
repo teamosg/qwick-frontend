@@ -15,12 +15,12 @@ const FeatureCard = ({ icon: Icon, tag, title, description, image, reverse = fal
         <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600">
           <Icon size={20} />
         </div>
-        <span className="text-sm font-bold text-slate-500 font-outfit">{tag}</span>
+        <span className="text-sm font-bold text-slate-500 font-inter">{tag}</span>
       </div>
-      <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight font-outfit">
+      <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight font-inter">
         {title}
       </h2>
-      <p className="text-lg text-slate-500 mb-8 max-w-lg font-outfit">
+      <p className="text-lg text-slate-500 mb-8 max-w-lg font-inter">
         {description}
       </p>
     </motion.div>
@@ -50,14 +50,14 @@ const PlatformSections = () => {
           viewport={{ once: true }}
           className="text-4xl md:text-6xl font-bold mb-6 font-silkscreen tracking-tighter"
         >
-          QWICK CREATOR REWARDS PROGRAM
+          Qwick Creator Rewards Program
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-slate-500 max-w-2xl mx-auto text-lg font-outfit"
+          className="text-slate-500 max-w-2xl mx-auto text-lg font-inter"
         >
           Welcome to the easiest way to make money creating short-form content. Get paid to get views, it's that simple.
         </motion.p>
@@ -197,16 +197,16 @@ const PlatformSections = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-bold mb-6 font-silkscreen tracking-tighter"
+          className="text-3xl md:text-5xl font-medium mb-6 font-silkscreen tracking-tighter"
         >
-          HIGH IMPACT CAMPAIGNS. LOWER RISK
+         High-impact Campaigns. Lower Risk.
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-slate-500 max-w-2xl mx-auto text-lg font-outfit"
+          className="text-slate-500 max-w-2xl mx-auto text-lg font-inter"
         >
           Welcome to the easiest way to make money creating short-form content. Get paid to get views, it's that simple.
         </motion.p>

@@ -44,7 +44,7 @@ const CTA = () => {
             <h2 className="text-4xl md:text-7xl font-bold text-white mb-8 font-silkscreen tracking-tighter leading-none">
               READY TO START <br /> EARNING?
             </h2>
-            <p className="text-white/60 max-w-xl mx-auto text-xl mb-12 font-outfit">
+            <p className="text-white/60 max-w-xl mx-auto text-xl mb-12 font-inter">
               Join thousands of creators who are already monetizing their short-form content with Qwick.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
