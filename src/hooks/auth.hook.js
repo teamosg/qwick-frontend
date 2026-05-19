@@ -98,7 +98,7 @@ export const useSignIn = () => {
 
 
         if (access) {
-          navigate(redirectUrl || "/");
+          navigate(redirectUrl || "/home");
         } else {
           if (message.includes("2FA")) {
             navigate("/verify-2fa", {
@@ -165,7 +165,7 @@ export const useVerifyOtp = (otpType = "account_verification") => {
           localStorage.setItem("token", token);
           localStorage.setItem("refresh", refresh);
 
-          navigate("/");
+          navigate("/home");
         }
       } else {
         toast.error(data?.message || "OTP verification failed");
@@ -536,7 +536,7 @@ export const useGoogleSignInHook = () => {
           localStorage.setItem("user", JSON.stringify(user));
         }
 
-        navigate(redirectUrl || "/");
+        navigate(redirectUrl || "/home");
       } else {
         toast.error(data?.message || "Failed to sign in with Google");
       }
