@@ -1,4 +1,4 @@
-import { useTheme } from "@/components/shared/ThemeProvider";
+// import { useTheme } from "@/components/shared/ThemeProvider";
 import { useState } from "react";
 import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -11,8 +11,8 @@ import { useGoogleLogin } from "@react-oauth/google";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { theme } = useTheme();
-  const darkMode = theme === "dark";
+  // const { theme } = useTheme();
+  // const darkMode = theme === "dark";
 
   // Use the new auth hook
   const { form, mutate, isPending } = useSignIn();
