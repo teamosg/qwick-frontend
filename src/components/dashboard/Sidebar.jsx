@@ -106,7 +106,7 @@ const Sidebar = ({ onClose }) => {
               {[
                 { icon: <Home />, text: "Home", to: "/" },
                 { icon: <DiscoverySVG />, text: "Discover", to: "/discover" },
-                { icon: <Megaphone />, text: "Announcement", to: "/announcement" },
+                // { icon: <Megaphone />, text: "Announcement", to: "/announcement" },
                 { icon: <MessageSVG />, text: "Messages", to: "/messages" },
                 {
                   icon: <NotificationSVG />,

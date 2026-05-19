@@ -98,7 +98,8 @@ const Discover = () => {
     }
 
     if (communityAsCreator) {
-      toast.info("As the creator of this community, you cannot join as a member.");
+      navigate(`/announcement/${communityAsCreator?.username}/content-reward`);
+      // toast.info("As the creator of this community, you cannot join as a member.");
       return;
     }
 
