@@ -19,8 +19,12 @@ const Analytics = () => {
 
     const submissions = submissionData.submissions;
     const totalViews = submissions.reduce((acc, sub) => acc + (sub.views || 0), 0);
-    const totalPayout = submissions.reduce((acc, sub) => acc + parseFloat(sub.payout || 0), 0);
-    const totalSubmissions = submissionData.total_submissions || 0;
+    const totalPayout = submissions.reduce((acc, sub) => {
+      const payoutVal = sub.payout;
+      const amount = typeof payoutVal === "object" ? payoutVal?.total_earned : payoutVal;
+      return acc + parseFloat(amount || 0);
+    }, 0);
+    const totalSubmissions = submissionData.total_submissions || submissions.length;
     const totalCampaigns = budgetData?.total_campaigns || 0;
 
     return { totalViews, totalPayout, totalSubmissions, totalCampaigns };
@@ -28,16 +32,15 @@ const Analytics = () => {
 
   // Map campaign names to submissions for the table
   const mappedSubmissions = useMemo(() => {
-    if (!submissionData?.submissions || !budgetData?.campaigns) return submissionData?.submissions || [];
+    if (!submissionData?.submissions) return [];
 
     return submissionData.submissions.map(sub => {
-      const campaign = budgetData.campaigns.find(c => c.campaign_id === sub.campaign);
       return {
         ...sub,
-        campaign_name: campaign?.campaign_name || `Campaign #${sub.campaign}`
+        campaign_name: sub.campaign?.name || `Campaign #${sub.campaign?.id || sub.campaign}`
       };
     });
-  }, [submissionData, budgetData]);
+  }, [submissionData]);
 
   const isLoading = budgetsLoading || submissionsLoading;
 
