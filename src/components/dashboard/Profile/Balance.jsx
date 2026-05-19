@@ -5,6 +5,7 @@ import BalanceCardSkeleton from "./components/BalanceCardSkeleton";
 import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
 import WithdrawModal from "./components/WithdrawModal";
 import { useState } from "react";
+import WithdrawList from "./components/WithdrawList";
 
 const ProfileBalance = () => {
   const {
@@ -49,7 +50,9 @@ const ProfileBalance = () => {
 
       <WithdrawModal open={openWithdraw} setOpen={setOpenWithdraw} />
 
-      <ProfileBalanceData />
+      {/* <ProfileBalanceData /> */}
+
+      <WithdrawList />
     </div>
   );
 };
