@@ -9,7 +9,7 @@ import {
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 
-const steps = [1, 2, 3];
+const steps = [1, 2];
 
 export default function AddCommunityStepper({
   currentStep,

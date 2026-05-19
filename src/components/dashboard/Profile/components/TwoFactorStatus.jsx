@@ -16,10 +16,10 @@ const TwoFactorStatus = () => {
         <div className="space-y-4">
             <div className="mb-8">
                 <h2 className="text-[18px] font-semibold text-[#090003] dark:text-white mb-1">
-                    Two-factor authentication
+                    Two-Factor Authentication
                 </h2>
                 <p className="text-[#717171] text-sm">
-                    Secure your account by requiring a verification code when signing in
+                    Add an extra layer of security with a verification code when signing in.
                 </p>
             </div>
 
@@ -27,15 +27,15 @@ const TwoFactorStatus = () => {
                 <CardContent className="p-6 flex items-center justify-between">
                     <div className="space-y-2">
                         <h3 className="font-medium text-gray-900 dark:text-white">
-                            Text message
+                            Text Message
                         </h3>
                         <p className="text-sm text-gray-500">
                             {
                                 isLoading
                                     ? "Loading..."
                                     : status
-                                        ? "Two-factor authentication is enabled. You will receive a code via SMS when signing in."
-                                        : "Two-factor authentication is disabled. Your account is less secure."
+                                        ? "Two-factor authentication is currently on. You will receive a code via SMS when signing in."
+                                        : "Two-factor authentication is currently off. Enable it to secure your account."
                             }
                         </p>
                     </div>

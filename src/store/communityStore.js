@@ -15,6 +15,10 @@ export const useCommunityStore = create(
 
             myCommunityList: [],
             setMyCommunityList: communityList => set({ myCommunityList: communityList }),
+
+            myCommunityListAnnouncement: [],
+            setMyCommunityListAnnouncement: communityList => set({ myCommunityListAnnouncement: communityList }),
+
         }),
         {
             name: "communityStore",

@@ -66,7 +66,7 @@ export default function AddCommunityForm({
 
   return (
     <motion.div
-      className="mx-auto p-6 bg-white dark:bg-zinc-900 dark:text-white"
+      className="mx-auto p-6 bg-white dark:bg-zinc-900 dark:text-white w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -82,14 +82,14 @@ export default function AddCommunityForm({
             htmlFor="businessName"
             className="block text-base font-medium text-[#0D0D12] mb-2 dark:text-white"
           >
-            Business Name
+            Community Name
           </label>
           <input
             id="businessName"
             type="text"
             value={formData?.business_name || ""}
             onChange={(e) => setFormData({ ...formData, business_name: e.target.value })}
-            placeholder="Write here..."
+            placeholder="Community Name"
             className={`w-full px-4 py-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-sm transition-colors duration-200  dark:text-white ${errors?.businessName
               ? "border-red-500 focus:ring-red-500"
               : "border-gray-200"
@@ -221,7 +221,7 @@ export default function AddCommunityForm({
                 Creating...
               </motion.div>
             ) : (
-              "Create Business"
+              "Create Community"
             )}
           </button>
         </motion.div>

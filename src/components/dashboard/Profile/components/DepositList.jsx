@@ -90,20 +90,20 @@ const DepositList = () => {
           >
             <div className="flex justify-between items-start mb-2">
               <div className="font-semibold text-[#25324B] dark:text-white">
-                {transaction.holder_name || transaction.name || "Unknown"}
+                {transaction?.holder_name || transaction?.name || "Unknown"}
               </div>
-              {getStatusBadge(transaction.status)}
+              {getStatusBadge(transaction?.status)}
             </div>
             <div className="text-sm text-[#25324B] dark:text-white">
-              {formatDate(transaction.created_at || transaction.date)}
+              {formatDate(transaction?.created_at || transaction?.date)}
             </div>
             <div className="text-sm text-[#25324B] dark:text-white">
 
             </div>
             <div className="font-semibold text-[#25324B] dark:text-white mt-1">
-              {formatAmount(transaction.amount)} {" "}
+              {formatAmount(transaction?.amount)} {" "}
               <span>
-                {transaction.stripe_info.currency}
+                {transaction?.stripe_info?.currency}
               </span>
             </div>
           </div>
@@ -140,19 +140,19 @@ const DepositList = () => {
                   className="border-none hover:bg-gray-50 dark:hover:bg-[#364152]"
                 >
                   <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
-                    {transaction.holder_name || transaction.name || "Unknown"}
+                    {transaction?.holder_name || transaction?.name || "Unknown"}
                   </TableCell>
                   <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
-                    {formatDate(transaction.created_at || transaction.date)}
+                    {formatDate(transaction?.created_at || transaction?.date)}
                   </TableCell>
                   <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                    {formatAmount(transaction.amount)}
+                    {formatAmount(transaction?.amount)}
                   </TableCell>
                   <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                    {transaction.stripe_info.currency}
+                    {transaction?.stripe_info?.currency}
                   </TableCell>
                   <TableCell className="py-4 px-6 dark:text-white">
-                    {getStatusBadge(transaction.status)}
+                    {getStatusBadge(transaction?.status)}
                   </TableCell>
                 </TableRow>
               ))}

@@ -38,7 +38,7 @@ const ContentRewordPublic = () => {
   return (
     <div>
       <h2 className="text-[24px] text-[#191919] dark:text-white font-semibold mb-3">
-        Content Reward
+        Campaigns
       </h2>
       {filteredCampaigns.length === 0 ? (
         <div className="text-center py-20 text-gray-500">

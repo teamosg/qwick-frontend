@@ -11,7 +11,7 @@ import CampaignProgress from "@/components/dashboard/Dashboard/ContentReward/Cam
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetails = () => {
-  const { campaignId } = useParams();
+  const { campaignId, communityUsername } = useParams();
   const navigate = useNavigate();
   const { selectedCreatorCommunity } = useCommunityStore();
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
@@ -21,6 +21,19 @@ const ContentRewardDetails = () => {
   }, [campaignRes, campaignId]);
 
   const isCreator = selectedCreatorCommunity?.can_edit;
+
+
+  const totalUsersEarning = campaign?.total_users_earning
+  const initialBudget = campaign?.initial_budget
+  const budget = campaign?.budget
+  const currentBudget = initialBudget || budget || 0;
+  const earning = parseFloat(totalUsersEarning || 0);
+
+  const progress = currentBudget > 0
+    ? Math.min(Math.max((earning / parseFloat(currentBudget)) * 100, 0), 100)
+    : 0;
+
+
 
   if (isCreator) {
     return (
@@ -59,6 +72,7 @@ const ContentRewardDetails = () => {
     : `${MEDIA_BASE_URL}${thumbnail}`;
 
   const isEnded = campaign?.end_date && new Date(campaign.end_date) < new Date();
+  const isFull = progress >= 100;
 
   return (
     <div className="p-4 sm:p-6 text-[#717171] max-w-4xl mx-auto">
@@ -66,12 +80,17 @@ const ContentRewardDetails = () => {
         <h2 className="text-xl sm:text-2xl text-[#191919] dark:text-white font-bold">
           Content Reward Details
         </h2>
-        {isEnded && (
+        {isEnded ? (
           <div className="px-3 py-1 bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 rounded-full text-xs font-bold flex items-center gap-1.5 border border-red-200 dark:border-red-900/50">
             <div className="size-1.5 rounded-full bg-red-600 animate-pulse" />
             CAMPAIGN EXPIRED
           </div>
-        )}
+        ) : isFull ? (
+          <div className="px-3 py-1 bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400 rounded-full text-xs font-bold flex items-center gap-1.5 border border-amber-200 dark:border-amber-900/50">
+            <div className="size-1.5 rounded-full bg-amber-600 animate-pulse" />
+            BUDGET REACHED
+          </div>
+        ) : null}
       </div>
 
       <div className="space-y-6">
@@ -105,9 +124,9 @@ const ContentRewardDetails = () => {
 
               <div className="space-y-2">
                 <CampaignProgress
-                  totalUsersEarning={campaign?.total_users_earning}
-                  initialBudget={campaign?.initial_budget}
-                  budget={campaign?.budget}
+                  totalUsersEarning={totalUsersEarning}
+                  initialBudget={initialBudget}
+                  budget={budget}
                   showTitle={false}
                 />
               </div>
@@ -225,14 +244,14 @@ const ContentRewardDetails = () => {
 
             <div className="flex flex-col gap-3">
               <Link
-                to={isEnded ? "#" : `/content-reward/reward-details-payment/${campaignId}`}
-                onClick={(e) => isEnded && e.preventDefault()}
-                className={`w-full text-center text-white text-lg font-bold py-3.5 rounded-2xl transition duration-300 shadow-lg ${isEnded
+                to={(isEnded || isFull) ? "#" : `/announcement/${communityUsername}/content-reward/reward-details-payment/${campaignId}`}
+                onClick={(e) => (isEnded || isFull) && e.preventDefault()}
+                className={`w-full text-center text-white text-lg font-bold py-3.5 rounded-2xl transition duration-300 shadow-lg ${(isEnded || isFull)
                   ? "bg-gray-400 cursor-not-allowed opacity-50"
                   : "bg-[#003933] hover:bg-[#002822] active:scale-[0.98]"
                   }`}
               >
-                {isEnded ? "Campaign Ended" : "Apply Now"}
+                {isEnded ? "Campaign Ended" : isFull ? "Budget Reached" : "Apply Now"}
               </Link>
               <button
                 onClick={() => navigate(-1)}

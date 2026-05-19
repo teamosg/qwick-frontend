@@ -48,7 +48,7 @@ const JoinCommunity = () => {
 
   if (isLoading) {
     return (
-      <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen p-6">
+      <div className="bg-[#f9fafb] dark:bg-zinc-950 flex-1 overflow-y-auto p-6">
         <div className="mb-9 inline-block">
           <Skeleton className="h-8 w-48 mb-4 shadow" />
         </div>
@@ -68,7 +68,7 @@ const JoinCommunity = () => {
 
   if (isError || (!isLoading && !community)) {
     return (
-      <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen flex items-center justify-center p-6 shadow-xl rounded-xl">
+      <div className="bg-[#f9fafb] dark:bg-zinc-950 flex-1 overflow-y-auto flex items-center justify-center p-6 shadow-xl rounded-xl">
         <div className="text-center max-w-lg p-10 bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl border border-gray-100 dark:border-zinc-800">
           <div className="w-20 h-20 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-4xl text-red-500 font-bold">!</span>
@@ -90,7 +90,7 @@ const JoinCommunity = () => {
 
   return (
     <motion.div
-      className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen"
+      className="bg-[#f9fafb] dark:bg-zinc-950 flex-1 overflow-y-auto p-6 md:p-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -101,9 +101,9 @@ const JoinCommunity = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <h1 className="text-[#191919] dark:text-white text-2xl font-semibold">
+        {/* <h1 className="text-[#191919] dark:text-white text-2xl font-semibold">
           Join Community
-        </h1>
+        </h1> */}
       </motion.div>
 
       <motion.div
@@ -114,9 +114,9 @@ const JoinCommunity = () => {
       >
         <div className="max-h-100 overflow-hidden rounded-xl mb-6 shadow-sm border border-gray-200 dark:border-zinc-800">
           <motion.img
-            src={JoinCommunityImage}
+            src={community?.banner_image || JoinCommunityImage}
             alt=""
-            className="max-w-full object-cover"
+            className="max-w-full object-cover w-full h-full"
             variants={itemVariants}
             whileHover={{
               scale: 1.02,

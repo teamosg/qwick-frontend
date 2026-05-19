@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useEditProfile, useProfile } from "@/hooks/auth.hook";
 import { useEffect, useState } from "react";
 import ProfileInfoSkeleton from "./components/ProfileInfoSkeleton";
+import { formatUsername } from "@/utils/usernameUtils";
 
 const ProfileGeneral = () => {
   const { data, isLoading: isProfileLoading } = useProfile();
@@ -18,7 +19,7 @@ const ProfileGeneral = () => {
   useEffect(() => {
     if (data) {
       setFormData({
-        name: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
+        name: data.full_name || "",
         bio: data.bio || "",
         username: data.username || "",
         phone: data.phone_number || "",
@@ -27,27 +28,27 @@ const ProfileGeneral = () => {
   }, [data]);
 
   const handleInputChange = (field, value) => {
+    let processedValue = value;
+    if (field === "username") {
+      processedValue = formatUsername(value);
+    }
     setFormData((prev) => ({
       ...prev,
-      [field]: value,
+      [field]: processedValue,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Split the name field before sending
-    const [first_name = "", last_name = ""] = formData.name.trim().split(" ");
+    // Create FormData for multipart submission
+    const formDataPayload = new FormData();
+    formDataPayload.append("full_name", formData.name);
+    formDataPayload.append("bio", formData.bio);
+    formDataPayload.append("username", formatUsername(formData.username));
+    formDataPayload.append("phone_number", formData.phone);
 
-    const payload = {
-      first_name,
-      last_name,
-      bio: formData.bio,
-      username: formData.username,
-      phone_number: formData.phone,
-    };
-
-    editProfile(payload);
+    editProfile(formDataPayload);
   };
 
   if (isProfileLoading) {
@@ -123,7 +124,7 @@ const ProfileGeneral = () => {
           type="tel"
           value={formData.phone}
           onChange={(e) => handleInputChange("phone", e.target.value)}
-          placeholder="Enter phone number"
+          placeholder="Phone Number"
           className="w-full mt-2 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
         />
       </div>

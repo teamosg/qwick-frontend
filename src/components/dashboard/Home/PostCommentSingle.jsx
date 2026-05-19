@@ -36,7 +36,7 @@ const PostCommentSingle = ({ comment, profile }) => {
         <div key={comment.id} className="flex space-x-2 relative">
             <img
                 src={comment.author.avatar}
-                alt={comment.author.first_name}
+                alt={comment.author.full_name}
                 className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover"
             />
 
@@ -44,7 +44,7 @@ const PostCommentSingle = ({ comment, profile }) => {
                 <div className="flex justify-between items-start">
                     <div className="flex items-end gap-4">
                         <div className="font-medium text-xs sm:text-sm dark:text-white truncate">
-                            {comment.author.first_name} {comment.author.last_name}
+                            {comment.author.full_name}
                         </div>
 
                         <div className="text-[10px] text-gray-500 dark:text-zinc-400 mt-0.5">

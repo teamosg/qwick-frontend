@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sidebar";
 import { PencilIcon } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
 import { useEditCommunity, useGetMyCommunityList } from "@/hooks/community.hook";
@@ -27,7 +27,7 @@ import { useCommunityStore } from "@/store/communityStore";
 // Menu items.
 const items = [
   {
-    title: "Content Payout",
+    title: "My Campaigns",
     url: "content-payout",
   },
   {
@@ -35,7 +35,7 @@ const items = [
     url: "users",
   },
   {
-    title: "Wait list",
+    title: "Waitlist",
     url: "wait-list",
   },
   {
@@ -58,6 +58,7 @@ const items = [
 
 // Main sidebar content component
 export function DashboardSidebarContent() {
+  const { communityUsername } = useParams()
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const { mutate: editCommunity, isPending } = useEditCommunity();
   const { setOpenMobile } = useSidebar();
@@ -71,15 +72,25 @@ export function DashboardSidebarContent() {
   const myCommunityList = communityList?.created_communities
 
 
-  const handleImageUpload = (imageFile) => {
-    if (!imageFile) return;
+  const handleImageUpload = (file, type) => {
+    if (!file) return;
 
     const formData = new FormData();
-    formData.append("banner_image", imageFile);
+    if (type === "banner") {
+      formData.append("banner_image", file);
+    } else if (type === "profile") {
+      formData.append("profile_image", file);
+    }
 
     editCommunity({
       communityUsername: selectedBrandCommunity?.username,
       payload: formData,
+    }, {
+      onSuccess: (response) => {
+        if (response?.status && response?.data) {
+          setSelectedBrandCommunity(response.data);
+        }
+      }
     });
   };
 
@@ -105,7 +116,7 @@ export function DashboardSidebarContent() {
               disabled={isPending}
               onClick={openImageModal}
               className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
-              title="Edit banner"
+              title="Edit community images"
             >
               {
                 isPending
@@ -156,7 +167,7 @@ export function DashboardSidebarContent() {
                     >
                       <Link
                         className="hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full"
-                        to={item.url}
+                        to={`/dashboard/${communityUsername}/${item.url}`}
                         onClick={() => setOpenMobile(false)}
                       >
                         <span className="hover:bg-none hover:shadow-none font-medium">

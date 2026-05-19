@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetMyEarnings } from "@/hooks/earnings.hook";
-import { ExternalLink, DollarSign, Calendar, TrendingUp, Hash } from "lucide-react";
+import { ExternalLink, DollarSign, Calendar, TrendingUp, Hash, HelpCircle } from "lucide-react";
 import { format } from "date-fns";
 import { FaYoutube, FaTiktok, FaInstagram } from "react-icons/fa";
 import { formatViewCount } from "@/lib/utils";
@@ -13,6 +13,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const ProfileMyEarnings = () => {
     const { data: earnings, isLoading } = useGetMyEarnings();
@@ -66,8 +67,18 @@ const ProfileMyEarnings = () => {
             {/* Header & Stats */}
             <div className="p-4 sm:p-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+                    <h1 className="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
                         My Earnings
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <button type="button" tabIndex={-1}>
+                                    <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                                </button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-72 text-sm">
+                                Heads up, submissions take a bit to process. Views may take some time to appear on Qwick.
+                            </PopoverContent>
+                        </Popover>
                     </h1>
                     <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1">
                         Track your campaign rewards and payout status.
@@ -143,7 +154,7 @@ const ProfileMyEarnings = () => {
                     <TableHeader className="bg-gray-50 dark:bg-zinc-800/50">
                         <TableRow>
                             <TableHead className="w-[80px]">Media</TableHead>
-                            <TableHead>Campaign ID</TableHead>
+                            {/* <TableHead>Campaign ID</TableHead> */}
                             <TableHead>Platform</TableHead>
                             <TableHead>Status</TableHead>
                             <TableHead>
@@ -181,9 +192,9 @@ const ProfileMyEarnings = () => {
                                             />
                                         </div>
                                     </TableCell>
-                                    <TableCell className="font-medium text-gray-900 dark:text-white">
+                                    {/* <TableCell className="font-medium text-gray-900 dark:text-white">
                                         #{item.campaign}
-                                    </TableCell>
+                                    </TableCell> */}
                                     <TableCell>
                                         <div className="flex gap-1.5">
                                             {item.youtube_link && (

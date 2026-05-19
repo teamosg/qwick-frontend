@@ -8,18 +8,18 @@ import PostActions from "./PostActions";
 const Post = ({ post }) => {
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow p-3 sm:p-6">
+    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow p-3 sm:p-6 max-w-2xl mx-auto">
       {/* ================= POST HEADER ================= */}
       <div className="flex justify-between items-start mb-3 sm:mb-4">
         <div className="flex items-center space-x-2 sm:space-x-3">
           <img
             src={post?.author?.avatar}
-            alt={post?.author?.first_name}
+            alt={post?.author?.full_name}
             className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
           />
           <div className="min-w-0 flex-1">
-            <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
-              {post?.author?.first_name} {post?.author?.last_name}
+             <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
+              {post?.author?.full_name}
             </h3>
             <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
               <Clock size={10} className="mr-1" />

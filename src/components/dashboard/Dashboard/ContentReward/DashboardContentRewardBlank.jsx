@@ -17,11 +17,10 @@ const DashboardContentRewardBlank = ({ onCreateReward }) => {
         <div className="py-4">
           <div className="mb-6">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">
-              No active Content Payouts
+              No Active Campaigns
             </h2>
             <p className="text-gray-500 dark:text-gray-400 max-w-xs sm:max-w-md mx-auto text-sm sm:text-base leading-relaxed">
-              You don't have any active content payouts. Create one to start
-              paying out users
+              You haven’t created a campaign yet. Start one to reward your users.
             </p>
           </div>
           <div className="mt-8 flex justify-center">
@@ -30,7 +29,7 @@ const DashboardContentRewardBlank = ({ onCreateReward }) => {
               type="button"
               className="w-full sm:w-auto bg-[#003933] text-white px-6 py-3.5 sm:px-10 sm:py-4 rounded-full hover:bg-[#002822] transition-all font-semibold text-sm sm:text-base shadow-lg shadow-emerald-900/10 cursor-pointer"
             >
-              Create content payouts
+              Create Campaign
             </button>
           </div>
         </div>

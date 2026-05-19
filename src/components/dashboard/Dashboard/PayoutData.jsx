@@ -63,8 +63,8 @@ const PayoutData = () => {
   };
 
   const getDisplayName = (user) => {
-    if (user.first_name || user.last_name) {
-      return `${user.first_name || ""} ${user.last_name || ""}`.trim();
+    if (user.full_name) {
+      return user.full_name;
     }
     return user.user || "Unknown User";
   };

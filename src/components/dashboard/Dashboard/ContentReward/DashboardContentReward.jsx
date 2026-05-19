@@ -26,7 +26,6 @@ const DashboardContentReward = () => {
   };
 
   const handleFormSubmit = async (formData) => {
-    // Mappings
     const typeMap = {
       "UGC": 1,
       "Sponsored": 2,
@@ -46,10 +45,9 @@ const DashboardContentReward = () => {
 
     const platformMap = {
       "Instagram": 2,
-      "Tiktok": 3,
+      "TikTok": 3,
       "Youtube": 1
     };
-
 
     const payload = new FormData();
 
@@ -67,6 +65,7 @@ const DashboardContentReward = () => {
     payload.append("max_payout", Number(formData.maxPayout) || 0);
     payload.append("available_content", formData.availableContent || "");
     payload.append("content_requirement", formData.contentRequirement);
+    payload.append("flat_fee_bonus", Number(formData.flatFeeBonus) || 0);
 
     if (formData.startDate) {
       const date = new Date(formData.startDate);
@@ -77,7 +76,6 @@ const DashboardContentReward = () => {
       payload.append("end_date", date.toISOString().split('T')[0]);
     }
 
-    // Platforms
     const platforms = formData.platforms || [];
     platforms.forEach((p) => {
       const id = platformMap[p];
@@ -132,7 +130,7 @@ const DashboardContentReward = () => {
               onClick={handleCreateReward}
               className="w-full sm:w-auto bg-[#003933] text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-[#002822] transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/10"
             >
-              Create New Reward
+              Create Campaign
             </button>
           </div>
           <div className="space-y-4 pb-6 mt-6">

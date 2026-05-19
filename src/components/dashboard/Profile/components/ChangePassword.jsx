@@ -78,7 +78,7 @@ const ChangePassword = () => {
                                             <div className="relative">
                                                 <Input
                                                     type={showCurrent ? "text" : "password"}
-                                                    placeholder="Enter current password"
+                                                    placeholder="Current Password"
                                                     {...field}
                                                     className="pr-10"
                                                 />
@@ -109,7 +109,7 @@ const ChangePassword = () => {
                                             <div className="relative">
                                                 <Input
                                                     type={showNew ? "text" : "password"}
-                                                    placeholder="Enter new password"
+                                                    placeholder="New Password"
                                                     {...field}
                                                     className="pr-10"
                                                 />
@@ -140,7 +140,7 @@ const ChangePassword = () => {
                                             <div className="relative">
                                                 <Input
                                                     type={showConfirm ? "text" : "password"}
-                                                    placeholder="Confirm new password"
+                                                    placeholder="Confirm New Password"
                                                     {...field}
                                                     className="pr-10"
                                                 />

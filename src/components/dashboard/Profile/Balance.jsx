@@ -4,8 +4,8 @@ import { useGetWalletBalance } from "@/hooks/payment.hook";
 import BalanceCardSkeleton from "./components/BalanceCardSkeleton";
 import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
 import WithdrawModal from "./components/WithdrawModal";
-import DepositModal from "./components/DepositModal";
 import { useState } from "react";
+import WithdrawList from "./components/WithdrawList";
 
 const ProfileBalance = () => {
   const {
@@ -15,7 +15,6 @@ const ProfileBalance = () => {
   } = useGetWalletBalance();
 
   const [openWithdraw, setOpenWithdraw] = useState(false);
-  const [openDeposit, setOpenDeposit] = useState(false);
 
   if (isErrorBalance)
     return (
@@ -45,23 +44,15 @@ const ProfileBalance = () => {
             >
               Withdraw
             </Button>
-
-            {/* Deposit */}
-            <Button
-              onClick={() => setOpenDeposit(true)}
-              variant="outline"
-              className="border-[#003933] text-[#003933] dark:text-white dark:border-white rounded-full"
-            >
-              Deposit
-            </Button>
           </div>
         </div>
       )}
 
       <WithdrawModal open={openWithdraw} setOpen={setOpenWithdraw} />
-      <DepositModal open={openDeposit} setOpen={setOpenDeposit} />
 
-      <ProfileBalanceData />
+      {/* <ProfileBalanceData /> */}
+
+      <WithdrawList />
     </div>
   );
 };

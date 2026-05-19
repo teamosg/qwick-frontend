@@ -18,7 +18,7 @@ import CampaignProgress from "@/components/dashboard/Dashboard/ContentReward/Cam
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetailsPayment = () => {
-  const { campaignId } = useParams();
+  const { campaignId, communityUsername } = useParams();
   const navigate = useNavigate();
   const { selectedCreatorCommunity } = useCommunityStore();
   const { data: campaignRes, isLoading: isLoadingCampaigns } = useGetAllCampaigns();
@@ -30,6 +30,7 @@ const ContentRewardDetailsPayment = () => {
 
   const [files, setFiles] = useState();
   const [showPopup, setShowPopup] = useState(false);
+  const [selectedPlatform, setSelectedPlatform] = useState(null);
 
   const availablePlatforms = useMemo(() => {
     return campaign?.platforms?.map(p => p.name?.toLowerCase()) || [];
@@ -41,6 +42,15 @@ const ContentRewardDetailsPayment = () => {
     tiktok_link: "",
     termsAccepted: false,
   });
+
+  const currentBudget = campaign?.initial_budget || campaign?.budget || 0;
+  const earning = parseFloat(campaign?.total_users_earning || 0);
+  const progress = currentBudget > 0
+    ? Math.min(Math.max((earning / parseFloat(currentBudget)) * 100, 0), 100)
+    : 0;
+
+  const isEnded = campaign?.end_date && new Date(campaign.end_date) < new Date();
+  const isFull = progress >= 100;
 
   const [errors, setErrors] = useState({});
 
@@ -63,6 +73,7 @@ const ContentRewardDetailsPayment = () => {
       termsAccepted: false,
     });
     setErrors({});
+    setSelectedPlatform(null);
   };
 
   const handleInputChange = (platform, value) => {
@@ -87,10 +98,6 @@ const ContentRewardDetailsPayment = () => {
       newErrors.general = "Please provide at least one social media link.";
     }
 
-    if (!files || files.length === 0) {
-      newErrors.files = "Media file is required.";
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -111,7 +118,7 @@ const ContentRewardDetailsPayment = () => {
       onSuccess: (data) => {
         if (data?.success || data?.status === 200 || data?.status === 201) {
           handleClosePopup();
-          navigate("/content-reward");
+          navigate(`/announcement/${communityUsername}/content-reward`);
         }
       },
       onError: (error) => {
@@ -163,6 +170,21 @@ const ContentRewardDetailsPayment = () => {
       <div className="p-4 sm:p-6 text-[#717171] max-w-5xl mx-auto">
         <div className="dark:text-white dark:bg-zinc-900 p-4 sm:p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 bg-white">
           <div className="space-y-6">
+            {(isEnded || isFull) && (
+              <div className="flex justify-end">
+                {isEnded ? (
+                  <div className="px-3 py-1 bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400 rounded-full text-xs font-bold flex items-center gap-1.5 border border-red-200 dark:border-red-900/50">
+                    <div className="size-1.5 rounded-full bg-red-600 animate-pulse" />
+                    CAMPAIGN EXPIRED
+                  </div>
+                ) : (
+                  <div className="px-3 py-1 bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400 rounded-full text-xs font-bold flex items-center gap-1.5 border border-amber-200 dark:border-amber-900/50">
+                    <div className="size-1.5 rounded-full bg-amber-600 animate-pulse" />
+                    BUDGET REACHED
+                  </div>
+                )}
+              </div>
+            )}
             <div className="relative group overflow-hidden rounded-2xl">
               <img
                 src={fullThumbnail || "/confirm-apply.png"}
@@ -231,9 +253,13 @@ const ContentRewardDetailsPayment = () => {
               </button>
               <button
                 onClick={handleApplyClick}
-                className="w-full sm:w-auto px-10 py-3.5 text-white bg-[#003933] hover:bg-[#002822] text-lg font-bold rounded-2xl transition duration-300 shadow-xl active:scale-[0.98] order-1 sm:order-2"
+                disabled={isEnded || isFull}
+                className={`w-full sm:w-auto px-10 py-3.5 text-white text-lg font-bold rounded-2xl transition duration-300 shadow-xl order-1 sm:order-2 ${isEnded || isFull
+                  ? "bg-gray-400 cursor-not-allowed opacity-50"
+                  : "bg-[#003933] hover:bg-[#002822] active:scale-[0.98]"
+                  }`}
               >
-                Submit Content
+                {isEnded ? "Campaign Ended" : isFull ? "Budget Reached" : "Submit Content"}
               </button>
             </div>
           </div>
@@ -274,43 +300,69 @@ const ContentRewardDetailsPayment = () => {
                 </div>
               )}
 
-              <div className="space-y-5">
-                {/* Dynamically render platform links */}
-                {[
-                  { id: "youtube", label: "YouTube Link", placeholder: "https://www.youtube.com/watch?v=...", icon: <FaYoutube className="text-red-600" /> },
-                  { id: "instagram", label: "Instagram Link", placeholder: "https://www.instagram.com/reels/...", icon: <FaInstagram className="text-pink-600" /> },
-                  { id: "tiktok", label: "TikTok Link", placeholder: "https://www.tiktok.com/@user/video/...", icon: <FaTiktok className="text-black dark:text-white" /> }
-                ].map((input) => (
-                  availablePlatforms.includes(input.id) && (
-                    <div key={input.id} className="space-y-2">
-                      <label className="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white">
-                        {input.icon} {input.label}
-                      </label>
-                      <input
-                        type="url"
-                        value={formData[`${input.id}_link`]}
-                        onChange={(e) => handleInputChange(`${input.id}_link`, e.target.value)}
-                        placeholder={input.placeholder}
-                        className={`w-full px-4 py-3.5 bg-gray-50 dark:bg-zinc-800 border-2 rounded-2xl focus:ring-4 focus:ring-[#3fa796]/20 focus:border-[#3fa796] outline-none transition-all placeholder:text-gray-400 dark:text-white font-medium ${errors[`${input.id}_link`] ? "border-red-400" : "border-transparent"
-                          }`}
-                      />
-                      {errors[`${input.id}_link`] && (
-                        <p className="text-red-500 text-[10px] font-bold px-1 uppercase tracking-tight">
-                          {Array.isArray(errors[`${input.id}_link`]) ? errors[`${input.id}_link`][0] : errors[`${input.id}_link`]}
-                        </p>
-                      )}
-                    </div>
-                  )
-                ))}
+              <div className="space-y-6">
+                {/* Platform Selector Grid */}
+                <div className="space-y-4">
+                  <label className="block text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+                    Select Platform
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {[
+                      { id: "instagram", label: "Instagram", icon: <FaInstagram size={24} className="text-pink-600" /> },
+                      { id: "tiktok", label: "TikTok", icon: <FaTiktok size={24} className="text-black dark:text-white" /> },
+                      { id: "youtube", label: "YouTube", icon: <FaYoutube size={24} className="text-red-600" /> }
+                    ].map((platform) => (
+                      availablePlatforms.includes(platform.id) && (
+                        <button
+                          key={platform.id}
+                          type="button"
+                          onClick={() => setSelectedPlatform(platform.id)}
+                          className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all duration-200 gap-2 ${selectedPlatform === platform.id
+                            ? "border-[#003933] bg-[#003933]/5 dark:bg-[#003933]/20 ring-4 ring-[#003933]/10"
+                            : "border-gray-100 dark:border-zinc-800 hover:border-gray-200 dark:hover:border-zinc-700 bg-white dark:bg-zinc-800/50"
+                            }`}
+                        >
+                          {platform.icon}
+                          <span className="text-xs font-bold text-gray-900 dark:text-white">{platform.label}</span>
+                        </button>
+                      )
+                    ))}
+                  </div>
+                </div>
+
+                {/* Conditional Platform Link Input */}
+                {selectedPlatform && (
+                  <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <label className="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white capitalize">
+                      {selectedPlatform === 'youtube' ? <FaYoutube className="text-red-600" /> :
+                        selectedPlatform === 'instagram' ? <FaInstagram className="text-pink-600" /> :
+                          <FaTiktok className="text-black dark:text-white" />}
+                      {selectedPlatform} Link
+                    </label>
+                    <input
+                      type="url"
+                      value={formData[`${selectedPlatform}_link`]}
+                      onChange={(e) => handleInputChange(`${selectedPlatform}_link`, e.target.value)}
+                      placeholder={`https://www.${selectedPlatform}.com/...`}
+                      className={`w-full px-4 py-3.5 bg-gray-50 dark:bg-zinc-800 border-2 rounded-2xl focus:ring-4 focus:ring-[#003933]/20 focus:border-[#003933] outline-none transition-all placeholder:text-gray-400 dark:text-white font-medium ${errors[`${selectedPlatform}_link`] ? "border-red-400" : "border-transparent"
+                        }`}
+                    />
+                    {errors[`${selectedPlatform}_link`] && (
+                      <p className="text-red-500 text-[10px] font-bold px-1 uppercase tracking-tight">
+                        {Array.isArray(errors[`${selectedPlatform}_link`]) ? errors[`${selectedPlatform}_link`][0] : errors[`${selectedPlatform}_link`]}
+                      </p>
+                    )}
+                  </div>
+                )}
 
                 {/* Dropzone Container */}
-                <div className="space-y-2">
+                <div className="space-y-2 pt-2">
                   <label className="block text-sm font-bold text-gray-900 dark:text-white">
-                    Official Media File <span className="text-red-500">*</span>
+                    Official Media File <span className="text-gray-400 font-normal">(Optional)</span>
                   </label>
                   <div className={`p-4 rounded-3xl border-2 border-dashed transition-all ${errors.files
                     ? "border-red-400 bg-red-50/50 dark:bg-red-900/10"
-                    : "border-emerald-200 dark:border-zinc-800 bg-emerald-50/10 dark:bg-zinc-800/20"
+                    : "border-[#003933]/20 dark:border-zinc-800 bg-[#003933]/5 dark:bg-zinc-800/20"
                     }`}>
                     <Dropzone
                       maxFiles={1}
@@ -379,7 +431,7 @@ const ContentRewardDetailsPayment = () => {
                     <span>Processing...</span>
                   </>
                 ) : (
-                  "Finalize Submission"
+                  "Submit for approval"
                 )}
               </button>
             </div>

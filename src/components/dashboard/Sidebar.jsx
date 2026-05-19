@@ -58,7 +58,7 @@ const NavItem = ({ icon, text, to, onClose, showDot }) => {
 };
 
 const Sidebar = ({ onClose }) => {
-  const { setMyCommunityList } = useCommunityStore()
+  const { setMyCommunityList, setMyCommunityListAnnouncement } = useCommunityStore()
   const {
     data: communityList,
     isLoading: isLoadingCommunityList,
@@ -79,7 +79,9 @@ const Sidebar = ({ onClose }) => {
 
   useEffect(() => {
     const myCommunityList = [...createdCommunityList, ...joinedCommunityList]
+    const myCommunityListAnnouncement = { createdCommunities: [...createdCommunityList], joinedCommunities: [...joinedCommunityList] }
     setMyCommunityList(myCommunityList)
+    setMyCommunityListAnnouncement(myCommunityListAnnouncement)
   }, [communityList])
 
 
@@ -104,7 +106,7 @@ const Sidebar = ({ onClose }) => {
               {[
                 { icon: <Home />, text: "Home", to: "/home" },
                 { icon: <DiscoverySVG />, text: "Discover", to: "/discover" },
-                { icon: <Megaphone />, text: "Announcement", to: "/announcement" },
+                // { icon: <Megaphone />, text: "Announcement", to: "/announcement" },
                 { icon: <MessageSVG />, text: "Messages", to: "/messages" },
                 {
                   icon: <NotificationSVG />,

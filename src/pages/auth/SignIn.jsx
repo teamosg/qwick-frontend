@@ -1,4 +1,4 @@
-import { useTheme } from "@/components/shared/ThemeProvider";
+// import { useTheme } from "@/components/shared/ThemeProvider";
 import { useState } from "react";
 import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -11,8 +11,8 @@ import { useGoogleLogin } from "@react-oauth/google";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { theme } = useTheme();
-  const darkMode = theme === "dark";
+  // const { theme } = useTheme();
+  // const darkMode = theme === "dark";
 
   // Use the new auth hook
   const { form, mutate, isPending } = useSignIn();
@@ -62,12 +62,21 @@ const SignIn = () => {
 
         <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
           <div className="mb-10 text-center">
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
-              SIGN IN
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
+              Sign In
             </h2>
-            <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
-              Start earning rewards for your content
-            </p>
+            {/* Sign up link */}
+            <div className="mt-6 sm:mt-10 text-center">
+              <p className="text-gray-600 dark:text-gray-400">
+                Don't have an account?{" "}
+                <Link
+                  to="/sign-up"
+                  className="text-[#003933] dark:text-white font-medium hover:underline"
+                >
+                  Sign Up
+                </Link>
+              </p>
+            </div>
           </div>
 
           {/* Social Buttons */}
@@ -120,7 +129,7 @@ const SignIn = () => {
                 <input
                   type="email"
                   {...register("email")}
-                  placeholder="Enter email"
+                  placeholder="Email"
                   className="w-full px-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
               </div>
@@ -143,7 +152,7 @@ const SignIn = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
-                  placeholder="Enter password"
+                  placeholder="Password"
                   className="w-full px-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
                 <button
@@ -197,22 +206,11 @@ const SignIn = () => {
               disabled={isPending}
               className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isPending ? "Signing in..." : "Sign in"}
+              {isPending ? "Signing In..." : "Sign In"}
             </button>
           </form>
 
-          {/* Sign up link */}
-          <div className="mt-6 sm:mt-10 text-center">
-            <p className="text-gray-600 dark:text-gray-400">
-              Don't have an account?{" "}
-              <Link
-                to="/sign-up"
-                className="text-[#003933] dark:text-white font-medium hover:underline"
-              >
-                Sign up
-              </Link>
-            </p>
-          </div>
+
         </div>
       </div>
 

@@ -24,11 +24,12 @@ export const useSignUp = () => {
   const form = useForm({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
+      full_name: "",
+      username: "",
       email: "",
       password: "",
       confirm_password: "",
+      accepted_terms: false,
     },
   });
 

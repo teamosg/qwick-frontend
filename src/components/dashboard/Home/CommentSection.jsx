@@ -66,7 +66,7 @@ const CommentSection = ({ post }) => {
         >
             <AvatarUser
                 src={profile?.avatar}
-                alt={profile?.first_name}
+                alt={profile?.full_name}
                 className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover"
             />
 

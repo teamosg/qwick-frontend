@@ -157,7 +157,10 @@ const WaitListData = () => {
       </div>
 
       {
-        waitingUsers?.length === 0 && <NoDataAlert />
+        waitingUsers?.length === 0 && <NoDataAlert
+        title="Your Waitlist Is Empty"
+        message='Start inviting users and grow your early audience.'
+        />
       }
 
       {

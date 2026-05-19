@@ -140,6 +140,14 @@ const CampaignForm = ({
     }
   };
 
+  const calculateViews = (payout, rate) => {
+    if (!payout || !rate || Number(rate) === 0) return null;
+    const views = (Number(payout) / Number(rate)) * 1000;
+    if (views >= 1000000) return `~${(views / 1000000).toFixed(1)}M views`;
+    if (views >= 1000) return `~${Math.round(views / 1000)}k views`;
+    return `~${Math.round(views)} views`;
+  };
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -202,20 +210,22 @@ const CampaignForm = ({
         {/* Upload Thumbnail */}
         <div className="space-y-3">
           {formData.thumbnailPreview ? (
-            <div className="relative border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <img
-                src={formData.thumbnailPreview}
-                alt="Thumbnail preview"
-                className="w-full h-40 object-cover rounded-lg"
-              />
-              <div className="flex flex-col sm:flex-row gap-3 mt-4">
+            <div className="relative border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden group">
+              <div className="aspect-[16/9] w-full">
+                <img
+                  src={formData.thumbnailPreview}
+                  alt="Thumbnail preview"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                 <button
                   type="button"
                   disabled={isFormDisabled}
                   onClick={() =>
                     document.getElementById("thumbnail-upload").click()
                   }
-                  className="px-4 py-2 text-sm bg-gray-100 dark:bg-[#2E2E2E] text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2E2E2E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-colors font-medium"
                 >
                   Change Image
                 </button>
@@ -223,11 +233,12 @@ const CampaignForm = ({
                   type="button"
                   disabled={isFormDisabled}
                   onClick={removeThumbnail}
-                  className="px-4 py-2 text-sm bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
                 >
                   Remove
                 </button>
               </div>
+
               <input
                 id="thumbnail-upload"
                 type="file"
@@ -237,21 +248,19 @@ const CampaignForm = ({
               />
             </div>
           ) : (
-            <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 sm:p-10 text-center hover:border-gray-300 dark:hover:border-gray-600 transition-colors cursor-pointer">
-              <div className="flex flex-col items-center space-y-3">
-                <div className="">
-                  <button
-                    type="button"
-                    disabled={isFormDisabled}
-                    onClick={() =>
-                      document.getElementById("thumbnail-upload").click()
-                    }
-                    className="dark:bg-[#2E2E2E]  text-sm font-medium text-black dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex gap-3 px-5 py-2 bg-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Upload className="w-5 h-5 text-black dark:text-gray-400" />
-                    Upload thumbnail
-                  </button>
+            <div 
+              onClick={() => document.getElementById("thumbnail-upload").click()}
+              className="border-2 border-dashed border-gray-200 dark:border-zinc-800 rounded-2xl aspect-[16/9] w-full flex items-center justify-center bg-gray-50/50 dark:bg-zinc-900/30 hover:bg-gray-50 dark:hover:bg-zinc-900/50 hover:border-gray-300 dark:hover:border-zinc-700 transition-all cursor-pointer group"
+            >
+              <div className="flex flex-col items-center space-y-4">
+                <div className="p-4 rounded-full bg-white dark:bg-zinc-800 shadow-sm border border-gray-100 dark:border-zinc-700 group-hover:scale-110 transition-transform">
+                  <Upload className="w-6 h-6 text-[#003933] dark:text-emerald-500" />
                 </div>
+                <div className="text-center px-4">
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">Upload thumbnail</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Recommended size: 1280x720 (16:9)</p>
+                </div>
+
                 <input
                   id="thumbnail-upload"
                   type="file"
@@ -274,7 +283,7 @@ const CampaignForm = ({
             disabled={isFormDisabled}
             value={formData.campaignName}
             onChange={(e) => handleInputChange("campaignName", e.target.value)}
-            placeholder="e.g. Summer UGC Challenge"
+            placeholder="Campaign Name"
             className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none text-gray-900 dark:text-white placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
@@ -344,7 +353,7 @@ const CampaignForm = ({
         {/* Campaign budget */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Campaign budget*
+            Campaign Budget*
           </label>
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
@@ -356,7 +365,7 @@ const CampaignForm = ({
                 onChange={(e) =>
                   handleInputChange("campaignBudget", e.target.value)
                 }
-                placeholder="e.g. 1000"
+                placeholder="0.00"
                 className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
@@ -390,7 +399,7 @@ const CampaignForm = ({
         {/* Reward rate */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Reward rate* (per 1k views)
+            Reward Rate* (per 1k views)
           </label>
           <div className="relative">
             <input
@@ -398,17 +407,17 @@ const CampaignForm = ({
               disabled={isFormDisabled}
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
-              placeholder="e.g. 5"
+              placeholder="0.00"
               className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
 
         {/* Min and Max payout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-              Minimum payout*
+            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-2 flex items-center gap-2">
+              Minimum Payout*
               <Popover>
                 <PopoverTrigger asChild>
                   <button type="button" tabIndex={-1}>
@@ -427,15 +436,20 @@ const CampaignForm = ({
                 disabled={isFormDisabled}
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
-                placeholder="e.g. 10"
+                placeholder="0.00"
                 className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
+            {formData.minPayout && formData.rewardRate && (
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 ml-1 font-medium">
+                {calculateViews(formData.minPayout, formData.rewardRate)}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-              Maximum payout*
+            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-2 flex items-center gap-2">
+              Maximum Payout*
               <Popover>
                 <PopoverTrigger asChild>
                   <button type="button" tabIndex={-1}>
@@ -454,18 +468,22 @@ const CampaignForm = ({
                 disabled={isFormDisabled}
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
-                placeholder="e.g. 500"
+                placeholder="0.00"
                 className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
+            {formData.maxPayout && formData.rewardRate && (
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 ml-1 font-medium">
+                {calculateViews(formData.maxPayout, formData.rewardRate)}
+              </p>
+            )}
           </div>
         </div>
 
         {/* Flat fee bonus */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-            Flat fee bonus (optional) -
-            Max 10% of the total budget
+            Flat Fee Bonus (Optional) - Max 10% of the Total Budget
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
@@ -486,7 +504,7 @@ const CampaignForm = ({
               onChange={(e) =>
                 handleInputChange("flatFeeBonus", e.target.value)
               }
-              placeholder="e.g. 20"
+              placeholder="0.00"
               className={cn(
                 "w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed",
                 formData.flatFeeBonus && Number(formData.flatFeeBonus) > (Number(formData.campaignBudget) * 0.1) && "border-red-500 focus:ring-red-500"
@@ -506,7 +524,7 @@ const CampaignForm = ({
             Platform*
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {["Instagram", "Tiktok", "Youtube"].map((platform) => (
+            {["Instagram", "TikTok", "Youtube"].map((platform) => (
               <label
                 key={platform}
                 className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-[#2E2E2E] hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
@@ -531,7 +549,7 @@ const CampaignForm = ({
         {/* Available content */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Available content
+            Available Content
           </label>
           <p className="text-xs text-gray-500 dark:text-gray-400">
             We suggest adding your guides, raw footage, and other materials for
@@ -557,7 +575,7 @@ const CampaignForm = ({
         {/* Content requirement */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Content requirement*
+            Content Requirement*
           </label>
           <p className="text-xs text-gray-500 dark:text-gray-400">
             We recommend including content guidelines for users to follow.
@@ -568,7 +586,7 @@ const CampaignForm = ({
             onChange={(e) =>
               handleInputChange("contentRequirement", e.target.value)
             }
-            placeholder="e.g. Video must be at least 30 seconds long, include the brand logo..."
+            placeholder="Enter Requirement"
             rows={4}
             className="w-full px-3 text-gray-900 dark:text-white py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
           />
@@ -577,7 +595,7 @@ const CampaignForm = ({
         {/* Campaign Duration */}
         <div className="space-y-3">
           <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-            Campaign duration* (Min 30days)
+            Campaign Duration (Min 30 Days)
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
@@ -698,11 +716,15 @@ const CampaignForm = ({
             </div>
           )}
         </div>
-        {
-          alert && (
+        {alert && (
+          typeof alert === 'object' ? (
             <CommonAlert alert={alert} onClose={() => setAlert(null)} />
+          ) : (
+            <div className="text-sm text-red-500 p-3 bg-red-50 dark:bg-red-950/20 rounded-lg">
+              {alert}
+            </div>
           )
-        }
+        )}
         {/* Terms and Conditions */}
         {!isEditMode && (
           <div className="flex items-start space-x-3 p-4 bg-gray-50 dark:bg-[#2E2E2E] rounded-xl border border-gray-100 dark:border-gray-800 transition-colors">

@@ -51,15 +51,15 @@ const Analytics = () => {
   }
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-6 md:space-y-8 animate-in fade-in duration-500 pb-10">
       <ContentRewardNav />
 
       {/* Stats Overview */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
         {/* Total Campaigns */}
         <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
-          <CardContent className="p-4 sm:p-5 md:p-6">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-3 md:gap-4 text-center sm:text-left">
+          <CardContent className="p-3 sm:p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
               <div className="p-2.5 sm:p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform shrink-0">
                 <ShoppingBag size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
@@ -75,8 +75,8 @@ const Analytics = () => {
 
         {/* Total Views */}
         <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
-          <CardContent className="p-4 sm:p-5 md:p-6">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-3 md:gap-4 text-center sm:text-left">
+          <CardContent className="p-3 sm:p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
               <div className="p-2.5 sm:p-3 rounded-xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform shrink-0">
                 <TrendingUp size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
@@ -92,8 +92,8 @@ const Analytics = () => {
 
         {/* Total Submissions */}
         <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
-          <CardContent className="p-4 sm:p-5 md:p-6">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-3 md:gap-4 text-center sm:text-left">
+          <CardContent className="p-3 sm:p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
               <div className="p-2.5 sm:p-3 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0">
                 <Users size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
@@ -109,8 +109,8 @@ const Analytics = () => {
 
         {/* Total Paid */}
         <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
-          <CardContent className="p-4 sm:p-5 md:p-6">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start md:items-center gap-3 md:gap-4 text-center sm:text-left">
+          <CardContent className="p-3 sm:p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
               <div className="p-2.5 sm:p-3 rounded-xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0">
                 <DollarSign size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>

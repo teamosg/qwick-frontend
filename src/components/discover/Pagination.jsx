@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
@@ -17,31 +16,42 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   const getPageNumbers = () => {
-    const pages = [];
-    const maxVisiblePages = 5;
+    const siblingCount = 1;
+    const totalPageNumbers = siblingCount + 5;
 
-    if (totalPages <= maxVisiblePages) {
+    if (totalPages <= totalPageNumbers) {
+      const pages = [];
       for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      if (currentPage <= 3) {
-        for (let i = 1; i <= 4; i++) pages.push(i);
-        pages.push("...");
-        pages.push(totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1);
-        pages.push("...");
-        for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i);
-      } else {
-        pages.push(1);
-        pages.push("...");
-        pages.push(currentPage - 1);
-        pages.push(currentPage);
-        pages.push(currentPage + 1);
-        pages.push("...");
-        pages.push(totalPages);
-      }
+      return pages;
     }
-    return pages;
+
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);
+
+    const shouldShowLeftDots = leftSiblingIndex > 2;
+    const shouldShowRightDots = rightSiblingIndex < totalPages - 1;
+
+    if (!shouldShowLeftDots && shouldShowRightDots) {
+      const leftItemCount = 3 + 2 * siblingCount;
+      const leftRange = [];
+      for (let i = 1; i <= leftItemCount; i++) leftRange.push(i);
+      return [...leftRange, "...", totalPages];
+    }
+
+    if (shouldShowLeftDots && !shouldShowRightDots) {
+      const rightItemCount = 3 + 2 * siblingCount;
+      const rightRange = [];
+      for (let i = totalPages - rightItemCount + 1; i <= totalPages; i++) rightRange.push(i);
+      return [1, "...", ...rightRange];
+    }
+
+    if (shouldShowLeftDots && shouldShowRightDots) {
+      const middleRange = [];
+      for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) middleRange.push(i);
+      return [1, "...", ...middleRange, "...", totalPages];
+    }
+
+    return [];
   };
 
   return (
