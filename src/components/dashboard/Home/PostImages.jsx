@@ -29,12 +29,12 @@ const PostImages = ({ post }) => {
       return (
         <div 
           onClick={() => handleOpen(0)} 
-          className="cursor-pointer rounded-xl overflow-hidden bg-gray-50 dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800"
+          className="cursor-pointer rounded-xl overflow-hidden bg-gray-50 dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 "
         >
           <img 
             src={files[0].file} 
             alt="Post image" 
-            className="w-full h-auto max-h-[280px] object-contain mx-auto transition-all duration-300 hover:brightness-95" 
+            className="w-full aspect-[4/3] sm:aspect-[16/10] object-cover transition-all duration-300 hover:brightness-95" 
           />
         </div>
       );
@@ -42,17 +42,17 @@ const PostImages = ({ post }) => {
 
     if (count === 2) {
       return (
-        <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800">
+        <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800 ">
           {files.map((file, i) => (
             <div 
               key={file.id} 
               onClick={() => handleOpen(i)} 
-              className="aspect-[21/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+              className="aspect-[4/3] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
             >
               <img 
                 src={file.file} 
                 alt="" 
-                className="w-full h-full object-contain transition-all duration-300 hover:brightness-95" 
+                className="w-full h-full object-cover transition-all duration-300 hover:brightness-95" 
               />
             </div>
           ))}
@@ -62,62 +62,88 @@ const PostImages = ({ post }) => {
 
     if (count === 3) {
       return (
-        <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800">
+        <div className="grid grid-cols-6 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800 ">
           <div 
             onClick={() => handleOpen(0)} 
-            className="col-span-2 aspect-[21/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+            className="col-span-6 aspect-[16/10] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
           >
             <img 
               src={files[0].file} 
               alt="" 
-              className="w-full h-full object-contain transition-all duration-300 hover:brightness-95" 
+              className="w-full h-full object-cover transition-all duration-300 hover:brightness-95" 
             />
           </div>
           <div 
             onClick={() => handleOpen(1)} 
-            className="aspect-[16/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+            className="col-span-3 aspect-[4/3] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
           >
             <img 
               src={files[1].file} 
               alt="" 
-              className="w-full h-full object-contain transition-all duration-300 hover:brightness-95" 
+              className="w-full h-full object-cover transition-all duration-300 hover:brightness-95" 
             />
           </div>
           <div 
             onClick={() => handleOpen(2)} 
-            className="aspect-[16/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+            className="col-span-3 aspect-[4/3] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
           >
             <img 
               src={files[2].file} 
               alt="" 
-              className="w-full h-full object-contain transition-all duration-300 hover:brightness-95" 
+              className="w-full h-full object-cover transition-all duration-300 hover:brightness-95" 
             />
           </div>
         </div>
       );
     }
 
-    // 4+ images (Facebook style)
+    if (count === 4) {
+      return (
+        <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800 ">
+          {files.slice(0, 4).map((file, i) => (
+            <div 
+              key={file.id} 
+              onClick={() => handleOpen(i)} 
+              className="aspect-square cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+            >
+              <img 
+                src={file.file} 
+                alt="" 
+                className="w-full h-full object-cover transition-all duration-300 hover:brightness-95" 
+              />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    // 5+ images (Facebook grid style: 2 top aspect-square, 3 bottom aspect-square)
     return (
-      <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800">
-        {files.slice(0, 4).map((file, i) => (
-          <div 
-            key={file.id} 
-            onClick={() => handleOpen(i)} 
-            className="relative aspect-[16/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
-          >
-            <img 
-              src={file.file} 
-              alt="" 
-              className="w-full h-full object-contain transition-all duration-300 hover:brightness-95" 
-            />
-            {i === 3 && count > 4 && (
-              <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
-                <span className="text-white text-2xl font-bold">+{count - 4}</span>
-              </div>
-            )}
-          </div>
-        ))}
+      <div className="grid grid-cols-6 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800 ">
+        {files.slice(0, 5).map((file, i) => {
+          const isTopRow = i < 2;
+          const colSpan = isTopRow ? "col-span-3" : "col-span-2";
+          const aspectClass = isTopRow ? "aspect-[4/3]" : "aspect-square";
+
+          return (
+            <div 
+              key={file.id} 
+              onClick={() => handleOpen(i)} 
+              className={`relative ${colSpan} ${aspectClass} cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900`}
+            >
+              <img 
+                src={file.file} 
+                alt="" 
+                className="w-full h-full object-cover transition-all duration-300 hover:brightness-95" 
+              />
+              {i === 4 && count > 5 && (
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
+                  <span className="text-white text-xl sm:text-2xl font-bold">+{count - 5}</span>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     );
   };
