@@ -108,7 +108,7 @@ const Discover = () => {
     if (communityAsMember) {
       // Already joined
       setSelectedCreatorCommunity(communityAsMember);
-      navigate("/content-reward");
+      navigate(`/announcement/${communityAsMember?.username}/content-reward`);
     } else {
       // Find community username from all communities to navigate to join page
       const targetCommunity = allCommunities?.find(c => c.id === communityId);
