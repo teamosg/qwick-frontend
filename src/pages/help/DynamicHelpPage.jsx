@@ -245,17 +245,17 @@ const DynamicHelpPage = () => {
   return (
     <div className="p-12 dark:bg-zinc-950 max-w-6xl mx-auto">
       <div className="mb-6 inline-block">
-        <h1 className="text-[#090003] dark:text-white text-4xl font-semibold">
+        <h1 className="text-foreground-strong dark:text-white text-4xl font-semibold">
           {helpContent.title}
         </h1>
       </div>
       <Accordion type="single" collapsible>
         {helpContent.faqs.map((faq) => (
           <AccordionItem key={faq.id} value={faq.id} className="mb-8">
-            <AccordionTrigger className="text-lg font-semibold text-[#242A33] p-6 bg-[#f5f5f5] mb-8 hover:no-underline hover:cursor-pointer">
+            <AccordionTrigger className="text-lg font-semibold text-foreground p-6 bg-muted mb-8 hover:no-underline hover:cursor-pointer">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="bg-white p-6 text-base text-[#4B586B]">
+            <AccordionContent className="bg-white p-6 text-base text-foreground-muted">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>

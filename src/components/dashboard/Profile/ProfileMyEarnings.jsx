@@ -22,7 +22,7 @@ const ProfileMyEarnings = () => {
         const statusType = status?.toLowerCase() || "pending";
         const variants = {
             pending: "bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-800",
-            approved: "bg-[#002822]/10 text-[#002822] border-[#002822]/20 dark:bg-[#002822]/20 dark:text-[#002822] dark:border-[#002822]/30",
+            approved: "bg-foreground/10 text-foreground border-foreground-muted-hover/20 dark:bg-foreground/20 dark:text-foreground dark:border-foreground-muted-hover/30",
             rejected: "bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800",
         };
 
@@ -84,13 +84,13 @@ const ProfileMyEarnings = () => {
                         Track your campaign rewards and payout status.
                     </p>
                 </div>
-                <div className="flex items-center gap-3 bg-[#002822]/5 dark:bg-[#002822]/10 px-4 py-3 rounded-xl border border-[#002822]/10 dark:border-[#002822]/20 w-full sm:w-auto">
-                    <div className="p-2 bg-[#002822]/10 dark:bg-[#002822]/20 rounded-lg">
-                        <DollarSign className="h-5 w-5 text-[#002822]" />
+                <div className="flex items-center gap-3 bg-foreground/5 dark:bg-foreground/10 px-4 py-3 rounded-xl border border-foreground-muted-hover/10 dark:border-foreground-muted-hover/20 w-full sm:w-auto">
+                    <div className="p-2 bg-foreground/10 dark:bg-foreground/20 rounded-lg">
+                        <DollarSign className="h-5 w-5 text-foreground" />
                     </div>
                     <div>
-                        <p className="text-[10px] uppercase tracking-wider font-bold text-[#002822]/70">Total</p>
-                        <p className="text-lg font-bold text-[#002822] dark:text-[#002822] leading-none">
+                        <p className="text-[10px] uppercase tracking-wider font-bold text-foreground/70">Total</p>
+                        <p className="text-lg font-bold text-foreground dark:text-foreground leading-none">
                             ${totalEarnings}
                         </p>
                     </div>
@@ -123,7 +123,7 @@ const ProfileMyEarnings = () => {
                                         {getStatusBadge(item.status)}
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="font-bold text-lg text-[#002822] dark:text-[#002822]">${item.payout}</span>
+                                        <span className="font-bold text-lg text-foreground dark:text-foreground">${item.payout}</span>
                                         <div className="flex gap-2">
                                             {item.youtube_link && <a href={item.youtube_link} target="_blank" rel="noreferrer"><FaYoutube className="text-red-600 size-4" /></a>}
                                             {item.tiktok_link && <a href={item.tiktok_link} target="_blank" rel="noreferrer"><FaTiktok className="text-black dark:text-white size-4" /></a>}
@@ -225,7 +225,7 @@ const ProfileMyEarnings = () => {
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <div className="flex flex-col items-end">
-                                            <span className="font-bold text-[#002822] dark:text-[#002822]">
+                                            <span className="font-bold text-foreground dark:text-foreground">
                                                 ${parseFloat(item.payout).toFixed(2)}
                                             </span>
                                             <div className="flex gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">

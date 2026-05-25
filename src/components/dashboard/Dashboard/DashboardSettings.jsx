@@ -34,11 +34,11 @@ const DashboardSettings = () => {
       <div className=" space-y-3">
         <Link
           to={"/dashboard/dashboard-settings/notifications"}
-          className="flex items-center justify-between bg-white dark:bg-[#2E2E2E] rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
+          className="flex items-center justify-between bg-white dark:bg-zinc-800 rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
         >
           <div className="flex items-center justify-center gap-3">
             <Bell />
-            <h3 className="text-[#003933] dark:text-white text-[20px] font-semibold ">
+            <h3 className="text-foreground-strong dark:text-white text-[20px] font-semibold ">
               Notifications
             </h3>
           </div>
@@ -47,11 +47,11 @@ const DashboardSettings = () => {
 
         <div
           onClick={handleCopyRefLink}
-          className="flex items-center justify-between bg-white dark:bg-[#2E2E2E] rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm cursor-pointer"
+          className="flex items-center justify-between bg-white dark:bg-zinc-800 rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm cursor-pointer"
         >
           <div className="flex items-center justify-center gap-3">
             {copied ? <Check className="text-emerald-500" /> : <Share2 />}
-            <h3 className="text-[#003933] dark:text-white text-[20px] font-semibold ">
+            <h3 className="text-foreground-strong dark:text-white text-[20px] font-semibold ">
               {copied ? "Link Copied!" : "Generate Reference Link"}
             </h3>
           </div>
@@ -60,11 +60,11 @@ const DashboardSettings = () => {
 
         <Link
           to={""}
-          className="flex items-center justify-between bg-white dark:bg-[#2E2E2E] rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
+          className="flex items-center justify-between bg-white dark:bg-zinc-800 rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
         >
           <div className="flex items-center justify-center gap-3">
             <LegalSvg />
-            <h3 className="text-[#003933] dark:text-white text-[20px] font-semibold ">Legal</h3>
+            <h3 className="text-foreground-strong dark:text-white text-[20px] font-semibold ">Legal</h3>
           </div>
           <ChevronRight />
         </Link>

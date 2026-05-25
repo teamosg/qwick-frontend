@@ -29,7 +29,7 @@ const SuccessfullyVerified = () => {
             <button
               onClick={() => navigate("/sign-in")}
               type="submit"
-              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
+              className="w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer"
             >
               Sign in
             </button>

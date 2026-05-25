@@ -80,7 +80,7 @@ const PayoutData = () => {
               ? Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={index}
-                  className="bg-white dark:bg-[#2E2E2E] border rounded-lg p-4 shadow-sm dark:border-[#444]"
+                  className="bg-white dark:bg-zinc-800 border rounded-lg p-4 shadow-sm dark:border-zinc-700"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <Skeleton className="h-5 w-32" />
@@ -95,10 +95,10 @@ const PayoutData = () => {
               : withdrawals.map((withdrawal, index) => (
                 <div
                   key={index}
-                  className="bg-[#fff] dark:bg-[#2E2E2E] border rounded-lg p-4 shadow-sm dark:border-[#444] dark:text-[#fff]"
+                  className="bg-[#fff] dark:bg-zinc-800 border rounded-lg p-4 shadow-sm dark:border-zinc-700 dark:text-white"
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+                    <div className="font-semibold text-foreground dark:text-white">
                       {getDisplayName(withdrawal)}
                     </div>
                     {withdrawal.status?.toLowerCase() === "pending" && (
@@ -120,19 +120,19 @@ const PayoutData = () => {
                       </div>
                     )}
                   </div>
-                  <div className="text-sm text-[#25324B] dark:text-[#fff] p-1">
+                  <div className="text-sm text-foreground dark:text-white p-1">
                     {withdrawal.email}
                   </div>
-                  <div className="text-sm text-[#25324B] dark:text-[#fff]  p-1">
+                  <div className="text-sm text-foreground dark:text-white  p-1">
                     {" "}
                     {getStatusBadge(withdrawal.status)}
                   </div>
                   {withdrawal.contact && (
-                    <div className="font-semibold text-[#25324B] dark:text-[#fff]  p-1">
+                    <div className="font-semibold text-foreground dark:text-white  p-1">
                       {withdrawal.contact}
                     </div>
                   )}
-                  <div className="font-semibold text-[#25324B] dark:text-[#fff] p-1">
+                  <div className="font-semibold text-foreground dark:text-white p-1">
                     ${withdrawal.amount}
                   </div>
                 </div>
@@ -149,23 +149,23 @@ const PayoutData = () => {
             <div className="p-1">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="bg-[#f5f5f5] dark:bg-[#2E2E2E] text-gray-900 dark:text-[#fff] border-black rounded-full dark:border-[#444]">
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  <TableRow className="bg-muted/50 dark:bg-zinc-800 text-gray-900 dark:text-white border-black rounded-full dark:border-zinc-700">
+                    <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Name
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className=" font-medium py-4 px-6 dark:text-white">
                       Email
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Status
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className=" font-medium py-4 px-6 dark:text-white">
                       Total amount
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Contact
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Actions
                     </TableHead>
                   </TableRow>
@@ -197,21 +197,21 @@ const PayoutData = () => {
                     : withdrawals.map((withdrawal, index) => (
                       <TableRow
                         key={index}
-                        className="border-none hover:bg-[#f5f5f5] dark:hover:bg-[#2E2E2E] dark:text-[#fff]"
+                        className="border-none hover:bg-muted/50 dark:hover:bg-zinc-800 dark:text-white"
                       >
-                        <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
                           {getDisplayName(withdrawal)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
                           {withdrawal.email}
                         </TableCell>
-                        <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                           {getStatusBadge(withdrawal.status)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
                           $ {withdrawal.amount}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
                           {withdrawal.contact || "N/A"}
                         </TableCell>
                         <TableCell className="py-4 px-6 flex gap-2 items-center">

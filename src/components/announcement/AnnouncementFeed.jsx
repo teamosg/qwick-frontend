@@ -125,7 +125,7 @@ const AnnouncementFeed = () => {
 
   return (
     <motion.div
-      className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen"
+      className="bg-background min-h-screen"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}

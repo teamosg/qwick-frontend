@@ -167,7 +167,7 @@ const ContentRewardDetailsPayment = () => {
 
   return (
     <>
-      <div className="p-4 sm:p-6 text-[#717171] max-w-5xl mx-auto">
+      <div className="p-4 sm:p-6 text-foreground-subtle max-w-5xl mx-auto">
         <div className="dark:text-white dark:bg-zinc-900 p-4 sm:p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 bg-white">
           <div className="space-y-6">
             {(isEnded || isFull) && (
@@ -198,7 +198,7 @@ const ContentRewardDetailsPayment = () => {
 
             <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 p-4 rounded-xl flex gap-3 items-start">
               <CircleAlert className="text-amber-500 shrink-0 mt-0.5" size={18} />
-              <p className="text-[#003933] dark:text-amber-200 text-xs sm:text-sm font-medium leading-relaxed">
+              <p className="text-foreground-strong dark:text-amber-200 text-xs sm:text-sm font-medium leading-relaxed">
                 Only views after you submit count towards payout. Submit as soon
                 as you post to get paid for all of your views.
               </p>
@@ -256,7 +256,7 @@ const ContentRewardDetailsPayment = () => {
                 disabled={isEnded || isFull}
                 className={`w-full sm:w-auto px-10 py-3.5 text-white text-lg font-bold rounded-2xl transition duration-300 shadow-xl order-1 sm:order-2 ${isEnded || isFull
                   ? "bg-gray-400 cursor-not-allowed opacity-50"
-                  : "bg-[#003933] hover:bg-[#002822] active:scale-[0.98]"
+                  : "bg-foreground-strong hover:bg-foreground active:scale-[0.98]"
                   }`}
               >
                 {isEnded ? "Campaign Ended" : isFull ? "Budget Reached" : "Submit Content"}
@@ -277,7 +277,7 @@ const ContentRewardDetailsPayment = () => {
                   Create Submission
                 </h2>
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-zinc-400 mt-1">
-                  Share your results for <span className="text-[#003933] dark:text-[#00b89f] font-semibold">{name}</span>
+                  Share your results for <span className="text-foreground-strong dark:text-foreground-strong font-semibold">{name}</span>
                 </p>
               </div>
               <button
@@ -318,7 +318,7 @@ const ContentRewardDetailsPayment = () => {
                           type="button"
                           onClick={() => setSelectedPlatform(platform.id)}
                           className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all duration-200 gap-2 ${selectedPlatform === platform.id
-                            ? "border-[#003933] bg-[#003933]/5 dark:bg-[#003933]/20 ring-4 ring-[#003933]/10"
+                            ? "border-foreground-muted bg-foreground-strong/5 dark:bg-foreground-strong/20 ring-4 ring-primary/10"
                             : "border-gray-100 dark:border-zinc-800 hover:border-gray-200 dark:hover:border-zinc-700 bg-white dark:bg-zinc-800/50"
                             }`}
                         >
@@ -344,7 +344,7 @@ const ContentRewardDetailsPayment = () => {
                       value={formData[`${selectedPlatform}_link`]}
                       onChange={(e) => handleInputChange(`${selectedPlatform}_link`, e.target.value)}
                       placeholder={`https://www.${selectedPlatform}.com/...`}
-                      className={`w-full px-4 py-3.5 bg-gray-50 dark:bg-zinc-800 border-2 rounded-2xl focus:ring-4 focus:ring-[#003933]/20 focus:border-[#003933] outline-none transition-all placeholder:text-gray-400 dark:text-white font-medium ${errors[`${selectedPlatform}_link`] ? "border-red-400" : "border-transparent"
+                      className={`w-full px-4 py-3.5 bg-gray-50 dark:bg-zinc-800 border-2 rounded-2xl focus:ring-4 focus:ring-ring/20 focus:border-border-strong outline-none transition-all placeholder:text-gray-400 dark:text-white font-medium ${errors[`${selectedPlatform}_link`] ? "border-red-400" : "border-transparent"
                         }`}
                     />
                     {errors[`${selectedPlatform}_link`] && (
@@ -362,7 +362,7 @@ const ContentRewardDetailsPayment = () => {
                   </label>
                   <div className={`p-4 rounded-3xl border-2 border-dashed transition-all ${errors.files
                     ? "border-red-400 bg-red-50/50 dark:bg-red-900/10"
-                    : "border-[#003933]/20 dark:border-zinc-800 bg-[#003933]/5 dark:bg-zinc-800/20"
+                    : "border-foreground-muted/20 dark:border-zinc-800 bg-foreground-strong/5 dark:bg-zinc-800/20"
                     }`}>
                     <Dropzone
                       maxFiles={1}
@@ -388,14 +388,14 @@ const ContentRewardDetailsPayment = () => {
               </div>
 
               {/* Terms and Conditions */}
-              <div className="flex items-start space-x-3 p-4 bg-gray-50 dark:bg-[#2E2E2E] rounded-xl border border-gray-100 dark:border-gray-800 transition-colors">
+              <div className="flex items-start space-x-3 p-4 bg-gray-50 dark:bg-zinc-800 rounded-xl border border-gray-100 dark:border-gray-800 transition-colors">
                 <div className="flex items-center h-5">
                   <input
                     id="terms"
                     type="checkbox"
                     checked={formData.termsAccepted}
                     onChange={(e) => handleInputChange("termsAccepted", e.target.checked)}
-                    className="size-4 rounded border-gray-300 text-[#003933] focus:ring-[#003933] dark:bg-zinc-800 dark:border-zinc-700 cursor-pointer"
+                    className="size-4 rounded border-gray-300 text-foreground-strong focus:ring-ring dark:bg-zinc-800 dark:border-zinc-700 cursor-pointer"
                   />
                 </div>
                 <div className="text-sm">
@@ -405,7 +405,7 @@ const ContentRewardDetailsPayment = () => {
                       href="/terms-and-conditions"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#003933] dark:text-[#00b89f] hover:underline font-bold"
+                      className="text-foreground-strong dark:text-foreground-strong hover:underline font-bold"
                       onClick={(e) => e.stopPropagation()}
                     >
                       Terms & Conditions
@@ -423,7 +423,7 @@ const ContentRewardDetailsPayment = () => {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting || !formData.termsAccepted}
-                className="w-full h-14 bg-[#003933] hover:bg-[#002822] disabled:bg-gray-400 dark:disabled:bg-zinc-700 text-white font-bold rounded-2xl transition duration-300 shadow-xl flex items-center justify-center gap-3 active:scale-[0.98]"
+                className="w-full h-14 bg-foreground-strong hover:bg-foreground disabled:bg-gray-400 dark:disabled:bg-zinc-700 text-white font-bold rounded-2xl transition duration-300 shadow-xl flex items-center justify-center gap-3 active:scale-[0.98]"
               >
                 {isSubmitting ? (
                   <>

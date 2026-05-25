@@ -48,7 +48,7 @@ const JoinCommunity = () => {
 
   if (isLoading) {
     return (
-      <div className="bg-[#f9fafb] dark:bg-zinc-950 flex-1 overflow-y-auto p-6">
+      <div className="bg-background dark:bg-zinc-950 flex-1 overflow-y-auto p-6">
         <div className="mb-9 inline-block">
           <Skeleton className="h-8 w-48 mb-4 shadow" />
         </div>
@@ -68,18 +68,18 @@ const JoinCommunity = () => {
 
   if (isError || (!isLoading && !community)) {
     return (
-      <div className="bg-[#f9fafb] dark:bg-zinc-950 flex-1 overflow-y-auto flex items-center justify-center p-6 shadow-xl rounded-xl">
+      <div className="bg-background dark:bg-zinc-950 flex-1 overflow-y-auto flex items-center justify-center p-6 shadow-xl rounded-xl">
         <div className="text-center max-w-lg p-10 bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl border border-gray-100 dark:border-zinc-800">
           <div className="w-20 h-20 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-4xl text-red-500 font-bold">!</span>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Community Doesn't Exist</h2>
-          <p className="text-[#717171] dark:text-zinc-400 mb-8 leading-relaxed">
+          <p className="text-foreground-subtle dark:text-zinc-400 mb-8 leading-relaxed">
             The community you are looking for was not found. It might have been deleted or the username is incorrect.
           </p>
           <Link
             to="/discover"
-            className="inline-block text-white bg-[#003933] hover:bg-[#002822] px-8 py-3 rounded-full font-semibold transition shadow-lg active:scale-95"
+            className="inline-block text-white bg-foreground-strong hover:bg-foreground px-8 py-3 rounded-full font-semibold transition shadow-lg active:scale-95"
           >
             Go to Discover
           </Link>
@@ -90,7 +90,7 @@ const JoinCommunity = () => {
 
   return (
     <motion.div
-      className="bg-[#f9fafb] dark:bg-zinc-950 flex-1 overflow-y-auto p-6 md:p-10"
+      className="bg-background dark:bg-zinc-950 flex-1 overflow-y-auto p-6 md:p-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -101,7 +101,7 @@ const JoinCommunity = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        {/* <h1 className="text-[#191919] dark:text-white text-2xl font-semibold">
+        {/* <h1 className="text-foreground dark:text-white text-2xl font-semibold">
           Join Community
         </h1> */}
       </motion.div>
@@ -130,13 +130,13 @@ const JoinCommunity = () => {
           variants={itemVariants}
         >
           <motion.h2
-            className="text-2xl text-[#090003] dark:text-white font-semibold mb-6"
+            className="text-2xl text-foreground-strong dark:text-white font-semibold mb-6"
             variants={itemVariants}
           >
             Welcome to {community?.business_name || communityUsername}
           </motion.h2>
           <motion.p
-            className="text-[18px] text-[#717171] dark:text-zinc-400 mb-11"
+            className="text-[18px] text-foreground-subtle dark:text-zinc-400 mb-11"
             variants={itemVariants}
           >
             Join this community to start earning rewards for your content!
@@ -149,7 +149,7 @@ const JoinCommunity = () => {
             <button
               disabled={isJoining || community?.is_member}
               onClick={handleJoinCommunity}
-              className="mx-auto max-w-sm flex items-center justify-center w-full text-white bg-[#003933] hover:bg-[#002822] text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition shadow-xl disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="mx-auto max-w-sm flex items-center justify-center w-full text-white bg-foreground-strong hover:bg-foreground text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition shadow-xl disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               {
                 isJoining ? <Spinner className={'text-white size-6'} /> : (community?.is_member ? 'Already joined' : 'Join Community')

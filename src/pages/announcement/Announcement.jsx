@@ -65,7 +65,7 @@ const Announcement = () => {
     <SidebarProvider className="flex-1 flex min-h-0 overflow-hidden">
       <AnnouncementSidebar />
 
-      <main className="flex-1 flex flex-col min-h-0 bg-[#f9fafb] dark:bg-zinc-950 overflow-hidden relative">
+      <main className="flex-1 flex flex-col min-h-0 bg-background dark:bg-zinc-950 overflow-hidden relative">
         {/* Mobile Toggle - Only visible on small screens since the sidebar is hidden then */}
         <div className="flex-none md:hidden p-4 border-b dark:border-zinc-800">
           <SidebarTrigger />

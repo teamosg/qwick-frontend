@@ -42,7 +42,7 @@ const MessageRequestConfirmation = ({
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="p-6 bg-white dark:bg-[#171717] border-t border-gray-200 dark:border-[#282828]"
+      className="p-6 bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-800"
     >
       <div className="max-w-2xl mx-auto">
         {/* Header */}
@@ -69,7 +69,7 @@ const MessageRequestConfirmation = ({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="bg-gray-50 dark:bg-[#232323] rounded-lg p-4 mb-6 border border-gray-200 dark:border-[#282828]"
+          className="bg-gray-50 dark:bg-zinc-800/50 rounded-lg p-4 mb-6 border border-gray-200 dark:border-zinc-800"
         >
           <p className="text-sm text-gray-700 dark:text-gray-300">
             📬 By accepting, you'll be able to chat with {selectedChat.name} and
@@ -82,7 +82,7 @@ const MessageRequestConfirmation = ({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleDeleteRequest}
-            className="flex-1 px-6 py-3 border-2 border-gray-300 dark:border-[#282828] text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-[#232323] font-semibold transition-colors flex items-center justify-center gap-2"
+            className="flex-1 px-6 py-3 border-2 border-gray-300 dark:border-zinc-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800/50 font-semibold transition-colors flex items-center justify-center gap-2"
           >
             <XCircle className="w-5 h-5" />
             Delete Request
@@ -91,7 +91,7 @@ const MessageRequestConfirmation = ({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleAcceptRequest}
-            className="flex-1 px-6 py-3 bg-[#003933] hover:bg-[#002822] text-white rounded-lg font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+            className="flex-1 px-6 py-3 bg-foreground-strong hover:bg-foreground text-white rounded-lg font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
           >
             <CheckCircle className="w-5 h-5" />
             Accept Request

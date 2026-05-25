@@ -80,7 +80,7 @@ export default function AddCommunityForm({
         >
           <label
             htmlFor="businessName"
-            className="block text-base font-medium text-[#0D0D12] mb-2 dark:text-white"
+            className="block text-base font-medium text-foreground-strong mb-2 dark:text-white"
           >
             Community Name
           </label>
@@ -115,7 +115,7 @@ export default function AddCommunityForm({
         >
           <label
             htmlFor="country"
-            className="block text-base font-medium text-[#0D0D12] mb-2 dark:text-white"
+            className="block text-base font-medium text-foreground-strong mb-2 dark:text-white"
           >
             Country
           </label>
@@ -143,7 +143,7 @@ export default function AddCommunityForm({
             <AnimatePresence>
               {isDropdownOpen && (
                 <motion.div
-                  className="absolute z-10 w-full mt-1 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-zinc-700 rounded-lg shadow-lg max-h-60 overflow-hidden flex flex-col"
+                  className="absolute z-10 w-full mt-1 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg shadow-lg max-h-60 overflow-hidden flex flex-col"
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -207,7 +207,7 @@ export default function AddCommunityForm({
           <button
             type="submit"
             disabled={isPending}
-            className={`w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer ${isPending ? "opacity-50 cursor-not-allowed" : ""
+            className={`w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer ${isPending ? "opacity-50 cursor-not-allowed" : ""
               }`}
             data-discover="true"
           >

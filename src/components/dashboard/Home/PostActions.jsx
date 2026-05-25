@@ -60,12 +60,12 @@ const PostActions = ({ post }) => {
             <button
                 onClick={handleSave}
                 disabled={isSaving || isUnsaving}
-                className="disabled:cursor-progress cursor-pointer text-gray-600 dark:text-gray-400 hover:text-[#003933] dark:hover:text-emerald-400 transition-colors group"
+                className="disabled:cursor-progress cursor-pointer text-gray-600 dark:text-gray-400 hover:text-foreground-strong dark:hover:text-emerald-400 transition-colors group"
             >
                 <Bookmark
                     className={`w-5 h-5 ${post?.is_saved
-                        ? "fill-[#003933] text-[#003933] dark:fill-emerald-400 dark:text-emerald-400"
-                        : "group-hover:text-[#003933] dark:group-hover:text-emerald-400"
+                        ? "fill-foreground-strong text-foreground-strong dark:fill-emerald-400 dark:text-emerald-400"
+                        : "group-hover:text-foreground-strong dark:group-hover:text-emerald-400"
                         }`}
                 />
             </button>

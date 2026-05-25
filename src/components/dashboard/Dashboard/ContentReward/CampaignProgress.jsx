@@ -11,11 +11,11 @@ const CampaignProgress = ({ totalUsersEarning, initialBudget, budget, showTitle 
     return (
         <div className="mb-2.5">
             {showTitle && (
-                <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white uppercase font-semibold">
+                <h4 className="text-foreground text-sm mb-2.5 dark:text-white uppercase font-semibold">
                     Campaign Progress
                 </h4>
             )}
-            <p className="text-[#717171] text-xs flex justify-between dark:text-zinc-400 mb-2 font-medium">
+            <p className="text-foreground-subtle text-xs flex justify-between dark:text-zinc-400 mb-2 font-medium">
                 <span className=""> ${earning.toFixed(2)} of ${currentBudget}</span>
                 <span>{progress.toFixed(0)}%</span>
             </p>

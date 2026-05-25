@@ -53,12 +53,12 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
   // };
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-[#171717] text-gray-900 dark:text-white">
+    <div className="flex flex-col h-full bg-white dark:bg-zinc-900 text-gray-900 dark:text-white">
       {/* Header with close button and group avatar + name */}
-      <div className="relative p-6 border-b border-gray-200 dark:border-[#282828]">
+      <div className="relative p-6 border-b border-gray-200 dark:border-zinc-800">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-[#282828] rounded-lg transition-colors"
+          className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
           aria-label="Close group info"
         >
           <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
@@ -77,10 +77,10 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
       </div>
 
       {/* Action Buttons: Rename, Add User, Leave */}
-      <div className="grid grid-cols-3 gap-3 p-4 border-b border-gray-200 dark:border-[#282828]">
+      <div className="grid grid-cols-3 gap-3 p-4 border-b border-gray-200 dark:border-zinc-800">
         <button
           onClick={() => setOpenUpdateModal(true)}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
           aria-label="Rename group"
         >
           <Edit2 className="w-5 h-5 text-gray-600 dark:text-gray-400" />
@@ -91,7 +91,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
 
         <button
           onClick={handleAddUser}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
           aria-label="Add user to group"
         >
           <UserPlus className="w-5 h-5 text-gray-600 dark:text-gray-400" />
@@ -102,7 +102,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
 
         <button
           onClick={handleLeave}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
           aria-label="Leave group"
         >
           <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
@@ -113,7 +113,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
       </div>
 
       {/* Notifications Toggle */}
-      {/* <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+      {/* <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {notificationsEnabled ? (
@@ -153,7 +153,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
             {members.map((member) => (
               <div
                 key={member?.id}
-                className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+                className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <AvatarUser

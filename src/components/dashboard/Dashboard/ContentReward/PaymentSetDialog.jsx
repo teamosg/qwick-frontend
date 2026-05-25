@@ -13,7 +13,7 @@ const PaymentSetDialog = ({showPaymentsModal, setShowForm, setShowPaymentsModal}
     <Dialog open={showPaymentsModal} onOpenChange={setShowPaymentsModal}>
       <DialogContent className="max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border-0 p-0 overflow-hidden">
         {/* Header with brand accent */}
-        <div className="relative bg-gradient-to-br from-[#003933] to-[#005549] px-6 pt-8 pb-6">
+        <div className="relative bg-gradient-to-br from-primary to-primary-dark px-6 pt-8 pb-6">
           <div className="flex justify-center mb-4">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
               <DollarSign className="w-8 h-8 text-white" strokeWidth={2.5} />
@@ -38,7 +38,7 @@ const PaymentSetDialog = ({showPaymentsModal, setShowForm, setShowPaymentsModal}
           </div>
 
           <Button
-            className="w-full bg-[#003933] hover:bg-[#002822] text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+            className="w-full bg-foreground-strong hover:bg-foreground text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
             onClick={() => {
               setShowPaymentsModal(false);
               setShowForm(false);

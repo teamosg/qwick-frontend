@@ -27,7 +27,7 @@ const DashboardContentRewardBlank = ({ onCreateReward }) => {
             <button
               onClick={handleClick}
               type="button"
-              className="w-full sm:w-auto bg-[#003933] text-white px-6 py-3.5 sm:px-10 sm:py-4 rounded-full hover:bg-[#002822] transition-all font-semibold text-sm sm:text-base shadow-lg shadow-emerald-900/10 cursor-pointer"
+              className="w-full sm:w-auto bg-foreground-strong text-white px-6 py-3.5 sm:px-10 sm:py-4 rounded-full hover:bg-foreground transition-all font-semibold text-sm sm:text-base shadow-lg shadow-foreground-strong/10 cursor-pointer"
             >
               Create Campaign
             </button>

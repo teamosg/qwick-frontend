@@ -1,16 +1,16 @@
 import { DollarSign } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const PayoutStatCard = ({ isLoading, label, value, icon: Icon = DollarSign, bgColor = "bg-[#1BC285]" }) => {
+export const PayoutStatCard = ({ isLoading, label, value, icon: Icon = DollarSign, bgColor = "bg-success" }) => {
     return (
-        <div className="p-5 shadow bg-white dark:bg-[#2E2E2E] rounded-xl">
+        <div className="p-5 shadow bg-white dark:bg-zinc-800 rounded-xl">
             <div className={`w-10 h-10 rounded-full ${bgColor} flex items-center justify-center mb-4`}>
-                <Icon color="#fff" size={24} />
+                <Icon className="text-white" size={24} />
             </div>
             {isLoading ? (
                 <Skeleton className="h-9 w-24 mb-1" />
             ) : (
-                <h2 className="text-3xl font-bold text-[#212B36] dark:text-white mb-1">
+                <h2 className="text-3xl font-bold text-foreground-strong dark:text-white mb-1">
                     {value}
                 </h2>
             )}

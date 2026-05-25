@@ -114,7 +114,7 @@ const VerifyTwoAuth = () => {
                                         value={digit}
                                         onChange={(e) => handleOtpChange(index, e.target.value)}
                                         onKeyDown={(e) => handleKeyDown(index, e)}
-                                        className="w-10 h-10 md:w-12 md:h-12 text-center border border-gray-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-zinc-900 text-gray-900 dark:text-white text-lg font-medium"
+                                        className="w-10 h-10 md:w-12 md:h-12 text-center border border-gray-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-zinc-900 text-gray-900 dark:text-white text-lg font-medium"
                                         placeholder=""
                                     />
                                 ))}
@@ -125,7 +125,7 @@ const VerifyTwoAuth = () => {
 
                         <button
                             type="submit"
-                            className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
+                            className="w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer"
                         >
                             {
                                 isPending

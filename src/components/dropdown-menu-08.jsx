@@ -36,7 +36,7 @@ export default function WorkspaceSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-2 bg-accent py-2.5 px-3 rounded-lg">
         <Avatar className="rounded-lg h-8 w-8">
-          <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
+          <AvatarFallback className="rounded-lg bg-foreground-strong text-white">
             {selectedWorkspace.name[0]}
           </AvatarFallback>
         </Avatar>
@@ -56,7 +56,7 @@ export default function WorkspaceSwitcher() {
           <DropdownMenuItem key={workspace.id} onClick={() => setSelectedWorkspace(workspace)}>
             <div className="flex items-center gap-2">
               <Avatar className="rounded-md h-8 w-8">
-                <AvatarFallback className="rounded-md bg-primary/10 text-foreground">
+                <AvatarFallback className="rounded-md bg-foreground-strong/10 text-foreground">
                   {workspace.name[0]}
                 </AvatarFallback>
               </Avatar>

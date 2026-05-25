@@ -37,7 +37,7 @@ const ContentRewordPublic = () => {
 
   return (
     <div>
-      <h2 className="text-[24px] text-[#191919] dark:text-white font-semibold mb-3">
+      <h2 className="text-[24px] text-foreground dark:text-white font-semibold mb-3">
         Campaigns
       </h2>
       {filteredCampaigns.length === 0 ? (

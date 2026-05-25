@@ -18,10 +18,10 @@ const NoCommunityDashboardPage = () => {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className="flex items-center justify-center mb-5"
                 >
-                    <FaUsers className="text-[#003933] dark:text-white" size={60} />
+                    <FaUsers className="text-foreground-strong dark:text-white" size={60} />
                 </motion.div>
 
-                <h2 className="text-xl font-semibold text-[#090003] dark:text-white mb-3">
+                <h2 className="text-xl font-semibold text-foreground dark:text-white mb-3">
                     No Community Yet
                 </h2>
 
@@ -33,7 +33,7 @@ const NoCommunityDashboardPage = () => {
                     <Link
                         to={`/addcommunity`}
                         type="submit"
-                        className="max-w-max mx-auto bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-2.5 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+                        className="max-w-max mx-auto bg-foreground-strong dark:bg-foreground-strong text-white px-4 py-2 sm:py-2.5 sm:px-10 rounded-3xl sm:rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition font-medium cursor-pointer flex gap-2"
                     >
                         <Plus />
                         Add Community

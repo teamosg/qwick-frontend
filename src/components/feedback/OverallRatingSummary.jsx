@@ -6,7 +6,7 @@ const OverallRatingSummary = ({
   ratingBreakdown,
 }) => {
   return (
-    <div className="bg-white dark:bg-[#1E1E1E] rounded-xl p-6 mb-6">
+    <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 mb-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Overall Rating */}
         <div className="space-y-4">

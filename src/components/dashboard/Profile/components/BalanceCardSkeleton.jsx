@@ -2,7 +2,7 @@ import React from "react";
 
 const BalanceCardSkeleton = () => {
   return (
-    <div className="p-6 text-left w-full shadow rounded-[16px] sm:rounded-[24px] bg-white dark:bg-[#2E2E2E]">
+    <div className="p-6 text-left w-full shadow rounded-[16px] sm:rounded-[24px] bg-white dark:bg-zinc-800">
       {/* Title Skeleton */}
       <div className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
 

@@ -27,7 +27,7 @@ const WriteReviewForm = ({ onSubmit }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-[#1E1E1E] p-6 mb-6 rounded-xl">
+    <div className="bg-white dark:bg-zinc-900 p-6 mb-6 rounded-xl">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Rating Selection */}
         <div className="space-y-4">
@@ -40,8 +40,8 @@ const WriteReviewForm = ({ onSubmit }) => {
                 onClick={() => setRating(starCount)}
                 className={`w-full flex items-center justify-between p-3 rounded-lg border transition-colors ${
                   rating === starCount
-                    ? "bg-gray-50 dark:bg-[#707070] dark:border-[#4E4E4E]"
-                    : "border-gray-200 hover:bg-gray-50 dark:bg-[#2E2E2E] dark:border-[#3E3E3E] dark:hover:bg-[#3E3E3E]"
+                    ? "bg-gray-50 dark:bg-zinc-700 dark:border-zinc-600"
+                    : "border-gray-200 hover:bg-gray-50 dark:bg-zinc-800 dark:border-zinc-700 dark:hover:bg-zinc-700"
                 }`}
               >
                 <StarRating rating={starCount} size="md" />
@@ -61,7 +61,7 @@ const WriteReviewForm = ({ onSubmit }) => {
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
               placeholder="Tell us about your experience with this product..."
-              className="w-full h-32 p-4 border border-gray-300 rounded-lg resize-none focus:ring-2 dark:focus:ring-[#4E4E4E] dark:focus:border-transparent outline-none dark:text-white transition-colors"
+              className="w-full h-32 p-4 border border-gray-300 rounded-lg resize-none focus:ring-2 dark:focus:ring-zinc-600 dark:focus:border-transparent outline-none dark:text-white transition-colors"
               required
             />
             <div className="flex justify-center">

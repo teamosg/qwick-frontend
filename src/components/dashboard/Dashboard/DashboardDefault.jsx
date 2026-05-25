@@ -11,19 +11,19 @@ export function DashboardDefault() {
         <div className="flex flex-col gap-3 p-6">
           <h3 className="flex items-center gap-2">
             {" "}
-            <span className="bg-[#003933] w-8 h-8 rounded-full  flex items-center justify-center">
+            <span className="bg-foreground-strong w-8 h-8 rounded-full  flex items-center justify-center">
               <ShoppingCart className="text-white" size={18} />
             </span>
-            <span className="text-[#858D9D] font-semibold"> New users</span>
+            <span className="text-foreground-subtle font-semibold"> New users</span>
           </h3>
 
-          <h2 className="text-[#090003] text-2xl font-semibold">3</h2>
+          <h2 className="text-foreground text-2xl font-semibold">3</h2>
           <div className="flex items-center gap-2">
             <span className="flex items-center border-r">
               <span className="text-sm font-semibold">24%</span>
               <ArrowUpRight />
             </span>{" "}
-            <h3 className="text-[#858D9D] text-sm">From last week</h3>
+            <h3 className="text-foreground-subtle text-sm">From last week</h3>
           </div>
         </div>
       </div>
@@ -32,19 +32,19 @@ export function DashboardDefault() {
         <div className="flex flex-col gap-3 p-6">
           <h3 className="flex items-center gap-2">
             {" "}
-            <span className="bg-[#003933] w-8 h-8 rounded-full  flex items-center justify-center">
+            <span className="bg-foreground-strong w-8 h-8 rounded-full  flex items-center justify-center">
               <ShoppingCart className="text-white" size={18} />
             </span>
-            <span className="text-[#858D9D] font-semibold"> New users</span>
+            <span className="text-foreground-subtle font-semibold"> New users</span>
           </h3>
 
-          <h2 className="text-[#090003] text-2xl font-semibold">3</h2>
+          <h2 className="text-foreground text-2xl font-semibold">3</h2>
           <div className="flex items-center gap-2">
             <span className="flex items-center border-r">
               <span className="text-sm font-semibold">24%</span>
               <ArrowUpRight />
             </span>{" "}
-            <h3 className="text-[#858D9D] text-sm">From last week</h3>
+            <h3 className="text-foreground-subtle text-sm">From last week</h3>
           </div>
         </div>
       </div>
@@ -53,19 +53,19 @@ export function DashboardDefault() {
         <div className="flex flex-col gap-3 p-6">
           <h3 className="flex items-center gap-2">
             {" "}
-            <span className="bg-[#003933] w-8 h-8 rounded-full  flex items-center justify-center">
+            <span className="bg-foreground-strong w-8 h-8 rounded-full  flex items-center justify-center">
               <ShoppingCart className="text-white" size={18} />
             </span>
-            <span className="text-[#858D9D] font-semibold"> New users</span>
+            <span className="text-foreground-subtle font-semibold"> New users</span>
           </h3>
 
-          <h2 className="text-[#090003] text-2xl font-semibold">3</h2>
+          <h2 className="text-foreground text-2xl font-semibold">3</h2>
           <div className="flex items-center gap-2">
             <span className="flex items-center border-r">
               <span className="text-sm font-semibold">24%</span>
               <ArrowUpRight />
             </span>{" "}
-            <h3 className="text-[#858D9D] text-sm">From last week</h3>
+            <h3 className="text-foreground-subtle text-sm">From last week</h3>
           </div>
         </div>
       </div>
@@ -74,19 +74,19 @@ export function DashboardDefault() {
         <div className="flex flex-col gap-3 p-6">
           <h3 className="flex items-center gap-2">
             {" "}
-            <span className="bg-[#003933] w-8 h-8 rounded-full  flex items-center justify-center">
+            <span className="bg-foreground-strong w-8 h-8 rounded-full  flex items-center justify-center">
               <ShoppingCart className="text-white" size={18} />
             </span>
-            <span className="text-[#858D9D] font-semibold"> New users</span>
+            <span className="text-foreground-subtle font-semibold"> New users</span>
           </h3>
 
-          <h2 className="text-[#090003] text-2xl font-semibold">3</h2>
+          <h2 className="text-foreground text-2xl font-semibold">3</h2>
           <div className="flex items-center gap-2">
             <span className="flex items-center border-r">
               <span className="text-sm font-semibold">24%</span>
               <ArrowUpRight />
             </span>{" "}
-            <h3 className="text-[#858D9D] text-sm">From last week</h3>
+            <h3 className="text-foreground-subtle text-sm">From last week</h3>
           </div>
         </div>
       </div> */}

@@ -75,7 +75,7 @@ const ForgotPassword = () => {
                   type="email"
                   {...register("email")}
                   placeholder="Email"
-                  className="w-full px-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                  className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
               </div>
               {errors.email && (
@@ -88,7 +88,7 @@ const ForgotPassword = () => {
             <button
               type="submit"
               disabled={isPending}
-              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPending ? "Sending..." : "Continue"}
             </button>
@@ -100,7 +100,7 @@ const ForgotPassword = () => {
               Remember your password?{" "}
               <Link
                 to="/sign-in"
-                className="text-[#003933] dark:text-primary font-medium hover:underline"
+                className="text-foreground-strong dark:text-foreground-strong font-medium hover:underline"
               >
                 Sign In
               </Link>

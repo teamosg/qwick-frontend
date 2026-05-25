@@ -105,7 +105,7 @@ const AnnouncementPostForm = ({
               value={postText}
               onChange={(e) => setPostText(e.target.value)}
               placeholder="What's on your mind?"
-              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-[#2E2E2E]  rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-[#003933] resize-none"
+              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-zinc-800  rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-ring resize-none"
               rows={5}
             />
 
@@ -139,7 +139,7 @@ const AnnouncementPostForm = ({
                 <button
                   type="button"
                   onClick={handleImageIconClick}
-                  className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E] "
+                  className="text-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 "
                 >
                   <ImageIcon size={20} />
                 </button>
@@ -153,14 +153,14 @@ const AnnouncementPostForm = ({
                 />
                 {/* <button
                   type="button"
-                  className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E] "
+                  className="text-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 "
                 >
                   <Paperclip size={20} />
                 </button> */}
                 <button
                   type="button"
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E] "
+                  className="text-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 "
                 >
                   <Smile size={20} />
                 </button>
@@ -169,8 +169,8 @@ const AnnouncementPostForm = ({
                 type="submit"
                 disabled={isPosting || (!postText.trim() && imagePreviewUrls.length === 0)}
                 className={`px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors 
-                  bg-[#003933] text-white cursor-pointer hover:bg-[#002a26]
-                  disabled:bg-[#003933] disabled:dark:bg-[#2E2E2E]  disabled:text-white disabled:cursor-not-allowed disabled:opacity-50
+                  bg-foreground-strong text-white cursor-pointer hover:bg-foreground
+                  disabled:bg-foreground-strong disabled:opacity-50  disabled:text-white disabled:cursor-not-allowed disabled:opacity-50
                   `}
               >
                 {isPosting ? "Posting..." : "Post"}

@@ -65,7 +65,7 @@ const AnnouncementComment = ({ comment, AnnouncementId }) => {
                             <button
                                 onClick={() => handleUpdateComment(comment?.id)}
                                 disabled={isUpdating}
-                                className="px-3 disabled:bg-[#003933]/50 py-1.5 text-xs rounded-md bg-[#003933] text-white"
+                                className="px-3 disabled:bg-foreground-strong/50 py-1.5 text-xs rounded-md bg-foreground-strong text-white"
                             >
                                 Save
                             </button>

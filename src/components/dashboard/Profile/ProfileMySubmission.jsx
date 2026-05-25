@@ -29,9 +29,9 @@ const ProfileMySubmission = () => {
   const getStatusBadge = (status) => {
     const statusType = status?.toLowerCase() || "pending";
     const variants = {
-      pending: "bg-[#FEF9C3] text-[#A16207] border-[#A16207]",
-      approved: "bg-[#F0FDF4] text-[#15803D] border-[#15803D]",
-      rejected: "bg-[#FEE2E2] text-[#CA6377] border-[#CA6377]",
+      pending: "bg-warning-bg text-warning border-warning",
+      approved: "bg-success-bg text-success border-success",
+      rejected: "bg-error-bg text-error border-error",
     };
 
     return (
@@ -64,7 +64,7 @@ const ProfileMySubmission = () => {
           {[1, 2, 3].map((i) => (
             <Card
               key={i}
-              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
+              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-zinc-800 dark:border-foreground-muted"
             >
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -92,7 +92,7 @@ const ProfileMySubmission = () => {
     <div className="md:p-6 space-y-4 sm:space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
         <div className="flex items-center gap-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-[#15161E] dark:text-white">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground-strong dark:text-white">
             My Submissions
           </h1>
           <Badge
@@ -127,7 +127,7 @@ const ProfileMySubmission = () => {
           filteredSubmissions.map((submission) => (
             <Card
               key={submission.id}
-              className="p-0! group overflow-hidden transition-all duration-300 hover:shadow-md border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
+              className="p-0! group overflow-hidden transition-all duration-300 hover:shadow-md border border-gray-200 dark:bg-zinc-800 dark:border-foreground-muted"
             >
               <CardContent className="p-4 sm:p-5">
                 <div className="flex flex-col lg:flex-row gap-6">
@@ -154,7 +154,7 @@ const ProfileMySubmission = () => {
                       {/* Campaign Title & Status */}
                       <div className="flex items-start justify-between gap-4">
                         <div className="min-w-0">
-                          <h3 className="text-base sm:text-lg font-bold text-[#15161E] dark:text-white truncate leading-tight mb-1">
+                          <h3 className="text-base sm:text-lg font-bold text-foreground-strong dark:text-white truncate leading-tight mb-1">
                             {submission.campaign?.name || "Untitled Campaign"}
                           </h3>
                           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -182,7 +182,7 @@ const ProfileMySubmission = () => {
                               <TrendingUp className="size-4 text-blue-600 dark:text-blue-400" />
                             </div>
                             <div>
-                              <span className="block text-sm font-bold text-[#15161E] dark:text-white leading-none mb-0.5">
+                              <span className="block text-sm font-bold text-foreground-strong dark:text-white leading-none mb-0.5">
                                 {submission.total_views_earned?.toLocaleString() || 0}
                               </span>
                               <span className="text-[10px] text-gray-500 dark:text-gray-400">Total Views Earned</span>

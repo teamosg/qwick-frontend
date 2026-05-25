@@ -15,15 +15,15 @@ const TwoFactorStatus = () => {
     return (
         <div className="space-y-4">
             <div className="mb-8">
-                <h2 className="text-[18px] font-semibold text-[#090003] dark:text-white mb-1">
+                <h2 className="text-[18px] font-semibold text-foreground dark:text-white mb-1">
                     Two-Factor Authentication
                 </h2>
-                <p className="text-[#717171] text-sm">
+                <p className="text-foreground-subtle text-sm">
                     Add an extra layer of security with a verification code when signing in.
                 </p>
             </div>
 
-            <Card className="text-left text-[#717171] border-[#003933] text-[16px] mb-8 w-full shadow rounded-[24px] p-0">
+            <Card className="text-left text-foreground-subtle border-foreground-muted text-[16px] mb-8 w-full shadow rounded-[24px] p-0">
                 <CardContent className="p-6 flex items-center justify-between">
                     <div className="space-y-2">
                         <h3 className="font-medium text-gray-900 dark:text-white">

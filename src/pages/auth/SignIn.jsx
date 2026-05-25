@@ -71,8 +71,7 @@ const SignIn = () => {
                 Don't have an account?{" "}
                 <Link
                   to="/sign-up"
-                  className="text-[#003933] dark:text-white font-medium hover:underline"
-                >
+                  className="text-foreground-strong dark:text-white font-medium hover:underline">
                   Sign Up
                 </Link>
               </p>
@@ -85,7 +84,7 @@ const SignIn = () => {
               type="button"
               onClick={() => handleGoogleLogin()}
               disabled={googlePending}
-              className="w-full py-4 px-5 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-gray-800 transition cursor-pointer bg-[#f9f9f9]"
+              className="w-full py-4 px-5 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-gray-800 transition cursor-pointer bg-background"
             >
               <div className="flex items-center gap-2">
                 <FcGoogle className="text-lg" />
@@ -95,7 +94,7 @@ const SignIn = () => {
               </div>
               <img src={arrowRight} alt="arrow" className="dark:invert" />
             </button>
-            {/* <button className="w-full py-4 px-4 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-gray-800 transition cursor-pointer bg-[#f9f9f9]">
+            {/* <button className="w-full py-4 px-4 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-gray-800 transition cursor-pointer bg-background">
               <div className="flex items-center gap-2">
                 <FaFacebook className="text-lg text-blue-600" />
                 <span className="text-gray-800 dark:text-gray-200">
@@ -130,7 +129,7 @@ const SignIn = () => {
                   type="email"
                   {...register("email")}
                   placeholder="Email"
-                  className="w-full px-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                  className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
               </div>
               {errors.email && (
@@ -153,7 +152,7 @@ const SignIn = () => {
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
                   placeholder="Password"
-                  className="w-full px-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                  className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
                 <button
                   type="button"
@@ -181,7 +180,7 @@ const SignIn = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-[#003933] dark:text-primary focus:ring-[#003933] dark:focus:ring-primary border-gray-300 dark:border-gray-600 rounded-xl"
+                  className="h-4 w-4 text-foreground-strong dark:text-foreground-strong focus:ring-ring dark:focus:ring-ring border-gray-300 dark:border-gray-600 rounded-xl"
                 />
                 <label
                   htmlFor="remember-me"
@@ -194,7 +193,7 @@ const SignIn = () => {
               <div className="text-sm">
                 <Link
                   to="/forgot-password"
-                  className="font-medium text-[#003933] dark:text-primary hover:text-[#002822] dark:hover:text-primary/80"
+                  className="font-medium text-foreground-strong dark:text-foreground-strong hover:text-foreground dark:hover:text-foreground-strong/80"
                 >
                   Forget your password?
                 </Link>
@@ -204,7 +203,7 @@ const SignIn = () => {
             <button
               type="submit"
               disabled={isPending}
-              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPending ? "Signing In..." : "Sign In"}
             </button>

@@ -68,7 +68,7 @@ const PaymentsData = () => {
               ? Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={index}
-                  className="bg-white dark:bg-[#2E2E2E] border rounded-lg p-4 shadow-sm dark:border-[#444]"
+                  className="bg-white dark:bg-zinc-800 border rounded-lg p-4 shadow-sm dark:border-zinc-700"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <Skeleton className="h-5 w-32" />
@@ -82,24 +82,24 @@ const PaymentsData = () => {
               : earnings.map((user, index) => (
                 <div
                   key={index}
-                  className="bg-white border rounded-lg p-4 shadow-sm dark:bg-[#2E2E2E] dark:border-[#444] dark:text-[#fff]"
+                  className="bg-white border rounded-lg p-4 shadow-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+                    <div className="font-semibold text-foreground dark:text-white">
                       {getDisplayName(user)}
                     </div>
                   </div>
-                  <div className="text-sm text-[#25324B] dark:text-[#fff] p-1">
+                  <div className="text-sm text-foreground dark:text-white p-1">
                     {user.email}
                   </div>
-                  <div className="text-sm text-[#25324B] dark:text-[#fff] p-1">
+                  <div className="text-sm text-foreground dark:text-white p-1">
                     {" "}
                     {getStatusBadge(user.status)}
                   </div>
-                  <div className="font-semibold text-[#25324B] dark:text-[#fff] p-1">
+                  <div className="font-semibold text-foreground dark:text-white p-1">
                     {user.contact || "N/A"}
                   </div>
-                  <div className="font-semibold text-[#25324B] dark:text-[#fff] p-1">
+                  <div className="font-semibold text-foreground dark:text-white p-1">
                     ${user.total_earned}
                   </div>
                 </div>
@@ -116,23 +116,23 @@ const PaymentsData = () => {
             <div className="p-1 min-w-[600px]">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="bg-[#f5f5f5] text-gray-900 border-black rounded-full dark:bg-[#2E2E2E] dark:text-[#fff] dark:border-[#444]">
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  <TableRow className="bg-muted/50 text-gray-900 border-black rounded-full dark:bg-zinc-800 dark:text-white dark:border-zinc-700">
+                    <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Name
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className=" font-medium py-4 px-6 dark:text-white">
                       Email
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Status
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className=" font-medium py-4 px-6 dark:text-white">
                       Total amount
                     </TableHead>
-                    {/* <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    {/* <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Contact
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Actions
                     </TableHead> */}
                   </TableRow>
@@ -158,21 +158,21 @@ const PaymentsData = () => {
                     : earnings.map((user, index) => (
                       <TableRow
                         key={index}
-                        className="border-none hover:bg-white dark:hover:bg-[#2E2E2E] dark:text-[#fff]"
+                        className="border-none hover:bg-white dark:hover:bg-zinc-800 dark:text-white"
                       >
-                        <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
                           {getDisplayName(user)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
                           {user.email}
                         </TableCell>
-                        <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                           {getStatusBadge(user.status)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 dark:text-white">
                           $ {user.total_earned}
                         </TableCell>
-                        {/* <TableCell className="py-4 px-6 dark:text-[#fff]">
+                        {/* <TableCell className="py-4 px-6 dark:text-white">
                         {user.contact || "N/A"}
                       </TableCell>
                       <TableCell className="py-4 px-6 flex gap-2">

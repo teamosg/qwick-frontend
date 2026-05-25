@@ -86,9 +86,9 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
 
 
   return (
-    <div className="w-full md:w-80 border-r border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717] flex flex-col h-full max-h-full">
+    <div className="w-full md:w-80 border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col h-full max-h-full">
       {/* Header */}
-      <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+      <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
             Messages
@@ -107,7 +107,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
         </div>
       </div>
       {/* Search and badge section */}
-      <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+      <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
         <div className="relative mb-3 flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -116,12 +116,12 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-[#282828] rounded-lg bg-gray-50 dark:bg-[#101010] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <button
             onClick={() => setShowNewMessageSidebar(true)}
-            className="cursor-pointer p-2 border border-gray-300 dark:border-[#282828] rounded-lg hover:bg-gray-100 dark:hover:bg-[#1b1b1b] transition-colors"
+            className="cursor-pointer p-2 border border-gray-300 dark:border-zinc-800 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors"
           >
             <MessageSquarePlus className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           </button>
@@ -133,8 +133,8 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
             <button
               onClick={() => setShowUnreadOnly(!showUnreadOnly)}
               className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${showUnreadOnly
-                ? "bg-[#003933] text-white border-[#003933]"
-                : "hover:bg-gray-100 dark:hover:bg-[#222]"
+                ? "bg-foreground-strong text-white border-foreground-muted"
+                : "hover:bg-gray-100 dark:hover:bg-zinc-800"
                 }`}
             >
               <span className="text-red-400">●</span>
@@ -157,11 +157,11 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
             <button
               onClick={() => setShowRequestsOnly(!showRequestsOnly)}
               className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${showRequestsOnly
-                ? "bg-[#003933] text-white border-[#003933]"
-                : "hover:bg-gray-100 dark:hover:bg-[#222]"
+                ? "bg-foreground-strong text-white border-foreground-muted"
+                : "hover:bg-gray-100 dark:hover:bg-zinc-800"
                 }`}
             >
-              <span className="text-[#003933] dark:text-[#41d8a8]">●</span>{" "}
+              <span className="text-foreground-strong dark:text-foreground-strong">●</span>{" "}
               Requests
               <span className="transition-transform duration-200">
                 {showRequestsOnly ? (

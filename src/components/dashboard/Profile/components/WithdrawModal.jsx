@@ -125,7 +125,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                     <button
                                         onClick={() => setMethod("bank_account")}
                                         className={`flex-1 py-2.5 text-xs font-bold rounded-lg transition-all ${method === "bank_account"
-                                            ? "bg-white dark:bg-zinc-700 shadow-sm text-[#003933] dark:text-[#00b89f]"
+                                            ? "bg-white dark:bg-zinc-700 shadow-sm text-foreground-strong dark:text-foreground-strong"
                                             : "text-gray-500 dark:text-zinc-500 hover:text-gray-700"
                                             }`}
                                     >
@@ -134,7 +134,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                     <button
                                         onClick={() => setMethod("connected_account")}
                                         className={`flex-1 py-2.5 text-xs font-bold rounded-lg transition-all ${method === "connected_account"
-                                            ? "bg-white dark:bg-zinc-700 shadow-sm text-[#003933] dark:text-[#00b89f]"
+                                            ? "bg-white dark:bg-zinc-700 shadow-sm text-foreground-strong dark:text-foreground-strong"
                                             : "text-gray-500 dark:text-zinc-500 hover:text-gray-700"
                                             }`}
                                     >
@@ -152,7 +152,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                             placeholder="0.00"
                                             value={amount}
                                             onChange={(e) => setAmount(e.target.value)}
-                                            className="h-14 pl-8 rounded-2xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-[#003933]/20 text-lg font-bold"
+                                            className="h-14 pl-8 rounded-2xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-primary/20 text-lg font-bold"
                                         />
                                     </div>
                                 </div>
@@ -178,7 +178,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                             placeholder="acct_..."
                                             value={connectedAccountId}
                                             onChange={(e) => setConnectedAccountId(e.target.value)}
-                                            className="h-12 rounded-xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-[#003933]/20"
+                                            className="h-12 rounded-xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-primary/20"
                                         />
                                     </div>
                                 ) : (
@@ -197,7 +197,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                     <label className="text-xs font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider">Bank Details</label>
                                                     <button 
                                                         onClick={() => setView("saved_methods")}
-                                                        className="text-[10px] font-bold text-[#003933] dark:text-[#00b89f] hover:underline"
+                                                        className="text-[10px] font-bold text-foreground-strong dark:text-foreground-strong hover:underline"
                                                     >
                                                         View All
                                                     </button>
@@ -206,10 +206,10 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                 {selectedMethodId ? (
                                                     <div 
                                                         onClick={() => setView("saved_methods")}
-                                                        className="flex items-center justify-between p-4 bg-white dark:bg-zinc-800/50 border-2 border-[#003933]/20 dark:border-[#00b89f]/20 rounded-2xl cursor-pointer hover:border-[#003933] dark:hover:border-[#00b89f] transition-all"
+                                                        className="flex items-center justify-between p-4 bg-white dark:bg-zinc-800/50 border-2 border-foreground-muted/20 dark:border-foreground-muted/20 rounded-2xl cursor-pointer hover:border-foreground-muted dark:hover:border-foreground-muted transition-all"
                                                     >
                                                         <div className="flex items-center gap-3">
-                                                            <div className="w-10 h-10 rounded-xl bg-[#003933]/5 dark:bg-[#00b89f]/10 flex items-center justify-center text-[#003933] dark:text-[#00b89f]">
+                                                            <div className="w-10 h-10 rounded-xl bg-foreground-strong/5 dark:bg-foreground-strong/10 flex items-center justify-center text-foreground-strong dark:text-foreground-strong">
                                                                 <Landmark size={20} />
                                                             </div>
                                                             <div>
@@ -256,7 +256,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                     {hasSavedMethods && (
                                                         <button 
                                                             onClick={() => setShowManual(false)}
-                                                            className="text-[10px] font-bold text-[#003933] dark:text-[#00b89f] hover:underline"
+                                                            className="text-[10px] font-bold text-foreground-strong dark:text-foreground-strong hover:underline"
                                                         >
                                                             Use Saved Method
                                                         </button>
@@ -270,7 +270,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                             placeholder="e.g. Chase Bank"
                                                             value={bankData.bank_name}
                                                             onChange={(e) => setBankData({ ...bankData, bank_name: e.target.value })}
-                                                            className="h-11 rounded-xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-[#003933]/20"
+                                                            className="h-11 rounded-xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-primary/20"
                                                         />
                                                     </div>
                                                     <div>
@@ -280,7 +280,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                             placeholder="Full name on account"
                                                             value={bankData.account_holder_name}
                                                             onChange={(e) => setBankData({ ...bankData, account_holder_name: e.target.value })}
-                                                            className="h-11 rounded-xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-[#003933]/20"
+                                                            className="h-11 rounded-xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-primary/20"
                                                         />
                                                     </div>
                                                     <div>
@@ -290,7 +290,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                             placeholder="Enter full account number"
                                                             value={bankData.bank_account_number}
                                                             onChange={(e) => setBankData({ ...bankData, bank_account_number: e.target.value })}
-                                                            className="h-11 rounded-xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-[#003933]/20"
+                                                            className="h-11 rounded-xl bg-gray-50 dark:bg-zinc-800/50 border-gray-200 dark:border-zinc-700 focus-visible:ring-2 focus-visible:ring-primary/20"
                                                         />
                                                     </div>
                                                 </div>
@@ -307,7 +307,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                         (method === "connected_account" ? !connectedAccountId : (!bankData.bank_name || !bankData.account_holder_name || !bankData.bank_account_number)) ||
                                         withdrawLoading
                                     }
-                                    className="w-full h-14 rounded-2xl bg-[#003933] hover:bg-[#002822] text-white mt-4 shadow-xl shadow-[#003933]/10 text-base font-bold transition-all active:scale-[0.98] disabled:opacity-50"
+                                    className="w-full h-14 rounded-2xl bg-foreground-strong hover:bg-foreground text-white mt-4 shadow-xl shadow-foreground/10 text-base font-bold transition-all active:scale-[0.98] disabled:opacity-50"
                                 >
                                     {withdrawLoading ? <Spinner className="w-5 h-5" /> : "Request Withdrawal"}
                                 </Button>
@@ -317,7 +317,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                             <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300 pb-4">
                                 {savedMethodsLoading ? (
                                     <div className="flex flex-col items-center justify-center py-12 space-y-4">
-                                        <Spinner className="w-8 h-8 text-[#003933]" />
+                                        <Spinner className="w-8 h-8 text-foreground-strong" />
                                         <p className="text-sm text-gray-500 font-medium">Loading your methods...</p>
                                     </div>
                                 ) : (
@@ -328,14 +328,14 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                 onClick={() => handleSelectSavedMethod(m)}
                                                 className={`group relative flex items-center justify-between p-4 rounded-2xl transition-all cursor-pointer border-2 ${
                                                     selectedMethodId === m.id 
-                                                    ? "bg-[#003933]/5 border-[#003933] dark:bg-[#00b89f]/5 dark:border-[#00b89f]" 
+                                                    ? "bg-foreground-strong/5 border-foreground-muted dark:bg-foreground-strong/5 dark:border-foreground-muted" 
                                                     : "bg-white dark:bg-zinc-800/50 border-gray-100 dark:border-zinc-700 hover:border-gray-300 dark:hover:border-zinc-500"
                                                 }`}
                                             >
                                                 <div className="flex items-center gap-4">
                                                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
                                                         selectedMethodId === m.id 
-                                                        ? "bg-[#003933] text-white dark:bg-[#00b89f]" 
+                                                        ? "bg-foreground-strong text-white dark:bg-foreground-strong" 
                                                         : "bg-gray-100 dark:bg-zinc-700 text-gray-600 dark:text-gray-300"
                                                     }`}>
                                                         <Landmark size={24} />
@@ -360,7 +360,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                     </button>
                                                     <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                                                         selectedMethodId === m.id 
-                                                        ? "bg-[#003933] border-[#003933] dark:bg-[#00b89f] dark:border-[#00b89f]" 
+                                                        ? "bg-foreground-strong border-foreground-muted dark:bg-foreground-strong dark:border-foreground-muted" 
                                                         : "border-gray-200 dark:border-zinc-700"
                                                     }`}>
                                                         {selectedMethodId === m.id && <CheckCircle2 size={14} className="text-white" />}
@@ -424,7 +424,7 @@ const WithdrawModal = ({ open, setOpen }) => {
 
                             <Button
                                 onClick={handleCancel}
-                                className="w-full h-14 rounded-2xl bg-[#003933] hover:bg-[#002822] text-white shadow-xl shadow-[#003933]/10 font-bold text-base transition-all active:scale-[0.98]"
+                                className="w-full h-14 rounded-2xl bg-foreground-strong hover:bg-foreground text-white shadow-xl shadow-foreground/10 font-bold text-base transition-all active:scale-[0.98]"
                             >
                                 Done
                             </Button>

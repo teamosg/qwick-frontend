@@ -12,7 +12,7 @@ const MessageError = ({ isBlocked = false, isError = false, onUnblock }) => {
             transition={{ duration: 0.25 }}
             className="bottom-0 left-0 right-0 
             p-4
-            bg-white dark:bg-[#1b1b1b]
+            bg-white dark:bg-zinc-900
             border-t border-gray-200 dark:border-gray-800
             flex flex-col items-center gap-3"
         >
@@ -42,7 +42,7 @@ const MessageError = ({ isBlocked = false, isError = false, onUnblock }) => {
                     className="text-sm md:text-base 
                 border-gray-300 dark:border-gray-700
                 text-gray-800 dark:text-gray-200
-                hover:bg-gray-100 dark:hover:bg-[#2a2a2a]"
+                hover:bg-gray-100 dark:hover:bg-zinc-800"
                     onClick={onUnblock}
                 >
                     Unblock User

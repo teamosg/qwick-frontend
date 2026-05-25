@@ -115,7 +115,7 @@ const Profile = () => {
   const userAvatar = profile?.avatar;
 
   return (
-    <div className="flex-1 flex flex-col min-h-0 bg-[#f9fafb] dark:bg-zinc-950 overflow-hidden relative">
+    <div className="flex-1 flex flex-col min-h-0 bg-background dark:bg-zinc-950 overflow-hidden relative">
       <div className="md:hidden p-4 bg-white dark:bg-zinc-900 border-b dark:border-zinc-800">
         <button
           onClick={() => setIsTabsOpen(!isTabsOpen)}
@@ -179,7 +179,7 @@ const Profile = () => {
                 />
               </div>
 
-              <h4 className="font-semibold text-base text-[#191919] dark:text-white mt-3">
+              <h4 className="font-semibold text-base text-foreground dark:text-white mt-3">
                 {isProfileLoading ? "Loading..." : userName}
               </h4>
             </div>
@@ -190,7 +190,7 @@ const Profile = () => {
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="cursor-pointer flex items-center gap-x-2 !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
+                  className="cursor-pointer flex items-center gap-x-2 !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-foreground-strong dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
                   onClick={() => setIsTabsOpen(false)}
                 >
                   <tab.icon /> {tab.name}

@@ -50,7 +50,7 @@ const SingleRewardItem = ({ campaign }) => {
         <div className="flex-1">
           <div className="mb-2.5">
 
-            <h4 className="text-[#090003] text-lg font-semibold mb-1.5 dark:text-white">
+            <h4 className="text-foreground text-lg font-semibold mb-1.5 dark:text-white">
               {name}
             </h4>
             <p className="text-xs dark:text-zinc-400 flex gap-2 items-center mb-2">
@@ -74,34 +74,34 @@ const SingleRewardItem = ({ campaign }) => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <p className="text-[#090003] text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
                 Reward
               </p>
               <p className="text-sm dark:text-zinc-400 font-medium">${reward_rate}/1k</p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
                 Type
               </p>
               <p className="text-sm dark:text-zinc-400 font-medium">{campaign_type?.name || "N/A"}</p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
                 Category
               </p>
               <p className="text-sm dark:text-zinc-400 font-medium">{category?.name || "N/A"}</p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
                 Max Payout
               </p>
               <p className="text-sm dark:text-zinc-400 font-medium">${max_payout}</p>
             </div>
             <div className="col-span-2">
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Platforms
               </p>
-              <div className="flex gap-3 dark:text-zinc-400 text-[#003933]">
+              <div className="flex gap-3 dark:text-zinc-400 text-foreground-strong">
                 {platforms?.map((p, idx) => {
                   const pName = p.name?.toLowerCase();
                   if (pName === 'instagram') return <FaInstagram key={idx} size={18} />;

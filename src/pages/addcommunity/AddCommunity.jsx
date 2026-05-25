@@ -57,7 +57,7 @@ const AddCommunity = () => {
             transition={pageTransition}
             className="space-y-6 w-full"
           >
-            <h1 className="my-8 text-3xl md:text-4xl font-bold text-[#15161E] dark:text-white text-center">
+            <h1 className="my-8 text-3xl md:text-4xl font-bold text-foreground dark:text-white text-center">
               Which model best describes your offer?
             </h1>
 
@@ -80,7 +80,7 @@ const AddCommunity = () => {
             transition={pageTransition}
             className="space-y-6 w-full max-w-2xl mx-auto"
           >
-            <h1 className="my-8 text-3xl md:text-4xl font-bold text-[#15161E] dark:text-white text-center">
+            <h1 className="my-8 text-3xl md:text-4xl font-bold text-foreground dark:text-white text-center">
               Name Your Community
             </h1>
 
@@ -119,7 +119,7 @@ const AddCommunity = () => {
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
         >
           <div className="bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-lg">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#003933] dark:border-white mx-auto"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-foreground-muted dark:border-white mx-auto"></div>
             <p className="mt-2 text-sm text-gray-600 dark:text-zinc-400">
               Loading...
             </p>

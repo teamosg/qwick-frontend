@@ -126,9 +126,9 @@ const ContentRewardApply = () => {
               alt=""
               className="w-full h-auto object-cover mb-7 rounded-xl"
             />
-            <p className="text-[#717171] text-xs mb-7 dark:text-zinc-400 flex gap-2 items-center">
+            <p className="text-foreground-subtle text-xs mb-7 dark:text-zinc-400 flex gap-2 items-center">
               <span>
-                <CircleAlert className="text-[#FEC260]" />
+                <CircleAlert className="text-warning" />
               </span>
               <span>
                 Only views after you submit count towards payout. Submit as soon
@@ -136,10 +136,10 @@ const ContentRewardApply = () => {
               </span>
             </p>
             <div className="mb-2.5">
-              <h4 className="text-[#090003] text-sm mb-2.5 dark:text-white">
+              <h4 className="text-foreground text-sm mb-2.5 dark:text-white">
                 PAID OUT
               </h4>
-              <p className="text-[#717171] text-xs flex justify-between dark:text-zinc-400">
+              <p className="text-foreground-subtle text-xs flex justify-between dark:text-zinc-400">
                 <span className=""> $1673.18 of $14968.30</span> <span>7%</span>
               </p>
             </div>
@@ -147,42 +147,42 @@ const ContentRewardApply = () => {
           </div>
           <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between mb-9">
             <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
+              <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Reward
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
                 $3.00/1k
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
+              <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Type
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
                 Clipping
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
+              <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Clipping
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
                 $3.00/1k
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
+              <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Maximum Payout
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
                 $3.00/1k
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold  dark:text-white">
+              <p className="text-foreground text-sm mb-1 font-semibold  dark:text-white">
                 Platforms
               </p>
-              <p className="text-[#003933] text-sm">
+              <p className="text-foreground-strong text-sm">
                 <span className="flex gap-2 dark:text-zinc-400">
                   <FaInstagram size={20} /> <FaFacebook size={20} />
                   <FaYoutube size={20} />
@@ -190,10 +190,10 @@ const ContentRewardApply = () => {
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-sm mb-1 font-semibold dark:text-white">
+              <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Category
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
                 $3.00/1k
               </p>
             </div>
@@ -201,7 +201,7 @@ const ContentRewardApply = () => {
           <div className="text-center">
             <button
               onClick={handleApplyClick}
-              className="block text-white bg-[#003933] dark:bg-[#3fa796] dark:hover:bg-[#0dc4a5]  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition  w-full "
+              className="block text-white bg-foreground-strong dark:bg-foreground-strong dark:hover:bg-foreground-strong  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition  w-full "
             >
               Apply
             </button>
@@ -273,7 +273,7 @@ const ContentRewardApply = () => {
                         handleInputChange("youtube", e.target.value)
                       }
                       placeholder="https://www.youtube.com/watch?v=..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.youtube
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.youtube
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
                         }`}
@@ -296,7 +296,7 @@ const ContentRewardApply = () => {
                         handleInputChange("instagram", e.target.value)
                       }
                       placeholder="https://www.instagram.com/p/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.instagram
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.instagram
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
                         }`}
@@ -319,7 +319,7 @@ const ContentRewardApply = () => {
                         handleInputChange("tiktok", e.target.value)
                       }
                       placeholder="https://www.tiktok.com/@user/video/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.tiktok
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.tiktok
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
                         }`}
@@ -342,7 +342,7 @@ const ContentRewardApply = () => {
                         handleInputChange("linkedin", e.target.value)
                       }
                       placeholder="https://www.linkedin.com/posts/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#3fa796] focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.linkedin
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.linkedin
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
                         }`}
@@ -362,7 +362,7 @@ const ContentRewardApply = () => {
                   </label>
 
                   <div
-                    className="border-2 border-dashed rounded-lg p-6 sm:p-8 text-center transition-colors border-[#003933] dark:border-gray-600"
+                    className="border-2 border-dashed rounded-lg p-6 sm:p-8 text-center transition-colors border-foreground-muted dark:border-gray-600"
                     onDrop={handleDrop}
                   >
                     <div className="flex flex-col items-center space-y-3">
