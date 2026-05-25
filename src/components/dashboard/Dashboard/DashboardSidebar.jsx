@@ -163,7 +163,7 @@ export function DashboardSidebarContent() {
                   >
                     <SidebarMenuButton
                       asChild
-                      className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
+                      className="text-foreground-subtle hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
                     >
                       <Link
                         className="hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full"

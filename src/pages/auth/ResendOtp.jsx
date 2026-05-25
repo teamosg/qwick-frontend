@@ -41,7 +41,7 @@ const ResendOtp = ({ type, email }) => {
                     disabled={isPending || timer > 0}
                     onClick={handleResendOtp}
                     type="button"
-                    className="text-[#003933] cursor-pointer dark:text-white font-medium hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="text-foreground-strong cursor-pointer dark:text-white font-medium hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {isPending ? "Resending..." : "Click to resend code"}
                 </button>

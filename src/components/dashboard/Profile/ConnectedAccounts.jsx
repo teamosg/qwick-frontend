@@ -121,7 +121,7 @@ const ConnectedAccounts = () => {
           Connected Accounts
         </h2>
         {connectedList.length === 0 ? (
-          <div className="text-center text-[#717171] dark:text-white text-[16px] py-10 px-4 w-full shadow rounded-[24px]">
+          <div className="text-center text-foreground-subtle dark:text-white text-[16px] py-10 px-4 w-full shadow rounded-[24px]">
             <p>No Accounts Connected</p>
           </div>
         ) : (
@@ -164,7 +164,7 @@ const ConnectedAccounts = () => {
                 key={account.id}
                 variant="outline"
                 onClick={() => handleAccountClick(account, false, null)}
-                className="flex items-center justify-between w-full p-4 h-12 rounded-full border border-gray-300 dark:border-[#364152] hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
+                className="flex items-center justify-between w-full p-4 h-12 rounded-full border border-gray-300 dark:border-foreground-muted hover:bg-gray-50 dark:hover:bg-zinc-800"
               >
                 <div className="flex items-center gap-3">
                   <account.icon className="h-5 w-5 text-gray-600 dark:text-white" />
@@ -210,7 +210,7 @@ const ConnectedAccounts = () => {
                 <Button
                   onClick={handleConfirmConnect}
                   disabled={!url || isPending}
-                  className="flex-1 bg-[#003933] hover:bg-[#002822] text-white"
+                  className="flex-1 bg-foreground-strong hover:bg-foreground text-white"
                 >
                   {isPending ? <Spinner className="w-4 h-4 text-white" /> : "Generate OTP"}
                 </Button>
@@ -253,7 +253,7 @@ const ConnectedAccounts = () => {
                 <Button
                   onClick={handleVerify}
                   disabled={isVerifying}
-                  className="flex-1 bg-[#003933] hover:bg-[#002822] text-white"
+                  className="flex-1 bg-foreground-strong hover:bg-foreground text-white"
                 >
                   {isVerifying ? <Spinner className="w-4 h-4 text-white" /> : "Verify"}
                 </Button>

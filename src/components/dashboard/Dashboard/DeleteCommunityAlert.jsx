@@ -43,7 +43,7 @@ const DeleteCommunityAlert = () => {
         <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <AlertDialogTrigger asChild>
                 <button
-                    className="w-full text-red-600 cursor-pointer flex items-center justify-between bg-white dark:bg-[#2E2E2E] rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm border border-red-400"
+                    className="w-full text-red-600 cursor-pointer flex items-center justify-between bg-white dark:bg-zinc-800 rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm border border-red-400"
                 >
                     <div className="flex items-center justify-center gap-3">
                         <Trash2 className="text-red-600" />
@@ -59,7 +59,7 @@ const DeleteCommunityAlert = () => {
                 {/* Warning Icon */}
                 <div className="flex justify-center mb-4 pt-2">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30">
-                        <AlertTriangle className="w-8 h-8 text-[#DF1C41]" strokeWidth={2.5} />
+                        <AlertTriangle className="w-8 h-8 text-destructive" strokeWidth={2.5} />
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@ const DeleteCommunityAlert = () => {
                     <Button
                         onClick={handleDeleteCommunity}
                         disabled={isDeletingPending}
-                        className="w-full sm:w-auto bg-[#DF1C41] hover:bg-[#c01838] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full sm:w-auto bg-destructive hover:bg-destructive text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isDeletingPending ? "Deleting..." : "Delete Community"}
                     </Button>

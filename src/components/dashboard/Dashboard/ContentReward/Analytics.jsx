@@ -47,7 +47,7 @@ const Analytics = () => {
   if (isLoading) {
     return (
       <div className="min-h-[400px] flex flex-col items-center justify-center gap-4">
-        <Loader2 className="w-10 h-10 animate-spin text-[#003933]" />
+        <Loader2 className="w-10 h-10 animate-spin text-foreground-strong" />
         <p className="text-gray-500 dark:text-gray-400 font-medium animate-pulse">Loading analytics...</p>
       </div>
     );

@@ -86,21 +86,21 @@ const DepositList = () => {
         {transactions?.map((transaction, index) => (
           <div
             key={index}
-            className="bg-white dark:bg-[#2E2E2E] border rounded-lg p-4 shadow-sm"
+            className="bg-white dark:bg-zinc-800 border rounded-lg p-4 shadow-sm"
           >
             <div className="flex justify-between items-start mb-2">
-              <div className="font-semibold text-[#25324B] dark:text-white">
+              <div className="font-semibold text-foreground dark:text-white">
                 {transaction?.holder_name || transaction?.name || "Unknown"}
               </div>
               {getStatusBadge(transaction?.status)}
             </div>
-            <div className="text-sm text-[#25324B] dark:text-white">
+            <div className="text-sm text-foreground dark:text-white">
               {formatDate(transaction?.created_at || transaction?.date)}
             </div>
-            <div className="text-sm text-[#25324B] dark:text-white">
+            <div className="text-sm text-foreground dark:text-white">
 
             </div>
-            <div className="font-semibold text-[#25324B] dark:text-white mt-1">
+            <div className="font-semibold text-foreground dark:text-white mt-1">
               {formatAmount(transaction?.amount)} {" "}
               <span>
                 {transaction?.stripe_info?.currency}
@@ -118,26 +118,26 @@ const DepositList = () => {
           <Table>
             <TableHeader>
               <TableRow className="border rounded-full">
-                <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
                   Name
                 </TableHead>
-                <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
                   Date
                 </TableHead>
-                <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
                   Amount
                 </TableHead>
-                <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
                   Status
                 </TableHead>
               </TableRow>
             </TableHeader>
 
-            <TableBody className="bg-white dark:bg-[#2E2E2E] rounded-xl">
+            <TableBody className="bg-white dark:bg-zinc-800 rounded-xl">
               {transactions?.map((transaction, index) => (
                 <TableRow
                   key={index}
-                  className="border-none hover:bg-gray-50 dark:hover:bg-[#364152]"
+                  className="border-none hover:bg-gray-50 dark:hover:bg-foreground-muted"
                 >
                   <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
                     {transaction?.holder_name || transaction?.name || "Unknown"}

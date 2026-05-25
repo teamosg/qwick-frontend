@@ -80,7 +80,7 @@ const SignUp = () => {
                 Already have an account?{" "}
                 <Link
                   to="/sign-in"
-                  className="text-[#003933] dark:text-white font-medium hover:underline"
+                  className="text-foreground-strong dark:text-white font-medium hover:underline"
                 >
                   Sign In
                 </Link>
@@ -94,7 +94,7 @@ const SignUp = () => {
               type="button"
               onClick={() => handleGoogleLogin()}
               disabled={googlePending}
-              className="w-full py-4 px-5 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-zinc-900 transition cursor-pointer bg-[#f9f9f9]"
+              className="w-full py-4 px-5 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-zinc-900 transition cursor-pointer bg-background"
             >
               <div className="flex items-center gap-2">
                 <FcGoogle className="text-lg" />
@@ -104,7 +104,7 @@ const SignUp = () => {
               </div>
               <img src={arrowRight} alt="arrow" className="dark:invert" />
             </button>
-            {/* <button className="w-full py-4 px-4 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-gray-800 transition cursor-pointer bg-[#f9f9f9]">
+            {/* <button className="w-full py-4 px-4 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-gray-800 transition cursor-pointer bg-background">
               <div className="flex items-center gap-2">
                 <FaFacebook className="text-lg text-blue-600" />
                 <span className="text-gray-800 dark:text-gray-200">
@@ -140,7 +140,7 @@ const SignUp = () => {
                     type="text"
                     {...register("full_name")}
                     placeholder="Name"
-                    className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                    className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
                   />
                 </div>
                 {errors.full_name && (
@@ -166,7 +166,7 @@ const SignUp = () => {
                       form.setValue("username", formatted);
                     }}
                     placeholder="Username"
-                    className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                    className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
                   />
                 </div>
                 {errors.username && (
@@ -190,7 +190,7 @@ const SignUp = () => {
                   type="email"
                   {...register("email")}
                   placeholder="Email"
-                  className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                  className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
               </div>
               {errors.email && (
@@ -213,7 +213,7 @@ const SignUp = () => {
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
                   placeholder="Password"
-                  className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                  className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
                 />
                 <button
                   type="button"
@@ -242,15 +242,15 @@ const SignUp = () => {
                 type="checkbox"
                 {...register("accepted_terms")}
                 id="accepted_terms"
-                className="mt-1 w-4 h-4 text-[#003933] border-gray-300 rounded focus:ring-[#003933] cursor-pointer"
+                className="mt-1 w-4 h-4 text-foreground-strong border-gray-300 rounded focus:ring-ring cursor-pointer"
               />
               <label htmlFor="accepted_terms" className="text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
                 By signing up, I agree to{" "}
-                <Link to="/terms-and-conditions" className="text-[#003933] dark:text-white font-medium hover:underline">
+                <Link to="/terms-and-conditions" className="text-foreground-strong dark:text-white font-medium hover:underline">
                   Terms of Service
                 </Link>{" "}
                 and{" "}
-                <Link to="/terms-and-conditions" className="text-[#003933] dark:text-white font-medium hover:underline">
+                <Link to="/terms-and-conditions" className="text-foreground-strong dark:text-white font-medium hover:underline">
                   Privacy Policy
                 </Link>
                 .
@@ -265,7 +265,7 @@ const SignUp = () => {
             <button
               type="submit"
               disabled={isPending || !acceptedTerms}
-              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPending ? "Creating Account..." : "Sign Up"}
             </button>

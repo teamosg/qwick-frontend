@@ -33,11 +33,11 @@ const AllSubmissions = () => {
   const getStatusBadge = (status) => {
     const statusType = status?.toLowerCase() || "pending";
     const variants = {
-      pending: "bg-[#FEF9C3] text-[#A16207] border-[#A16207]",
-      accepted: "bg-[#F0FDF4] text-[#15803D] border-[#15803D]",
-      approved: "bg-[#F0FDF4] text-[#15803D] border-[#15803D]",
-      reject: "bg-[#FEE2E2] text-[#CA6377] border-[#CA6377]",
-      rejected: "bg-[#FEE2E2] text-[#CA6377] border-[#CA6377]",
+      pending: "bg-warning-bg text-warning border-warning",
+      accepted: "bg-success-bg text-success border-success",
+      approved: "bg-success-bg text-success border-success",
+      reject: "bg-error-bg text-error border-error",
+      rejected: "bg-error-bg text-error border-error",
     };
 
     return (
@@ -62,7 +62,7 @@ const AllSubmissions = () => {
           {[1, 2, 3].map((i) => (
             <Card
               key={i}
-              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
+              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-zinc-800 dark:border-foreground-muted"
             >
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -104,7 +104,7 @@ const AllSubmissions = () => {
           submissions.map((submission) => (
             <Card
               key={submission.id}
-              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-[#2E2E2E] dark:border-[#444444]"
+              className="p-0! overflow-hidden shadow-sm border border-gray-200 dark:bg-zinc-800 dark:border-foreground-muted"
             >
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row gap-6">
@@ -131,7 +131,7 @@ const AllSubmissions = () => {
                       {/* User Info and Status */}
                       <div className="flex items-start justify-between">
                           <div className="space-y-1">
-                            <div className="text-sm font-bold text-[#15161E] dark:text-white leading-tight">
+                            <div className="text-sm font-bold text-foreground-strong dark:text-white leading-tight">
                               {submission?.campaign?.name || "Untitled Campaign"}
                             </div>
                             <div className="flex flex-col gap-0.5">
@@ -158,7 +158,7 @@ const AllSubmissions = () => {
                           <div className="flex flex-wrap gap-3">
                             <div className="flex flex-col">
                               <span className="text-[10px] text-gray-500 flex items-center gap-1"><TrendingUp className="size-3" /> Total Views</span>
-                              <span className="text-sm font-bold text-[#15161E] dark:text-white">{submission?.views?.toLocaleString()}</span>
+                              <span className="text-sm font-bold text-foreground-strong dark:text-white">{submission?.views?.toLocaleString()}</span>
                             </div>
                             <div className="h-8 w-[1px] bg-gray-200 dark:bg-zinc-700" />
                             <div className="flex flex-col">
@@ -184,7 +184,7 @@ const AllSubmissions = () => {
                                     href={submission.platform_stats.youtube.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-[#003933] dark:hover:text-emerald-400 transition-colors font-medium group cursor-pointer"
+                                    className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-foreground-strong dark:hover:text-emerald-400 transition-colors font-medium group cursor-pointer"
                                   >
                                     <FaYoutube className="text-red-600 size-3.5" />
                                     <span>YouTube</span>
@@ -209,7 +209,7 @@ const AllSubmissions = () => {
                                     href={submission.platform_stats.tiktok.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-[#003933] dark:hover:text-emerald-400 transition-colors font-medium group cursor-pointer"
+                                    className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-foreground-strong dark:hover:text-emerald-400 transition-colors font-medium group cursor-pointer"
                                   >
                                     <FaTiktok className="text-black dark:text-white size-3.5" />
                                     <span>TikTok</span>
@@ -234,7 +234,7 @@ const AllSubmissions = () => {
                                     href={submission.platform_stats.instagram.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-[#003933] dark:hover:text-emerald-400 transition-colors font-medium group cursor-pointer"
+                                    className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-foreground-strong dark:hover:text-emerald-400 transition-colors font-medium group cursor-pointer"
                                   >
                                     <FaInstagram className="text-pink-600 size-3.5" />
                                     <span>Instagram</span>
@@ -267,7 +267,7 @@ const AllSubmissions = () => {
                             variant="ghost"
                             onClick={() => handleReview(submission?.id, "approve")}
                             disabled={isReviewing}
-                            className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-[#15803D] hover:text-[#15803D]/80 text-xs font-semibold flex items-center gap-1.5"
+                            className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-success hover:text-success/80 text-xs font-semibold flex items-center gap-1.5"
                           >
                             <Check className="size-4" />
                             Approve Payout
@@ -277,7 +277,7 @@ const AllSubmissions = () => {
                             variant="ghost"
                             onClick={() => handleReview(submission?.id, "reject")}
                             disabled={isReviewing}
-                            className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-[#DC2626] hover:text-[#DC2626]/80 text-xs font-semibold flex items-center gap-1.5"
+                            className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-error hover:text-error/80 text-xs font-semibold flex items-center gap-1.5"
                           >
                             <X className="size-4" />
                             Reject

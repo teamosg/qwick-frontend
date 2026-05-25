@@ -145,7 +145,7 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
           {/* Users/People Button */}
           {/* <button
             onClick={handleUsersClick}
-            className="p-2 rounded-lg hover:text-[#000000] dark:hover:text-white transition duration-300"
+            className="p-2 rounded-lg hover:text-black dark:hover:text-white transition duration-300"
           >
             <Users className="w-6 h-6" />
           </button> */}
@@ -172,7 +172,7 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
           ) : (
             <button
               onClick={handleSearchClick}
-              className="p-2 rounded-lg hover:text-[#000000] dark:hover:text-white"
+              className="p-2 rounded-lg hover:text-black dark:hover:text-white"
             >
               <Search className="w-6 h-6" />
             </button>

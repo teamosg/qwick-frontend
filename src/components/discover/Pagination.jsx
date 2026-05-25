@@ -64,7 +64,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           disabled={currentPage === 1}
           className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border rounded-lg transition-all ${currentPage === 1
               ? "bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-600 cursor-not-allowed border-gray-200 dark:border-zinc-700"
-              : "border-gray-300 dark:border-zinc-700 hover:bg-[#003933] hover:text-white dark:text-white"
+              : "border-gray-300 dark:border-zinc-700 hover:bg-foreground-strong hover:text-white dark:text-white"
             }`}
         >
           <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -90,8 +90,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 type="button"
                 onClick={() => handlePageClick(page)}
                 className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-xs sm:text-sm md:text-base rounded-lg transition-all ${isActive
-                    ? "bg-[#003933] text-white shadow-lg"
-                    : "border border-gray-300 dark:border-zinc-700 hover:bg-[#003933] hover:text-white dark:text-white"
+                    ? "bg-foreground-strong text-white shadow-lg"
+                    : "border border-gray-300 dark:border-zinc-700 hover:bg-foreground-strong hover:text-white dark:text-white"
                   }`}
               >
                 {page}
@@ -107,7 +107,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           disabled={currentPage === totalPages}
           className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border rounded-lg transition-all ${currentPage === totalPages
               ? "bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-600 cursor-not-allowed border-gray-200 dark:border-zinc-700"
-              : "border-gray-300 dark:border-zinc-700 hover:bg-[#003933] hover:text-white dark:text-white"
+              : "border-gray-300 dark:border-zinc-700 hover:bg-foreground-strong hover:text-white dark:text-white"
             }`}
         >
           <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />

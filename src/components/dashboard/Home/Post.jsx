@@ -21,7 +21,7 @@ const Post = ({ post }) => {
              <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
               {post?.author?.full_name}
             </h3>
-            <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
+            <div className="text-xs text-foreground-subtle dark:text-gray-400 flex items-center">
               <Clock size={10} className="mr-1" />
               {new Date(post?.created_at).toLocaleString()}
             </div>

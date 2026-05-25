@@ -108,10 +108,10 @@ const WithdrawList = () => {
           return (
             <div
               key={index}
-              className="bg-white dark:bg-[#2E2E2E] border rounded-lg p-4 shadow-sm"
+              className="bg-white dark:bg-zinc-800 border rounded-lg p-4 shadow-sm"
             >
               <div className="flex justify-between items-start mb-2">
-                <div className="font-semibold text-[#25324B] dark:text-white">
+                <div className="font-semibold text-foreground dark:text-white">
                   {transaction.holder_name || "Unknown"}
                 </div>
                 <div className="flex items-center gap-2">
@@ -134,10 +134,10 @@ const WithdrawList = () => {
                   )}
                 </div>
               </div>
-              <div className="text-sm text-[#25324B] dark:text-white">
+              <div className="text-sm text-foreground dark:text-white">
                 {formatDate(transaction.created_at)}
               </div>
-              <div className="font-semibold text-[#25324B] dark:text-white">
+              <div className="font-semibold text-foreground dark:text-white">
                 {formatAmount(transaction.amount)}
               </div>
             </div>
@@ -152,30 +152,30 @@ const WithdrawList = () => {
           <Table>
             <TableHeader className="">
               <TableRow className="border rounded-full">
-                <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
                   Name
                 </TableHead>
-                <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
                   Date
                 </TableHead>
-                <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
                   Amount
                 </TableHead>
-                <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
                   Status
                 </TableHead>
-                <TableHead className="text-[#717171] font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
                   Actions
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="bg-white dark:bg-[#2E2E2E] rounded-xl">
+            <TableBody className="bg-white dark:bg-zinc-800 rounded-xl">
               {transactions?.map((transaction, index) => {
 
                 return (
                   <TableRow
                     key={index}
-                    className="border-none hover:bg-gray-50 dark:hover:bg-[#364152]"
+                    className="border-none hover:bg-gray-50 dark:hover:bg-foreground-muted"
                   >
                     <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
                       {transaction.holder_name || "Unknown"}

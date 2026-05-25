@@ -101,7 +101,7 @@ const GroupConversationActionBox = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="p-4 bg-white dark:bg-[#171717] border-t border-gray-200 dark:border-[#282828]"
+                className="p-4 bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-800"
             >
                 {/* Attachments preview section */}
                 {(attachments.length > 0 || isUploading) && (
@@ -110,7 +110,7 @@ const GroupConversationActionBox = ({
                             Array.from({ length: totalAttachments }).map((_, index) => (
                                 <div
                                     key={index}
-                                    className="bg-gray-50 dark:bg-[#232323] p-2 rounded-md border border-gray-200 dark:border-[#282828] flex items-center gap-2"
+                                    className="bg-gray-50 dark:bg-zinc-800/50 p-2 rounded-md border border-gray-200 dark:border-zinc-800 flex items-center gap-2"
                                 >
                                     <Loader className="animate-spin" size={16} />
                                     <span className="text-sm">Uploading...</span>
@@ -122,7 +122,7 @@ const GroupConversationActionBox = ({
                                     <img
                                         src={file.url}
                                         alt={file.name}
-                                        className="w-16 h-12 object-cover border border-gray-200 dark:border-[#282828] rounded-lg"
+                                        className="w-16 h-12 object-cover border border-gray-200 dark:border-zinc-800 rounded-lg"
                                     />
                                     <button
                                         onClick={() => handleRemoveAttachment(file.id)}
@@ -134,7 +134,7 @@ const GroupConversationActionBox = ({
                             ) : (
                                 <div
                                     key={file.id}
-                                    className="pl-2 pr-3 py-2 rounded-lg border border-gray-200 dark:border-[#282828] flex items-center gap-2 group relative"
+                                    className="pl-2 pr-3 py-2 rounded-lg border border-gray-200 dark:border-zinc-800 flex items-center gap-2 group relative"
                                 >
                                     <LuFile className="text-gray-600 dark:text-gray-400" />
                                     <div>
@@ -163,7 +163,7 @@ const GroupConversationActionBox = ({
                         onChange={(e) => setNewMessage(e.target.value)}
                         onKeyPress={handleKeyPress}
                         placeholder="Write a message..."
-                        className="flex-1 px-4 py-2 border border-gray-300 dark:border-[#282828] rounded-lg bg-gray-50 dark:bg-[#232323] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="flex-1 px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     {/* Hidden file input for attachments */}
                     <input
@@ -177,7 +177,7 @@ const GroupConversationActionBox = ({
                     <motion.button
                         whileTap={{ scale: 0.95 }}
                         onClick={handleAttachmentClick}
-                        className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#232323] rounded-lg transition-colors"
+                        className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors"
                         disabled={isUploading}
                     >
                         <FiImage className="w-5 h-5" />
@@ -186,7 +186,7 @@ const GroupConversationActionBox = ({
                         <motion.button
                             whileTap={{ scale: 0.95 }}
                             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                            className="hidden sm:block p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#232323] rounded-lg transition-colors"
+                            className="hidden sm:block p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors"
                         >
                             {/* Emoji Icon SVG */}
                             <svg

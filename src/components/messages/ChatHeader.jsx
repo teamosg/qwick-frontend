@@ -8,7 +8,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
 
   if (!selectedChat) {
     return (
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717]">
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
         <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
           Select a conversation
         </h2>
@@ -21,7 +21,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 dark:border-[#282828] bg-white dark:bg-[#171717]">
+      <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
         {/* Back button (Mobile only), Avatar, Name and Status */}
         <div className="flex items-center gap-2 sm:gap-3">
           <button

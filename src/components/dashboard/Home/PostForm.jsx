@@ -108,7 +108,7 @@ const PostForm = () => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="What's on your mind?"
-              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-[#2E2E2E] dark:text-gray-300 rounded-lg p-2 sm:p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-primary resize-none text-sm sm:text-base"
+              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-zinc-800 dark:text-gray-300 rounded-lg p-2 sm:p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-ring resize-none text-sm sm:text-base"
               rows={3}
             />
 
@@ -142,7 +142,7 @@ const PostForm = () => {
                   <button
                     type="button"
                     onClick={triggerFileInput}
-                    className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E] transition-colors"
+                    className="text-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
                   >
                     <ImageIcon size={18} className="sm:w-5 sm:h-5" />
                   </button>
@@ -157,7 +157,7 @@ const PostForm = () => {
                   <button
                     type="button"
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    className="text-gray-500 hover:text-primary p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#2E2E2E] transition-colors emoji-button"
+                    className="text-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors emoji-button"
                   >
                     <Smile size={18} className="sm:w-5 sm:h-5" />
                   </button>
@@ -168,7 +168,7 @@ const PostForm = () => {
                   <button
                     type="button"
                     onClick={() => setShowCommunityDropdown(!showCommunityDropdown)}
-                    className="flex items-center dark:text-gray-300 space-x-1 text-xs sm:text-sm bg-gray-100 dark:bg-[#2E2E2E] rounded-full px-2 sm:px-3 py-1 w-full sm:w-auto justify-center sm:justify-start"
+                    className="flex items-center dark:text-gray-300 space-x-1 text-xs sm:text-sm bg-gray-100 dark:bg-zinc-800 rounded-full px-2 sm:px-3 py-1 w-full sm:w-auto justify-center sm:justify-start"
                   >
                     <span className="dark:text-gray-300 truncate">
                       {selectedCommunity}
@@ -191,8 +191,8 @@ const PostForm = () => {
                               setShowCommunityDropdown(false);
                             }}
                             className={`w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${selectedCommunity === community.business_name
-                              ? "bg-gray-100 dark:bg-[#2E2E2E] text-primary"
-                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2E2E2E]"
+                              ? "bg-gray-100 dark:bg-zinc-800 text-foreground-strong"
+                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800"
                               }`}
                           >
                             {community.business_name}
@@ -208,8 +208,8 @@ const PostForm = () => {
                 type="submit"
                 disabled={!content.trim() && imagePreviewUrls.length === 0 || isCreatingAnnouncement}
                 className={`disabled:cursor-not-allowed disabled:opacity-70 px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors ${content.trim() || imagePreviewUrls.length > 0
-                  ? "bg-[#003933] text-white cursor-pointer hover:bg-[#002a26]"
-                  : "bg-[#003933] dark:bg-[#2E2E2E] text-white cursor-not-allowed opacity-50"
+                  ? "bg-foreground-strong text-white cursor-pointer hover:bg-foreground"
+                  : "bg-foreground-strong dark:bg-zinc-800 text-white cursor-not-allowed opacity-50"
                   }`}
               >
                 {isCreatingAnnouncement ? "Posting..." : "Post"}

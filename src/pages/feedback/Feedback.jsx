@@ -89,7 +89,7 @@ const Feedback = () => {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-[#121212] py-8">
+    <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-foreground py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Overall Rating Summary */}
         <OverallRatingSummary

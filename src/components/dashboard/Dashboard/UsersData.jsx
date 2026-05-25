@@ -79,19 +79,19 @@ const UsersData = () => {
         {activeUsers?.map((user, index) => (
           <div
             key={index}
-            className="bg-white border rounded-lg p-4 shadow-sm dark:bg-[#2E2E2E] dark:border-[#444] dark:text-[#fff]"
+            className="bg-white border rounded-lg p-4 shadow-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
           >
             <div className="flex justify-between items-start mb-2">
-              <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+              <div className="font-semibold text-foreground dark:text-white">
                 {user?.username}
               </div>
             </div>
-            <div className="text-sm text-[#25324B] dark:text-[#fff]">{user?.email}</div>
-            <div className="text-sm text-[#25324B] dark:text-[#fff]">{user?.status}</div>
-            <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+            <div className="text-sm text-foreground dark:text-white">{user?.email}</div>
+            <div className="text-sm text-foreground dark:text-white">{user?.status}</div>
+            <div className="font-semibold text-foreground dark:text-white">
               {user?.email}
             </div>
-            <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+            <div className="font-semibold text-foreground dark:text-white">
               {user?.joined_at}
             </div>
           </div>
@@ -103,23 +103,23 @@ const UsersData = () => {
         <div className="p-1 min-w-[800px]">
           <Table>
             <TableHeader className="">
-              <TableRow className="bg-[#f5f5f5] text-gray-900 dark:bg-[#2E2E2E] dark:text-[#fff] border-black rounded-full">
-                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+              <TableRow className="bg-muted/50 text-gray-900 dark:bg-zinc-800 dark:text-white border-black rounded-full">
+                <TableHead className="font-medium py-4 px-6 dark:text-white">
                   Name
                 </TableHead>
-                <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
+                <TableHead className=" font-medium py-4 px-6 dark:text-white">
                   Email
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                <TableHead className="font-medium py-4 px-6 dark:text-white">
                   Status
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                <TableHead className="font-medium py-4 px-6 dark:text-white">
                   Role
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                <TableHead className="font-medium py-4 px-6 dark:text-white">
                   Joined at
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                <TableHead className="font-medium py-4 px-6 dark:text-white">
                   Actions
                 </TableHead>
               </TableRow>
@@ -128,21 +128,21 @@ const UsersData = () => {
               {activeUsers?.map((user, index) => (
                 <TableRow
                   key={index}
-                  className="border-none hover:bg-white dark:hover:bg-[#2E2E2E]"
+                  className="border-none hover:bg-white dark:hover:bg-zinc-800"
                 >
-                  <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
+                  <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
                     {user?.username}
                   </TableCell>
-                  <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                  <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
                     {user?.email}
                   </TableCell>
-                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
+                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                     {getStatusBadge(user?.status)}
                   </TableCell>
-                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
+                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                     {getStatusBadge(user?.is_moderator ? 'moderator' : 'user')}
                   </TableCell>
-                  <TableCell className="py-4 px-6 font-semibold text-sm text-gray-500 dark:text-[#fff]">
+                  <TableCell className="py-4 px-6 font-semibold text-sm text-gray-500 dark:text-white">
                     {user?.joined_at?.substring(0, 10)}
                   </TableCell>
                   <TableCell className="py-4 px-6 flex gap-2">

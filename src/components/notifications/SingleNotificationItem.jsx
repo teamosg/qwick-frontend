@@ -46,7 +46,7 @@ const SingleNotificationItem = () => {
         {posts.map((post) => (
           <div
             key={post.id}
-            className="p-4 hover:bg-[#e7f5ff] dark:hover:bg-transparent transition-colors"
+            className="p-4 hover:bg-nav-active-bg dark:hover:bg-transparent transition-colors"
           >
             <div className="flex items-center justify-center space-x-3">
               {/* Avatar */}
@@ -63,11 +63,11 @@ const SingleNotificationItem = () => {
                     <span className="font-semibold text-black dark:text-white">
                       {post.user}
                     </span>
-                    <span className="text-[#6F6F6F] dark:text-zinc-400 text-base">
+                    <span className="text-foreground-subtle text-base">
                       {post.action}
                     </span>
                   </div>
-                  <span className="text-xs text-[#6F6F6F]">
+                  <span className="text-xs text-foreground-subtle">
                     {post.time}
                   </span>
                 </div>
@@ -93,7 +93,7 @@ const SingleNotificationItem = () => {
                       {post.description}
                     </a>
                   ) : (
-                    <span className="text-[#6F6F6F] dark:text-zinc-400 text-sm">
+                    <span className="text-foreground-subtle text-sm">
                       {post.description}
                     </span>
                   )}

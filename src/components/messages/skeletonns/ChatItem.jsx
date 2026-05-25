@@ -36,7 +36,7 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpen
         />
 
         {chat?.isOnline && (
-          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
+          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-zinc-900 rounded-full"></div>
         )}
       </div>
 

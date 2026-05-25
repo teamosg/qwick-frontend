@@ -21,7 +21,7 @@ export function SidebarJoinedCommunity({ onClose, joinedCommunityList, isLoading
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
-        <AccordionTrigger className="text-[#090003] dark:text-white font-semibold text-base hover:no-underline">
+        <AccordionTrigger className="text-foreground-subtle dark:text-zinc-400 font-semibold text-base hover:no-underline">
           Joined Community
         </AccordionTrigger>
         <AccordionContent>
@@ -33,7 +33,7 @@ export function SidebarJoinedCommunity({ onClose, joinedCommunityList, isLoading
                     <div className="text-sm  mb-3">
                       <button
                         onClick={onClose}
-                        className="flex items-center gap-2 dark:text-white cursor-pointer transition duration-300 hover:text-[#17173c]"
+                        className="flex items-center gap-2 dark:text-white cursor-pointer transition duration-300 hover:text-foreground-strong"
                       >
                         <AvatarUser
                           src={community?.profile_image}

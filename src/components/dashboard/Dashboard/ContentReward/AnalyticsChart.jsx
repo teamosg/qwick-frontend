@@ -101,7 +101,7 @@ const chartData = [
 const chartConfig = {
   views: {
     label: "Views",
-    color: "#00A6FF",
+    color: "hsl(var(--info))",
   },
 };
 
@@ -180,8 +180,8 @@ export function AnalyticsChart() {
           >
             <defs>
               <linearGradient id="colorViews" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#00A6FF" stopOpacity={1} />
-                <stop offset="100%" stopColor="#00A6FF" stopOpacity={0} />
+                <stop offset="0%" stopColor="hsl(var(--info))" stopOpacity={1} />
+                <stop offset="100%" stopColor="hsl(var(--info))" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} />
@@ -209,9 +209,9 @@ export function AnalyticsChart() {
             <Area
               dataKey="views"
               type="natural"
-              fill="#00A6FF"
+              fill="hsl(var(--info))"
               fillOpacity={0.4}
-              stroke="#00A6FF"
+              stroke="hsl(var(--info))"
               strokeWidth={2}
             />
           </AreaChart>

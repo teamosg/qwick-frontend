@@ -15,7 +15,7 @@ const ImagePreview = ({
     <button
       className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2"
       onClick={onRemove}>
-      <XCircleIcon className="h-5 w-5 fill-primary text-primary-foreground" />
+      <XCircleIcon className="h-5 w-5 fill-foreground-strong text-white" />
     </button>
     <Image
       src={url}
@@ -58,9 +58,9 @@ export default function InputDemo() {
               <div
                 {...getRootProps()}
                 className={cn(
-                  "border border-dashed flex items-center justify-center aspect-square rounded-md focus:outline-none focus:border-primary",
+                  "border border-dashed flex items-center justify-center aspect-square rounded-md focus:outline-none focus:border-border-strong",
                   {
-                    "border-primary bg-secondary": isDragActive && isDragAccept,
+                    "border-foreground-muted bg-secondary": isDragActive && isDragAccept,
                     "border-destructive bg-destructive/20":
                       isDragActive && isDragReject,
                   }

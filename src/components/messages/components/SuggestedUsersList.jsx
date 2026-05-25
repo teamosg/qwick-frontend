@@ -15,7 +15,7 @@ const SuggestedUsersList = ({ suggestedUsers, handleUserSelect }) => {
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
                             onClick={() => handleUserSelect(user)}
-                            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+                            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
                         >
                             <div className="relative">
                                 <AvatarUser
@@ -24,7 +24,7 @@ const SuggestedUsersList = ({ suggestedUsers, handleUserSelect }) => {
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
                                 {user?.isOnline && (
-                                    <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
+                                    <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-zinc-900 rounded-full"></div>
                                 )}
                             </div>
                             <div className="flex-1 text-left">

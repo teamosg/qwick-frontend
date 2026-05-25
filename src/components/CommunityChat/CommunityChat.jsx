@@ -168,9 +168,9 @@ const CommunityChat = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col w-full min-h-0 bg-white dark:bg-[#101010] relative overflow-hidden">
+    <div className="flex-1 flex flex-col w-full min-h-0 bg-white dark:bg-zinc-950 relative overflow-hidden">
       {/* Header Area */}
-      <div className="flex-none sticky top-0 z-10 bg-white/80 dark:bg-[#101010]/80 backdrop-blur-md border-b border-gray-100 dark:border-zinc-800">
+      <div className="flex-none sticky top-0 z-10 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md border-b border-gray-100 dark:border-zinc-800">
         <ChatHeader
           onSearch={setSearchQuery}
           searchQuery={searchQuery}
@@ -203,7 +203,7 @@ const CommunityChat = () => {
 
                   <div
                     className={`py-2.5 px-4 rounded-2xl text-sm shadow-sm transition-all ${message.sender === "me"
-                      ? "bg-[#003933] text-white rounded-tr-none shadow-emerald-900/10"
+                      ? "bg-foreground-strong text-white rounded-tr-none shadow-foreground-strong/10"
                       : "bg-white dark:bg-zinc-900 text-gray-800 dark:text-zinc-200 rounded-tl-none border border-gray-100 dark:border-zinc-800"
                       }`}
                   >
@@ -224,9 +224,9 @@ const CommunityChat = () => {
       </div>
 
       {/* Input Area - Fixed at bottom */}
-      <div className="flex-none p-4 sm:p-6 bg-white dark:bg-[#101010] border-t border-gray-100 dark:border-zinc-800">
+      <div className="flex-none p-4 sm:p-6 bg-white dark:bg-zinc-950 border-t border-gray-100 dark:border-zinc-800">
         <div className="max-w-4xl mx-auto">
-          <div className="relative flex items-center bg-gray-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-gray-200 dark:border-zinc-800 focus-within:ring-2 focus-within:ring-[#003933]/20 focus-within:border-[#003933] transition-all duration-300">
+          <div className="relative flex items-center bg-gray-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-gray-200 dark:border-zinc-800 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-foreground-muted transition-all duration-300">
             <textarea
               ref={inputRef}
               rows={1}
@@ -241,7 +241,7 @@ const CommunityChat = () => {
               whileTap={{ scale: 0.92 }}
               onClick={handleSendMessage}
               disabled={!newMessage.trim()}
-              className="ml-2 p-3 bg-[#003933] text-white rounded-xl hover:bg-[#002822] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md active:scale-95"
+              className="ml-2 p-3 bg-foreground-strong text-white rounded-xl hover:bg-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md active:scale-95"
             >
               <LuSend size={20} />
             </motion.button>

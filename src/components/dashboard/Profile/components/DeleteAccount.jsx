@@ -35,15 +35,15 @@ const DeleteAccount = () => {
   return (
     <div className="space-y-4">
       <div className="mb-8">
-        <h2 className="text-[18px] font-semibold text-[#090003] dark:text-white mb-1">
+        <h2 className="text-[18px] font-semibold text-foreground dark:text-white mb-1">
           Delete Account
         </h2>
-        <p className="text-[#717171] text-sm">
+        <p className="text-foreground-subtle text-sm">
           Permanently remove your account and all of your data from our platform
         </p>
       </div>
 
-      <Card className="border-[#DF1C41] shadow rounded-[24px] overflow-hidden">
+      <Card className="border-destructive shadow rounded-[24px] overflow-hidden">
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
@@ -59,7 +59,7 @@ const DeleteAccount = () => {
               <AlertDialogTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="cursor-pointer hover:text-white hover:bg-[#DF1C41] active:scale-[0.98] transition-all duration-300 ease-in-out px-8 rounded-full text-[#DF1C41] text-[16px] border border-[#DF1C41] bg-transparent"
+                  className="cursor-pointer hover:text-white hover:bg-destructive active:scale-[0.98] transition-all duration-300 ease-in-out px-8 rounded-full text-destructive text-[16px] border border-destructive bg-transparent"
                 >
                   Delete account
                 </Button>
@@ -68,7 +68,7 @@ const DeleteAccount = () => {
                 <div className="flex justify-center mb-4">
                   <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30">
                     <AlertTriangle
-                      className="w-7 h-7 sm:w-8 sm:h-8 text-[#DF1C41]"
+                      className="w-7 h-7 sm:w-8 sm:h-8 text-destructive"
                       strokeWidth={2.5}
                     />
                   </div>
@@ -105,7 +105,7 @@ const DeleteAccount = () => {
                   <Button
                     onClick={handleDeleteAccount}
                     disabled={isDeletingPending}
-                    className="w-full sm:w-auto bg-[#DF1C41] hover:bg-[#c01838] text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed py-2"
+                    className="w-full sm:w-auto bg-destructive hover:bg-destructive text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed py-2"
                   >
                     {isDeletingPending ? "Deleting..." : "Delete account"}
                   </Button>

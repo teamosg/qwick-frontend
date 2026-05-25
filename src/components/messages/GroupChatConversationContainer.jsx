@@ -45,7 +45,7 @@ const GroupChatConversationContainer = ({ messages, user, members }) => {
                                     <div
                                         className={`py-3 px-4 rounded-2xl text-sm break-all whitespace-pre-wrap ${isCurrentUser
                                             ? "bg-blue-500 text-white"
-                                            : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
+                                            : "bg-white dark:bg-zinc-800/50 text-gray-900 dark:text-white"
                                             } ${message.isCard ? "border border-blue-300" : ""}`}
                                     >
                                         {/* Attachments */}
@@ -54,9 +54,9 @@ const GroupChatConversationContainer = ({ messages, user, members }) => {
                                                 {message.attachments.map((attachment) => (
                                                     <div
                                                         key={attachment.id}
-                                                        className="flex items-center p-2 mb-2 bg-white dark:bg-[#282828] rounded-md border border-gray-200 dark:border-[#282828]"
+                                                        className="flex items-center p-2 mb-2 bg-white dark:bg-zinc-800 rounded-md border border-gray-200 dark:border-zinc-800"
                                                     >
-                                                        <div className="p-2 bg-gray-100 dark:bg-[#171717] rounded-md">
+                                                        <div className="p-2 bg-gray-100 dark:bg-zinc-900 rounded-md">
                                                             {attachment.type.includes("image/") ? (
                                                                 <FiImage size={16} />
                                                             ) : (

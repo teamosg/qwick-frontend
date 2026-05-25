@@ -35,7 +35,7 @@ export default function VerticalSeparatedTabsDemo() {
           <TabsTrigger
             key={tab.value}
             value={tab.value}
-            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground justify-start px-3 py-1.5">
+            className="data-[state=active]:bg-foreground-strong data-[state=active]:text-white justify-start px-3 py-1.5">
             <tab.icon className="h-5 w-5 me-2" /> {tab.name}
           </TabsTrigger>
         ))}

@@ -93,7 +93,7 @@ const ContentRewardDetailsEdit = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-20">
-        <Spinner className="size-10 text-[#003933]" />
+        <Spinner className="size-10 text-foreground-strong" />
       </div>
     );
   }
@@ -132,17 +132,17 @@ const ContentRewardDetailsEdit = () => {
     <div>
       {/* Tabs Navigation */}
       <ContentRewardNav />
-      <div className="mt-6 text-[#717171]">
-        <div className="dark:text-white dark:bg-[#1E1E1E] p-4 sm:p-6 rounded-2xl items-center justify-center mx-auto shadow-sm mb-6 max-w-5xl bg-white border border-gray-100 dark:border-zinc-800">
+      <div className="mt-6 text-foreground-subtle">
+        <div className="dark:text-white dark:bg-zinc-900 p-4 sm:p-6 rounded-2xl items-center justify-center mx-auto shadow-sm mb-6 max-w-5xl bg-white border border-gray-100 dark:border-zinc-800">
           <div className="mb-6">
             <img
               src={thumbnail ? fullThumbnail : "/confirm-apply.png"}
               alt={name}
               className="w-full h-[300px] object-cover mb-7 rounded-xl"
             />
-            <p className="text-[#717171] text-xs mb-7 dark:text-zinc-400 flex gap-2 items-center">
+            <p className="text-foreground-subtle text-xs mb-7 dark:text-zinc-400 flex gap-2 items-center">
               <span>
-                <CircleAlert className="text-[#FEC260]" />
+                <CircleAlert className="text-warning" />
               </span>
               <span>
                 Only views after you submit count towards payout. Submit as soon
@@ -163,34 +163,34 @@ const ContentRewardDetailsEdit = () => {
           </div>
           <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between mb-9">
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Reward
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400 font-medium">
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
                 ${reward_rate}/1k
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Type
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400 font-medium">
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
                 {campaign_type?.name || "N/A"}
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Maximum Payout
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400 font-medium">
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
                 ${max_payout}
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold  dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold  dark:text-white uppercase opacity-70">
                 Platforms
               </p>
-              <div className="flex gap-2 dark:text-zinc-400 text-[#003933]">
+              <div className="flex gap-2 dark:text-zinc-400 text-foreground-strong">
                 {platforms?.map((p, idx) => {
                   const pName = p.name?.toLowerCase();
                   if (pName === 'instagram') return <FaInstagram key={idx} size={20} />;
@@ -202,10 +202,10 @@ const ContentRewardDetailsEdit = () => {
               </div>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Category
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400 font-medium">
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
                 {category?.name || "N/A"}
               </p>
             </div>
@@ -262,7 +262,7 @@ const ContentRewardDetailsEdit = () => {
               <>
                 <button
                   onClick={() => setShowExtendModal(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-[#003933] hover:bg-[#002822] text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-emerald-900/10"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-foreground-strong hover:bg-foreground text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-foreground-strong/10"
                 >
                   <LucideCalendar size={18} />
                   Extend Date
@@ -270,14 +270,14 @@ const ContentRewardDetailsEdit = () => {
                 <button
                   onClick={handleWithdrawClick}
                   disabled={isWithdrawing}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-[#003933] bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-foreground-strong bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition"
                 >
                   <Wallet size={18} />
                   {isWithdrawing ? "Withdrawing..." : "Withdraw Remaining"}
                 </button>
               </>
             ) : (
-              <div className="px-6 py-2 bg-emerald-50 text-[#003933] rounded-full text-sm font-bold border border-emerald-100">
+              <div className="px-6 py-2 bg-emerald-50 text-foreground-strong rounded-full text-sm font-bold border border-emerald-100">
                 Active Campaign
               </div>
             )}
@@ -288,10 +288,10 @@ const ContentRewardDetailsEdit = () => {
       {/* Extend Date Modal */}
       {showExtendModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+          <div className="bg-white dark:bg-zinc-900 rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
             <div className="p-6 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center bg-gray-50/50 dark:bg-zinc-800/20">
               <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
-                <LucideCalendar className="text-[#003933] dark:text-[#0dc4a5]" size={22} />
+                <LucideCalendar className="text-foreground-strong dark:text-foreground-strong" size={22} />
                 Extend Campaign
               </h2>
               <button
@@ -313,7 +313,7 @@ const ContentRewardDetailsEdit = () => {
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-full justify-start text-left font-normal h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]",
+                        "w-full justify-start text-left font-normal h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-border-strong dark:focus:border-border-strong",
                         !newEndDate && "text-gray-400 dark:text-gray-500"
                       )}
                     >
@@ -350,7 +350,7 @@ const ContentRewardDetailsEdit = () => {
                   placeholder="Enter additional budget"
                   value={addBudget}
                   onChange={(e) => setAddBudget(e.target.value)}
-                  className="h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]"
+                  className="h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-border-strong dark:focus:border-border-strong"
                 />
               </div>
 
@@ -372,7 +372,7 @@ const ContentRewardDetailsEdit = () => {
               <button
                 onClick={handleExtendSubmit}
                 disabled={isExtending || !newEndDate || !addBudget}
-                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-[#003933] hover:bg-[#002822] shadow-lg shadow-emerald-900/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong hover:bg-foreground shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isExtending ? "Extending..." : "Confirm Extension"}
               </button>
@@ -384,10 +384,10 @@ const ContentRewardDetailsEdit = () => {
       {/* Edit Content Modal */}
       {showContentModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+          <div className="bg-white dark:bg-zinc-900 rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
             <div className="p-6 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center bg-gray-50/50 dark:bg-zinc-800/20">
               <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
-                <FaGoogleDrive className="text-[#003933] dark:text-[#0dc4a5]" size={22} />
+                <FaGoogleDrive className="text-foreground-strong dark:text-foreground-strong" size={22} />
                 Update Assets
               </h2>
               <button
@@ -408,7 +408,7 @@ const ContentRewardDetailsEdit = () => {
                   placeholder="https://drive.google.com/..."
                   value={contentLink || ""}
                   onChange={(e) => setContentLink(e.target.value)}
-                  className="h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]"
+                  className="h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-border-strong dark:focus:border-border-strong"
                 />
               </div>
 
@@ -430,7 +430,7 @@ const ContentRewardDetailsEdit = () => {
               <button
                 onClick={handleContentSubmit}
                 disabled={isUpdating || !contentLink}
-                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-[#003933] hover:bg-[#002822] shadow-lg shadow-emerald-900/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong hover:bg-foreground shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isUpdating ? "Updating..." : "Update Assets"}
               </button>
@@ -442,7 +442,7 @@ const ContentRewardDetailsEdit = () => {
       {/* Withdraw Confirmation Modal */}
       {showWithdrawModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+          <div className="bg-white dark:bg-zinc-900 rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
             <div className="p-8 text-center space-y-6">
               <div className="mx-auto w-20 h-20 bg-red-50 dark:bg-red-900/10 rounded-full flex items-center justify-center text-red-600 border border-red-100 dark:border-red-900/20 animate-bounce">
                 <Wallet size={40} />

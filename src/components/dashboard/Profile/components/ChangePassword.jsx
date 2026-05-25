@@ -56,11 +56,11 @@ const ChangePassword = () => {
 
     return (
         <div>
-            <h2 className="text-[18px] font-semibold text-[#090003] dark:text-white mb-4">
+            <h2 className="text-[18px] font-semibold text-foreground dark:text-white mb-4">
                 Change Password
             </h2>
 
-            <Card className="border-[#003933] shadow rounded-[24px]">
+            <Card className="border-foreground-muted shadow rounded-[24px]">
                 <CardContent className="p-6">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -161,7 +161,7 @@ const ChangePassword = () => {
                             <Button
                                 type="submit"
                                 disabled={isChanging}
-                                className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed bg-[#003933] hover:bg-[#005a52] text-white rounded-xl"
+                                className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed bg-foreground-strong hover:bg-foreground text-white rounded-xl"
                             >
                                 {
                                     isChanging

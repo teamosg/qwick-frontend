@@ -33,7 +33,7 @@ export default function AddCommunityStepper({
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          <span className="bg-[#eaeaea] p-2 block rounded-md cursor-pointer hover:bg-gray-200 transition duration-300">
+          <span className="bg-muted p-2 block rounded-md cursor-pointer hover:bg-gray-200 transition duration-300">
             <ArrowLeft />
           </span>
         </motion.button>
@@ -42,12 +42,12 @@ export default function AddCommunityStepper({
           <Stepper
             value={currentStep}
             onValueChange={() => setCurrentStep(setCurrentStep)}
-            className="bg-[#eaeaea] rounded-full overflow-hidden"
+            className="bg-muted rounded-full overflow-hidden"
           >
             {steps.map((step) => (
               <StepperItem key={step} step={step} className="flex-1">
                 <StepperTrigger
-                  className={`w-full flex-col items-start gap-2 bg-[#eaeaea] data-[state=completed]:bg-[#003933] data-[state=active]:bg-[#003933] transition-all duration-300`}
+                  className={`w-full flex-col items-start gap-2 bg-muted data-[state=completed]:bg-foreground-strong data-[state=active]:bg-foreground-strong transition-all duration-300`}
                   asChild
                 >
                   <StepperIndicator
@@ -73,7 +73,7 @@ export default function AddCommunityStepper({
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="ml-2 text-[#003933]"
+            className="ml-2 text-foreground-strong"
           >
             • Loading...
           </motion.span>

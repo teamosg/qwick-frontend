@@ -58,7 +58,7 @@ const Card = ({ content, onApply }) => {
             <div className="flex items-center gap-2.5">
               <Avatar className="w-9 h-9 border border-gray-50 dark:border-zinc-800 shadow-sm">
                 <AvatarImage src={communityAvatar} alt={communityName} />
-                <AvatarFallback className="bg-[#003933] text-white text-[10px] font-medium">
+                <AvatarFallback className="bg-foreground-strong text-white text-[10px] font-medium">
                   {communityName?.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
@@ -74,7 +74,7 @@ const Card = ({ content, onApply }) => {
               {(socials || []).map(({ icon: Icon, name }, idx) => (
                 <div
                   key={name + idx}
-                  className="w-8 h-8 rounded-full bg-[#002B27] flex items-center justify-center text-white shadow-sm"
+                  className="w-8 h-8 rounded-full bg-foreground-strong flex items-center justify-center text-white shadow-sm"
                 >
                   {Icon && <Icon size={14} />}
                 </div>
@@ -83,21 +83,21 @@ const Card = ({ content, onApply }) => {
           </div>
 
           {/* Row 2: Camp1aign Name */}
-          <h3 className="text-[20px] font-medium text-[#090003] dark:text-white leading-[1.2] tracking-tight">
+          <h3 className="text-[20px] font-medium text-foreground dark:text-white leading-[1.2] tracking-tight">
             {title}
           </h3>
 
           {/* Row 3: Progress Bar (Single continuous bar) */}
           <div className="w-full bg-gray-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden mt-1">
             <div 
-              className="bg-[#003933] h-full transition-all duration-500 ease-out"
+              className="bg-foreground-strong h-full transition-all duration-500 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
 
           {/* Row 4: Payout & Views */}
           <div className="flex items-center justify-between mt-auto pt-1">
-            <div className="text-[14px] font-medium text-[#090003] dark:text-white uppercase tracking-wide">
+            <div className="text-[14px] font-medium text-foreground dark:text-white uppercase tracking-wide">
               {compensation}
             </div>
             <div className="flex items-center gap-1.5 text-sm font-medium text-gray-900 dark:text-white">

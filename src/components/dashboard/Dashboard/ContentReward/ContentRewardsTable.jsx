@@ -31,7 +31,7 @@ const ContentRewardsTable = ({ data = [] }) => {
         <div className="flex flex-wrap items-center gap-3">
           <div className="w-[160px]">
             <Select onValueChange={setStatusFilter} defaultValue="all">
-              <SelectTrigger className="h-9 rounded-full bg-gray-50 dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 focus:ring-1 focus:ring-[#003933] text-xs font-medium">
+              <SelectTrigger className="h-9 rounded-full bg-gray-50 dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 focus:ring-1 focus:ring-ring text-xs font-medium">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent className="dark:bg-zinc-900 dark:border-zinc-800">

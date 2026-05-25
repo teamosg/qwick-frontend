@@ -28,7 +28,7 @@ const LeaveGroupModal = ({ isOpen, onClose, onConfirm, isLeaving }) => {
                         className="fixed inset-0 z-50 flex items-center justify-center p-4"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="bg-white dark:bg-[#171717] rounded-xl shadow-2xl w-full max-w-sm p-6 text-center">
+                        <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-2xl w-full max-w-sm p-6 text-center">
 
                             <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <AlertCircle className="w-6 h-6 text-red-600 dark:text-red-500" />

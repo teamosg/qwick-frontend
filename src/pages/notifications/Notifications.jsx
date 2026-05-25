@@ -27,12 +27,12 @@ const Notifications = () => {
   const visibleNotifications = notifications.slice(0, displayCount);
 
   return (
-    <div className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen p-4 md:p-8">
+    <div className="bg-background dark:bg-zinc-950 min-h-screen p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white dark:bg-zinc-900 shadow-sm border border-gray-200 dark:border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-full md:max-h-[calc(100vh-8rem)]">
           <div className="px-4 md:px-6 py-4 md:py-5 border-b border-gray-200 dark:border-zinc-800 flex items-center justify-between sticky top-0 bg-white dark:bg-zinc-900 z-10">
             <h1 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-              <Bell className="w-5 h-5 text-[#003933] dark:text-primary" />
+              <Bell className="w-5 h-5 text-foreground-strong dark:text-foreground-strong" />
               Notifications
             </h1>
             <span className="bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-400 text-[10px] md:text-xs font-bold px-2.5 py-1 rounded-full whitespace-nowrap ml-2">
@@ -43,7 +43,7 @@ const Notifications = () => {
           <div className="flex-1 overflow-y-auto divide-y divide-gray-100 dark:divide-zinc-800 custom-scrollbar">
             {isLoading ? (
               <div className="flex flex-col items-center justify-center p-20 gap-3">
-                <Loader2 className="w-8 h-8 text-[#003933] animate-spin" />
+                <Loader2 className="w-8 h-8 text-foreground-strong animate-spin" />
                 <p className="text-gray-500 dark:text-gray-400 animate-pulse">Fetching your notifications...</p>
               </div>
             ) : visibleNotifications.length > 0 ? (
@@ -51,14 +51,14 @@ const Notifications = () => {
                 {visibleNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className="p-6 hover:bg-gray-50 dark:hover:bg-zinc-800/30 transition-all duration-200 border-l-4 border-transparent hover:border-[#003933]"
+                    className="p-6 hover:bg-gray-50 dark:hover:bg-zinc-800/30 transition-all duration-200 border-l-4 border-transparent hover:border-foreground-muted"
                   >
                     <div className="flex flex-col gap-1.5">
                       <p className="text-gray-900 dark:text-gray-100 font-medium leading-relaxed">
                         {notification.message}
                       </p>
                       <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#003933]/40"></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-foreground-strong/40"></span>
                         <p className="text-[11px] uppercase tracking-wider font-semibold text-gray-400 dark:text-gray-500">
                           {format(new Date(notification.created_at), "MMM d, yyyy • h:mm a")}
                         </p>
@@ -72,7 +72,7 @@ const Notifications = () => {
                     <Button
                       onClick={handleLoadMore}
                       variant="outline"
-                      className="w-full sm:w-auto rounded-full px-6 flex items-center justify-center gap-2 hover:bg-[#003933] hover:text-white transition-all text-sm"
+                      className="w-full sm:w-auto rounded-full px-6 flex items-center justify-center gap-2 hover:bg-foreground-strong hover:text-white transition-all text-sm"
                     >
                       <ChevronDown size={16} />
                       Load More

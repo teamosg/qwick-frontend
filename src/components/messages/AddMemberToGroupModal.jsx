@@ -76,13 +76,13 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
                         className="fixed inset-0 z-50 flex items-center justify-center p-4"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="bg-white dark:bg-[#171717] rounded-2xl shadow-2xl w-full max-w-md max-h-[600px] flex flex-col">
+                        <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md max-h-[600px] flex flex-col">
 
                             {/* Header */}
-                            <div className="p-4 border-b border-gray-200 dark:border-[#282828] flex items-center gap-3">
+                            <div className="p-4 border-b border-gray-200 dark:border-zinc-800 flex items-center gap-3">
                                 <button
                                     onClick={onClose}
-                                    className="p-2 hover:bg-gray-100 dark:hover:bg-[#282828] rounded-lg transition-colors"
+                                    className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
                                 >
                                     <ArrowLeft className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                                 </button>
@@ -94,14 +94,14 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
 
                                 <button
                                     onClick={onClose}
-                                    className="p-2 hover:bg-gray-100 dark:hover:bg-[#282828] rounded-lg transition-colors"
+                                    className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
                                 >
                                     <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                                 </button>
                             </div>
 
                             {/* Search Bar */}
-                            <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+                            <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
                                 <div className="relative">
                                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                                     <input
@@ -109,7 +109,7 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
                                         placeholder="Search users..."
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-[#282828] rounded-lg bg-gray-50 dark:bg-[#232323] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
 
@@ -144,7 +144,7 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
                                                 onClick={() => toggleUserSelection(user?.user_id)}
                                                 className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors ${isSelected
                                                     ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
-                                                    : "hover:bg-gray-100 dark:hover:bg-[#282828]"
+                                                    : "hover:bg-gray-100 dark:hover:bg-zinc-800"
                                                     }`}
                                             >
                                                 <AvatarUser
@@ -177,13 +177,13 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
                             </div>
 
                             {/* Add Button */}
-                            <div className="p-4 border-t border-gray-200 dark:border-[#282828]">
+                            <div className="p-4 border-t border-gray-200 dark:border-zinc-800">
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={handleAddMembers}
                                     disabled={selectedUsers.length === 0 || isAdding}
-                                    className="w-full px-6 py-3 bg-[#003933] hover:bg-[#002822] text-white rounded-lg font-semibold shadow-md transition-all disabled:opacity-50 disabled:hover:scale-100"
+                                    className="w-full px-6 py-3 bg-foreground-strong hover:bg-foreground text-white rounded-lg font-semibold shadow-md transition-all disabled:opacity-50 disabled:hover:scale-100"
                                 >
                                     {isAdding ? "Adding..." : "Add Members"} ({selectedUsers.length})
                                 </motion.button>

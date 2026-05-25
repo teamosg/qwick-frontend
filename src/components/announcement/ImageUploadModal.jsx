@@ -74,7 +74,7 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
             </label>
             <div 
               onClick={() => profileInputRef.current.click()}
-              className="relative w-20 h-20 border-2 border-dashed border-[#003933] rounded-full flex items-center justify-center cursor-pointer bg-gray-50 dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors group"
+              className="relative w-20 h-20 border-2 border-dashed border-foreground-muted rounded-full flex items-center justify-center cursor-pointer bg-gray-50 dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors group"
             >
               {profilePreview ? (
                 <>
@@ -100,7 +100,7 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
             </label>
             <div 
               onClick={() => bannerInputRef.current.click()}
-              className="relative border-2 border-dashed border-[#003933] rounded-lg p-3 text-center cursor-pointer bg-gray-50 dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors group"
+              className="relative border-2 border-dashed border-foreground-muted rounded-lg text-center cursor-pointer bg-gray-50 dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors group"
             >
               {bannerPreview ? (
                 <>
@@ -115,7 +115,7 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
               ) : (
                 <div className="py-2">
                   <ImageIcon className="mx-auto h-6 w-6 text-gray-400 mb-1" />
-                  <p className="text-[10px] text-gray-500">Upload Banner</p>
+                  <p className="text-[10px] text-gray-500 dark:text-zinc-400">Upload Banner</p>
                 </div>
               )}
             </div>
@@ -130,7 +130,7 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
             disabled={!bannerImage && !profileImage}
             className={`w-full py-3 px-4 rounded-full text-white font-medium transition-colors ${
               bannerImage || profileImage
-                ? "bg-[#003933] hover:bg-[#002a26] cursor-pointer"
+                ? "bg-foreground-strong hover:bg-foreground cursor-pointer"
                 : "bg-gray-300 dark:bg-zinc-700 cursor-not-allowed"
             }`}
           >

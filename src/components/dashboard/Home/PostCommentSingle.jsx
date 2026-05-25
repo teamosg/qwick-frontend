@@ -40,7 +40,7 @@ const PostCommentSingle = ({ comment, profile }) => {
                 className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover"
             />
 
-            <div className="bg-gray-100 dark:bg-[#2E2E2E] rounded-lg p-2 sm:p-3 flex-1 min-w-0">
+            <div className="bg-gray-100 dark:bg-zinc-800 rounded-lg p-2 sm:p-3 flex-1 min-w-0">
                 <div className="flex justify-between items-start">
                     <div className="flex items-end gap-4">
                         <div className="font-medium text-xs sm:text-sm dark:text-white truncate">
@@ -98,7 +98,7 @@ const PostCommentSingle = ({ comment, profile }) => {
                         <button
                             onClick={handleUpdateComment}
                             disabled={isUpdating}
-                            className="px-3 py-1.5 text-xs rounded-md bg-[#003933] text-white disabled:bg-[#003933]/50"
+                            className="px-3 py-1.5 text-xs rounded-md bg-foreground-strong text-white disabled:bg-foreground-strong/50"
                         >
                             Save
                         </button>

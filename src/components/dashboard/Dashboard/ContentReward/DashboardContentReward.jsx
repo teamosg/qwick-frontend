@@ -98,7 +98,7 @@ const DashboardContentReward = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-20">
-        <Spinner className="size-10 text-[#003933]" />
+        <Spinner className="size-10 text-foreground-strong" />
       </div>
     );
   }
@@ -128,7 +128,7 @@ const DashboardContentReward = () => {
             </p>
             <button
               onClick={handleCreateReward}
-              className="w-full sm:w-auto bg-[#003933] text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-[#002822] transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/10"
+              className="w-full sm:w-auto bg-foreground-strong text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-foreground transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-foreground-strong/10"
             >
               Create Campaign
             </button>

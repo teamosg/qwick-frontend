@@ -93,7 +93,7 @@ export function AnnouncementSidebar() {
 
     return (
         <>
-            <Sidebar className="relative h-full inset-auto md:w-64 border-r dark:border-zinc-800">
+            <Sidebar className="relative h-full inset-auto md:w-64 border-r border-border">
                 <SidebarHeader
                     className="p-0 bg-center bg-cover bg-no-repeat h-[135px] relative"
                     style={{ backgroundImage: `url(${bg})` }}
@@ -119,7 +119,7 @@ export function AnnouncementSidebar() {
                                     >
                                         <SidebarMenuButton
                                             asChild
-                                            className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
+                                            className="text-foreground-subtle hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
                                         >
                                             <Link
                                                 className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
@@ -139,16 +139,16 @@ export function AnnouncementSidebar() {
                 <SidebarMenuItem className="hover:hover:bg-none h-auto hover:shadow-none">
                   <SidebarMenuButton
                     onClick={handleCopyLink}
-                    className="text-[#003933] dark:text-[#00b89f] hover:shadow-none text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent w-full group"
+                    className="text-foreground-strong hover:shadow-none text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent w-full group"
                   >
                     <div className="px-3 py-2 w-full flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <span className="font-semibold capitalize">
                           {copied ? "Link Copied!" : "Community link"}
                         </span>
-                        <LinkIcon size={18} className={copied ? "text-emerald-500" : "text-[#003933] dark:text-[#00b89f]"} />
+                        <LinkIcon size={18} className={copied ? "text-success" : "text-foreground-strong"} />
                       </div>
-                      {copied && <Check size={16} className="text-emerald-500" />}
+                      {copied && <Check size={16} className="text-success" />}
                     </div>
                   </SidebarMenuButton>
                   <hr />

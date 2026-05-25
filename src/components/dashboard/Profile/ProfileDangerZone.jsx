@@ -17,7 +17,7 @@ const ProfileDangerZone = () => {
         onClick={handleSignOut}
         disabled={isPending}
         variant="ghost"
-        className="cursor-pointer hover:text-white hover:bg-[#003933] transition-all duration-300 ease-in-out w-full flex items-center justify-center p-4 sm:p-4.5 rounded-full active:scale-[0.98] text-[#003933] dark:text-white text-base sm:text-[16px] border border-[#003933] bg-transparent"
+        className="cursor-pointer hover:text-white hover:bg-foreground-strong transition-all duration-300 ease-in-out w-full flex items-center justify-center p-4 sm:p-4.5 rounded-full active:scale-[0.98] text-foreground-strong dark:text-white text-base sm:text-[16px] border border-foreground-muted bg-transparent"
       >
         {isPending ? "Signing out..." : "Sign out"}
       </Button>

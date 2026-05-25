@@ -26,10 +26,10 @@ const ProfileBalance = () => {
       {isLoadingBalance ? (
         <BalanceCardSkeleton />
       ) : (
-        <div className="p-6 text-left text-[#717171] dark:text-white text-sm mb-4 sm:mb-4.5 w-full shadow rounded-[16px] sm:rounded-[24px] bg-white dark:bg-[#2E2E2E]">
+        <div className="p-6 text-left text-foreground-subtle dark:text-white text-sm mb-4 sm:mb-4.5 w-full shadow rounded-[16px] sm:rounded-[24px] bg-white dark:bg-zinc-800">
           <p>Total Balance</p>
 
-          <h3 className="py-3 text-[20px] text-[#090003] dark:text-white">
+          <h3 className="py-3 text-[20px] text-foreground dark:text-white">
             ${walletBalance?.balance || 0}
           </h3>
 
@@ -40,7 +40,7 @@ const ProfileBalance = () => {
             {/* Withdraw */}
             <Button
               onClick={() => setOpenWithdraw(true)}
-              className="bg-[#003933] text-white hover:bg-[#002822] rounded-full"
+              className="bg-foreground-strong text-white hover:bg-foreground rounded-full"
             >
               Withdraw
             </Button>

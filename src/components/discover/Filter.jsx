@@ -34,16 +34,16 @@ export default function DiscoverFilter({
     <div className="relative flex-1 min-w-[120px] sm:min-w-[180px] md:min-w-[200px] sm:flex-initial">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 sm:gap-3 text-white px-3 py-2.5 sm:px-4 sm:py-3.5 md:px-6 rounded-xl hover:bg-[#002822] bg-[#003933] transition-all w-full group shadow-md"
+        className="flex items-center gap-2 sm:gap-3 text-foreground px-3 py-2.5 sm:px-4 sm:py-3.5 md:px-6 rounded-xl hover:bg-gray-50 bg-white border border-border transition-all w-full group shadow-sm"
       >
-        <span className="text-white/70 font-medium text-xs sm:text-sm md:text-base whitespace-nowrap">
+        <span className="text-foreground-muted font-medium text-xs sm:text-sm md:text-base whitespace-nowrap">
           {label}
         </span>
         <span className="flex-1 text-left font-semibold text-xs sm:text-sm md:text-base whitespace-nowrap overflow-hidden text-ellipsis">
           {value}
         </span>
         <ChevronDown
-          className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform flex-shrink-0 ${isOpen ? "rotate-180" : ""
+          className={`w-4 h-4 sm:w-5 sm:h-5 text-foreground-muted transition-transform flex-shrink-0 ${isOpen ? "rotate-180" : ""
             }`}
         />
       </button>
@@ -54,7 +54,7 @@ export default function DiscoverFilter({
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute top-full mt-2 w-full bg-[#003933] rounded-xl shadow-2xl z-20 overflow-hidden min-w-[160px] border border-white/10">
+          <div className="absolute top-full mt-2 w-full bg-white rounded-xl shadow-2xl z-20 overflow-hidden min-w-[160px] border border-border">
             {options.map((option, index) => (
               <button
                 key={option}
@@ -62,8 +62,8 @@ export default function DiscoverFilter({
                   onSelect(option);
                   setIsOpen(false);
                 }}
-                className={`w-full text-xs sm:text-sm md:text-base text-left p-3.5 hover:bg-[#002822] transition-colors ${value === option ? "bg-[#002822] font-semibold text-white" : "text-white/80"
-                  } ${index !== 0 ? "border-t border-white/5" : ""} whitespace-nowrap`}
+                className={`w-full text-xs sm:text-sm md:text-base text-left p-3.5 hover:bg-gray-50 transition-colors ${value === option ? "bg-gray-100 font-semibold text-foreground-strong" : "text-foreground"
+                  } ${index !== 0 ? "border-t border-border" : ""} whitespace-nowrap`}
               >
                 {option}
               </button>

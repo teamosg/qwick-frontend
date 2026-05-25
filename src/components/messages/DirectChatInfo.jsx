@@ -37,12 +37,12 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
   }
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-[#171717] text-gray-900 dark:text-white">
+    <div className="flex flex-col h-full bg-white dark:bg-zinc-900 text-gray-900 dark:text-white">
       {/* Header with avatar, status, and close button */}
-      <div className="relative p-6 border-b border-gray-200 dark:border-[#282828]">
+      <div className="relative p-6 border-b border-gray-200 dark:border-zinc-800">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-[#282828] rounded-lg transition-colors"
+          className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
           aria-label="Close chat info"
         >
           <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
@@ -56,7 +56,7 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
               className="w-20 h-20 rounded-full object-cover text-2xl"
             />
             {selectedChat.isOnline && (
-              <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-[#171717] rounded-full"></div>
+              <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-zinc-900 rounded-full"></div>
             )}
           </div>
           <h2 className="text-lg font-semibold text-center">{username}</h2>
@@ -67,7 +67,7 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
       </div>
 
       {/* //* Notification Toggle */}
-      {/* <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+      {/* <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {notificationsEnabled ? (
@@ -134,7 +134,7 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div
                   key={i}
-                  className="aspect-square bg-gray-200 dark:bg-[#282828] rounded-lg"
+                  className="aspect-square bg-gray-200 dark:bg-zinc-800 rounded-lg"
                 ></div>
               ))}
             </div>
@@ -143,7 +143,7 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
       </div>
 
       {/* Block User Button */}
-      <div className="p-4 border-t border-gray-200 dark:border-[#282828]">
+      <div className="p-4 border-t border-gray-200 dark:border-zinc-800">
         {
           blocked ? (
             <button

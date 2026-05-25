@@ -30,10 +30,10 @@ const NotificationsSettings = () => {
 
       <div className="space-y-4">
         {/* Joins Notification */}
-        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+        <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-[#003933] dark:text-white text-lg font-semibold mb-2">
+              <h3 className="text-foreground-strong dark:text-white text-lg font-semibold mb-2">
                 Joins
               </h3>
               <p className="text-gray-600 dark:text-zinc-400 text-sm">
@@ -49,10 +49,10 @@ const NotificationsSettings = () => {
         </div>
 
         {/* Payments Notification */}
-        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+        <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-[#003933] dark:text-white text-lg font-semibold mb-2">
+              <h3 className="text-foreground-strong dark:text-white text-lg font-semibold mb-2">
                 Payments
               </h3>
               <p className="text-gray-600 dark:text-zinc-400 text-sm">
@@ -68,10 +68,10 @@ const NotificationsSettings = () => {
         </div>
 
         {/* Waitlists Notification */}
-        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+        <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-[#003933] dark:text-white text-lg font-semibold mb-2">
+              <h3 className="text-foreground-strong dark:text-white text-lg font-semibold mb-2">
                 Waitlists
               </h3>
               <p className="text-gray-600 dark:text-zinc-400 text-sm">
