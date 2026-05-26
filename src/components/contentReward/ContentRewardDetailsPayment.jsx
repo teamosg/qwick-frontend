@@ -17,6 +17,42 @@ import CampaignProgress from "@/components/dashboard/Dashboard/ContentReward/Cam
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
+const platformPatterns = {
+  youtube: {
+    patterns: [
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?(?:.*&)?v=|youtu\.be\/|youtube\.com\/shorts\/|m\.youtube\.com\/watch\?(?:.*&)?v=|youtube\.com\/embed\/)[\w-]+/,
+      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/@[\w.-]+/
+    ],
+    expected: "YouTube"
+  },
+  instagram: {
+    patterns: [
+      /(?:https?:\/\/)?(?:www\.)?instagram\.com\/(?:p|reel|tv|stories|share)\/[\w-]+/,
+      /(?:https?:\/\/)?(?:www\.)?instagram\.com\/[A-Za-z0-9_.]+/
+    ],
+    expected: "Instagram"
+  },
+  tiktok: {
+    patterns: [
+      /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/@[\w.]+\/video\/[\d]+/,
+      /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/@[\w.]+/,
+      /(?:https?:\/\/)?vm\.tiktok\.com\/[\w]+/
+    ],
+    expected: "TikTok"
+  }
+};
+
+const validateSingleLink = (platformKey, value) => {
+  if (!value || !value.trim()) return "";
+  const platformRule = platformPatterns[platformKey];
+  if (!platformRule) return "";
+  const isValid = platformRule.patterns.some(pattern => pattern.test(value.trim()));
+  if (!isValid) {
+    return `Please enter a valid ${platformRule.expected} link.`;
+  }
+  return "";
+};
+
 const ContentRewardDetailsPayment = () => {
   const { campaignId, communityUsername } = useParams();
   const navigate = useNavigate();
@@ -81,8 +117,27 @@ const ContentRewardDetailsPayment = () => {
       ...prev,
       [platform]: value,
     }));
-    if (errors[platform]) {
+
+    // Real-time validation for link fields
+    if (platform.endsWith("_link")) {
+      const platformKey = platform.replace("_link", "");
+      if (availablePlatforms.includes(platformKey)) {
+        const error = validateSingleLink(platformKey, value);
+        setErrors((prev) => ({ ...prev, [platform]: error }));
+      }
+    } else if (platform === "termsAccepted") {
       setErrors((prev) => ({ ...prev, [platform]: "" }));
+    }
+  };
+
+  // Validate the current platform's link when switching platforms
+  const handlePlatformSelect = (platformId) => {
+    setSelectedPlatform(platformId);
+    const fieldKey = `${platformId}_link`;
+    const value = formData[fieldKey];
+    if (value && value.trim()) {
+      const error = validateSingleLink(platformId, value);
+      setErrors((prev) => ({ ...prev, [fieldKey]: error }));
     }
   };
 
@@ -97,6 +152,21 @@ const ContentRewardDetailsPayment = () => {
     if (!hasAnyLink && availablePlatforms.length > 0) {
       newErrors.general = "Please provide at least one social media link.";
     }
+
+    // Validate each platform link matches the correct platform
+    Object.entries(formData).forEach(([key, val]) => {
+      if (key === "termsAccepted") return;
+      const platformKey = key.replace("_link", "");
+      if (!availablePlatforms.includes(platformKey) || !val.trim()) return;
+
+      const platformRule = platformPatterns[platformKey];
+      if (!platformRule) return;
+
+      const isValid = platformRule.patterns.some(pattern => pattern.test(val.trim()));
+      if (!isValid) {
+        newErrors[key] = `Please enter a valid ${platformRule.expected} link.`;
+      }
+    });
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -316,7 +386,7 @@ const ContentRewardDetailsPayment = () => {
                         <button
                           key={platform.id}
                           type="button"
-                          onClick={() => setSelectedPlatform(platform.id)}
+                          onClick={() => handlePlatformSelect(platform.id)}
                           className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all duration-200 gap-2 ${selectedPlatform === platform.id
                             ? "border-foreground-muted bg-foreground-strong/5 dark:bg-foreground-strong/20 ring-4 ring-primary/10"
                             : "border-gray-100 dark:border-zinc-800 hover:border-gray-200 dark:hover:border-zinc-700 bg-white dark:bg-zinc-800/50"
