@@ -6,6 +6,7 @@ import commonAuthLogo from "../../assets/authImg.png";
 import { useResetPassword } from "../../hooks/auth.hook.js";
 import { useLocation, useNavigate } from "react-router";
 import LogoOnly from "@/components/Logo/LogoOnly";
+import Logo from "@/components/Logo/Logo";
 
 const ResetPassword = () => {
   const {
@@ -39,7 +40,8 @@ const ResetPassword = () => {
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
           {/* Logo */}
           <div className="py-5 md:py-7 mb-4 md:mb-5">
-            <LogoOnly />
+            {/* <LogoOnly /> */}
+            <Logo/>
           </div>
 
           {/* Theme Toggle */}

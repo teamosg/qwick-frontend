@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import ResendOtp from "./ResendOtp";
 import LogoOnly from "@/components/Logo/LogoOnly";
+import Logo from "@/components/Logo/Logo";
 
 const VerifyAccount = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -68,7 +69,8 @@ const VerifyAccount = () => {
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
           {/* Logo */}
           <div className="py-5 md:py-7 mb-4 md:mb-5">
-            <LogoOnly />
+            {/* <LogoOnly /> */}
+            <Logo/>
           </div>
 
           {/* Theme Toggle */}
