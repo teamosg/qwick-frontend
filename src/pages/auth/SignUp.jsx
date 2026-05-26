@@ -16,6 +16,7 @@ import { useNavigate } from "react-router";
 import LogoOnly from "@/components/Logo/LogoOnly";
 import { useGoogleLogin } from "@react-oauth/google";
 import { formatUsername } from "@/utils/usernameUtils";
+import Logo from "@/components/Logo/Logo";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -65,7 +66,8 @@ const SignUp = () => {
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
           {/* Logo */}
           <div className="py-5 md:py-7 mb-4 md:mb-5">
-            <LogoOnly />
+            {/* <LogoOnly /> */}
+            <Logo/>
           </div>
         </div>
 

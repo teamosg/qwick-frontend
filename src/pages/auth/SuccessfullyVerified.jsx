@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import commonAuthLogo from "../../assets/authImg.png";
 import successfull from "../../assets/successfull.gif";
 import LogoOnly from "@/components/Logo/LogoOnly";
+import Logo from "@/components/Logo/Logo";
 
 const SuccessfullyVerified = () => {
   const navigate = useNavigate();
@@ -12,7 +13,8 @@ const SuccessfullyVerified = () => {
         <div className="max-w-md mx-auto w-full">
           {/* Logo */}
           <div className="py-5 md:py-7 mb-4 md:mb-5">
-            <LogoOnly />
+            {/* <LogoOnly /> */}
+            <Logo />
           </div>
         </div>
         <div className="max-w-md mx-auto w-full flex flex-col items-center justify-center flex-1">
