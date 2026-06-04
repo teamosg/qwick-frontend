@@ -91,8 +91,8 @@ const VerifyTwoAuth = () => {
 
                 <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
                     <div className="mb-8 text-center">
-                        <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
-                            VERIFY YOUR TWO-FACTOR AUTHENTICATION
+                        <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
+                            Verify Your Two-Factor Authentication
                         </h2>
                         <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
                             Check your email, we are sending the verification code
@@ -102,9 +102,9 @@ const VerifyTwoAuth = () => {
                     {/* OTP Input */}
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
-                            <label className="text-black dark:text-gray-200 font-[Inter] text-[18px] not-italic font-medium leading-[155%] mb-4 block">
+                            {/* <label className="text-black dark:text-gray-200 font-[Inter] text-[18px] not-italic font-medium leading-[155%] mb-4 block">
                                 Enter your OTP
-                            </label>
+                            </label> */}
                             <div className="flex justify-center gap-1.5 md:gap-2">
                                 {otp.map((digit, index) => (
                                     <input

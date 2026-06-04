@@ -119,7 +119,7 @@ const ChatBox = ({ selectedChat, setSelectedChat }) => {
 
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-zinc-900 h-full min-h-0">
+    <div className="flex-1 flex flex-col bg-background h-full min-h-0">
       {/* Messages Area */}
       <div className="flex-1 p-2 overflow-y-auto no-scrollbar">
         {/* Message bubbles, colors updated for dark mode */}

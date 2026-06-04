@@ -51,7 +51,7 @@ const Notifications = () => {
                 {visibleNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className="p-6 hover:bg-gray-50 dark:hover:bg-zinc-800/30 transition-all duration-200 border-l-4 border-transparent hover:border-foreground-muted"
+                    className="p-6 hover:bg-gray-50 dark:hover:bg-zinc-800/30 transition-all duration-200 hover: border-l-4 hover:border-[#F62B36] border-l-transparent"
                   >
                     <div className="flex flex-col gap-1.5">
                       <p className="text-gray-900 dark:text-gray-100 font-medium leading-relaxed">

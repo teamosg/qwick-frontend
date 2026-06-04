@@ -8,7 +8,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
 
   if (!selectedChat) {
     return (
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
         <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
           Select a conversation
         </h2>
@@ -21,7 +21,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+      <div className="flex items-center justify-between p-3 sm:p-4 bg-white dark:bg-zinc-900 shadow-md">
         {/* Back button (Mobile only), Avatar, Name and Status */}
         <div className="flex items-center gap-2 sm:gap-3">
           <button
@@ -35,7 +35,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
           <div className="relative">
             <Avatar className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover">
               <AvatarImage src={avatar || group_avatar} alt={username} />
-              <AvatarFallback>{username?.[0]}</AvatarFallback>
+              <AvatarFallback className={'bg-[#DCDCDC] dark:bg-nav-active-bg text-gray-900 dark:text-white'}>{username?.[0]}</AvatarFallback>
             </Avatar>
           </div>
           <div className="min-w-0">

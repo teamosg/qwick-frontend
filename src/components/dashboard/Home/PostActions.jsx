@@ -25,7 +25,7 @@ const PostActions = ({ post }) => {
     };
 
     return (
-        <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 mb-4">
+        <div className="flex items-center justify-between pt-4 border-t-[1px] border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 mb-4">
             <div className="flex items-center space-x-6">
                 <div className="flex items-center space-x-2">
                     <button

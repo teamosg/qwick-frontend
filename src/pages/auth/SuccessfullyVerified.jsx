@@ -24,7 +24,7 @@ const SuccessfullyVerified = () => {
 
           <div className="text-center flex flex-col gap-4 md:gap-7 lf:gap-8">
             {/* Title */}
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium uppercase mb-4 leading-tight">
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium mb-4 leading-tight">
               Your account has been verified successfully
             </h2>
 
@@ -33,7 +33,7 @@ const SuccessfullyVerified = () => {
               type="submit"
               className="w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer"
             >
-              Sign in
+              Sign In
             </button>
           </div>
         </div>

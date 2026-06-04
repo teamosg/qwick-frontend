@@ -55,11 +55,11 @@ const SettingsMenu = () => {
   ];
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative w-full" ref={dropdownRef}>
       {/* Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 cursor-pointer text-gray-900 dark:text-gray-100 font-semibold transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800"
+        className="w-full flex items-center gap-2 cursor-pointer text-gray-900 dark:text-gray-100 font-semibold transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800"
       >
         <Menu size={20} />
         <span>Menu</span>
