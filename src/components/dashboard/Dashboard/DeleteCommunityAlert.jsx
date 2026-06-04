@@ -43,15 +43,15 @@ const DeleteCommunityAlert = () => {
         <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <AlertDialogTrigger asChild>
                 <button
-                    className="w-full text-red-600 cursor-pointer flex items-center justify-between bg-white dark:bg-zinc-800 rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm border border-red-400"
+                    className="w-full text-[#EF0C18] cursor-pointer flex items-center justify-between bg-white dark:bg-zinc-800 rounded-xl py-4 px-6 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm border border-[#EF0C18]"
                 >
                     <div className="flex items-center justify-center gap-3">
-                        <Trash2 className="text-red-600" />
+                        <Trash2 className="text-[#EF0C18]" />
                         <h3 className="dark:text-white text-[20px] font-semibold">
                             Delete Community
                         </h3>
                     </div>
-                    <ChevronRight className="text-red-600" />
+                    <ChevronRight className="text-[#EF0C18]" />
                 </button>
             </AlertDialogTrigger>
 
