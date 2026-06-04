@@ -89,8 +89,8 @@ const VerifyAccount = () => {
 
         <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
           <div className="mb-8 text-center">
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
-              VERIFY YOUR ACCOUNT
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
+              Verify Your Account
             </h2>
             <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
               Check your email, we are sending the verification code
