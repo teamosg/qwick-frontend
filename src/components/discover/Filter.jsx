@@ -34,7 +34,7 @@ export default function DiscoverFilter({
     <div className="relative flex-1 min-w-[120px] sm:min-w-[180px] md:min-w-[200px] sm:flex-initial">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 sm:gap-3 text-foreground px-3 py-2.5 sm:px-4 sm:py-3.5 md:px-6 rounded-xl hover:bg-gray-50 bg-white border border-border transition-all w-full group shadow-sm"
+        className="flex items-center gap-2 sm:gap-3 text-foreground px-3 py-2.5 sm:px-4 sm:py-3.5 md:px-6 rounded-xl hover:bg-nav-active-bg bg-white border border-border transition-all w-full group shadow-sm"
       >
         <span className="text-foreground-muted font-medium text-xs sm:text-sm md:text-base whitespace-nowrap">
           {label}
@@ -62,7 +62,7 @@ export default function DiscoverFilter({
                   onSelect(option);
                   setIsOpen(false);
                 }}
-                className={`w-full text-xs sm:text-sm md:text-base text-left p-3.5 hover:bg-gray-50 transition-colors ${value === option ? "bg-gray-100 font-semibold text-foreground-strong" : "text-foreground"
+                className={`w-full text-xs sm:text-sm md:text-base text-left p-3.5 hover:bg-nav-active-bg transition-colors ${value === option ? "bg-nav-active-bg font-semibold text-foreground-strong" : "text-foreground"
                   } ${index !== 0 ? "border-t border-border" : ""} whitespace-nowrap`}
               >
                 {option}
