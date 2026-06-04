@@ -86,9 +86,9 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
 
 
   return (
-    <div className="w-full md:w-80 border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col h-full max-h-full">
+    <div className="w-full md:w-80 border-r border-l border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col h-full max-h-full">
       {/* Search and badge section */}
-      <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
+      <div className="p-4">
         <div className="relative mb-3 flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -118,7 +118,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
                 : "hover:bg-gray-100 dark:hover:bg-zinc-800"
                 }`}
             >
-              <span className="text-red-400">●</span>
+              <span className="text-[#F62B36]">●</span>
               Unread
               <span className="transition-transform duration-200">
                 {showUnreadOnly ? (
