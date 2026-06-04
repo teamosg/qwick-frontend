@@ -88,7 +88,7 @@ const Sidebar = ({ onClose }) => {
   const { hasUnread } = useNotificationStore();
 
   return (
-    <div className="h-full flex flex-col bg-card dark:bg-zinc-900 overflow-y-auto no-scrollbar">
+    <div className="h-full flex flex-col bg-card overflow-y-auto no-scrollbar">
       <div className="flex flex-col justify-between h-full">
         <div>
           <div>
