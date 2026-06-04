@@ -153,7 +153,7 @@ const Sidebar = ({ onClose }) => {
           </div>
         </div>
 
-        <div className="p-4">
+        <div className="p-4 absolute bottom-0 bg-card w-full">
           <SettingsMenu />
         </div>
 
