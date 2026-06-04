@@ -30,7 +30,7 @@ const NavItem = ({ icon, text, to, onClose, showDot }) => {
       onClick={onClose}
       className={({ isActive, isPending }) =>
         `flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative navmenu" ${isActive || isPending
-          ? "bg-nav-active-bg text-foreground-strong shadow-sm before:absolute before:-left-3 before:top-0 before:w-1 before:h-full before:bg-primary before:rounded-tr-2xl before:rounded-br-2xl "
+          ? "bg-nav-active-bg text-foreground-strong before:absolute before:-left-3 before:top-0 before:w-1 before:h-full before:bg-primary before:rounded-tr-2xl before:rounded-br-2xl "
           : "text-foreground-strong dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
         }`
       }
@@ -88,7 +88,7 @@ const Sidebar = ({ onClose }) => {
   const { hasUnread } = useNotificationStore();
 
   return (
-    <div className="h-full flex flex-col bg-background dark:bg-zinc-900 overflow-y-auto no-scrollbar">
+    <div className="h-full flex flex-col bg-card dark:bg-zinc-900 overflow-y-auto no-scrollbar">
       <div className="flex flex-col justify-between h-full">
         <div>
           <div>

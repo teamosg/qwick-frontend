@@ -75,14 +75,14 @@
   --radius: 0.625rem;
 
   /* Primary colors */
-  --primary: #F94E58;
-  --primary-hover: #F62B36;
-  --primary-dark: #EF0C18;
+  --primary: #F62B36;
+  --primary-dark: #F62B36;
+  --primary-hover: #C20C17;
   --primary-light: #FFF1F2;
   --primary-foreground: #FFFFFF;
 
   /* Background & Surface */
-  --background: #FAFAFA;
+  --background: #F5F5F5;
   --surface: #FFFFFF;
 
   /* Borders */
@@ -108,7 +108,7 @@
   --info: #2E90FA;
 
   /* Navigation */
-  --nav-active-bg: #F0F1F1;
+  --nav-active-bg: #E7E7E7;
   --nav-active-text: #161B26;
 
   /* Legacy/Shadcn compatibility */
@@ -145,9 +145,9 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: #F94E58;
-  --primary-hover: #F62B36;
-  --primary-dark: #EF0C18;
+  --primary: #F62B36;
+  --primary-hover: #C20C17;
+  --primary-dark: #F62B36;
   --primary-light: #FFF1F2;
   --primary-foreground: #FFFFFF;
   --secondary: oklch(0.269 0 0);
