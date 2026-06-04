@@ -5,7 +5,7 @@ const AvatarUser = ({ src, alt, className }) => {
   return (
     <Avatar className={cn(" rounded-full", className)}>
       <AvatarImage src={src} alt={alt} />
-      <AvatarFallback className={'bg-[#DCDCDC] dark:bg-gray-800 text-gray-900 dark:text-white'}>
+      <AvatarFallback className={'bg-[#DCDCDC] dark:bg-nav-active-bg text-gray-900 dark:text-white'}>
         {alt?.slice(0, 1)?.toUpperCase()}
       </AvatarFallback>
     </Avatar>

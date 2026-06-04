@@ -87,25 +87,6 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
 
   return (
     <div className="w-full md:w-80 border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col h-full max-h-full">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-            Messages
-          </h2>
-          {/* <div className="relative">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="appearance-none bg-transparent text-sm text-gray-600 dark:text-gray-300 pr-6 focus:outline-none"
-            >
-              <option value="Newest">Newest</option>
-              <option value="Oldest">Oldest</option>
-            </select>
-            <ChevronDown className="absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-          </div> */}
-        </div>
-      </div>
       {/* Search and badge section */}
       <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
         <div className="relative mb-3 flex gap-2">

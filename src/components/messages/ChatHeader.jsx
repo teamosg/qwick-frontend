@@ -35,7 +35,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
           <div className="relative">
             <Avatar className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover">
               <AvatarImage src={avatar || group_avatar} alt={username} />
-              <AvatarFallback>{username?.[0]}</AvatarFallback>
+              <AvatarFallback className={'bg-[#DCDCDC] dark:bg-nav-active-bg text-gray-900 dark:text-white'}>{username?.[0]}</AvatarFallback>
             </Avatar>
           </div>
           <div className="min-w-0">
