@@ -2,7 +2,7 @@
 const TermsAndConditions = () => {
     return (
         <div className="overflow-y-auto">
-            <div className="p-6 md:p-12 dark:bg-zinc-950 max-w-6xl mx-auto text-foreground dark:text-gray-300 ">
+            <div className="p-6 md:p-12 bg-background max-w-6xl mx-auto text-foreground dark:text-gray-300 ">
                 <div className="mb-8">
                     <h1 className="text-3xl md:text-4xl font-bold mb-4 text-foreground-strong dark:text-white">Terms of Service</h1>
                     <p className="mb-6 leading-relaxed">
