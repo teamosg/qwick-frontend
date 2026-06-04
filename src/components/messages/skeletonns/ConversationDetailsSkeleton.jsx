@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const ConversationDetailsSkeleton = () => {
   return (
-    <div className="flex-1 flex flex-col max-h-full">
+    <div className="flex-1 flex flex-col h-full bg-background">
       {/* Messages */}
       <div className="flex-1 p-4 overflow-y-auto space-y-8">
 
@@ -38,7 +38,7 @@ const ConversationDetailsSkeleton = () => {
       </div>
 
       {/* Input bar */}
-      <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="p-4 border-t border-border">
         <div className="flex items-center gap-4">
           <Skeleton className="flex-1 h-11 rounded-lg" />
           <Skeleton className="w-10 h-10 rounded-lg" />
