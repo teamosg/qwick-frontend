@@ -23,7 +23,7 @@ const AllSubmissions = () => {
   };
 
   const getImageUrl = (path) => {
-    if (!path) return "/submission.png";
+    if (!path) return "/communityBG.png";
     if (path.startsWith("http")) return path;
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const origin = baseUrl.replace(/\/api$/, "");
@@ -118,11 +118,11 @@ const AllSubmissions = () => {
                         e.target.src = "/submission.png";
                       }}
                     />
-                    <div className="absolute top-2 left-2">
+                    {/* <div className="absolute top-2 left-2">
                        <Badge className="bg-black/60 backdrop-blur-md text-white border-none text-[10px]">
                          #{submission?.id}
                        </Badge>
-                    </div>
+                    </div> */}
                   </div>
 
                   {/* Content Section */}
