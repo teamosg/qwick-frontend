@@ -3,9 +3,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const DashboardSkeleton = () => {
     return (
-        <div className="flex min-h-screen bg-gray-100">
+        <div className="flex min-h-screen bg-background">
             {/* Sidebar */}
-            <aside className="hidden md:flex flex-col w-60 bg-white border-r p-4">
+            <aside className="hidden md:flex flex-col w-60 bg-card border-r border-border p-4">
                 <Skeleton className="h-12 w-12 rounded-full mb-3" />
                 <Skeleton className="h-6 w-24 rounded mb-8" />
                 <div className="space-y-4">
@@ -18,7 +18,7 @@ const DashboardSkeleton = () => {
             {/* Main dashboard area */}
             <div className="flex-1 flex flex-col">
                 {/* Header */}
-                <div className="w-full flex items-center justify-between px-4 py-5 bg-white shadow-sm">
+                <div className="w-full flex items-center justify-between px-4 py-5 bg-card shadow-sm">
                     <Skeleton className="h-8 w-36 rounded" />
                     <Skeleton className="h-10 w-40 rounded" />
                 </div>
@@ -34,7 +34,7 @@ const DashboardSkeleton = () => {
                     {[...Array(4)].map((_, i) => (
                         <div
                             key={i}
-                            className="flex items-center bg-white rounded-xl shadow p-5 gap-6"
+                            className="flex items-center bg-card rounded-xl shadow-sm border border-border p-5 gap-6"
                         >
                             {/* Thumbnail/Card left */}
                             <Skeleton className="h-32 w-40 rounded-lg" />

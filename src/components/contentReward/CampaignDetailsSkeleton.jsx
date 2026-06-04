@@ -6,7 +6,7 @@ const CampaignDetailsSkeleton = () => {
         <div className="p-4 sm:p-6 max-w-4xl mx-auto space-y-6">
             <Skeleton className="h-8 w-64 mb-4 sm:mb-6" />
 
-            <div className="bg-white dark:bg-zinc-900 p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-zinc-800 space-y-8 shadow-sm">
+            <div className="bg-card p-5 sm:p-6 rounded-2xl border border-border space-y-8 shadow-sm">
                 {/* Header section */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
@@ -36,7 +36,7 @@ const CampaignDetailsSkeleton = () => {
                 </div>
 
                 {/* Info grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-gray-50 dark:border-zinc-800">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-border">
                     <div className="space-y-2">
                         <Skeleton className="h-3 w-12" />
                         <Skeleton className="h-5 w-24" />
@@ -62,7 +62,7 @@ const CampaignDetailsSkeleton = () => {
             </div>
 
             {/* Summary section */}
-            <div className="bg-white dark:bg-zinc-900 p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm">
+            <div className="bg-card p-5 sm:p-6 rounded-2xl border border-border shadow-sm">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div className="space-y-4">
                         <Skeleton className="h-5 w-48" />
