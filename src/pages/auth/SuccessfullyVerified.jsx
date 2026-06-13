@@ -7,9 +7,9 @@ import Logo from "@/components/Logo/Logo";
 const SuccessfullyVerified = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen flex bg-white dark:bg-gray-900">
+    <div className="min-h-screen flex bg-background">
       {/* Left side - Content */}
-      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-white dark:bg-gray-900">
+      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col">
         <div className="max-w-md mx-auto w-full">
           {/* Logo */}
           <div className="py-5 md:py-7 mb-4 md:mb-5">
@@ -24,23 +24,23 @@ const SuccessfullyVerified = () => {
 
           <div className="text-center flex flex-col gap-4 md:gap-7 lf:gap-8">
             {/* Title */}
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium uppercase mb-4 leading-tight">
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium mb-4 leading-tight">
               Your account has been verified successfully
             </h2>
 
             <button
               onClick={() => navigate("/sign-in")}
               type="submit"
-              className="w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer"
+              className="w-full bg-primary hover:bg-primary-hover text-primary-foreground py-4 px-10 rounded-full transition mt-2 font-medium cursor-pointer"
             >
-              Sign in
+              Sign In
             </button>
           </div>
         </div>
       </div>
 
       {/* Right side - Image (hidden on mobile) */}
-      <div className="hidden md:block md:w-1/2 bg-white dark:bg-gray-800">
+      <div className="hidden md:block md:w-1/2">
         <div className="h-full w-full flex items-center justify-center p-2.5 rounded-[30px] overflow-hidden">
           <img
             src={commonAuthLogo}

@@ -51,7 +51,7 @@ const Notifications = () => {
                 {visibleNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className="p-6 hover:bg-gray-50 dark:hover:bg-zinc-800/30 transition-all duration-200 border-l-4 border-transparent hover:border-foreground-muted"
+                    className="p-6 hover:bg-gray-50 dark:hover:bg-zinc-800/30 transition-all duration-200 hover: border-l-4 hover:border-primary border-l-transparent"
                   >
                     <div className="flex flex-col gap-1.5">
                       <p className="text-gray-900 dark:text-gray-100 font-medium leading-relaxed">
@@ -72,9 +72,9 @@ const Notifications = () => {
                     <Button
                       onClick={handleLoadMore}
                       variant="outline"
-                      className="w-full sm:w-auto rounded-full px-6 flex items-center justify-center gap-2 hover:bg-foreground-strong hover:text-white transition-all text-sm"
+                      className="w-full sm:w-auto rounded-full px-4 py-1.5 flex items-center justify-center gap-1.5 hover:bg-foreground-strong hover:text-white transition-all text-sm"
                     >
-                      <ChevronDown size={16} />
+                      <ChevronDown size={14} />
                       Load More
                     </Button>
                   )}
@@ -82,9 +82,9 @@ const Notifications = () => {
                     <Button
                       onClick={handleShowLess}
                       variant="ghost"
-                      className="w-full sm:w-auto rounded-full px-6 flex items-center justify-center gap-2 hover:bg-gray-200 dark:hover:bg-zinc-700 text-sm"
+                      className="w-full sm:w-auto rounded-full px-4 py-1.5 flex items-center justify-center gap-1.5 hover:bg-gray-200 dark:hover:bg-zinc-700 text-sm"
                     >
-                      <ChevronUp size={16} />
+                      <ChevronUp size={14} />
                       Show Less
                     </Button>
                   )}

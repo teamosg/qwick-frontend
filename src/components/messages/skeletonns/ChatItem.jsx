@@ -23,9 +23,9 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpen
   return (
     <div
       onClick={() => onSelectChat(chat)}
-      className={`flex items-center gap-3 p-3 cursor-pointer transition-colors ${selectedChatId === conversationId
-        ? "bg-gray-100 dark:bg-gray-800"
-        : "hover:bg-gray-50 dark:hover:bg-gray-800"
+      className={`rounded-md flex items-center gap-3 p-3 cursor-pointer transition-colors ${selectedChatId === conversationId
+        ? "bg-nav-active-bg"
+        : "hover:bg-nav-active-bg"
         }`}
     >
       <div className="relative">

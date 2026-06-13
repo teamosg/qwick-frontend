@@ -34,9 +34,9 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-white dark:bg-gray-900">
+    <div className="min-h-screen flex bg-background">
       {/* Left side - Form */}
-      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-white dark:bg-gray-900 ">
+      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col">
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
           {/* Logo */}
           <div className="py-5 md:py-7 mb-4 md:mb-5">
@@ -87,7 +87,7 @@ const ResetPassword = () => {
                   // },
                 })}
                 placeholder="Enter your email"
-                className="w-full px-4 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
+                className="w-full px-4 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
               />
             </div>
 
@@ -111,7 +111,7 @@ const ResetPassword = () => {
                     },
                   })}
                   placeholder="Your password"
-                  className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
+                  className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
                 />
                 <button
                   type="button"
@@ -150,7 +150,7 @@ const ResetPassword = () => {
                       "Passwords do not match",
                   })}
                   placeholder="Confirm your password"
-                  className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-gray-800 text-black dark:text-white"
+                  className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
                 />
                 <button
                   type="button"
@@ -172,7 +172,7 @@ const ResetPassword = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer"
+              className="w-full bg-primary hover:bg-primary-hover text-primary-foreground py-4 px-10 rounded-full transition mt-2 font-medium cursor-pointer"
             >
               Reset Password
             </button>
@@ -194,7 +194,7 @@ const ResetPassword = () => {
       </div>
 
       {/* Right side - Image (hidden on mobile) */}
-      <div className="hidden md:block md:w-1/2 bg-white dark:bg-gray-800">
+      <div className="hidden md:block md:w-1/2">
         <div className="h-full w-full flex items-center justify-center p-2.5 rounded-[30px] overflow-hidden">
           <img
             src={commonAuthLogo}

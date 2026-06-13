@@ -94,7 +94,7 @@ const menuItems = [
   },
 ];
 
-const Header = ({ onMenuClick }) => {
+const  Header = ({ onMenuClick }) => {
   const location = useLocation();
   const isHome = location.pathname === "/";
 

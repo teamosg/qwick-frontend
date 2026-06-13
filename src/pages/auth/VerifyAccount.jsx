@@ -63,9 +63,9 @@ const VerifyAccount = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-white dark:bg-gray-900">
+    <div className="min-h-screen flex bg-background">
       {/* Left side - Form */}
-      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-white dark:bg-gray-900">
+      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col">
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
           {/* Logo */}
           <div className="py-5 md:py-7 mb-4 md:mb-5">
@@ -89,8 +89,8 @@ const VerifyAccount = () => {
 
         <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
           <div className="mb-8 text-center">
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
-              VERIFY YOUR ACCOUNT
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
+              Verify Your Account
             </h2>
             <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
               Check your email, we are sending the verification code
@@ -114,7 +114,7 @@ const VerifyAccount = () => {
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    className="w-10 h-10 md:w-12 md:h-12 text-center border border-gray-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-white dark:bg-zinc-900 text-gray-900 dark:text-white text-lg font-medium"
+                    className="w-10 h-10 md:w-12 md:h-12 text-center border border-gray-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-gray-900 dark:text-white text-lg font-medium"
                     placeholder=""
                   />
                 ))}
@@ -128,7 +128,7 @@ const VerifyAccount = () => {
 
             <button
               type="submit"
-              className="w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer"
+              className="w-full bg-primary hover:bg-primary-hover text-primary-foreground py-4 px-10 rounded-full transition mt-2 font-medium cursor-pointer"
             >
               {
                 isPending
@@ -141,7 +141,7 @@ const VerifyAccount = () => {
       </div>
 
       {/* Right side - Image (hidden on mobile) */}
-      <div className="hidden md:block md:w-1/2 bg-white dark:bg-zinc-900">
+      <div className="hidden md:block md:w-1/2">
         <div className="h-full w-full flex items-center justify-center p-2.5 rounded-[30px] overflow-hidden">
           <img
             src={commonAuthLogo}

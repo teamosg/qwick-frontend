@@ -32,10 +32,10 @@ const SectionSkeleton = () => (
 
 const MessageListSkeleton = () => {
   return (
-    <div className="w-80 border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col h-full max-h-full">
+    <div className="w-80 border-r border-border bg-card flex flex-col h-full max-h-full">
 
       {/* Header */}
-      <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
+      <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between">
           <Skeleton className="w-24 h-5" />
           <Skeleton className="w-16 h-4" />
@@ -43,7 +43,7 @@ const MessageListSkeleton = () => {
       </div>
 
       {/* Search + Buttons */}
-      <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
+      <div className="p-4 border-b border-border">
         <div className="flex gap-2 mb-3">
           <Skeleton className="h-10 flex-1 rounded-lg" />
           <Skeleton className="w-10 h-10 rounded-lg" />
