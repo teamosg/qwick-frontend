@@ -23,6 +23,7 @@ import DashboardSwitcher from "./DashboardSwitcher";
 import { useEditCommunity, useGetMyCommunityList } from "@/hooks/community.hook";
 import { Spinner } from "@/components/ui/spinner";
 import { useCommunityStore } from "@/store/communityStore";
+import AvatarUser from "@/components/ui/AvatarUser";
 
 // Menu items.
 const items = [
@@ -144,12 +145,28 @@ export function DashboardSidebarContent() {
               </div>
             </div>
           </div> */}
-          <DashboardSwitcher
+          <div className="z-40 flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg text-white focus-visible:outline-none">
+            <AvatarUser
+              src={selectedBrandCommunity?.avatar}
+              alt={selectedBrandCommunity?.business_name}
+              className="h-8 w-8"
+            />
+            <div className="text-start flex flex-col gap-1 leading-none w-full">
+              <span className="text-base leading-none font-semibold truncate max-w-[17ch]">
+                {selectedBrandCommunity?.business_name?.slice(0, 15)}
+                {selectedBrandCommunity?.business_name?.length > 15 ? "..." : ""}
+              </span>
+              <span className="text-xs truncate max-w-[20ch]">
+                @{selectedBrandCommunity?.username}
+              </span>
+            </div>
+          </div>
+          {/* <DashboardSwitcher
             data={myCommunityList}
             isLoading={isLoadingMyCommunityList}
             selectedCommunity={selectedBrandCommunity}
             setSelectedCommunity={setSelectedBrandCommunity}
-          />
+          /> */}
         </SidebarHeader>
 
         <SidebarContent>
