@@ -1,9 +1,5 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { Plus, Minus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
@@ -212,7 +208,7 @@ const DynamicHelpPage = () => {
 
   if (loading) {
     return (
-      <div className="p-12 dark:bg-background max-w-6xl mx-auto">
+      <div className="p-12 dark:bg-background w-full">
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="animate-pulse">
             <div className="h-8 bg-muted rounded w-48 mb-6"></div>
@@ -229,7 +225,7 @@ const DynamicHelpPage = () => {
 
   if (!helpContent) {
     return (
-      <div className="p-12 dark:bg-background max-w-6xl mx-auto">
+      <div className="p-12 dark:bg-background w-full">
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-red-600 mb-4">
             Category Not Found
@@ -243,24 +239,38 @@ const DynamicHelpPage = () => {
   }
 
   return (
-    <div className="p-12 dark:bg-background max-w-6xl mx-auto">
+    <div className="p-12 dark:bg-background w-full">
       <div className="mb-6 inline-block">
         <h1 className="text-foreground-strong dark:text-white text-4xl font-semibold">
           {helpContent.title}
         </h1>
       </div>
-      <Accordion type="single" collapsible>
+      <AccordionPrimitive.Root type="single" collapsible className="space-y-4">
         {helpContent.faqs.map((faq) => (
-          <AccordionItem key={faq.id} value={faq.id} className="mb-8">
-            <AccordionTrigger className="text-lg font-semibold text-foreground p-6 bg-muted mb-8 hover:no-underline hover:cursor-pointer">
-              {faq.question}
-            </AccordionTrigger>
-            <AccordionContent className="bg-card p-6 text-base text-muted-foreground">
-              {faq.answer}
-            </AccordionContent>
-          </AccordionItem>
+          <AccordionPrimitive.Item
+            key={faq.id}
+            value={faq.id}
+            className="border-b border-border"
+          >
+            <AccordionPrimitive.Header>
+              <AccordionPrimitive.Trigger className="w-full py-6 flex items-center justify-between text-left group">
+                <span className="font-bold text-foreground font-inter group-hover:text-primary transition-colors">
+                  {faq.question}
+                </span>
+                <div className="w-6 h-6 flex items-center justify-center">
+                  <Plus className="group-data-[state=open]:hidden transition-transform" size={20} />
+                  <Minus className="hidden group-data-[state=open]:block transition-transform" size={20} />
+                </div>
+              </AccordionPrimitive.Trigger>
+            </AccordionPrimitive.Header>
+            <AccordionPrimitive.Content className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+              <div className="pb-6 text-muted-foreground font-inter text-sm leading-relaxed">
+                {faq.answer}
+              </div>
+            </AccordionPrimitive.Content>
+          </AccordionPrimitive.Item>
         ))}
-      </Accordion>
+      </AccordionPrimitive.Root>
     </div>
   );
 };
