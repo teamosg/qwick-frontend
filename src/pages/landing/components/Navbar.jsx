@@ -30,10 +30,11 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300   ${isScrolled
-        ? "bg-transparent  border-slate-200/60 py-3  "
-        : "bg-transparent  border-transparent py-5"
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300   ${
+        isScrolled
+          ? "bg-transparent  border-slate-200/60 py-3  "
+          : "bg-transparent  border-transparent py-5"
+      }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo section */}
@@ -48,7 +49,7 @@ const Navbar = () => {
         </div>
 
         {/* Center Links */}
-        <div className="hidden md:flex items-center gap-1 bg-slate-50/80 backdrop-blur-lg px-1.5 py-1.5 rounded-full border border-slate-200/60 shadow-sm">
+        <div className="hidden md:flex items-center gap-1 bg-[#9B9B9B] backdrop-blur-lg px-1.5 py-1.5 rounded-full border border-slate-200/60 shadow-sm">
           <Link
             to="/#creators"
             className="text-[14px] font-medium text-slate-600 px-7 py-2.5 rounded-full hover:bg-white hover:text-black hover:shadow-sm transition-all duration-300 font-inter"
@@ -59,13 +60,13 @@ const Navbar = () => {
             to="/#brand"
             className="text-[14px] font-medium text-slate-600 px-7 py-2.5 rounded-full hover:bg-white hover:text-black hover:shadow-sm transition-all duration-300 font-inter"
           >
-            Brand
+            Brands
           </Link>
           <Link
             to="/#video-guides"
             className="text-[14px] font-medium text-slate-600 px-7 py-2.5 rounded-full hover:bg-white hover:text-black hover:shadow-sm transition-all duration-300 font-inter"
           >
-            Guide
+            Guides
           </Link>
           <Link
             to="/home"
