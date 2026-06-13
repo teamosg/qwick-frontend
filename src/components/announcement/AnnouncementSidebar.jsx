@@ -153,7 +153,7 @@ export function AnnouncementSidebar() {
                 ))}
 
                 {/* Copy Link Button */}
-                <SidebarMenuItem className="hover:hover:bg-none h-auto hover:shadow-none">
+                {/* <SidebarMenuItem className="hover:hover:bg-none h-auto hover:shadow-none">
                   <SidebarMenuButton
                     onClick={handleCopyLink}
                     className="text-foreground-strong hover:shadow-none text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent w-full group"
@@ -169,7 +169,7 @@ export function AnnouncementSidebar() {
                     </div>
                   </SidebarMenuButton>
                   <hr />
-                </SidebarMenuItem>
+                </SidebarMenuItem> */}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
