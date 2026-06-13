@@ -115,7 +115,7 @@ export function DashboardSidebarContent() {
             <button
               disabled={isPending}
               onClick={openImageModal}
-              className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
+              className="p-2 bg-card/20 backdrop-blur-sm rounded-full hover:bg-card/30 transition-colors"
               title="Edit community images"
             >
               {
@@ -135,8 +135,8 @@ export function DashboardSidebarContent() {
                   <img src="/dashboardProfile.png" alt="" />
                 </div>
                 <div className="hidden sm:block">
-                  <h2 className="text-[16px] font-semibold text-gray-900 dark:text-white">Darren Chua</h2>
-                  <p className="text-sm text-gray-600 dark:text-zinc-400">@lofttypayoff</p>
+                  <h2 className="text-[16px] font-semibold text-foreground dark:text-foreground">Darren Chua</h2>
+                  <p className="text-sm text-muted-foreground dark:text-muted-foreground">@lofttypayoff</p>
                 </div>
               </div>
               <div className="hidden sm:block">

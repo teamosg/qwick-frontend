@@ -9,8 +9,8 @@ const NotificationItem = ({ title, time, isRead }) => (
     className={`p-4 ${!isRead ? "bg-foreground-strong/5" : ""
       } hover:bg-accent cursor-pointer`}
   >
-    <p className="text-sm font-medium text-gray-900 dark:text-white">{title}</p>
-    <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">{time}</p>
+    <p className="text-sm font-medium text-foreground dark:text-foreground">{title}</p>
+    <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-1">{time}</p>
   </div>
 );
 
@@ -113,7 +113,7 @@ const  Header = ({ onMenuClick }) => {
           >
             <Menu size={22} className="text-foreground" />
           </button>
-          <h2 className="text-xl md:text-2xl text-gray-900 dark:text-white font-semibold">
+          <h2 className="text-xl md:text-2xl text-foreground dark:text-foreground font-semibold">
             {menuItems.find((item) => item.path === location.pathname)?.text}
           </h2>
 

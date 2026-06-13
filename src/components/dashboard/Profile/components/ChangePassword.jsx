@@ -161,7 +161,7 @@ const ChangePassword = () => {
                             <Button
                                 type="submit"
                                 disabled={isChanging}
-                                className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed bg-foreground-strong hover:bg-foreground text-white rounded-xl"
+                                className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white rounded-xl"
                             >
                                 {
                                     isChanging

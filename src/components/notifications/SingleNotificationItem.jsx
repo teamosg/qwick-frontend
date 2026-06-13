@@ -34,7 +34,7 @@ const SingleNotificationItem = () => {
   ];
 
   return (
-    <div className="bg-white dark:bg-zinc-900 dark:text-zinc-300 mb-5">
+    <div className="bg-card dark:bg-card dark:text-foreground mb-5">
       {/* Date Header */}
       <div className="mb-2 text-sm font-medium  text-black dark:text-white">
         Sat, 9 Nov 2024

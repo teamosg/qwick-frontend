@@ -262,7 +262,7 @@ const ContentRewardDetailsEdit = () => {
               <>
                 <button
                   onClick={() => setShowExtendModal(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-foreground-strong hover:bg-foreground text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-foreground-strong/10"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-foreground-strong/10"
                 >
                   <LucideCalendar size={18} />
                   Extend Date
@@ -372,7 +372,7 @@ const ContentRewardDetailsEdit = () => {
               <button
                 onClick={handleExtendSubmit}
                 disabled={isExtending || !newEndDate || !addBudget}
-                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong hover:bg-foreground shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isExtending ? "Extending..." : "Confirm Extension"}
               </button>
@@ -430,7 +430,7 @@ const ContentRewardDetailsEdit = () => {
               <button
                 onClick={handleContentSubmit}
                 disabled={isUpdating || !contentLink}
-                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong hover:bg-foreground shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isUpdating ? "Updating..." : "Update Assets"}
               </button>

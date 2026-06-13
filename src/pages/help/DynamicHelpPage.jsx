@@ -212,13 +212,13 @@ const DynamicHelpPage = () => {
 
   if (loading) {
     return (
-      <div className="p-12 dark:bg-zinc-950 max-w-6xl mx-auto">
+      <div className="p-12 dark:bg-background max-w-6xl mx-auto">
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-300 rounded w-48 mb-6"></div>
+            <div className="h-8 bg-muted rounded w-48 mb-6"></div>
             <div className="space-y-4">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-16 bg-gray-300 rounded"></div>
+                <div key={i} className="h-16 bg-muted rounded"></div>
               ))}
             </div>
           </div>
@@ -229,12 +229,12 @@ const DynamicHelpPage = () => {
 
   if (!helpContent) {
     return (
-      <div className="p-12 dark:bg-zinc-950 max-w-6xl mx-auto">
+      <div className="p-12 dark:bg-background max-w-6xl mx-auto">
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-red-600 mb-4">
             Category Not Found
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-muted-foreground dark:text-muted-foreground">
             The requested help category does not exist.
           </p>
         </div>
@@ -243,7 +243,7 @@ const DynamicHelpPage = () => {
   }
 
   return (
-    <div className="p-12 dark:bg-zinc-950 max-w-6xl mx-auto">
+    <div className="p-12 dark:bg-background max-w-6xl mx-auto">
       <div className="mb-6 inline-block">
         <h1 className="text-foreground-strong dark:text-white text-4xl font-semibold">
           {helpContent.title}
@@ -255,7 +255,7 @@ const DynamicHelpPage = () => {
             <AccordionTrigger className="text-lg font-semibold text-foreground p-6 bg-muted mb-8 hover:no-underline hover:cursor-pointer">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="bg-white p-6 text-base text-foreground-muted">
+            <AccordionContent className="bg-card p-6 text-base text-muted-foreground">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>

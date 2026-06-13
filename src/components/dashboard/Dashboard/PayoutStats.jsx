@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const PayoutStatCard = ({ isLoading, label, value, icon: Icon = DollarSign, bgColor = "bg-success" }) => {
     return (
-        <div className="p-5 shadow bg-white dark:bg-zinc-800 rounded-xl">
+        <div className="p-5 shadow bg-card dark:bg-card rounded-xl">
             <div className={`w-10 h-10 rounded-full ${bgColor} flex items-center justify-center mb-4`}>
                 <Icon className="text-white" size={24} />
             </div>
@@ -14,7 +14,7 @@ export const PayoutStatCard = ({ isLoading, label, value, icon: Icon = DollarSig
                     {value}
                 </h2>
             )}
-            <p className="text-xs text-gray-600 dark:text-zinc-400">
+            <p className="text-xs text-muted-foreground dark:text-muted-foreground">
                 {label}
             </p>
         </div>

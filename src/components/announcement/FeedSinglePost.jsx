@@ -54,7 +54,7 @@ export default function FeedSinglePost({ post }) {
           <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
             {post?.author?.full_name}
           </h3>
-          <div className="text-xs text-foreground-subtle dark:text-gray-400 flex items-center">
+          <div className="text-xs text-foreground-subtle dark:text-foreground-subtle flex items-center">
             <Clock size={10} className="mr-1" />
             {new Date(post?.created_at).toLocaleString()}
           </div>
@@ -63,7 +63,7 @@ export default function FeedSinglePost({ post }) {
 
       {/* Post Content */}
       <div className="mb-4">
-        <p className="text-base leading-relaxed mb-3 text-gray-700 dark:text-gray-200">
+        <p className="text-base leading-relaxed mb-3 text-foreground dark:text-foreground">
           {post?.content}
         </p>
 
@@ -90,7 +90,7 @@ export default function FeedSinglePost({ post }) {
               return (
                 <div 
                   onClick={() => handleOpenImage(0)} 
-                  className="cursor-pointer rounded-xl overflow-hidden bg-gray-50 dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800"
+                  className="cursor-pointer rounded-xl overflow-hidden bg-accent dark:bg-card border border-border dark:border-border"
                 >
                   <img 
                     src={files[0].file} 
@@ -191,7 +191,7 @@ export default function FeedSinglePost({ post }) {
             <button
               onClick={handlePostLike}
               disabled={isLiking || isDisliking}
-              className="disabled:cursor-progress cursor-pointer text-gray-600 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors group"
+              className="disabled:cursor-progress cursor-pointer text-muted-foreground dark:text-muted-foreground hover:text-red-500 dark:hover:text-red-400 transition-colors group"
             >
               <Heart
                 className={`w-5 h-5 ${post?.is_liked
@@ -207,7 +207,7 @@ export default function FeedSinglePost({ post }) {
 
           <button
             onClick={() => setOpenComments(true)}
-            className="cursor-pointer flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors group"
+            className="cursor-pointer flex items-center space-x-2 text-muted-foreground dark:text-muted-foreground hover:text-blue-500 dark:hover:text-blue-400 transition-colors group"
           >
             <MessageCircle className="w-5 h-5 group-hover:text-blue-500 dark:group-hover:text-blue-400" />
             <span className="text-sm font-medium">

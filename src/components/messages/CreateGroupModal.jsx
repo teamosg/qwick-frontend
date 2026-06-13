@@ -78,7 +78,7 @@ const CreateGroupModal = ({ fetchedConversationList, isOpen, onClose, onSelectCh
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md max-h-[600px] flex flex-col">
+            <div className="bg-card dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md max-h-[600px] flex flex-col">
 
               {/* Header */}
               <div className="p-4 border-b border-gray-200 dark:border-zinc-800 flex items-center gap-3">
@@ -86,16 +86,16 @@ const CreateGroupModal = ({ fetchedConversationList, isOpen, onClose, onSelectCh
                   onClick={onClose}
                   className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
                 >
-                  <ArrowLeft className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                  <ArrowLeft className="w-5 h-5 text-muted-foreground dark:text-gray-400" />
                 </button>
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex-1">
+                <h2 className="text-lg font-semibold text-foreground dark:text-white flex-1">
                   New Group Chat
                 </h2>
                 <button
                   onClick={onClose}
                   className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
                 >
-                  <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                  <X className="w-5 h-5 text-muted-foreground dark:text-gray-400" />
                 </button>
               </div>
 
@@ -109,7 +109,7 @@ const CreateGroupModal = ({ fetchedConversationList, isOpen, onClose, onSelectCh
                     setGroupName(e.target.value);
                     if (nameError) setNameError(false);
                   }}
-                  className={`w-full px-3 py-2 text-sm border rounded-lg bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white 
+                  className={`w-full px-3 py-2 text-sm border rounded-lg bg-gray-50 dark:bg-accent/50 text-foreground dark:text-white 
                     ${nameError ? "border-red-500 focus:ring-red-500" : "border-gray-300 dark:border-zinc-800"}
                     focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 />
@@ -124,7 +124,7 @@ const CreateGroupModal = ({ fetchedConversationList, isOpen, onClose, onSelectCh
                     placeholder="Search users..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-accent/50 text-foreground dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -143,7 +143,7 @@ const CreateGroupModal = ({ fetchedConversationList, isOpen, onClose, onSelectCh
 
               {/* Suggested Users */}
               <div className="flex-1 overflow-y-auto p-4">
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">
+                <h3 className="text-sm font-medium text-muted-foreground dark:text-gray-400 mb-3">
                   Suggested
                 </h3>
 
@@ -168,10 +168,10 @@ const CreateGroupModal = ({ fetchedConversationList, isOpen, onClose, onSelectCh
                         />
 
                         <div className="flex-1 text-left">
-                          <h4 className="font-medium text-sm text-gray-900 dark:text-white">
+                          <h4 className="font-medium text-sm text-foreground dark:text-white">
                             {user?.username}
                           </h4>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                          <p className="text-xs text-muted-foreground dark:text-gray-400">
                             {user?.username}
                           </p>
                         </div>
@@ -197,7 +197,7 @@ const CreateGroupModal = ({ fetchedConversationList, isOpen, onClose, onSelectCh
                   whileTap={{ scale: 0.98 }}
                   onClick={handleCreateGroup}
                   disabled={selectedUsers.length === 0 || isCreating}
-                  className="w-full px-6 py-3 bg-foreground-strong hover:bg-foreground text-white rounded-lg font-semibold shadow-md transition-all disabled:opacity-50 disabled:hover:scale-100"
+                  className="w-full px-6 py-3 bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white rounded-lg font-semibold shadow-md transition-all disabled:opacity-50 disabled:hover:scale-100"
                 >
                   {
                     isCreating

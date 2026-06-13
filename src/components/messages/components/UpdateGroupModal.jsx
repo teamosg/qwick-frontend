@@ -133,7 +133,7 @@ const UpdateGroupModal = ({ isOpen, onClose, selectedChat, setSelectedChat }) =>
                                     whileTap={{ scale: 0.98 }}
                                     onClick={handleSave}
                                     disabled={isUpdating}
-                                    className="w-full disabled:opacity-60 px-6 py-3 bg-foreground-strong hover:bg-foreground text-white rounded-lg font-semibold shadow-md transition-all"
+                                    className="w-full disabled:opacity-60 px-6 py-3 bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white rounded-lg font-semibold shadow-md transition-all"
                                 >
                                     {isUpdating ? "Updating..." : "Save Changes"}
                                 </motion.button>

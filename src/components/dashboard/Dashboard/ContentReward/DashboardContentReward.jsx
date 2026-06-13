@@ -128,7 +128,7 @@ const DashboardContentReward = () => {
             </p>
             <button
               onClick={handleCreateReward}
-              className="w-full sm:w-auto bg-foreground-strong text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-foreground transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-foreground-strong/10"
+              className="w-full sm:w-auto bg-foreground-strong dark:bg-accent text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-foreground-strong/10"
             >
               Create Campaign
             </button>

@@ -40,7 +40,7 @@ const ProfileBalance = () => {
             {/* Withdraw */}
             <Button
               onClick={() => setOpenWithdraw(true)}
-              className="bg-foreground-strong text-white hover:bg-foreground rounded-full"
+              className="bg-foreground-strong dark:bg-accent text-white hover:bg-foreground dark:hover:bg-accent/80 rounded-full"
             >
               Withdraw
             </Button>

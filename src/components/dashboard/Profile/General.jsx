@@ -133,7 +133,7 @@ const ProfileGeneral = () => {
       <Button
         type="submit"
         disabled={isPending}
-        className="w-full sm:w-auto bg-foreground-strong text-white dark:bg-foreground dark:text-white px-12 py-5 cursor-pointer rounded-lg hover:bg-foreground transition font-medium flex gap-2 justify-center"
+        className="w-full sm:w-auto bg-foreground-strong dark:bg-accent text-white px-12 py-5 cursor-pointer rounded-lg hover:bg-foreground dark:hover:bg-accent/80 transition font-medium flex gap-2 justify-center"
       >
         {isPending ? "Updating..." : "Update"}
       </Button>

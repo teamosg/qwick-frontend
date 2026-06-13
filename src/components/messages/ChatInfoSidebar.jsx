@@ -25,7 +25,7 @@ const ChatInfoSidebar = ({ isOpen, onClose, selectedChat, setSelectedChat }) => 
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full sm:w-80 bg-white dark:bg-zinc-900 border-l border-gray-200 dark:border-zinc-800 z-50 flex flex-col overflow-hidden"
+            className="fixed right-0 top-0 h-full w-full sm:w-80 bg-card dark:bg-card border-l border-border dark:border-border z-50 flex flex-col overflow-hidden"
           >
             {isGroupChat ? (
               <GroupChatInfo selectedChat={selectedChat} onClose={onClose} setSelectedChat={setSelectedChat} />

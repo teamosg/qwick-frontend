@@ -25,14 +25,14 @@ export default function ChatBox() {
         <div className="space-y-2">
           {/* Kwasig's message with emoji */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-white px-4 py-2 rounded-full max-w-xs">
+            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-full max-w-xs">
               <span>Kwasig 😂😂</span>
             </div>
           </div>
 
           {/* Kwasig's longer message */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-white px-4 py-2 rounded-2xl max-w-sm">
+            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-2xl max-w-sm">
               <span>You dey hung dier you kai say house dey</span>
             </div>
           </div>
@@ -61,14 +61,14 @@ export default function ChatBox() {
         <div className="space-y-2">
           {/* Kwasig's message with emoji */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-white px-4 py-2 rounded-full max-w-xs">
+            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-full max-w-xs">
               <span>Kwasig 😂😂</span>
             </div>
           </div>
 
           {/* Kwasig's longer message */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-white px-4 py-2 rounded-2xl max-w-sm">
+            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-2xl max-w-sm">
               <span>You dey hung dier you kai say house dey</span>
             </div>
           </div>
@@ -96,14 +96,14 @@ export default function ChatBox() {
         <div className="space-y-2">
           {/* Kwasig's message with emoji */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-white px-4 py-2 rounded-full max-w-xs">
+            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-full max-w-xs">
               <span>Kwasig 😂😂</span>
             </div>
           </div>
 
           {/* Kwasig's longer message */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-white px-4 py-2 rounded-2xl max-w-sm">
+            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-2xl max-w-sm">
               <span>You dey hung dier you kai say house dey</span>
             </div>
           </div>
@@ -125,7 +125,7 @@ export default function ChatBox() {
 
             {/* Image/Attachment Button */}
             <button className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-200 rounded-full transition-colors">
-              <Image className="w-5 h-5 text-gray-500" />
+              <Image className="w-5 h-5 text-muted-foreground" />
             </button>
           </div>
 
@@ -133,7 +133,7 @@ export default function ChatBox() {
           <button
             onClick={handleSendMessage}
             disabled={!message.trim()}
-            className="p-3 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-full transition-colors"
+            className="p-3 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground rounded-full transition-colors"
           >
             <Send className="w-5 h-5" />
           </button>

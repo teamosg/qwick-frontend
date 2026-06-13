@@ -80,7 +80,7 @@ const PayoutData = () => {
               ? Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={index}
-                  className="bg-white dark:bg-zinc-800 border rounded-lg p-4 shadow-sm dark:border-zinc-700"
+                  className="bg-card dark:bg-card border rounded-lg p-4 shadow-sm dark:border-border"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <Skeleton className="h-5 w-32" />
@@ -95,7 +95,7 @@ const PayoutData = () => {
               : withdrawals.map((withdrawal, index) => (
                 <div
                   key={index}
-                  className="bg-[#fff] dark:bg-zinc-800 border rounded-lg p-4 shadow-sm dark:border-zinc-700 dark:text-white"
+                  className="bg-card dark:bg-card border rounded-lg p-4 shadow-sm dark:border-border dark:text-foreground"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div className="font-semibold text-foreground dark:text-white">
@@ -138,7 +138,7 @@ const PayoutData = () => {
                 </div>
               ))}
             {!isLoading && withdrawals.length === 0 && (
-              <div className="text-center p-4 text-gray-500 dark:text-gray-400">
+              <div className="text-center p-4 text-muted-foreground dark:text-muted-foreground">
                 No withdrawals found.
               </div>
             )}
@@ -149,7 +149,7 @@ const PayoutData = () => {
             <div className="p-1">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="bg-muted/50 dark:bg-zinc-800 text-gray-900 dark:text-white border-black rounded-full dark:border-zinc-700">
+                  <TableRow className="bg-muted/50 dark:bg-zinc-800 text-foreground dark:text-foreground border-black rounded-full dark:border-zinc-700">
                     <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Name
                     </TableHead>
@@ -199,19 +199,19 @@ const PayoutData = () => {
                         key={index}
                         className="border-none hover:bg-muted/50 dark:hover:bg-zinc-800 dark:text-white"
                       >
-                        <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
+                        <TableCell className="py-4 px-6 font-medium text-foreground dark:text-foreground">
                           {getDisplayName(withdrawal)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
+                        <TableCell className="py-4 px-6 text-muted-foreground dark:text-foreground">
                           {withdrawal.email}
                         </TableCell>
-                        <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                        <TableCell className="py-4 px-6 font-semibold text-foreground dark:text-foreground">
                           {getStatusBadge(withdrawal.status)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
+                        <TableCell className="py-4 px-6 text-muted-foreground dark:text-foreground">
                           $ {withdrawal.amount}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
+                        <TableCell className="py-4 px-6 text-muted-foreground dark:text-foreground">
                           {withdrawal.contact || "N/A"}
                         </TableCell>
                         <TableCell className="py-4 px-6 flex gap-2 items-center">
@@ -241,7 +241,7 @@ const PayoutData = () => {
                     ))}
                   {!isLoading && withdrawals.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center py-4 text-gray-500 dark:text-gray-400">
+                      <TableCell colSpan={6} className="text-center py-4 text-muted-foreground dark:text-muted-foreground">
                         No withdrawals found.
                       </TableCell>
                     </TableRow>

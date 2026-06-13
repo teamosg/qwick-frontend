@@ -8,7 +8,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
 
   if (!selectedChat) {
     return (
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
+      <div className="flex items-center justify-between p-4 border-b border-border dark:border-border bg-card dark:bg-card shadow-sm">
         <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
           Select a conversation
         </h2>
@@ -21,7 +21,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between p-3 sm:p-4 bg-white dark:bg-zinc-900 shadow-md">
+      <div className="flex items-center justify-between p-3 sm:p-4 bg-card dark:bg-card shadow-md">
         {/* Back button (Mobile only), Avatar, Name and Status */}
         <div className="flex items-center gap-2 sm:gap-3">
           <button
@@ -49,7 +49,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
         <div className="flex items-center gap-1 sm:gap-2">
           <button
             onClick={() => setShowInfoSidebar(true)}
-            className="p-1.5 sm:p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#222] rounded-lg transition-colors"
+            className="p-1.5 sm:p-2 text-muted-foreground dark:text-muted-foreground hover:text-foreground dark:hover:text-foreground hover:bg-accent dark:hover:bg-accent rounded-lg transition-colors"
             aria-label="View chat info"
           >
             <Info className="w-5 h-5" />

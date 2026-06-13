@@ -51,26 +51,26 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
                         onClick={(e) => e.stopPropagation()}
                         className="fixed inset-0 z-50 flex items-center justify-center p-4"
                     >
-                        <div className="bg-white dark:bg-zinc-900 w-full max-w-md rounded-2xl shadow-2xl flex flex-col max-h-[600px]">
+                        <div className="bg-card dark:bg-card w-full max-w-md rounded-2xl shadow-2xl flex flex-col max-h-[600px]">
 
                             {/* Header */}
                             <div className="p-4 border-b border-gray-200 dark:border-zinc-800 flex items-center gap-3">
                                 <button
                                     onClick={onClose}
-                                    className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg"
+                                    className="p-2 hover:bg-accent dark:hover:bg-accent rounded-lg"
                                 >
-                                    <ArrowLeft className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                                    <ArrowLeft className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
                                 </button>
 
-                                <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex-1">
+                                <h2 className="text-lg font-semibold text-foreground dark:text-foreground flex-1">
                                     Add User To Group
                                 </h2>
 
                                 <button
                                     onClick={onClose}
-                                    className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg"
+                                    className="p-2 hover:bg-accent dark:hover:bg-accent rounded-lg"
                                 >
-                                    <X className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                                    <X className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
                                 </button>
                             </div>
 
@@ -83,7 +83,7 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
                                 />
 
                                 <div>
-                                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+                                    <h3 className="text-sm font-semibold text-foreground dark:text-foreground">
                                         {chat?.username}
                                     </h3>
                                 </div>
@@ -98,7 +98,7 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
                                         placeholder="Search groups..."
-                                        className="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white border border-gray-300 dark:border-zinc-800 focus:ring-2 focus:ring-teal-600 outline-none"
+                                        className="w-full pl-10 pr-4 py-2 rounded-lg bg-background dark:bg-accent/50 text-foreground dark:text-foreground border border-border dark:border-border focus:ring-2 focus:ring-teal-600 outline-none"
                                     />
                                 </div>
                             </div>
@@ -109,7 +109,7 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
                                 {filteredGroups.map((group) => (
                                     <motion.div
                                         key={group.group_id}
-                                        className="w-full flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition"
+                                        className="w-full flex items-center justify-between p-3 rounded-lg bg-accent dark:bg-accent hover:bg-accent dark:hover:bg-accent transition"
                                     >
                                         <div className="flex items-center justify-center gap-2">
                                             <AvatarUser
@@ -117,7 +117,7 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
                                                 alt={chat?.username}
                                                 className="w-10 h-10 rounded-full"
                                             />
-                                            <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                            <p className="text-sm font-medium text-foreground dark:text-foreground">
                                                 {group.group_name}
                                             </p>
                                         </div>
@@ -139,7 +139,7 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
                                 ))}
 
                                 {filteredGroups.length === 0 && (
-                                    <p className="text-center text-sm text-gray-500 dark:text-gray-400 py-4">
+                                    <p className="text-center text-sm text-muted-foreground dark:text-muted-foreground py-4">
                                         No groups found.
                                     </p>
                                 )}

@@ -32,7 +32,7 @@ const AnnounceMentCommentAction = ({ AnnouncementId }) => {
             <button
                 onClick={handleComment}
                 disabled={!commentText || isCommenting}
-                className="bg-foreground-strong disabled:bg-foreground-strong/60 text-white px-3 sm:px-4 py-2 rounded-lg"
+                className="bg-foreground-strong dark:bg-accent disabled:bg-foreground-strong/60 text-white px-3 sm:px-4 py-2 rounded-lg"
             >
                 <Send className="w-4 h-4" />
             </button>

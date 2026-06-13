@@ -73,7 +73,7 @@ export function PostShare() {
             <Button
               type="button"
               variant="secondary"
-              className="bg-foreground-strong dark:bg-foreground-strong text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-foreground hover:dark:bg-foreground-strong/90 transition font-medium cursor-pointer flex gap-2"
+              className="bg-foreground-strong dark:bg-accent text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition font-medium cursor-pointer flex gap-2"
             >
               Close
             </Button>

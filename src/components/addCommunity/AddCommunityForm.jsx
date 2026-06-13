@@ -207,7 +207,7 @@ export default function AddCommunityForm({
           <button
             type="submit"
             disabled={isPending}
-            className={`w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer ${isPending ? "opacity-50 cursor-not-allowed" : ""
+            className={`w-full bg-foreground-strong dark:bg-accent text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition mt-2 font-medium cursor-pointer ${isPending ? "opacity-50 cursor-not-allowed" : ""
               }`}
             data-discover="true"
           >

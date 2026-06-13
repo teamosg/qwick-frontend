@@ -86,7 +86,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
 
 
   return (
-    <div className="w-full md:w-80 border-r border-l border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col h-full max-h-full">
+    <div className="w-full md:w-80 border-r border-l border-border dark:border-border bg-card dark:bg-card flex flex-col h-full max-h-full">
       {/* Search and badge section */}
       <div className="p-4">
         <div className="relative mb-3 flex gap-2">
@@ -97,14 +97,14 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 text-sm border border-border dark:border-border rounded-lg bg-background dark:bg-background text-foreground dark:text-foreground placeholder-muted-foreground dark:placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <button
             onClick={() => setShowNewMessageSidebar(true)}
-            className="cursor-pointer p-2 border border-gray-300 dark:border-zinc-800 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors"
+            className="cursor-pointer p-2 border border-border dark:border-border rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors"
           >
-            <MessageSquarePlus className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <MessageSquarePlus className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
           </button>
         </div>
         {/* Badges */}
@@ -115,7 +115,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
               onClick={() => setShowUnreadOnly(!showUnreadOnly)}
               className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${showUnreadOnly
                 ? "bg-foreground-strong text-white border-foreground-muted"
-                : "hover:bg-gray-100 dark:hover:bg-zinc-800"
+                : "hover:bg-accent dark:hover:bg-accent"
                 }`}
             >
               <span className="text-[#F62B36]">●</span>
@@ -139,7 +139,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
               onClick={() => setShowRequestsOnly(!showRequestsOnly)}
               className={`cursor-pointer px-2 py-1 border flex items-center gap-1 rounded-full font-medium transition-all duration-300 ${showRequestsOnly
                 ? "bg-foreground-strong text-white border-foreground-muted"
-                : "hover:bg-gray-100 dark:hover:bg-zinc-800"
+                : "hover:bg-accent dark:hover:bg-accent"
                 }`}
             >
               <span className="text-foreground-strong dark:text-foreground-strong">●</span>{" "}
@@ -159,7 +159,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
             onClick={() =>
               toast.error("This feature hasn't been implemented yet")
             }
-            className="cursor-pointer px-2 py-1 border rounded-full font-medium hover:bg-gray-100 dark:hover:bg-[#222] transition-colors"
+            className="cursor-pointer px-2 py-1 border rounded-full font-medium hover:bg-accent dark:hover:bg-accent transition-colors"
           >
             Groups <span className="text-gray-400">2</span>
           </button> */}
