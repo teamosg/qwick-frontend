@@ -141,8 +141,12 @@ export const useReviewSubmission = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async ({ submissionId, action }) => {
-            const res = await axiosPrivate.post(`/v1/${submissionId}/content/approve/`, { action });
+        mutationFn: async ({ submissionId, action, feedback }) => {
+            const payload = { action };
+            if (feedback?.trim()) {
+                payload.feedback = feedback.trim();
+            }
+            const res = await axiosPrivate.post(`/v1/${submissionId}/content/approve/`, payload);
             return res?.data;
         },
         onSuccess: (data) => {

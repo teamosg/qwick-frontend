@@ -98,7 +98,7 @@ const PostCommentSingle = ({ comment, profile }) => {
                         <button
                             onClick={handleUpdateComment}
                             disabled={isUpdating}
-                            className="px-3 py-1.5 text-xs rounded-md bg-foreground-strong text-white disabled:bg-foreground-strong/50"
+                            className="px-3 py-1.5 text-xs rounded-md bg-foreground-strong dark:bg-accent text-white disabled:bg-foreground-strong/50"
                         >
                             Save
                         </button>

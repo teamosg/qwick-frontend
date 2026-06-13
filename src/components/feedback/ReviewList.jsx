@@ -40,7 +40,7 @@ const ReviewCard = ({ review }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-800 p-6 mb-4 rounded-xl">
+    <div className="bg-card dark:bg-card p-6 mb-4 rounded-xl">
       {/* Main Review */}
       <div className="flex items-start space-x-4">
         <img
@@ -50,13 +50,13 @@ const ReviewCard = ({ review }) => {
         />
         <div className="flex-1">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="font-bold text-gray-900 dark:text-white">{review.user.name}</h3>
+            <h3 className="font-bold text-foreground dark:text-foreground">{review.user.name}</h3>
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-500 dark:text-zinc-400">{review.date}</span>
+              <span className="text-sm text-muted-foreground dark:text-muted-foreground">{review.date}</span>
             </div>
           </div>
           <StarRating rating={review.rating} size="sm" className="mb-3" />
-          <p className="text-gray-700 dark:text-zinc-300 mb-4">{review.text}</p>
+          <p className="text-foreground dark:text-foreground mb-4">{review.text}</p>
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-4">
@@ -64,8 +64,8 @@ const ReviewCard = ({ review }) => {
               onClick={handleLike}
               className={`flex items-center space-x-1 px-3 py-1 rounded-full transition-colors ${
                 isLiked
-                  ? "bg-blue-100 text-blue-600 dark:bg-zinc-700 dark:text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-zinc-700 dark:text-white dark:hover:bg-zinc-600"
+                  ? "bg-accent text-primary dark:bg-accent dark:text-foreground"
+                  : "bg-accent text-muted-foreground hover:bg-accent dark:bg-accent dark:text-foreground dark:hover:bg-accent"
               }`}
             >
               <ThumbsUp className="w-4 h-4" />
@@ -75,12 +75,12 @@ const ReviewCard = ({ review }) => {
               onClick={() => setShowReplyForm(!showReplyForm)}
               className={`flex items-center space-x-1 px-3 py-1 rounded-full transition-colors ${
                 showReplyForm
-                  ? "bg-blue-100 text-blue-600 dark:bg-zinc-700 dark:text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-zinc-700 dark:text-white dark:hover:bg-zinc-600"
+                  ? "bg-accent text-primary dark:bg-accent dark:text-foreground"
+                  : "bg-accent text-muted-foreground hover:bg-accent dark:bg-accent dark:text-foreground dark:hover:bg-accent"
               }`}
             >
               <MessageCircle className="w-4 h-4" />
-              <span className="text-sm dark:text-zinc-400">
+              <span className="text-sm dark:text-muted-foreground">
                 Reply{replies.length > 0 ? `(${replies.length})` : ""}
               </span>
             </button>
@@ -93,21 +93,21 @@ const ReviewCard = ({ review }) => {
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
                 placeholder="Write a reply..."
-                className="w-full p-3 border border-gray-300 dark:bg-zinc-800 dark:text-white dark:border-zinc-700 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
+                className="w-full p-3 border border-border dark:bg-card dark:text-foreground dark:border-border rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
                 rows={2}
               />
               <div className="flex justify-end space-x-2 mt-2">
                 <button
                   type="button"
                   onClick={() => setShowReplyForm(false)}
-                  className="px-4 py-2 text-gray-600 dark:text-zinc-400 hover:text-gray-800 transition-colors"
+                  className="px-4 py-2 text-muted-foreground dark:text-muted-foreground hover:text-gray-800 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={!replyText.trim()}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg dark:bg-zinc-700 dark:text-white dark:hover:bg-zinc-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-lg dark:bg-accent dark:text-foreground dark:hover:bg-accent hover:bg-primary-hover disabled:bg-muted disabled:cursor-not-allowed transition-colors"
                 >
                   Reply
                 </button>
@@ -129,13 +129,13 @@ const ReviewCard = ({ review }) => {
               />
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-1">
-                  <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
+                  <h4 className="font-semibold text-foreground dark:text-foreground text-sm">
                     {reply.user.name}
                   </h4>
-                  <span className="text-xs text-gray-500 dark:text-zinc-400">{reply.date}</span>
+                  <span className="text-xs text-muted-foreground dark:text-muted-foreground">{reply.date}</span>
                 </div>
-                <p className="text-gray-700 dark:text-zinc-300 text-sm">{reply.text}</p>
-                <button className="flex items-center space-x-1 mt-2 text-xs text-gray-500 dark:text-zinc-400 hover:text-gray-700 transition-colors">
+                <p className="text-foreground dark:text-foreground text-sm">{reply.text}</p>
+                <button className="flex items-center space-x-1 mt-2 text-xs text-muted-foreground dark:text-muted-foreground hover:text-gray-700 transition-colors">
                   <ThumbsUp className="w-3 h-3" />
                   <span>Like</span>
                 </button>
@@ -152,7 +152,7 @@ const ReviewList = ({ reviews }) => {
   if (!reviews || reviews.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500 dark:text-zinc-400 text-lg">
+        <p className="text-muted-foreground dark:text-muted-foreground text-lg">
           No reviews yet. Be the first to share your experience!
         </p>
       </div>

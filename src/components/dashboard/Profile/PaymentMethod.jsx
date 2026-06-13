@@ -23,7 +23,7 @@ const PaymentMethod = () => {
       {/* Open Modal Button */}
       <Button
         onClick={() => setOpen(true)}
-        className="bg-foreground-strong w-60 dark:bg-foreground-strong text-white px-4 py-2 sm:py-6 sm:px-10 rounded-3xl sm:rounded-full hover:bg-foreground transition font-medium cursor-pointer flex gap-2 m-auto">
+        className="bg-foreground-strong dark:bg-accent text-white px-4 py-2 sm:py-6 sm:px-10 rounded-3xl sm:rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition font-medium cursor-pointer flex gap-2 m-auto">
         Add Payment Method
       </Button>
 
@@ -56,7 +56,7 @@ const PaymentMethod = () => {
               <Button
                 onClick={handleConfirm}
                 disabled={isAddingPaymentMethod}
-                className="bg-foreground-strong hover:bg-foreground text-white min-w-[120px] flex items-center justify-center gap-2"
+                className="bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white min-w-[120px] flex items-center justify-center gap-2"
               >
                 {isAddingPaymentMethod ? <Spinner /> : "Confirm"}
               </Button>

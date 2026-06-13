@@ -48,7 +48,7 @@ const Analytics = () => {
     return (
       <div className="min-h-[400px] flex flex-col items-center justify-center gap-4">
         <Loader2 className="w-10 h-10 animate-spin text-foreground-strong" />
-        <p className="text-gray-500 dark:text-gray-400 font-medium animate-pulse">Loading analytics...</p>
+        <p className="text-muted-foreground dark:text-muted-foreground font-medium animate-pulse">Loading analytics...</p>
       </div>
     );
   }
@@ -60,14 +60,14 @@ const Analytics = () => {
       {/* Stats Overview */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
         {/* Total Campaigns */}
-        <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
+        <Card className="border-0 shadow-sm bg-card dark:bg-card overflow-hidden group hover:shadow-md transition-all rounded-2xl">
           <CardContent className="p-3 sm:p-4 md:p-6">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
               <div className="p-2.5 sm:p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform shrink-0">
                 <ShoppingBag size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Campaigns</p>
+                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">Campaigns</p>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tabular-nums leading-tight">
                   {stats.totalCampaigns}
                 </h3>
@@ -77,14 +77,14 @@ const Analytics = () => {
         </Card>
 
         {/* Total Views */}
-        <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
+        <Card className="border-0 shadow-sm bg-card dark:bg-card overflow-hidden group hover:shadow-md transition-all rounded-2xl">
           <CardContent className="p-3 sm:p-4 md:p-6">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
               <div className="p-2.5 sm:p-3 rounded-xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform shrink-0">
                 <TrendingUp size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Views</p>
+                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">Total Views</p>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tabular-nums leading-tight">
                   {stats.totalViews >= 1000000 ? `${(stats.totalViews / 1000000).toFixed(1)}M` : stats.totalViews.toLocaleString()}
                 </h3>
@@ -94,14 +94,14 @@ const Analytics = () => {
         </Card>
 
         {/* Total Submissions */}
-        <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
+        <Card className="border-0 shadow-sm bg-card dark:bg-card overflow-hidden group hover:shadow-md transition-all rounded-2xl">
           <CardContent className="p-3 sm:p-4 md:p-6">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
               <div className="p-2.5 sm:p-3 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0">
                 <Users size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Submissions</p>
+                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">Submissions</p>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tabular-nums leading-tight">
                   {stats.totalSubmissions}
                 </h3>
@@ -111,14 +111,14 @@ const Analytics = () => {
         </Card>
 
         {/* Total Paid */}
-        <Card className="border-0 shadow-sm bg-white dark:bg-zinc-900 overflow-hidden group hover:shadow-md transition-all rounded-2xl">
+        <Card className="border-0 shadow-sm bg-card dark:bg-card overflow-hidden group hover:shadow-md transition-all rounded-2xl">
           <CardContent className="p-3 sm:p-4 md:p-6">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
               <div className="p-2.5 sm:p-3 rounded-xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0">
                 <DollarSign size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Payout</p>
+                <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-muted-foreground dark:text-muted-foreground uppercase tracking-wider">Total Payout</p>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white tabular-nums leading-tight">
                   ${stats.totalPayout.toFixed(0)}
                 </h3>
@@ -131,7 +131,7 @@ const Analytics = () => {
       <div className="mt-8 md:mt-12">
         <div className="mb-4">
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">Submission History</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Manage and track all user rewards</p>
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground">Manage and track all user rewards</p>
         </div>
         <ContentRewardsTable data={mappedSubmissions} />
       </div>

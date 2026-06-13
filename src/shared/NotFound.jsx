@@ -51,7 +51,7 @@ const NotFound = () => {
   };
 
   return (
-    <div className="relative h-screen w-full flex items-center justify-center  bg-gray-900 text-white">
+    <div className="relative h-screen w-full flex items-center justify-center  bg-foreground-strong text-primary-foreground">
       <StarryBackground />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/60 z-10" />
 
@@ -87,7 +87,7 @@ const NotFound = () => {
         </motion.div>
 
         <motion.p
-          className="text-lg text-gray-300 mb-8 max-w-md"
+          className="text-lg text-foreground-subtle mb-8 max-w-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}

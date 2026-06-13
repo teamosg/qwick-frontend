@@ -18,8 +18,8 @@ export function PayoutTab({ onTabChange }) {
           onClick={() => handleTabChange("withdrawal")}
           className={`relative pb-2 text-sm font-medium transition-colors ${
             activeTab === "withdrawal"
-              ? "text-gray-900 dark:text-white"
-              : "text-gray-500 hover:text-gray-700 dark:text-muted"
+              ? "text-foreground dark:text-foreground"
+              : "text-muted-foreground hover:text-foreground dark:text-muted"
           }`}
         >
           Withdrawals
@@ -31,8 +31,8 @@ export function PayoutTab({ onTabChange }) {
           onClick={() => handleTabChange("payment-method")}
           className={`relative pb-2 text-sm font-medium transition-colors ${
             activeTab === "payment-method"
-              ? "text-gray-900 dark:text-white"
-              : "text-gray-500 hover:text-gray-700 dark:text-muted"
+              ? "text-foreground dark:text-foreground"
+              : "text-muted-foreground hover:text-foreground dark:text-muted"
           }`}
         >
           Payment method
@@ -43,7 +43,7 @@ export function PayoutTab({ onTabChange }) {
       </div>
 
       {/* Bottom border line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-200"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-border"></div>
     </div>
   );
 }

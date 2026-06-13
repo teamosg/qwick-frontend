@@ -43,6 +43,7 @@ import Home from "../pages/dashboard/Home";
 import DashboardLayout from "./../layout/DashboardLayout";
 import VerifyTwoAuth from "@/pages/auth/VerifyTwoAuth";
 import DepositSuccess from "@/pages/deposit/DepositSuccess";
+import PrivateRoute from "./PrivateRoute";
 const router = createBrowserRouter([
   // Landing Page
   {
@@ -100,7 +101,9 @@ const router = createBrowserRouter([
 
   {
     path: "/",
-    element: <DashboardLayout />,
+    element:  <PrivateRoute>
+                <DashboardLayout />
+              </PrivateRoute>,
     children: [
       {
         path: "/home",

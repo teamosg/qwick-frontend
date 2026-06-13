@@ -307,7 +307,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                         (method === "connected_account" ? !connectedAccountId : (!bankData.bank_name || !bankData.account_holder_name || !bankData.bank_account_number)) ||
                                         withdrawLoading
                                     }
-                                    className="w-full h-14 rounded-2xl bg-foreground-strong hover:bg-foreground text-white mt-4 shadow-xl shadow-foreground/10 text-base font-bold transition-all active:scale-[0.98] disabled:opacity-50"
+                                    className="w-full h-14 rounded-2xl bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white mt-4 shadow-xl shadow-foreground/10 text-base font-bold transition-all active:scale-[0.98] disabled:opacity-50"
                                 >
                                     {withdrawLoading ? <Spinner className="w-5 h-5" /> : "Request Withdrawal"}
                                 </Button>
@@ -424,7 +424,7 @@ const WithdrawModal = ({ open, setOpen }) => {
 
                             <Button
                                 onClick={handleCancel}
-                                className="w-full h-14 rounded-2xl bg-foreground-strong hover:bg-foreground text-white shadow-xl shadow-foreground/10 font-bold text-base transition-all active:scale-[0.98]"
+                                className="w-full h-14 rounded-2xl bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white shadow-xl shadow-foreground/10 font-bold text-base transition-all active:scale-[0.98]"
                             >
                                 Done
                             </Button>

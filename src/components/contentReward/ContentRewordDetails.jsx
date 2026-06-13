@@ -38,7 +38,7 @@ const ContentRewardDetails = () => {
   if (isCreator) {
     return (
       <div className="flex items-center justify-center p-6 mt-10">
-        <p className="text-gray-500 dark:text-zinc-400">Access denied for community creators.</p>
+        <p className="text-muted-foreground dark:text-muted-foreground">Access denied for community creators.</p>
       </div>
     );
   }
@@ -50,7 +50,7 @@ const ContentRewardDetails = () => {
   if (!campaign) {
     return (
       <div className="flex items-center justify-center p-10 h-[60vh]">
-        <p className="text-gray-500 dark:text-zinc-400">Campaign not found or has been removed.</p>
+        <p className="text-muted-foreground dark:text-muted-foreground">Campaign not found or has been removed.</p>
       </div>
     );
   }
@@ -95,7 +95,7 @@ const ContentRewardDetails = () => {
 
       <div className="space-y-6">
         {/* Main Details Card */}
-        <div className="dark:text-white bg-white dark:bg-zinc-900 p-5 sm:p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800">
+        <div className="dark:text-foreground bg-card dark:bg-card p-5 sm:p-6 rounded-2xl shadow-sm border border-border dark:border-border">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3">
               <img
@@ -115,10 +115,10 @@ const ContentRewardDetails = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-gray-900 text-lg font-bold mb-2 dark:text-white">
+              <h3 className="text-foreground text-lg font-bold mb-2 dark:text-foreground">
                 {name}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-zinc-400 mb-4 leading-relaxed">
+              <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-4 leading-relaxed">
                 {content_requirement || "No specific requirements mentioned."}
               </p>
 
@@ -134,18 +134,18 @@ const ContentRewardDetails = () => {
 
             <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-6 py-6 border-y border-gray-50 dark:border-zinc-800/50">
               <div>
-                <p className="text-[10px] text-gray-400 dark:text-zinc-500 mb-1 font-bold uppercase tracking-wider">
+                <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
                   Type
                 </p>
-                <p className="text-gray-800 text-sm font-medium dark:text-zinc-300">
+                <p className="text-foreground text-sm font-medium dark:text-foreground">
                   {campaign_type?.name || "N/A"}
                 </p>
               </div>
               <div>
-                <p className="text-[10px] text-gray-400 dark:text-zinc-500 mb-1 font-bold uppercase tracking-wider">
+                <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
                   Platforms
                 </p>
-                <div className="flex gap-3 text-gray-700 dark:text-zinc-300">
+                <div className="flex gap-3 text-foreground dark:text-foreground">
                   {platforms?.map((p, idx) => {
                     const pName = p.name?.toLowerCase();
                     if (pName === 'instagram') return <FaInstagram key={idx} size={18} />;
@@ -157,10 +157,10 @@ const ContentRewardDetails = () => {
                 </div>
               </div>
               <div>
-                <p className="text-[10px] text-gray-400 dark:text-zinc-500 mb-1 font-bold uppercase tracking-wider">
+                <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
                   Category
                 </p>
-                <p className="text-gray-800 text-sm font-medium dark:text-zinc-300">
+                <p className="text-foreground text-sm font-medium dark:text-foreground">
                   {category?.name || "N/A"}
                 </p>
               </div>
@@ -196,7 +196,7 @@ const ContentRewardDetails = () => {
                   <FaGoogleDrive size={24} />
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-base font-bold text-gray-900 dark:text-white leading-tight">Campaign Assets & Resources</h4>
+                  <h4 className="text-base font-bold text-foreground dark:text-foreground leading-tight">Campaign Assets & Resources</h4>
                   <p className="text-xs text-indigo-700/70 dark:text-indigo-400/70 max-w-sm font-medium">
                     Download raw footage, brand logos, and creative guidelines to help you create your video.
                   </p>
@@ -217,7 +217,7 @@ const ContentRewardDetails = () => {
         )}
 
         {/* Summary Card */}
-        <div className="dark:text-white bg-white dark:bg-zinc-900 p-5 sm:p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800">
+        <div className="dark:text-foreground bg-card dark:bg-card p-5 sm:p-6 rounded-2xl shadow-sm border border-border dark:border-border">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div>
               <h3 className="text-gray-900 dark:text-white text-sm font-bold mb-4">
@@ -234,7 +234,7 @@ const ContentRewardDetails = () => {
                     <div className="bg-foreground-strong/10 p-1 rounded-full">
                       <DollarSign className="text-foreground-strong dark:text-foreground-strong" size={14} />
                     </div>
-                    <span className={`text-gray-700 dark:text-zinc-300 text-xs font-medium ${item.includes("expired") ? "text-red-600 dark:text-red-400" : ""}`}>
+                    <span className={`text-foreground dark:text-foreground text-xs font-medium ${item.includes("expired") ? "text-red-600 dark:text-red-400" : ""}`}>
                       {item}
                     </span>
                   </li>
@@ -247,7 +247,7 @@ const ContentRewardDetails = () => {
                 to={(isEnded || isFull) ? "#" : `/announcement/${communityUsername}/content-reward/reward-details-payment/${campaignId}`}
                 onClick={(e) => (isEnded || isFull) && e.preventDefault()}
                 className={`w-full text-center text-white text-lg font-bold py-3.5 rounded-2xl transition duration-300 shadow-lg ${(isEnded || isFull)
-                  ? "bg-gray-400 cursor-not-allowed opacity-50"
+                  ? "bg-muted cursor-not-allowed opacity-50"
                   : "bg-foreground-strong hover:bg-foreground active:scale-[0.98]"
                   }`}
               >
@@ -255,7 +255,7 @@ const ContentRewardDetails = () => {
               </Link>
               <button
                 onClick={() => navigate(-1)}
-                className="w-full text-center text-gray-500 dark:text-zinc-400 text-sm font-semibold hover:text-gray-700 dark:hover:text-zinc-200 transition"
+                className="w-full text-center text-muted-foreground dark:text-muted-foreground text-sm font-semibold hover:text-gray-700 dark:hover:text-zinc-200 transition"
               >
                 Go Back
               </button>

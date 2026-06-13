@@ -7,7 +7,7 @@ const contentRewardColumn = [
     accessorKey: "campaign_name",
     header: "Campaign",
     cell: ({ row }) => (
-      <span className="font-medium text-gray-900 dark:text-gray-100 truncate max-w-[150px] inline-block">
+      <span className="font-medium text-foreground dark:text-foreground truncate max-w-[150px] inline-block">
         {row.original.campaign_name || row.original.campaign?.name || `Campaign #${row.original.campaign}`}
       </span>
     ),
@@ -33,7 +33,7 @@ const contentRewardColumn = [
     accessorKey: "views",
     header: "Views",
     cell: ({ row }) => (
-      <span className="text-gray-600 dark:text-gray-400 font-medium">
+      <span className="text-muted-foreground dark:text-muted-foreground font-medium">
         {row.original.views?.toLocaleString()}
       </span>
     ),
@@ -71,10 +71,10 @@ const contentRewardColumn = [
         >
           {icon}
           <span>{platformName}</span>
-          <ExternalLink size={12} className="text-gray-400 group-hover:text-current transition-colors" />
+          <ExternalLink size={12} className="text-foreground-subtle group-hover:text-current transition-colors" />
         </a>
       ) : (
-        <span className="text-gray-400 italic text-xs">No link</span>
+        <span className="text-foreground-subtle italic text-xs">No link</span>
       );
     },
   },

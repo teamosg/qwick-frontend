@@ -10,7 +10,7 @@ const NoCommunityDashboardPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="bg-white dark:bg-zinc-900 p-8 rounded-xl shadow max-w-md w-full"
+                className="bg-card dark:bg-card p-8 rounded-xl shadow max-w-md w-full"
             >
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
@@ -25,7 +25,7 @@ const NoCommunityDashboardPage = () => {
                     No Community Yet
                 </h2>
 
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">
+                <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-6">
                     You haven’t created a community for your brand. Start one to engage your audience and unlock more features.
                 </p>
 
@@ -33,7 +33,7 @@ const NoCommunityDashboardPage = () => {
                     <Link
                         to={`/addcommunity`}
                         type="submit"
-                        className="max-w-max mx-auto bg-foreground-strong dark:bg-foreground-strong text-white px-4 py-2 sm:py-2.5 sm:px-10 rounded-3xl sm:rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition font-medium cursor-pointer flex gap-2"
+                        className="max-w-max mx-auto bg-foreground-strong dark:bg-accent text-white px-4 py-2 sm:py-2.5 sm:px-10 rounded-3xl sm:rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition font-medium cursor-pointer flex gap-2"
                     >
                         <Plus />
                         Add Community

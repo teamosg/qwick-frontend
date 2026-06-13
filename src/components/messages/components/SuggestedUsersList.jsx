@@ -7,7 +7,7 @@ const SuggestedUsersList = ({ suggestedUsers, handleUserSelect }) => {
     return (
         <div className="flex-1 overflow-y-auto">
             <div className="p-4">
-                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Suggested</h3>
+                <h3 className="text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-3">Suggested</h3>
                 <div className="space-y-1">
                     {suggestedUsers?.map(user => (
                         <motion.button
@@ -29,7 +29,7 @@ const SuggestedUsersList = ({ suggestedUsers, handleUserSelect }) => {
                             </div>
                             <div className="flex-1 text-left">
                                 <h4 className="font-medium text-sm text-gray-900 dark:text-white">{user?.username}</h4>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">@{user?.username}</p>
+                                <p className="text-xs text-muted-foreground dark:text-muted-foreground">@{user?.username}</p>
                             </div>
                         </motion.button>
                     ))}

@@ -44,7 +44,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="flex items-center justify-center w-10 h-10 rounded-lg border border-border bg-card text-foreground hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
@@ -59,8 +59,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             page === currentPage
               ? "bg-black text-white border-black"
               : page === "..."
-              ? "border-gray-300 bg-white text-gray-500 cursor-default"
-              : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+              ? "border-border bg-card text-muted-foreground cursor-default"
+              : "border-border bg-card text-foreground hover:bg-accent"
           }`}
         >
           {page}
@@ -71,7 +71,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="flex items-center justify-center w-10 h-10 rounded-lg border border-border bg-card text-foreground hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         <ChevronRight className="w-4 h-4" />
       </button>

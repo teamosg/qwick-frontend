@@ -235,7 +235,7 @@ const Discover = () => {
       </motion.div>
 
       {processedCampaigns.length === 0 && (
-        <div className="text-center py-20 text-gray-500">
+        <div className="text-center py-20 text-muted-foreground">
           No campaigns found matching your filters.
         </div>
       )}

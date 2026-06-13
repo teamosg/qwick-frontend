@@ -203,7 +203,7 @@ const CommunityChat = () => {
 
                   <div
                     className={`py-2.5 px-4 rounded-2xl text-sm shadow-sm transition-all ${message.sender === "me"
-                      ? "bg-foreground-strong text-white rounded-tr-none shadow-foreground-strong/10"
+                      ? "bg-foreground-strong dark:bg-accent text-white rounded-tr-none shadow-foreground-strong/10"
                       : "bg-white dark:bg-zinc-900 text-gray-800 dark:text-zinc-200 rounded-tl-none border border-gray-100 dark:border-zinc-800"
                       }`}
                   >
@@ -241,7 +241,7 @@ const CommunityChat = () => {
               whileTap={{ scale: 0.92 }}
               onClick={handleSendMessage}
               disabled={!newMessage.trim()}
-              className="ml-2 p-3 bg-foreground-strong text-white rounded-xl hover:bg-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md active:scale-95"
+              className="ml-2 p-3 bg-foreground-strong dark:bg-accent text-white rounded-xl hover:bg-foreground dark:hover:bg-accent/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md active:scale-95"
             >
               <LuSend size={20} />
             </motion.button>

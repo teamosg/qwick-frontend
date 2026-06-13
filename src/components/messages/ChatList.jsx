@@ -19,8 +19,8 @@ const ChatList = ({
         /* Only Requests Chats Section */
         <div className="p-4 animate-fadeIn">
           <div className="flex items-center gap-2 mb-3">
-            <MessagesSquare className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <MessagesSquare className="w-4 h-4 text-muted-foreground dark:text-muted-foreground" />
+            <h3 className="text-sm font-medium text-foreground dark:text-foreground">
               Chat Requests
             </h3>
           </div>
@@ -45,8 +45,8 @@ const ChatList = ({
             pinnedConversation?.length > 0 &&
             <div className="p-4">
               <div className="flex items-center gap-2 mb-3">
-                <Pin className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <Pin className="w-4 h-4 text-muted-foreground dark:text-muted-foreground" />
+                <h3 className="text-sm font-medium text-foreground dark:text-foreground">
                   Pinned
                 </h3>
               </div>
@@ -70,8 +70,8 @@ const ChatList = ({
           {/* All Conversations Section */}
           <div className="p-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex items-center gap-2 mb-3">
-              <List className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <List className="w-4 h-4 text-muted-foreground dark:text-muted-foreground" />
+              <h3 className="text-sm font-medium text-foreground dark:text-foreground">
                 All Conversations
               </h3>
             </div>
@@ -96,8 +96,8 @@ const ChatList = ({
             requestsChats?.length > 0 &&
             <div className="p-4 border-t border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-2 mb-3">
-                <MessagesSquare className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <MessagesSquare className="w-4 h-4 text-muted-foreground dark:text-muted-foreground" />
+                <h3 className="text-sm font-medium text-foreground dark:text-foreground">
                   Chat Requests
                 </h3>
               </div>

@@ -45,12 +45,12 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpen
           <h3 className="font-medium text-sm text-gray-900 dark:text-white truncate">
             {conversationName}
           </h3>
-          <span className="text-xs text-gray-500 dark:text-gray-400">
+          <span className="text-xs text-muted-foreground dark:text-muted-foreground">
             {formattedDate}
           </span>
         </div>
         <div className="flex items-center justify-between mt-1">
-          <p className="text-xs text-gray-600 dark:text-gray-300 truncate">
+          <p className="text-xs text-muted-foreground dark:text-foreground truncate">
             {last_message}
           </p>
           {selectedChatId === conversationId && chat?.type === "dm" ? (

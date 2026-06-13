@@ -33,7 +33,7 @@ const WaitListSkeleton = () => {
                         <div className="p-1">
                             <Table>
                                 <TableHeader>
-                                    <TableRow className="bg-muted/50 text-gray-900 dark:bg-zinc-800 dark:text-white">
+                                    <TableRow className="bg-muted/50 text-foreground dark:bg-accent dark:text-foreground">
                                         {["Name", "Email", "Status", "Actions"].map((head, i) => (
                                             <TableHead key={i} className="py-4 px-6 font-medium">
                                                 {head}
@@ -43,7 +43,7 @@ const WaitListSkeleton = () => {
                                 </TableHeader>
                                 <TableBody>
                                     {skeletonItems.map((_, index) => (
-                                        <TableRow key={index} className="hover:bg-white dark:hover:bg-zinc-800">
+                                        <TableRow key={index} className="hover:bg-accent dark:hover:bg-accent">
                                             {Array.from({ length: 4 }).map((_, i) => (
                                                 <TableCell key={i} className="py-4 px-6">
                                                     <Skeleton className="h-4 w-24" />

@@ -210,7 +210,7 @@ const ConnectedAccounts = () => {
                 <Button
                   onClick={handleConfirmConnect}
                   disabled={!url || isPending}
-                  className="flex-1 bg-foreground-strong hover:bg-foreground text-white"
+                  className="flex-1 bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white"
                 >
                   {isPending ? <Spinner className="w-4 h-4 text-white" /> : "Generate OTP"}
                 </Button>
@@ -253,7 +253,7 @@ const ConnectedAccounts = () => {
                 <Button
                   onClick={handleVerify}
                   disabled={isVerifying}
-                  className="flex-1 bg-foreground-strong hover:bg-foreground text-white"
+                  className="flex-1 bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white"
                 >
                   {isVerifying ? <Spinner className="w-4 h-4 text-white" /> : "Verify"}
                 </Button>

@@ -27,11 +27,11 @@ const WriteReviewForm = ({ onSubmit }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-900 p-6 mb-6 rounded-xl">
+    <div className="bg-card dark:bg-card p-6 mb-6 rounded-xl">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Rating Selection */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Write a review</h2>
+          <h2 className="text-xl font-bold text-foreground dark:text-foreground">Write a review</h2>
           <div className="space-y-2">
             {[5, 4, 3, 2, 1].map((starCount) => (
               <button
@@ -40,12 +40,12 @@ const WriteReviewForm = ({ onSubmit }) => {
                 onClick={() => setRating(starCount)}
                 className={`w-full flex items-center justify-between p-3 rounded-lg border transition-colors ${
                   rating === starCount
-                    ? "bg-gray-50 dark:bg-zinc-700 dark:border-zinc-600"
-                    : "border-gray-200 hover:bg-gray-50 dark:bg-zinc-800 dark:border-zinc-700 dark:hover:bg-zinc-700"
+                    ? "bg-accent dark:bg-accent dark:border-border"
+                    : "border-border hover:bg-accent dark:bg-accent dark:border-border dark:hover:bg-accent"
                 }`}
               >
                 <StarRating rating={starCount} size="md" />
-                <span className="text-gray-600 dark:text-white font-medium">{starCount}</span>
+                <span className="text-muted-foreground dark:text-foreground font-medium">{starCount}</span>
               </button>
             ))}
           </div>
@@ -53,7 +53,7 @@ const WriteReviewForm = ({ onSubmit }) => {
 
         {/* Review Form */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-xl font-bold text-foreground dark:text-foreground">
             Share your experience
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">

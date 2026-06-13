@@ -53,9 +53,9 @@ const Dashboard = () => {
     <SidebarProvider className="flex-1 flex min-h-0 overflow-hidden">
       <DashboardSidebarContent />
 
-      <main className="flex-1 flex flex-col min-h-0 bg-background dark:bg-zinc-950 overflow-hidden relative">
+      <main className="flex-1 flex flex-col min-h-0 bg-background dark:bg-background overflow-hidden relative">
         {/* Mobile toggle button */}
-        <div className="flex-none md:hidden p-4 border-b dark:border-zinc-800">
+        <div className="flex-none md:hidden p-4 border-b dark:border-border">
           <SidebarTrigger />
         </div>
 

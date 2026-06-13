@@ -130,7 +130,7 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
             disabled={!bannerImage && !profileImage}
             className={`w-full py-3 px-4 rounded-full text-white font-medium transition-colors ${
               bannerImage || profileImage
-                ? "bg-foreground-strong hover:bg-foreground cursor-pointer"
+                ? "bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 cursor-pointer"
                 : "bg-gray-300 dark:bg-zinc-700 cursor-not-allowed"
             }`}
           >

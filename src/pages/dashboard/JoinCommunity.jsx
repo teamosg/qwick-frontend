@@ -48,11 +48,11 @@ const JoinCommunity = () => {
 
   if (isLoading) {
     return (
-      <div className="bg-background dark:bg-zinc-950 flex-1 overflow-y-auto p-6">
+      <div className="bg-background dark:bg-background flex-1 overflow-y-auto p-6">
         <div className="mb-9 inline-block">
           <Skeleton className="h-8 w-48 mb-4 shadow" />
         </div>
-        <div className="bg-gray-100 dark:bg-zinc-900 p-6 rounded-xl max-w-3xl items-center justify-center mx-auto border border-gray-200 dark:border-zinc-700">
+        <div className="bg-accent dark:bg-card p-6 rounded-xl max-w-3xl items-center justify-center mx-auto border border-border dark:border-border">
           <Skeleton className="h-[400px] w-full rounded-xl mb-6 shadow-sm" />
           <div className="max-w-md mx-auto space-y-6 flex flex-col items-center py-4">
             <Skeleton className="h-8 w-64 shadow-sm" />
@@ -69,17 +69,17 @@ const JoinCommunity = () => {
   if (isError || (!isLoading && !community)) {
     return (
       <div className="bg-background dark:bg-zinc-950 flex-1 overflow-y-auto flex items-center justify-center p-6 shadow-xl rounded-xl">
-        <div className="text-center max-w-lg p-10 bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl border border-gray-100 dark:border-zinc-800">
+        <div className="text-center max-w-lg p-10 bg-card dark:bg-card rounded-3xl shadow-2xl border border-border dark:border-border">
           <div className="w-20 h-20 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-4xl text-red-500 font-bold">!</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Community Doesn't Exist</h2>
-          <p className="text-foreground-subtle dark:text-zinc-400 mb-8 leading-relaxed">
+          <h2 className="text-2xl font-bold text-foreground dark:text-foreground mb-3">Community Doesn't Exist</h2>
+          <p className="text-foreground-subtle dark:text-muted-foreground mb-8 leading-relaxed">
             The community you are looking for was not found. It might have been deleted or the username is incorrect.
           </p>
           <Link
             to="/discover"
-            className="inline-block text-white bg-foreground-strong hover:bg-foreground px-8 py-3 rounded-full font-semibold transition shadow-lg active:scale-95"
+            className="inline-block text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 px-8 py-3 rounded-full font-semibold transition shadow-lg active:scale-95"
           >
             Go to Discover
           </Link>
@@ -90,7 +90,7 @@ const JoinCommunity = () => {
 
   return (
     <motion.div
-      className="bg-background dark:bg-zinc-950 flex-1 overflow-y-auto p-6 md:p-10"
+      className="bg-background dark:bg-background flex-1 overflow-y-auto p-6 md:p-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -107,7 +107,7 @@ const JoinCommunity = () => {
       </motion.div>
 
       <motion.div
-        className="bg-gray-100 dark:bg-zinc-900 p-6 rounded-xl max-w-3xl items-center justify-center mx-auto border border-gray-200 dark:border-zinc-700 shadow-sm"
+        className="bg-accent dark:bg-card p-6 rounded-xl max-w-3xl items-center justify-center mx-auto border border-border dark:border-border shadow-sm"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -136,7 +136,7 @@ const JoinCommunity = () => {
             Welcome to {community?.business_name || communityUsername}
           </motion.h2>
           <motion.p
-            className="text-[18px] text-foreground-subtle dark:text-zinc-400 mb-11"
+            className="text-[18px] text-foreground-subtle dark:text-muted-foreground mb-11"
             variants={itemVariants}
           >
             Join this community to start earning rewards for your content!
@@ -149,7 +149,7 @@ const JoinCommunity = () => {
             <button
               disabled={isJoining || community?.is_member}
               onClick={handleJoinCommunity}
-              className="mx-auto max-w-sm flex items-center justify-center w-full text-white bg-foreground-strong hover:bg-foreground text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition shadow-xl disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="mx-auto max-w-sm flex items-center justify-center w-full text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition shadow-xl disabled:bg-muted disabled:cursor-not-allowed"
             >
               {
                 isJoining ? <Spinner className={'text-white size-6'} /> : (community?.is_member ? 'Already joined' : 'Join Community')

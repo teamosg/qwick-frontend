@@ -208,7 +208,7 @@ const PostForm = () => {
                 type="submit"
                 disabled={!content.trim() && imagePreviewUrls.length === 0 || isCreatingAnnouncement}
                 className={`disabled:cursor-not-allowed disabled:opacity-70 px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors ${content.trim() || imagePreviewUrls.length > 0
-                  ? "bg-foreground-strong text-white cursor-pointer hover:bg-foreground"
+                  ? "bg-foreground-strong dark:bg-accent text-white cursor-pointer hover:bg-foreground dark:hover:bg-accent/80"
                   : "bg-foreground-strong dark:bg-zinc-800 text-white cursor-not-allowed opacity-50"
                   }`}
               >

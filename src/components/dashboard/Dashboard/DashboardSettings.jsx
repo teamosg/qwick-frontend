@@ -34,7 +34,7 @@ const DashboardSettings = () => {
       <div className=" space-y-3">
         <Link
           to={"/dashboard/dashboard-settings/notifications"}
-          className="flex items-center justify-between bg-white dark:bg-zinc-800 rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
+          className="flex items-center justify-between bg-card dark:bg-card rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
         >
           <div className="flex items-center justify-center gap-3">
             <Bell className="size-5" />
@@ -47,7 +47,7 @@ const DashboardSettings = () => {
 
         <div
           onClick={handleCopyRefLink}
-          className="flex items-center justify-between bg-white dark:bg-zinc-800 rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm cursor-pointer"
+          className="flex items-center justify-between bg-card dark:bg-card rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm cursor-pointer"
         >
           <div className="flex items-center justify-center gap-3">
             {copied ? <Check className="text-emerald-500 size-5" /> : <Share2 className="size-5" />}
@@ -60,7 +60,7 @@ const DashboardSettings = () => {
 
         <Link
           to={""}
-          className="flex items-center justify-between bg-white dark:bg-zinc-800 rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
+          className="flex items-center justify-between bg-card dark:bg-card rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
         >
           <div className="flex items-center justify-center gap-3">
             <LegalSvg />

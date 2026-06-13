@@ -68,7 +68,7 @@ const PaymentsData = () => {
               ? Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={index}
-                  className="bg-white dark:bg-zinc-800 border rounded-lg p-4 shadow-sm dark:border-zinc-700"
+                  className="bg-card dark:bg-card border rounded-lg p-4 shadow-sm dark:border-border"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <Skeleton className="h-5 w-32" />
@@ -82,7 +82,7 @@ const PaymentsData = () => {
               : earnings.map((user, index) => (
                 <div
                   key={index}
-                  className="bg-white border rounded-lg p-4 shadow-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
+                  className="bg-card border rounded-lg p-4 shadow-sm dark:bg-card dark:border-border dark:text-foreground"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div className="font-semibold text-foreground dark:text-white">
@@ -105,7 +105,7 @@ const PaymentsData = () => {
                 </div>
               ))}
             {!isLoading && earnings.length === 0 && (
-              <div className="text-center p-4 text-gray-500 dark:text-gray-400">
+              <div className="text-center p-4 text-muted-foreground dark:text-muted-foreground">
                 No attributes found.
               </div>
             )}
@@ -116,7 +116,7 @@ const PaymentsData = () => {
             <div className="p-1 min-w-[600px]">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="bg-muted/50 text-gray-900 border-black rounded-full dark:bg-zinc-800 dark:text-white dark:border-zinc-700">
+                  <TableRow className="bg-muted/50 text-foreground border-border rounded-full dark:bg-accent dark:text-foreground dark:border-border">
                     <TableHead className="font-medium py-4 px-6 dark:text-white">
                       Name
                     </TableHead>
@@ -158,7 +158,7 @@ const PaymentsData = () => {
                     : earnings.map((user, index) => (
                       <TableRow
                         key={index}
-                        className="border-none hover:bg-white dark:hover:bg-zinc-800 dark:text-white"
+                        className="border-none hover:bg-accent dark:hover:bg-accent dark:text-foreground"
                       >
                         <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
                           {getDisplayName(user)}
@@ -184,7 +184,7 @@ const PaymentsData = () => {
                     ))}
                   {!isLoading && earnings.length === 0 && (
                     <TableRow>
-                      <TableCell className="text-center py-4 text-gray-500 dark:text-gray-400" colSpan={6}>
+                      <TableCell className="text-center py-4 text-muted-foreground dark:text-muted-foreground" colSpan={6}>
                         No records found.
                       </TableCell>
                     </TableRow>
