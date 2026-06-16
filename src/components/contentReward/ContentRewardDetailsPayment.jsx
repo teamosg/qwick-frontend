@@ -10,7 +10,7 @@ import { useState, useMemo } from "react";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { toast } from "sonner";
 import { useParams, useNavigate } from "react-router";
-import { useGetAllCampaigns, useSubmitCampaignContent } from "@/hooks/campaign.hook";
+import { useGetSingleCampaign, useSubmitCampaignContent } from "@/hooks/campaign.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import CampaignDetailsSkeleton from "./CampaignDetailsSkeleton";
 import CampaignProgress from "@/components/dashboard/Dashboard/ContentReward/CampaignProgress";
@@ -22,12 +22,8 @@ const ContentRewardDetailsPayment = () => {
   const { campaignId, communityUsername } = useParams();
   const navigate = useNavigate();
   const { selectedCreatorCommunity } = useCommunityStore();
-  const { data: campaignRes, isLoading: isLoadingCampaigns } = useGetAllCampaigns();
+  const { data: campaign, isLoading } = useGetSingleCampaign(campaignId);
   const { mutate: submitContent, isPending: isSubmitting } = useSubmitCampaignContent(campaignId);
-
-  const campaign = useMemo(() => {
-    return campaignRes?.campaigns?.find(c => c.id === parseInt(campaignId));
-  }, [campaignRes, campaignId]);
 
   const [files, setFiles] = useState();
   const [showPopup, setShowPopup] = useState(false);
@@ -144,7 +140,7 @@ const ContentRewardDetailsPayment = () => {
     );
   }
 
-  if (isLoadingCampaigns) {
+  if (isLoading) {
     return <CampaignDetailsSkeleton />;
   }
 

@@ -18,6 +18,22 @@ export const useGetAllCampaigns = () => {
     });
 };
 
+export const useGetSingleCampaign = (campaignId) => {
+    return useQuery({
+        queryKey: ["singleCampaign", campaignId],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get(`/v1/campaigns/${campaignId}/`);
+                return res?.data?.campaign;
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch campaign" });
+            }
+        },
+        enabled: !!campaignId,
+        staleTime: 1000 * 60 * 2, // cache for 2 mins
+    });
+};
+
 
 export const useCreateCampaign = (communityId, setAlert) => {
     const queryClient = useQueryClient();

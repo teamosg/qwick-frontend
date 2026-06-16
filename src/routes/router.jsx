@@ -1,7 +1,7 @@
 import AnnouncementFeed from "@/components/announcement/AnnouncementFeed";
 import CommunityChat from "@/components/CommunityChat/CommunityChat";
 import Withdraw from "@/components/CommunityChat/Withdraw";
-import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
+// import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import ContentRewordPublic from "@/components/contentReward/ContentRewordPublic";
 import AutomatedMessage from "@/components/dashboard/Dashboard/AutomatedMessage";
@@ -153,10 +153,10 @@ const router = createBrowserRouter([
                     path: "reward-details/:campaignId",
                     element: <ContentRewardDetails />,
                   },
-                  {
-                    path: "reward-details-payment/:campaignId",
-                    element: <ContentRewardDetailsPayment />,
-                  },
+                  // {
+                  //   path: "reward-details-payment/:campaignId",
+                  //   element: <ContentRewardDetailsPayment />,
+                  // },
                 ],
               },
               {
