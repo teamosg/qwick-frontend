@@ -147,12 +147,12 @@ const JoinCommunity = () => {
             whileTap={{ scale: 0.95 }}
           >
             <button
-              disabled={isJoining || community?.is_member}
+              disabled={isJoining || community?.is_member || community?.is_waitlist}
               onClick={handleJoinCommunity}
               className="mx-auto max-w-sm flex items-center justify-center w-full text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition shadow-xl disabled:bg-muted disabled:cursor-not-allowed"
             >
               {
-                isJoining ? <Spinner className={'text-white size-6'} /> : (community?.is_member ? 'Already joined' : 'Join Community')
+                isJoining ? <Spinner className={'text-white size-6'} /> : (community?.is_member ? 'Already joined' : community?.is_waitlist ? 'Waitlisted' : 'Join Community')
               }
             </button>
           </motion.div>
