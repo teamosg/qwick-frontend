@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Link, useParams } from "react-router";
+import { Link, useParams, useLocation } from "react-router";
 import { useState } from "react";
 import { Copy, Check, Link as LinkIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -43,6 +43,7 @@ const items = [
 
 export function AnnouncementSidebar() {
   const { communityUsername } = useParams();
+  const location = useLocation();
 
   const {
     isLoadingCommunityList,
@@ -129,28 +130,41 @@ export function AnnouncementSidebar() {
           <SidebarGroup className="p-0">
             <SidebarGroupContent>
               <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem
-                    key={item.title}
-                    className="hover:hover:bg-none h-auto hover:shadow-none"
-                  >
-                    <SidebarMenuButton
-                      asChild
-                      className="text-foreground-subtle hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
+                {items.map((item) => {
+                  const currentPath = location.pathname;
+
+                  const isActive = (() => {
+                    if (item.url === "") {
+                      return currentPath === `/announcement/${communityUsername}` ||
+                             currentPath.startsWith(`/announcement/${communityUsername}/announcement`);
+                    }
+                    return currentPath === `/announcement/${communityUsername}/${item.url}` ||
+                           currentPath.startsWith(`/announcement/${communityUsername}/${item.url}/`);
+                  })();
+
+                  return (
+                    <SidebarMenuItem
+                      key={item.title}
+                      className="hover:hover:bg-none h-auto hover:shadow-none"
                     >
-                      <Link
-                        className="hover:bg-none hover:shadow-none inline-block px-5 py-3 "
-                        to={`/announcement/${communityUsername}/${item.url}`}
-                        onClick={handleMenuItemClick}
+                      <SidebarMenuButton
+                        asChild
+                        className={`hover:shadow-none text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent ${isActive ? 'text-foreground' : 'text-foreground-subtle'}`}
                       >
-                        <span className="hover:bg-none hover:shadow-none font-medium">
-                          {item.title}
-                        </span>
-                      </Link>
-                    </SidebarMenuButton>
-                    <hr />
-                  </SidebarMenuItem>
-                ))}
+                        <Link
+                          className={`hover:bg-none hover:shadow-none inline-block px-5 py-3 relative ${isActive ? 'bg-accent/10 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-6 before:w-0.5 before:bg-primary before:rounded-full' : ''}`}
+                          to={`/announcement/${communityUsername}/${item.url}`}
+                          onClick={handleMenuItemClick}
+                        >
+                          <span className={`hover:bg-none hover:shadow-none font-medium ${isActive ? 'text-foreground' : ''}`}>
+                            {item.title}
+                          </span>
+                        </Link>
+                      </SidebarMenuButton>
+                      <hr />
+                    </SidebarMenuItem>
+                  );
+                })}
 
                 {/* Copy Link Button */}
                 {/* <SidebarMenuItem className="hover:hover:bg-none h-auto hover:shadow-none">
