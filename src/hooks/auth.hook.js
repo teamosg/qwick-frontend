@@ -449,9 +449,7 @@ export const useDeleteAccount = () => {
     onSuccess: (data) => {
       if (data?.status) {
         toast.success(data?.message || "Account deleted successfully!");
-        localStorage.removeItem("token");
-        localStorage.removeItem("refresh");
-        localStorage.removeItem("user");
+        clearLocalStorage();
         queryClient.clear();
         navigate("/sign-in");
       } else {
