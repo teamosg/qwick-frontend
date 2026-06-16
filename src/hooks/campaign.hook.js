@@ -96,13 +96,7 @@ export const useSubmitCampaignContent = (campaignId) => {
                 toast.error(data?.message || "Failed to submit content");
             }
         },
-        onError: (error) => {
-            if (error?.response?.status === 400) {
-                toast.error("Please check your links and media file for errors.");
-            } else {
-                handleApiError({ error, errorMessage: "Failed to submit content" });
-            }
-        },
+        onError: (error) => { handleApiError({ error, errorMessage: "Failed to submit content" }); },
     });
 };
 
