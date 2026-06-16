@@ -28,6 +28,14 @@ import AvatarUser from "@/components/ui/AvatarUser";
 // Menu items.
 const items = [
   {
+    title: "Announcements",
+    url: "announcement",
+  },
+  {
+    title: "Community Chat",
+    url: "community-chat",
+  },
+  {
     title: "My Campaigns",
     url: "content-payout",
   },

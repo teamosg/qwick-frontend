@@ -219,6 +219,14 @@ const router = createBrowserRouter([
                 path: "content-reward/edit/:id",
                 element: <ContentRewardDetailsEdit />,
               },
+              {
+                path: "announcement",
+                element: <AnnouncementFeed />,
+              },
+              {
+                path: "community-chat",
+                element: <CommunityChat />,
+              },
             ]
           }
         ],

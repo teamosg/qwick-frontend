@@ -10,19 +10,20 @@ import { toast } from "sonner";
 
 
 const AnnouncementFeed = () => {
-  const { selectedCreatorCommunity } = useCommunityStore()
+  const { selectedCreatorCommunity, selectedBrandCommunity } = useCommunityStore()
+  const community = selectedCreatorCommunity || selectedBrandCommunity
 
   const [postText, setPostText] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const fileInputRef = useRef(null);
 
-  const creator = selectedCreatorCommunity?.creator
+  const creator = community?.creator
 
 
-  const communityUsername = selectedCreatorCommunity?.username;
+  const communityUsername = community?.username;
   const { data: announcementsList, isLoading: isLoadingAnnouncements } = useGetAnnouncementsList(communityUsername);
-  const canPost = selectedCreatorCommunity?.can_edit
+  const canPost = community?.can_edit
 
 
   const { mutate: createAnnouncement, isPending: isCreatingAnnouncement } = useCreateAnnouncements(communityUsername)
