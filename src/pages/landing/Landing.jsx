@@ -28,7 +28,7 @@ const Landing = () => {
         <ImpactDivider />
 
         {/* Second Set of Features (as seen in image) */}
-       <CampaignDropsAnother />
+        <CampaignDropsAnother />
         <SubmitClipsAnother />
         <EarningsSectionAnother />
 

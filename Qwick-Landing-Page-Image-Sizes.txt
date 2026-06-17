@@ -1,0 +1,101 @@
+QWick LANDING PAGE — IMAGE SIZE GUIDE
+=====================================
+
+Hello,
+
+Please use the dimensions below when preparing final images for the Qwick landing page. These sizes match how each image is displayed on desktop, tablet, and mobile.
+
+
+1. LOGO (Navbar & Footer)
+-------------------------
+Recommended size:  400 x 110 px (wide ratio ~3.5:1)
+Format:            PNG or WebP with transparent background
+Notes:
+  - Shown at roughly 144px wide in the navbar.
+  - Export at 2x for sharp display on retina screens.
+  - Keep important content centered — it scales down on mobile.
+
+
+2. HERO BACKGROUND (Top Banner)
+-------------------------------
+Recommended size:  1920 x 1080 px (16:9)
+Minimum size:      1600 x 900 px
+Format:            JPG or WebP (optimized, under ~500 KB if possible)
+Notes:
+  - Full-screen background — edges may crop on some screen sizes.
+  - Keep the main subject in the CENTER of the image.
+  - Used as video poster/fallback if a background video is added.
+
+Optional hero video (if provided):
+  - Resolution: 1920 x 1080 px, 16:9
+  - Format:     MP4 (H.264), no audio or muted
+  - Length:     10–30 seconds, looping
+
+
+3. FEATURE SECTION IMAGES (6 images needed)
+---------------------------------------------
+All feature images use the same specs.
+
+Recommended size:  1200 x 675 px (16:9)
+Ideal (retina):    1600 x 900 px or 1920 x 1080 px
+Format:            JPG or WebP
+Notes:
+  - Displayed in rounded 16:9 frames.
+  - Important content should stay in the CENTER — corners may crop on mobile.
+
+Please provide one image for each section:
+
+  #   Section                              Suggested content
+  --  -----------------------------------  ------------------------------------------
+  1   Explore campaigns on Qwick           Qwick Discover page / campaign browsing
+  2   Create and post                      Creator posting or submitting content
+  3   Earn payouts                         Earnings dashboard / payout screen
+  4   Create your community                Brand community setup
+  5   Launch a campaign in minutes         Campaign creation flow
+  6   Stay in control of your budget       Budget / performance dashboard
+
+
+4. VIDEO GUIDE THUMBNAIL ("Learn Your way Around")
+--------------------------------------------------
+Recommended size:  1600 x 900 px (16:9)
+Format:            JPG or WebP
+Notes:
+  - Shown before the video plays.
+  - A play button overlay is added on the website.
+
+Optional — video guide files (5 lessons):
+  - Resolution: 1920 x 1080 px, 16:9
+  - Format:     MP4
+  - Length:     Short clips, 2–5 minutes each
+
+
+GENERAL GUIDELINES
+------------------
+- Aspect ratio:  Use 16:9 for all feature and hero images unless noted otherwise.
+- File size:     Aim for under 300 KB per image (WebP preferred).
+- Safe zone:     Keep logos, text, and key UI centered — sides and corners may crop on smaller screens.
+- File naming:   Use clear names, e.g.:
+                   hero-background.jpg
+                   feature-campaigns.jpg
+                   feature-submit.jpg
+                   feature-earnings.jpg
+                   feature-community.jpg
+                   feature-launch.jpg
+                   feature-budget.jpg
+                   video-guide-thumbnail.jpg
+- Avoid embedding text in feature images if possible — section headings are already on the page.
+
+
+QUick REFERENCE SUMMARY
+-----------------------
+Asset                  Dimensions          Ratio    Format
+-----                  ----------          -----    ------
+Logo                   400 x 110 px        ~3.5:1   PNG / WebP (transparent)
+Hero background        1920 x 1080 px      16:9     JPG / WebP
+Feature images (x6)    1200 x 675 px min   16:9     JPG / WebP
+Video thumbnail        1600 x 900 px       16:9     JPG / WebP
+
+
+If you share drafts before final export, we can confirm crop and placement on desktop and mobile.
+
+Thank you!

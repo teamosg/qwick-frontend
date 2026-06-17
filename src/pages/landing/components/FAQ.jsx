@@ -37,10 +37,10 @@ const faqs = [
 
 const FAQ = () => {
   return (
-    <section className="py-24 bg-white">
-      <div className="container mx-auto px-6 max-w-3xl">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4 font-inter">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
+        <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 font-inter">
             Frequently Asked Questions
           </h2>
         </div>
@@ -53,11 +53,11 @@ const FAQ = () => {
               className="border-b border-slate-100"
             >
               <Accordion.Header>
-                <Accordion.Trigger className="w-full py-6 flex items-center justify-between text-left group">
-                  <span className="font-bold text-slate-900 font-inter group-hover:text-[#9B9B9B] transition-colors">
+                <Accordion.Trigger className="w-full py-4 sm:py-6 flex items-center justify-between text-left group gap-4">
+                  <span className="font-bold text-sm sm:text-base text-slate-900 font-inter group-hover:text-[#9B9B9B] transition-colors pr-2">
                     {faq.question}
                   </span>
-                  <div className="w-6 h-6 flex items-center justify-center">
+                  <div className="w-6 h-6 flex items-center justify-center shrink-0">
                     <Plus
                       className="group-data-[state=open]:hidden transition-transform"
                       size={20}

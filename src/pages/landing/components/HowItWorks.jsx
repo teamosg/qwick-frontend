@@ -55,26 +55,26 @@ const HowItWorks = () => {
 
   return (
     <section
-      className="py-24 bg-white border-t border-slate-100"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white border-t border-slate-100"
       id="video-guides"
     >
-      <div className="container mx-auto px-6 text-center mb-16">
+      <div className="container mx-auto px-4 sm:px-6 text-center mb-10 sm:mb-12 lg:mb-16">
         <span className="text-[10px] font-black text-[#9B9B9B] uppercase tracking-widest   px-3 py-2  rounded  font-inter">
           Video Guide
         </span>
-        <h2 className="text-3xl md:text-5xl font-medium mb-4 mt-2 font-inter tracking-tighter ">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-medium mb-3 sm:mb-4 mt-2 font-inter tracking-tighter">
           Learn Your Way Around
         </h2>
-        <p className="text-[#9B9B9B] max-w-xl mx-auto font-inter">
+        <p className="text-[#9B9B9B] max-w-xl mx-auto font-inter text-sm sm:text-base px-2 sm:px-0">
           Follow our quick, step-by-step video guides and get comfortable using
           the platform in minutes, no guesswork needed.{" "}
         </p>
       </div>
 
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 max-w-6xl mx-auto">
           {/* Video Player Area */}
-          <div className="lg:w-2/3 aspect-video bg-black rounded-[2.5rem] overflow-hidden shadow-2xl relative group border border-slate-100/10">
+          <div className="lg:w-2/3 aspect-video bg-black rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-2xl relative group border border-slate-100/10">
             {isPlaying ? (
               <video
                 src={activeLesson.videoUrl}
@@ -95,17 +95,17 @@ const HowItWorks = () => {
                 <div className="absolute inset-0 flex items-center justify-center z-10">
                   <div
                     onClick={() => setIsPlaying(true)}
-                    className="w-24 h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all cursor-pointer group/play"
+                    className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all cursor-pointer group/play"
                   >
                     <Play
-                      size={32}
-                      className="text-white fill-white ml-2 group-hover/play:scale-110 transition-transform"
+                      size={28}
+                      className="text-white fill-white ml-1 sm:ml-2 sm:w-8 sm:h-8 group-hover/play:scale-110 transition-transform"
                     />
                   </div>
                 </div>
                 {/* Simple video UI overlay */}
-                <div className="absolute bottom-0 inset-x-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
-                  <div className="flex items-center gap-4 text-white/60 text-sm">
+                <div className="absolute bottom-0 inset-x-0 p-4 sm:p-6 md:p-8 bg-gradient-to-t from-black/80 to-transparent">
+                  <div className="flex items-center gap-3 sm:gap-4 text-white/60 text-xs sm:text-sm">
                     <div className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
                       <div className="h-full bg-white w-1/3" />
                     </div>
@@ -127,14 +127,14 @@ const HowItWorks = () => {
                 <button
                   key={lesson.id}
                   onClick={() => handleLessonClick(lesson.id)}
-                  className={`w-full text-left p-4 rounded-2xl border transition-all flex items-center gap-4 group ${
+                  className={`w-full text-left p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all flex items-center gap-3 sm:gap-4 group ${
                     activeLessonId === lesson.id
                       ? "bg-slate-900 border-slate-900 text-white shadow-lg"
                       : "bg-white border-slate-100 text-slate-900 hover:border-slate-300"
                   }`}
                 >
                   <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 ${
                       activeLessonId === lesson.id
                         ? "bg-white/10"
                         : "bg-slate-100"
@@ -167,12 +167,12 @@ const HowItWorks = () => {
               ))}
             </div>
 
-            <div className="flex justify-between gap-2">
-              <button className="w-full mt-6 px-2 py-4 border border-slate-200 rounded-2xl flex items-center justify-center cursor-pointer gap-2 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+            <div className="flex flex-col sm:flex-row justify-between gap-2">
+              <button className="w-full mt-4 sm:mt-6 px-2 py-3 sm:py-4 border border-slate-200 rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer gap-2 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                 <FileText size={18} />
                 Download Guide (PDF)
               </button>
-              <button className="w-full mt-6 px-2 py-4 border border-slate-200 rounded-2xl flex items-center justify-center cursor-pointer gap-2 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+              <button className="w-full mt-2 sm:mt-6 px-2 py-3 sm:py-4 border border-slate-200 rounded-xl sm:rounded-2xl flex items-center justify-center cursor-pointer gap-2 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                 <PlayCircle size={18} />
                 See Youtube Channel
               </button>

@@ -11,7 +11,7 @@ const LandingHero = () => {
   const videoUrl = "https://cdn.pixabay.com/video/2024/05/26/213757_tiny.mp4";
 
   return (
-    <section className="relative min-h-[100vh] w-full overflow-hidden flex items-center">
+    <section className="relative min-h-[100vh] w-full overflow-hidden flex items-center pt-16 md:pt-0">
       {/* Background Media with Overlay */}
       <div className="absolute inset-0 z-0">
         {backgroundMode === "video" ? (
@@ -35,13 +35,13 @@ const LandingHero = () => {
         <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-6xl font-bold font-inter  text-white mb-8 leading-tight "
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-inter text-white mb-5 sm:mb-6 lg:mb-8 leading-tight px-2 sm:px-0"
           >
             Earn from making content, even with zero followers
           </motion.h1>
@@ -50,7 +50,7 @@ const LandingHero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-[#9B9B9B] leading-relaxed mb-12 max-w-2xl font-inter"
+            className="text-base sm:text-lg md:text-xl text-[#9B9B9B] leading-relaxed mb-8 sm:mb-10 lg:mb-12 max-w-2xl font-inter px-2 sm:px-0"
           >
             Discover campaigns from brands and creators, post or clip content,
             and earn based on performance.
@@ -60,11 +60,11 @@ const LandingHero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row  items-center gap-6"
+            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto px-4 sm:px-0"
           >
             <Link
               to="/home"
-              className="w-full sm:w-auto px-10 cursor-pointer py-5 bg-white text-black  rounded-2xl hover:bg-[#EF0C18] hover:text-white transition-all flex items-center justify-center gap-3 group shadow-2xl shadow-white/10 uppercase tracking-widest text-sm font-inter"
+              className="w-full sm:w-auto px-8 sm:px-10 cursor-pointer py-4 sm:py-5 bg-white text-black rounded-xl sm:rounded-2xl hover:bg-[#EF0C18] hover:text-white transition-all flex items-center justify-center gap-3 group shadow-2xl shadow-white/10 uppercase tracking-widest text-xs sm:text-sm font-inter"
             >
               Get Started
               <ArrowRight
