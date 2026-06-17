@@ -25,6 +25,7 @@ import SuccessfullyUpdated from "@/pages/auth/SuccessfullyUpdated";
 import SuccessfullyVerified from "@/pages/auth/SuccessfullyVerified";
 import VerifyAccount from "@/pages/auth/VerifyAccount";
 import Dashboard from "@/pages/dashboard/Dashboard";
+import CampaignDetails from "@/pages/discover/CampaignDetails";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
       {
         path: "/discover",
         element: <Discover />,
+      },
+      {
+        path: "/discover/:campaignId",
+        element: <CampaignDetails />,
       },
       {
         path: "/join-community/:communityUsername",
