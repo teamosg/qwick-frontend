@@ -18,6 +18,22 @@ export const useGetAllCampaigns = () => {
     });
 };
 
+export const useGetSingleCampaign = (campaignId) => {
+    return useQuery({
+        queryKey: ["singleCampaign", campaignId],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get(`/v1/campaigns/${campaignId}/`);
+                return res?.data?.campaign;
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch campaign" });
+            }
+        },
+        enabled: !!campaignId,
+        staleTime: 1000 * 60 * 2, // cache for 2 mins
+    });
+};
+
 
 export const useCreateCampaign = (communityId, setAlert) => {
     const queryClient = useQueryClient();
@@ -96,13 +112,7 @@ export const useSubmitCampaignContent = (campaignId) => {
                 toast.error(data?.message || "Failed to submit content");
             }
         },
-        onError: (error) => {
-            if (error?.response?.status === 400) {
-                toast.error("Please check your links and media file for errors.");
-            } else {
-                handleApiError({ error, errorMessage: "Failed to submit content" });
-            }
-        },
+        onError: (error) => { handleApiError({ error, errorMessage: "Failed to submit content" }); },
     });
 };
 

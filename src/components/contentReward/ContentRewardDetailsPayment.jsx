@@ -10,59 +10,20 @@ import { useState, useMemo } from "react";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
 import { toast } from "sonner";
 import { useParams, useNavigate } from "react-router";
-import { useGetAllCampaigns, useSubmitCampaignContent } from "@/hooks/campaign.hook";
+import { useGetSingleCampaign, useSubmitCampaignContent } from "@/hooks/campaign.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import CampaignDetailsSkeleton from "./CampaignDetailsSkeleton";
 import CampaignProgress from "@/components/dashboard/Dashboard/ContentReward/CampaignProgress";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
-const platformPatterns = {
-  youtube: {
-    patterns: [
-      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?(?:.*&)?v=|youtu\.be\/|youtube\.com\/shorts\/|m\.youtube\.com\/watch\?(?:.*&)?v=|youtube\.com\/embed\/)[\w-]+/,
-      /(?:https?:\/\/)?(?:www\.)?youtube\.com\/@[\w.-]+/
-    ],
-    expected: "YouTube"
-  },
-  instagram: {
-    patterns: [
-      /(?:https?:\/\/)?(?:www\.)?instagram\.com\/(?:p|reel|tv|stories|share)\/[\w-]+/,
-      /(?:https?:\/\/)?(?:www\.)?instagram\.com\/[A-Za-z0-9_.]+/
-    ],
-    expected: "Instagram"
-  },
-  tiktok: {
-    patterns: [
-      /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/@[\w.]+\/video\/[\d]+/,
-      /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/@[\w.]+/,
-      /(?:https?:\/\/)?vm\.tiktok\.com\/[\w]+/
-    ],
-    expected: "TikTok"
-  }
-};
-
-const validateSingleLink = (platformKey, value) => {
-  if (!value || !value.trim()) return "";
-  const platformRule = platformPatterns[platformKey];
-  if (!platformRule) return "";
-  const isValid = platformRule.patterns.some(pattern => pattern.test(value.trim()));
-  if (!isValid) {
-    return `Please enter a valid ${platformRule.expected} link.`;
-  }
-  return "";
-};
 
 const ContentRewardDetailsPayment = () => {
   const { campaignId, communityUsername } = useParams();
   const navigate = useNavigate();
   const { selectedCreatorCommunity } = useCommunityStore();
-  const { data: campaignRes, isLoading: isLoadingCampaigns } = useGetAllCampaigns();
+  const { data: campaign, isLoading } = useGetSingleCampaign(campaignId);
   const { mutate: submitContent, isPending: isSubmitting } = useSubmitCampaignContent(campaignId);
-
-  const campaign = useMemo(() => {
-    return campaignRes?.campaigns?.find(c => c.id === parseInt(campaignId));
-  }, [campaignRes, campaignId]);
 
   const [files, setFiles] = useState();
   const [showPopup, setShowPopup] = useState(false);
@@ -118,27 +79,13 @@ const ContentRewardDetailsPayment = () => {
       [platform]: value,
     }));
 
-    // Real-time validation for link fields
-    if (platform.endsWith("_link")) {
-      const platformKey = platform.replace("_link", "");
-      if (availablePlatforms.includes(platformKey)) {
-        const error = validateSingleLink(platformKey, value);
-        setErrors((prev) => ({ ...prev, [platform]: error }));
-      }
-    } else if (platform === "termsAccepted") {
+    if (platform === "termsAccepted") {
       setErrors((prev) => ({ ...prev, [platform]: "" }));
     }
   };
 
-  // Validate the current platform's link when switching platforms
   const handlePlatformSelect = (platformId) => {
     setSelectedPlatform(platformId);
-    const fieldKey = `${platformId}_link`;
-    const value = formData[fieldKey];
-    if (value && value.trim()) {
-      const error = validateSingleLink(platformId, value);
-      setErrors((prev) => ({ ...prev, [fieldKey]: error }));
-    }
   };
 
   const validateForm = () => {
@@ -152,21 +99,6 @@ const ContentRewardDetailsPayment = () => {
     if (!hasAnyLink && availablePlatforms.length > 0) {
       newErrors.general = "Please provide at least one social media link.";
     }
-
-    // Validate each platform link matches the correct platform
-    Object.entries(formData).forEach(([key, val]) => {
-      if (key === "termsAccepted") return;
-      const platformKey = key.replace("_link", "");
-      if (!availablePlatforms.includes(platformKey) || !val.trim()) return;
-
-      const platformRule = platformPatterns[platformKey];
-      if (!platformRule) return;
-
-      const isValid = platformRule.patterns.some(pattern => pattern.test(val.trim()));
-      if (!isValid) {
-        newErrors[key] = `Please enter a valid ${platformRule.expected} link.`;
-      }
-    });
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -208,7 +140,7 @@ const ContentRewardDetailsPayment = () => {
     );
   }
 
-  if (isLoadingCampaigns) {
+  if (isLoading) {
     return <CampaignDetailsSkeleton />;
   }
 

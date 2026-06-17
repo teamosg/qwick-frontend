@@ -1,5 +1,6 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 
 import JoinCommunityImage from '@/assets/JoinCommunityImage.png'
 import { useJoinCommunity, useGetCommunityByUsername } from "@/hooks/community.hook";
@@ -8,6 +9,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const JoinCommunity = () => {
   const { communityUsername } = useParams();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { data: community, isLoading, isError } = useGetCommunityByUsername(communityUsername);
   const { mutate: joinCommunity, isPending: isJoining } = useJoinCommunity()
 
@@ -42,7 +45,23 @@ const JoinCommunity = () => {
 
   const handleJoinCommunity = () => {
     if (communityUsername) {
-      joinCommunity({ communityUsername })
+      joinCommunity(
+        { communityUsername },
+        {
+          onSuccess: async () => {
+            await queryClient.refetchQueries({
+              queryKey: ["community", communityUsername],
+            });
+            const updatedCommunity = queryClient.getQueryData([
+              "community",
+              communityUsername,
+            ]);
+            if (updatedCommunity?.is_member) {
+              window.location.href = `/announcement/${communityUsername}/content-reward`;
+            }
+          },
+        }
+      );
     }
   }
 
@@ -147,12 +166,12 @@ const JoinCommunity = () => {
             whileTap={{ scale: 0.95 }}
           >
             <button
-              disabled={isJoining || community?.is_member}
+              disabled={isJoining || community?.is_member || community?.is_waitlist}
               onClick={handleJoinCommunity}
               className="mx-auto max-w-sm flex items-center justify-center w-full text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-[18px] font-semibold p-2.5 rounded-full cursor-pointer transition shadow-xl disabled:bg-muted disabled:cursor-not-allowed"
             >
               {
-                isJoining ? <Spinner className={'text-white size-6'} /> : (community?.is_member ? 'Already joined' : 'Join Community')
+                isJoining ? <Spinner className={'text-white size-6'} /> : (community?.is_member ? 'Already joined' : community?.is_waitlist ? 'Waitlisted' : 'Join Community')
               }
             </button>
           </motion.div>

@@ -9,11 +9,12 @@ import { LuSend } from "react-icons/lu";
 import ChatSkeleton from "./ChatSkeleton";
 
 const CommunityChat = () => {
-  const { selectedCreatorCommunity } = useCommunityStore();
+  const { selectedCreatorCommunity, selectedBrandCommunity } = useCommunityStore();
+  const community = selectedCreatorCommunity || selectedBrandCommunity;
   const token = localStorage.getItem("token");
   const { data: user } = useProfile();
 
-  const communityUsername = selectedCreatorCommunity?.username;
+  const communityUsername = community?.username;
   const { data: conversationData, isLoading: isHistoryLoading } = useGetCommunityConversations(communityUsername);
 
   const [messages, setMessages] = useState([]);
