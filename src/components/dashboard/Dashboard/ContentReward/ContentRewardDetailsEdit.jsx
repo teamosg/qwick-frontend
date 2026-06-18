@@ -254,7 +254,7 @@ const ContentRewardDetailsEdit = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-end">
             {
-              !isEnded && (
+              !is_withdrawn && (
                 <button
                   onClick={() => setShowExtendModal(true)}
                   className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-foreground-strong/10"
