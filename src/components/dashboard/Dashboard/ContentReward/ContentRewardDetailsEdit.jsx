@@ -253,29 +253,29 @@ const ContentRewardDetailsEdit = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-end">
+
+            <button
+              onClick={() => setShowExtendModal(true)}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-foreground-strong/10"
+            >
+              <LucideCalendar size={18} />
+              Extend Date
+            </button>
+
             {is_withdrawn ? (
               <div className="px-6 py-2 bg-red-50 text-red-600 rounded-full text-sm font-bold border border-red-100 flex items-center gap-2">
                 <Wallet size={16} />
                 Campaign Withdrawn
               </div>
             ) : isEnded ? (
-              <>
-                <button
-                  onClick={() => setShowExtendModal(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-foreground-strong/10"
-                >
-                  <LucideCalendar size={18} />
-                  Extend Date
-                </button>
-                <button
-                  onClick={handleWithdrawClick}
-                  disabled={isWithdrawing}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-foreground-strong bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition"
-                >
-                  <Wallet size={18} />
-                  {isWithdrawing ? "Withdrawing..." : "Withdraw Remaining"}
-                </button>
-              </>
+              <button
+                onClick={handleWithdrawClick}
+                disabled={isWithdrawing}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 text-foreground-strong bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition"
+              >
+                <Wallet size={18} />
+                {isWithdrawing ? "Withdrawing..." : "Withdraw Remaining"}
+              </button>
             ) : (
               <div className="px-6 py-2 bg-emerald-50 text-foreground-strong rounded-full text-sm font-bold border border-emerald-100">
                 Active Campaign

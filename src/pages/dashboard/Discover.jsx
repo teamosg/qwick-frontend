@@ -3,8 +3,7 @@ import DiscoverFilter from "@/components/discover/Filter";
 import Pagination from "@/components/discover/Pagination";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetAllCampaigns } from "@/hooks/campaign.hook";
-import { useGetCommunityList, useGetMyCommunityList } from "@/hooks/community.hook";
-import { useCommunityStore } from "@/store/communityStore";
+import { useGetCommunityList } from "@/hooks/community.hook";
 import { useState, useMemo } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { useNavigate } from "react-router";
@@ -18,9 +17,7 @@ const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 const Discover = () => {
   const navigate = useNavigate();
   const { data: campaignRes, isLoading: isLoadingCampaigns } = useGetAllCampaigns();
-  const { data: myCommunityRes, isLoading: isLoadingMyCommunities } = useGetMyCommunityList();
   const { data: allCommunities, isLoading: isLoadingAllCommunities } = useGetCommunityList();
-  const { setSelectedCreatorCommunity } = useCommunityStore();
 
   const [selectedType, setSelectedType] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -81,44 +78,14 @@ const Discover = () => {
   );
 
   const handleCampaignClick = (campaign) => {
-    const joinedCommunities = myCommunityRes?.joined_communities || [];
-    const createdCommunities = myCommunityRes?.created_communities || [];
-
-    const communityId = campaign.community;
-
-    // Check if user is the creator
-    const communityAsCreator = createdCommunities.find(c => c.id === communityId);
-
-    // Check if campaign has ended
     const isEnded = campaign.end_date && new Date(campaign.end_date) < new Date();
 
-    if (isEnded && !communityAsCreator) {
+    if (isEnded) {
       toast.error("This campaign has ended.");
       return;
     }
 
-    if (communityAsCreator) {
-      navigate(`/announcement/${communityAsCreator?.username}/content-reward`);
-      // toast.info("As the creator of this community, you cannot join as a member.");
-      return;
-    }
-
-    // Check if user has joined
-    const communityAsMember = joinedCommunities.find(c => c.id === communityId);
-
-    if (communityAsMember) {
-      // Already joined
-      setSelectedCreatorCommunity(communityAsMember);
-      navigate(`/announcement/${communityAsMember?.username}/content-reward`);
-    } else {
-      // Find community username from all communities to navigate to join page
-      const targetCommunity = allCommunities?.find(c => c.id === communityId);
-      if (targetCommunity?.username) {
-        navigate(`/join-community/${targetCommunity.username}`);
-      } else {
-        toast.error("Community information not found.");
-      }
-    }
+    navigate(`/discover/${campaign.id}`);
   };
 
   const containerVariants = {
@@ -149,7 +116,7 @@ const Discover = () => {
     },
   };
 
-  if (isLoadingCampaigns || isLoadingMyCommunities || isLoadingAllCommunities) {
+  if (isLoadingCampaigns || isLoadingAllCommunities) {
     return (
       <div className="p-4">
         <DiscoverSkeleton />
