@@ -424,6 +424,14 @@ const ContentRewardDetails = () => {
                       )
                     ))}
                   </div>
+
+                  {/* 24-hour upload notice */}
+                  <div className="flex items-start gap-2.5 px-1">
+                    <CircleAlert size={14} className="text-amber-500 shrink-0 mt-0.5" />
+                    <p className="text-[11px] text-amber-700 dark:text-amber-400 font-medium leading-relaxed">
+                      Videos must be uploaded within 24 hours of submission. Content older than 24 hours cannot be submitted to campaigns.
+                    </p>
+                  </div>
                 </div>
 
                 {/* Conditional Platform Link Input */}
@@ -481,6 +489,7 @@ const ContentRewardDetails = () => {
                   </div>
                   {errors.files && <p className="text-red-500 text-[10px] font-bold px-1 uppercase">{errors.files}</p>}
                 </div>
+
               </div>
 
               {/* Terms and Conditions */}
