@@ -1,8 +1,6 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 export const useCommunityStore = create(
-    persist(
         (set) => ({
 
             selectedBrandCommunity: null,
@@ -20,9 +18,4 @@ export const useCommunityStore = create(
             setMyCommunityListAnnouncement: communityList => set({ myCommunityListAnnouncement: communityList }),
 
         }),
-        {
-            name: "communityStore",
-            // getStorage: () => localStorage,
-        }
-    )
 )
