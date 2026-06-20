@@ -1,6 +1,6 @@
 import LegalSvg from "@/assets/svg/LegalSvg";
 import { Bell, ChevronRight, Share2, Check } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import DeleteCommunityAlert from "./DeleteCommunityAlert";
 import { useState } from "react";
 import { useCommunityStore } from "@/store/communityStore";
@@ -8,6 +8,7 @@ import { useProfile } from "@/hooks/auth.hook";
 import { toast } from "sonner";
 
 const DashboardSettings = () => {
+  const { communityUsername } = useParams();
   const { selectedBrandCommunity } = useCommunityStore();
   const { data: user } = useProfile();
   const [copied, setCopied] = useState(false);
@@ -33,7 +34,7 @@ const DashboardSettings = () => {
       </h2>
       <div className=" space-y-3">
         <Link
-          to={"/dashboard/dashboard-settings/notifications"}
+          to={`/dashboard/${communityUsername}/dashboard-settings/notifications`}
           className="flex items-center justify-between bg-card dark:bg-card rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
         >
           <div className="flex items-center justify-center gap-3">
@@ -58,7 +59,7 @@ const DashboardSettings = () => {
           <ChevronRight className="size-5" />
         </div>
 
-        <Link
+        {/* <Link
           to={""}
           className="flex items-center justify-between bg-card dark:bg-card rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
         >
@@ -67,7 +68,7 @@ const DashboardSettings = () => {
             <h3 className="text-foreground-strong dark:text-white text-[16px] font-semibold ">Legal</h3>
           </div>
           <ChevronRight className="size-5" />
-        </Link>
+        </Link> */}
 
         <DeleteCommunityAlert />
       </div>
