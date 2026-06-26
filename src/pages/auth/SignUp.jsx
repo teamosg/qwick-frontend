@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import {
-  FaEnvelope,
+  // FaEnvelope,
   FaEye,
   FaEyeSlash,
-  FaFacebook,
-  FaLock,
-  FaUser,
+  // FaFacebook,
+  // FaLock,
+  // FaUser,
 } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
@@ -134,15 +134,15 @@ const SignUp = () => {
                 <label className="text-black dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
                   Name
                 </label>
-                <div className="relative flex">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="relative">
+                  {/* <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <FaUser className="text-gray-400" />
-                  </div>
+                  </div> */}
                   <input
                     type="text"
                     {...register("full_name")}
                     placeholder="Name"
-                    className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
+                    className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
                   />
                 </div>
                 {errors.full_name && (
@@ -156,10 +156,10 @@ const SignUp = () => {
                 <label className="text-black dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
                   Username
                 </label>
-                <div className="relative flex">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="relative">
+                  {/* <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <FaUser className="text-gray-400" />
-                  </div>
+                  </div> */}
                   <input
                     type="text"
                     {...register("username")}
@@ -168,7 +168,7 @@ const SignUp = () => {
                       form.setValue("username", formatted);
                     }}
                     placeholder="Username"
-                    className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
+                    className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
                   />
                 </div>
                 {errors.username && (
@@ -185,14 +185,14 @@ const SignUp = () => {
                 Email
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                {/* <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaEnvelope className="text-gray-400" />
-                </div>
+                </div> */}
                 <input
                   type="email"
                   {...register("email")}
                   placeholder="Email"
-                  className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
+                  className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
                 />
               </div>
               {errors.email && (
@@ -208,14 +208,14 @@ const SignUp = () => {
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                {/* <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaLock className="text-gray-400" />
-                </div>
+                </div> */}
                 <input
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
                   placeholder="Password"
-                  className="w-full pl-10 pr-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
+                  className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
                 />
                 <button
                   type="button"
