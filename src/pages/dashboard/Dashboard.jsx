@@ -34,8 +34,11 @@ const Dashboard = () => {
       // Find the community that matches the username in URL, fallback to the first one
       const targetCommunity = createdCommunityList.find((c) => c.username === communityUsername) || createdCommunityList[0];
 
-      // Update store only if different
-      if (selectedBrandCommunity?.id !== targetCommunity.id) {
+      // Update store only if different or if data has changed (e.g. require_approval)
+      if (
+        selectedBrandCommunity?.id !== targetCommunity.id ||
+        selectedBrandCommunity?.require_approval !== targetCommunity.require_approval
+      ) {
         setSelectedBrandCommunity(targetCommunity);
       }
     } else if (selectedBrandCommunity !== null) {
