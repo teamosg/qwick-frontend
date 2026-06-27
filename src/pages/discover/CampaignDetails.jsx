@@ -33,10 +33,8 @@ const CampaignDetails = () => {
       return;
     }
 
-    const loggedInUserId = currentUser?.id;
-
     // Check if user is the campaign creator
-    if (campaign.creator?.id === loggedInUserId) {
+    if (campaign?.creator?.username === currentUser?.username) {
       navigate(`/dashboard/${communityUsername}/content-reward/edit/${campaign.id}`);
       return;
     }
@@ -84,7 +82,6 @@ const CampaignDetails = () => {
     end_date,
     currency,
     community,
-    is_member,
     creator,
     flat_fee_bonus,
   } = campaign;
