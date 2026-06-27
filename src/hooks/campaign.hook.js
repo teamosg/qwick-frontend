@@ -249,6 +249,10 @@ export const useExtendCampaign = (campaignId) => {
             if (data?.success || data?.status === 200) {
                 toast.success(data?.message || "Campaign extended successfully");
                 queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+
+                if (data?.data?.checkout_url) {
+                    window.location.href = data.data.checkout_url;
+                }
             } else {
                 toast.error(data?.message || "Failed to extend campaign");
             }
