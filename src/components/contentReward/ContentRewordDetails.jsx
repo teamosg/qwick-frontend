@@ -161,8 +161,15 @@ const ContentRewardDetails = () => {
     category,
     platforms,
     // budget,
+    max_payout,
+    min_payout,
     content_requirement,
     available_content,
+    end_date,
+    currency,
+    community,
+    creator,
+    flat_fee_bonus,
   } = campaign;
 
   const fullThumbnail = thumbnail?.startsWith("http")
@@ -201,9 +208,14 @@ const ContentRewardDetails = () => {
                 alt="Profile"
                 className="w-10 h-10 rounded-full border border-gray-100 dark:border-zinc-700 object-cover"
               />
-              <span className="text-base font-semibold text-gray-900 dark:text-white transition capitalize">
-                {name}
-              </span>
+              <div className="flex flex-col">
+                <span className="text-base font-semibold text-gray-900 dark:text-white transition capitalize leading-tight">
+                  {name}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  by {community?.business_name || community?.username || "N/A"}
+                </span>
+              </div>
             </div>
 
             <span className="font-bold text-foreground-strong dark:text-foreground-strong text-lg">
@@ -230,7 +242,7 @@ const ContentRewardDetails = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-6 py-6 border-y border-gray-50 dark:border-zinc-800/50">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 py-6 border-y border-gray-50 dark:border-zinc-800/50">
               <div>
                 <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
                   Type
@@ -241,9 +253,17 @@ const ContentRewardDetails = () => {
               </div>
               <div>
                 <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
+                  Category
+                </p>
+                <p className="text-foreground text-sm font-medium dark:text-foreground">
+                  {category?.name || "N/A"}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
                   Platforms
                 </p>
-                <div className="flex gap-3 text-foreground dark:text-foreground">
+                <div className="flex gap-2 text-foreground dark:text-foreground">
                   {platforms?.map((p, idx) => {
                     const pName = p.name?.toLowerCase();
                     if (pName === 'instagram') return <FaInstagram key={idx} size={18} />;
@@ -256,10 +276,42 @@ const ContentRewardDetails = () => {
               </div>
               <div>
                 <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
-                  Category
+                  Max Payout
                 </p>
                 <p className="text-foreground text-sm font-medium dark:text-foreground">
-                  {category?.name || "N/A"}
+                  ${max_payout || 0}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
+                  Min Payout
+                </p>
+                <p className="text-foreground text-sm font-medium dark:text-foreground">
+                  ${min_payout || 0}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
+                  Flat Bonus
+                </p>
+                <p className="text-foreground text-sm font-medium dark:text-foreground">
+                  ${flat_fee_bonus || 0}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
+                  Currency
+                </p>
+                <p className="text-foreground text-sm font-medium dark:text-foreground">
+                  {currency || "USD"}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] text-foreground-subtle dark:text-muted-foreground mb-1 font-bold uppercase tracking-wider">
+                  Budget Remaining
+                </p>
+                <p className="text-foreground text-sm font-medium dark:text-foreground">
+                  ${parseFloat(budget || 0).toFixed(2)}
                 </p>
               </div>
             </div>
@@ -326,6 +378,7 @@ const ContentRewardDetails = () => {
                   `Verified campaign for ${category?.name}`,
                   "Fast approval process",
                   `Support for ${platforms?.map(p => p.name).join(", ")}`,
+                  creator?.username ? `Created by ${creator?.username}` : null,
                   campaign.end_date ? `Campaign ${isEnded ? "expired" : "ends"} on ${campaign.end_date}` : null
                 ].filter(Boolean).map((item, i) => (
                   <li key={i} className="flex gap-2.5 items-center">

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useResetPassword } from "../../hooks/auth.hook.js";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import LogoOnly from "@/components/Logo/LogoOnly";
 import Logo from "@/components/Logo/Logo";
 
@@ -191,7 +191,7 @@ const ResetPassword = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div> 
 
       {/* Right side - Image (hidden on mobile) */}
       <div className="hidden md:block md:w-1/2">

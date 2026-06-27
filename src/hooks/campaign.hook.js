@@ -193,6 +193,7 @@ export const useUpdateCampaign = (campaignId) => {
             if (data?.success) {
                 toast.success(data?.message || "Campaign updated successfully");
                 queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+                queryClient.invalidateQueries({ queryKey: ["singleCampaign", campaignId] });
             } else {
                 toast.error(data?.message || "Failed to update campaign");
             }
@@ -249,6 +250,11 @@ export const useExtendCampaign = (campaignId) => {
             if (data?.success || data?.status === 200) {
                 toast.success(data?.message || "Campaign extended successfully");
                 queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+                queryClient.invalidateQueries({ queryKey: ["singleCampaign", campaignId] });
+
+                if (data?.data?.checkout_url) {
+                    window.location.href = data.data.checkout_url;
+                }
             } else {
                 toast.error(data?.message || "Failed to extend campaign");
             }
@@ -272,6 +278,7 @@ export const useWithdrawCampaign = (campaignId) => {
             if (data?.success || data?.status === 200) {
                 toast.success(data?.message || "Remaining balance withdrawn successfully");
                 queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+                queryClient.invalidateQueries({ queryKey: ["singleCampaign", campaignId] });
             } else {
                 toast.error(data?.message || "Failed to withdraw balance");
             }
