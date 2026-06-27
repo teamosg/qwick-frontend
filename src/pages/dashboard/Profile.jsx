@@ -128,7 +128,7 @@ const Profile = () => {
       <Tabs
         orientation="vertical"
         defaultValue={tabs[0].value}
-        className="flex-1 flex flex-col md:flex-row gap-6 min-h-0 overflow-hidden"
+        className="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden gap-0!"
       >
         {/* Tabs Sidebar */}
         <div
