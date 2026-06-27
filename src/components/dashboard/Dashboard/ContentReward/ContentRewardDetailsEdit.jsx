@@ -1,10 +1,10 @@
 import { CircleAlert, X, ExternalLink, Calendar as LucideCalendar, Wallet, CalendarIcon, Pencil } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok, FaGoogleDrive } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ContentRewardNav from "./ContentRewardNav";
-import { useGetAllCampaigns, useExtendCampaign, useWithdrawCampaign, useUpdateCampaign } from "@/hooks/campaign.hook";
+import { useGetSingleCampaign, useExtendCampaign, useWithdrawCampaign, useUpdateCampaign } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
 import CampaignProgress from "./CampaignProgress";
 import { format } from "date-fns";
@@ -23,7 +23,7 @@ const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetailsEdit = () => {
   const { id } = useParams();
-  const { data: campaignRes, isLoading } = useGetAllCampaigns();
+  const { data: campaign, isLoading } = useGetSingleCampaign(id);
 
   const { mutate: extendCampaign, isPending: isExtending } = useExtendCampaign(id);
   const { mutate: withdrawCampaign, isPending: isWithdrawing } = useWithdrawCampaign(id);
@@ -35,10 +35,6 @@ const ContentRewardDetailsEdit = () => {
   const [newEndDate, setNewEndDate] = useState("");
   const [addBudget, setAddBudget] = useState("");
   const [contentLink, setContentLink] = useState("");
-
-  const campaign = useMemo(() => {
-    return campaignRes?.campaigns?.find(c => c.id === parseInt(id));
-  }, [campaignRes, id]);
 
 
   const handleExtendSubmit = () => {
@@ -115,11 +111,16 @@ const ContentRewardDetailsEdit = () => {
     platforms,
     budget,
     max_payout,
+    min_payout,
     total_users_earning,
     initial_budget,
     available_content,
     end_date,
     is_withdrawn,
+    flat_fee_bonus,
+    currency,
+    total_content_views,
+    start_date,
   } = campaign;
 
   const isEnded = end_date ? new Date(end_date) < new Date() : false;
@@ -161,7 +162,7 @@ const ContentRewardDetailsEdit = () => {
               </p>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between mb-9">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 py-6 border-y border-gray-100 dark:border-zinc-800/50 mb-9 text-foreground-subtle">
             <div>
               <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Reward
@@ -180,14 +181,14 @@ const ContentRewardDetailsEdit = () => {
             </div>
             <div>
               <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Maximum Payout
+                Category
               </p>
               <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
-                ${max_payout}
+                {category?.name || "N/A"}
               </p>
             </div>
             <div>
-              <p className="text-foreground text-xs mb-1 font-semibold  dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Platforms
               </p>
               <div className="flex gap-2 dark:text-zinc-400 text-foreground-strong">
@@ -203,10 +204,58 @@ const ContentRewardDetailsEdit = () => {
             </div>
             <div>
               <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Category
+                Minimum Payout
               </p>
               <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
-                {category?.name || "N/A"}
+                ${min_payout || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Maximum Payout
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                ${max_payout || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Flat Fee Bonus
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                ${flat_fee_bonus || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Currency
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                {currency || "USD"}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Total Content Views
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                {total_content_views?.toLocaleString() || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Start Date
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                {start_date || "N/A"}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Budget Remaining
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                ${parseFloat(budget || 0).toFixed(2)}
               </p>
             </div>
           </div>
