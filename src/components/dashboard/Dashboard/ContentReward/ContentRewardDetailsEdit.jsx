@@ -333,9 +333,16 @@ const ContentRewardDetailsEdit = () => {
                       selected={newEndDate ? new Date(newEndDate) : undefined}
                       onSelect={(date) => setNewEndDate(date ? format(date, 'yyyy-MM-dd') : "")}
                       disabled={(date) => {
-                        const today = new Date()
-                        today.setHours(0, 0, 0, 0)
-                        return date < today
+                        if (!end_date) {
+                          const today = new Date();
+                          today.setHours(0, 0, 0, 0);
+                          return date < today;
+                        }
+                        const limitDate = new Date(end_date);
+                        limitDate.setHours(0, 0, 0, 0);
+                        const compareDate = new Date(date);
+                        compareDate.setHours(0, 0, 0, 0);
+                        return compareDate <= limitDate;
                       }}
                       initialFocus
                     />
