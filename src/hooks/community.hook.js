@@ -14,8 +14,8 @@ import { toast } from "sonner";
 export const useCreateCommunity = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ business_name, country, category, subcategory }) => {
-      const payload = { business_name, country, category, subcategory }
+    mutationFn: async ({ business_name, country, category, subcategory, require_approval }) => {
+      const payload = { business_name, country, category, subcategory, require_approval }
       const res = await axiosPrivate.post("/v1/communities/", payload)
       return res?.data || {}
     },

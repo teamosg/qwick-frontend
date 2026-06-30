@@ -6,6 +6,7 @@ import DashboardSingleRewardItem from "./DashboardSingleRewardItem";
 import { useCommunityStore } from "@/store/communityStore";
 import { useCreateCampaign, useGetAllCampaigns } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
+import CampaignCheckoutModal from "./CampaignCheckoutModal";
 
 const DashboardContentReward = () => {
   const [alert, setAlert] = useState(null);
@@ -13,6 +14,9 @@ const DashboardContentReward = () => {
   const { selectedBrandCommunity } = useCommunityStore();
   const { mutate: createCampaign, isPending: isSubmitting } = useCreateCampaign(selectedBrandCommunity?.id, setAlert);
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
+
+  const [checkoutDetails, setCheckoutDetails] = useState(null);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
   const [showForm, setShowForm] = useState(false);
 
@@ -85,8 +89,12 @@ const DashboardContentReward = () => {
     });
 
     createCampaign(payload, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setShowForm(false);
+        if (data?.checkout_url) {
+          setCheckoutDetails(data);
+          setShowCheckoutModal(true);
+        }
       }
     });
   };
@@ -128,7 +136,7 @@ const DashboardContentReward = () => {
             </p>
             <button
               onClick={handleCreateReward}
-              className="w-full sm:w-auto bg-foreground-strong text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-foreground transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-foreground-strong/10"
+              className="w-full sm:w-auto bg-foreground-strong dark:bg-accent text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-foreground-strong/10"
             >
               Create Campaign
             </button>
@@ -144,6 +152,12 @@ const DashboardContentReward = () => {
           <DashboardContentRewardBlank onCreateReward={handleCreateReward} />
         </div>
       )}
+
+      <CampaignCheckoutModal
+        open={showCheckoutModal}
+        setOpen={setShowCheckoutModal}
+        checkoutDetails={checkoutDetails}
+      />
     </div>
   );
 };

@@ -1,10 +1,16 @@
 import { countries } from "@/data/countriesData";
 import { useCreateCommunity } from "@/hooks/community.hook";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, CircleHelp } from "lucide-react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export default function AddCommunityForm({
   formData,
@@ -18,6 +24,7 @@ export default function AddCommunityForm({
   const navigate = useNavigate()
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [requireApproval, setRequireApproval] = useState(true);
 
 
   const filteredCountries = countries.filter(country =>
@@ -57,7 +64,7 @@ export default function AddCommunityForm({
     e.preventDefault()
     if (!valiDateForm()) return
 
-    createCommunity(formData, {
+    createCommunity({ ...formData, require_approval: requireApproval }, {
       onSuccess: data => {
         if (data?.data) navigate('/dashboard')
       }
@@ -104,6 +111,46 @@ export default function AddCommunityForm({
               {errors.business_name}
             </motion.p>
           )}
+        </motion.div>
+
+        {/* Require Approval Checkbox */}
+        <motion.div
+          className="mt-6"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.25 }}
+        >
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="requireApproval"
+              checked={requireApproval}
+              onCheckedChange={(checked) => setRequireApproval(checked)}
+            />
+            <label
+              htmlFor="requireApproval"
+              className="text-base font-medium text-foreground-strong dark:text-white cursor-pointer select-none"
+            >
+              Require Approval
+            </label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center h-5 w-5 rounded-full border border-muted-foreground text-muted-foreground hover:text-foreground hover:border-foreground transition-colors cursor-pointer"
+                  aria-label="Require approval info"
+                >
+                  <CircleHelp className="h-3.5 w-3.5" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                side="top"
+                align="center"
+                className="text-sm text-muted-foreground dark:text-muted-foreground max-w-xs"
+              >
+                If enabled, users will need brand owner permission to join the community.
+              </PopoverContent>
+            </Popover>
+          </div>
         </motion.div>
 
         {/* Country Dropdown */}
@@ -207,7 +254,7 @@ export default function AddCommunityForm({
           <button
             type="submit"
             disabled={isPending}
-            className={`w-full bg-foreground-strong dark:bg-foreground-strong text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition mt-2 font-medium cursor-pointer ${isPending ? "opacity-50 cursor-not-allowed" : ""
+            className={`w-full bg-foreground-strong dark:bg-accent text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition mt-2 font-medium cursor-pointer ${isPending ? "opacity-50 cursor-not-allowed" : ""
               }`}
             data-discover="true"
           >

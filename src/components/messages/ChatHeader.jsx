@@ -8,8 +8,8 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
 
   if (!selectedChat) {
     return (
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
-        <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
+      <div className="flex items-center justify-between p-4 border-b border-border dark:border-border bg-card dark:bg-card shadow-sm">
+        <h2 className="text-base sm:text-lg font-semibold text-qwick-gray-950 dark:text-white">
           Select a conversation
         </h2>
       </div>
@@ -21,12 +21,12 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between p-3 sm:p-4 bg-white dark:bg-zinc-900 shadow-md">
+      <div className="flex items-center justify-between p-3 sm:p-4 bg-card dark:bg-card shadow-md">
         {/* Back button (Mobile only), Avatar, Name and Status */}
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setSelectedChat(null)}
-            className="md:hidden p-1.5 -ml-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-[#222] rounded-full transition-colors"
+            className="md:hidden p-1.5 -ml-1 text-qwick-gray-500 hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 rounded-full transition-colors"
             aria-label="Back to messages"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -35,11 +35,11 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
           <div className="relative">
             <Avatar className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover">
               <AvatarImage src={avatar || group_avatar} alt={username} />
-              <AvatarFallback className={'bg-[#DCDCDC] dark:bg-nav-active-bg text-gray-900 dark:text-white'}>{username?.[0]}</AvatarFallback>
+              <AvatarFallback className={'bg-qwick-gray-200 dark:bg-qwick-gray-800 text-qwick-gray-900 dark:text-white'}>{username?.[0]}</AvatarFallback>
             </Avatar>
           </div>
           <div className="min-w-0">
-            <h2 className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-white truncate max-w-[150px] sm:max-w-none">
+            <h2 className="text-sm sm:text-lg font-semibold text-qwick-gray-950 dark:text-white truncate max-w-[150px] sm:max-w-none">
               {username}
             </h2>
           </div>
@@ -49,7 +49,7 @@ const ChatHeader = ({ selectedChat, setSelectedChat }) => {
         <div className="flex items-center gap-1 sm:gap-2">
           <button
             onClick={() => setShowInfoSidebar(true)}
-            className="p-1.5 sm:p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#222] rounded-lg transition-colors"
+            className="p-1.5 sm:p-2 text-muted-foreground dark:text-muted-foreground hover:text-foreground dark:hover:text-foreground hover:bg-accent dark:hover:bg-accent rounded-lg transition-colors"
             aria-label="View chat info"
           >
             <Info className="w-5 h-5" />

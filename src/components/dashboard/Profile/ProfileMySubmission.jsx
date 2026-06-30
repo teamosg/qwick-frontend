@@ -1,9 +1,8 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Link } from "react-router";
 import { useGetMySubmissions } from "@/hooks/campaign.hook";
-import { Loader2, ExternalLink, TrendingUp, DollarSign, Calendar, CheckCircle2 } from "lucide-react";
+import { ExternalLink, TrendingUp, DollarSign, Calendar, CheckCircle2, MessageSquareText } from "lucide-react";
 import { format } from "date-fns";
 import { FaYoutube, FaTiktok, FaInstagram } from "react-icons/fa";
 import { useState } from "react";
@@ -14,10 +13,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import FeedbackModal from "./FeedbackModal";
 
 const ProfileMySubmission = () => {
   const { data, isLoading } = useGetMySubmissions();
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [feedbackModal, setFeedbackModal] = useState({ isOpen: false, submission: null });
+  const [erroredImages, setErroredImages] = useState(new Set());
+
+  const openFeedbackModal = (submission) => {
+    setFeedbackModal({ isOpen: true, submission });
+  };
+
+  const closeFeedbackModal = () => {
+    setFeedbackModal({ isOpen: false, submission: null });
+  };
+
+  const handleImageError = (submissionId) => {
+    setErroredImages((prev) => new Set(prev).add(submissionId));
+  };
 
   const submissions = data?.submissions || [];
 
@@ -46,7 +60,7 @@ const ProfileMySubmission = () => {
   };
 
   const getImageUrl = (path) => {
-    if (!path) return "/submission.png";
+    if (!path) return null;
     if (path.startsWith("http")) return path;
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const origin = baseUrl.replace(/\/api$/, "");
@@ -133,14 +147,27 @@ const ProfileMySubmission = () => {
                 <div className="flex flex-col lg:flex-row gap-6">
                   {/* Image Section */}
                   <div className="w-full lg:w-56 h-52 lg:h-44 flex-shrink-0 bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden relative group-hover:scale-[1.01] transition-transform duration-300">
-                    <img
-                      src={getImageUrl(submission.file)}
-                      className="h-full w-full object-cover"
-                      alt="Submission"
-                      onError={(e) => {
-                        e.target.src = "/submission.png";
-                      }}
-                    />
+                    {(() => {
+                      const imageUrl = getImageUrl(submission.file);
+                      const hasError = erroredImages.has(submission.id);
+                      if (imageUrl && !hasError) {
+                        return (
+                          <img
+                            src={imageUrl}
+                            className="h-full w-full object-cover"
+                            alt="Submission"
+                            onError={() => handleImageError(submission.id)}
+                          />
+                        );
+                      }
+                      return (
+                        <div className="flex items-center justify-center h-full w-full bg-gray-200 dark:bg-zinc-700">
+                          <svg className="w-12 h-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
+                          </svg>
+                        </div>
+                      );
+                    })()}
                     <div className="absolute top-3 left-3">
                        <Badge className="bg-black/60 backdrop-blur-md text-white border-none text-[10px] px-2 py-0.5">
                          ID: #{submission.id}
@@ -246,6 +273,17 @@ const ProfileMySubmission = () => {
                             </a>
                           )}
                         </div>
+
+                        {/* Feedback Button */}
+                        {submission.feedback && (
+                          <button
+                            onClick={() => openFeedbackModal(submission)}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 rounded-xl text-[11px] font-semibold text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-all shadow-sm mt-3"
+                          >
+                            <MessageSquareText className="size-3.5" />
+                            View Feedback
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -255,6 +293,13 @@ const ProfileMySubmission = () => {
           ))
         )}
       </div>
+
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={feedbackModal.isOpen}
+        onClose={closeFeedbackModal}
+        submission={feedbackModal.submission}
+      />
     </div>
   );
 };

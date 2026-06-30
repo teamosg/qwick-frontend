@@ -69,7 +69,7 @@ const SignIn = () => {
             </h2>
             {/* Sign up link */}
             <div className="mt-6 sm:mt-10 text-center">
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-qwick-gray-600 dark:text-qwick-gray-400">
                 Don't have an account?{" "}
                 <Link
                   to="/sign-up"
@@ -90,48 +90,36 @@ const SignIn = () => {
             >
               <div className="flex items-center gap-2">
                 <FcGoogle className="text-lg" />
-                <span className="text-gray-800 dark:text-gray-200">
+                <span className="text-qwick-gray-800 dark:text-qwick-gray-200">
                   {googlePending ? "Signing in..." : "Google"}
                 </span>
               </div>
               <img src={arrowRight} alt="arrow" className="dark:invert" />
             </button>
-            {/* <button className="w-full py-4 px-4 md:px-2 lg:px-4 border border-none dark:border-none rounded-full text-center font-medium flex items-center justify-between gap-2 hover:bg-gray-100 dark:bg-gray-800 transition cursor-pointer bg-background">
-              <div className="flex items-center gap-2">
-                <FaFacebook className="text-lg text-blue-600" />
-                <span className="text-gray-800 dark:text-gray-200">
-                  Facebook
-                </span>
-              </div>
-              <img src={arrowRight} alt="arrow" className="dark:invert" />
-            </button> */}
           </div>
 
           {/* Divider */}
           <div className="my-6 md:my-7.5 flex items-center">
-            <div className="flex-1 border-t border-dashed border-gray-300 dark:border-gray-700"></div>
-            <span className="px-3 text-gray-500 dark:text-gray-400 text-sm">
+            <div className="flex-1 border-t border-dashed border-qwick-gray-300 dark:border-qwick-gray-700"></div>
+            <span className="px-3 text-qwick-gray-500 dark:text-qwick-gray-400 text-sm">
               or
             </span>
-            <div className="flex-1 border-t border-dashed border-gray-300 dark:border-gray-700"></div>
+            <div className="flex-1 border-t border-dashed border-qwick-gray-300 dark:border-qwick-gray-700"></div>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email */}
             <div>
-              <label className="text-black dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
+              <label className="text-qwick-gray-900 dark:text-qwick-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
                 Email
               </label>
               <div className="relative">
-                {/* <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaEnvelope className="text-gray-400" />
-                </div> */}
                 <input
                   type="email"
                   {...register("email")}
                   placeholder="Email"
-                  className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
+                  className="w-full px-5 py-4 border border-qwick-gray-300 dark:border-qwick-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-qwick-gray-300 dark:focus:border-qwick-gray-700 bg-card text-black dark:text-white"
                 />
               </div>
               {errors.email && (
@@ -143,18 +131,15 @@ const SignIn = () => {
 
             {/* Password */}
             <div>
-              <label className="text-black dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
+              <label className="text-qwick-gray-900 dark:text-qwick-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
                 Password
               </label>
               <div className="relative">
-                {/* <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="text-gray-400" />
-                </div> */}
                 <input
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
                   placeholder="Password"
-                  className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
+                  className="w-full px-5 py-4 border border-qwick-gray-300 dark:border-qwick-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-qwick-gray-300 dark:focus:border-qwick-gray-700 bg-card text-black dark:text-white"
                 />
                 <button
                   type="button"
@@ -162,9 +147,9 @@ const SignIn = () => {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <FaEyeSlash className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
+                    <FaEyeSlash className="text-qwick-gray-400 hover:text-qwick-gray-600 dark:hover:text-qwick-gray-300" />
                   ) : (
-                    <FaEye className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
+                    <FaEye className="text-qwick-gray-400 hover:text-qwick-gray-600 dark:hover:text-qwick-gray-300" />
                   )}
                 </button>
               </div>
@@ -182,11 +167,11 @@ const SignIn = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-foreground-strong dark:text-foreground-strong focus:ring-ring dark:focus:ring-ring border-gray-300 dark:border-gray-600 rounded-xl"
+                  className="h-4 w-4 text-foreground-strong dark:text-foreground-strong focus:ring-ring dark:focus:ring-ring border-qwick-gray-300 dark:border-qwick-gray-600 rounded-xl"
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+                  className="ml-2 block text-sm text-qwick-gray-700 dark:text-qwick-gray-300"
                 >
                   Keep me signed in
                 </label>

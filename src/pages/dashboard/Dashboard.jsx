@@ -5,12 +5,14 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useGetMyCommunityList } from "@/hooks/community.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import { useEffect } from "react";
-import { Outlet, useParams, useNavigate } from "react-router";
+import { Outlet, useParams, useNavigate, useLocation } from "react-router";
 
 const Dashboard = () => {
   const { communityUsername } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore();
+  const isChat = location.pathname.includes("community-chat");
 
   const {
     data: communityList,
@@ -32,8 +34,11 @@ const Dashboard = () => {
       // Find the community that matches the username in URL, fallback to the first one
       const targetCommunity = createdCommunityList.find((c) => c.username === communityUsername) || createdCommunityList[0];
 
-      // Update store only if different
-      if (selectedBrandCommunity?.id !== targetCommunity.id) {
+      // Update store only if different or if data has changed (e.g. require_approval)
+      if (
+        selectedBrandCommunity?.id !== targetCommunity.id ||
+        selectedBrandCommunity?.require_approval !== targetCommunity.require_approval
+      ) {
         setSelectedBrandCommunity(targetCommunity);
       }
     } else if (selectedBrandCommunity !== null) {
@@ -53,14 +58,14 @@ const Dashboard = () => {
     <SidebarProvider className="flex-1 flex min-h-0 overflow-hidden">
       <DashboardSidebarContent />
 
-      <main className="flex-1 flex flex-col min-h-0 bg-background dark:bg-zinc-950 overflow-hidden relative">
+      <main className="flex-1 flex flex-col min-h-0 bg-background dark:bg-background overflow-hidden relative">
         {/* Mobile toggle button */}
-        <div className="flex-none md:hidden p-4 border-b dark:border-zinc-800">
+        <div className="flex-none md:hidden p-4 border-b dark:border-border">
           <SidebarTrigger />
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
-          <div className="max-w-7xl mx-auto w-full">
+        <div className={`flex-1 flex flex-col min-h-0 ${isChat ? 'overflow-hidden' : 'overflow-y-auto p-4 md:p-6 lg:p-8'}`}>
+          <div className={`flex-1 flex flex-col min-h-0 ${!isChat ? 'max-w-7xl mx-auto w-full' : 'w-full'}`}>
             <Outlet />
           </div>
         </div>

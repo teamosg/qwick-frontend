@@ -1,9 +1,10 @@
-import { Link } from "react-router";
+import { useState } from "react";
 import ContentRewardNav from "./ContentRewardNav";
+import ReviewSubmissionModal from "./ReviewSubmissionModal";
 import { Button } from "@/components/ui/button";
-import { Check, X, Loader2, ExternalLink, TrendingUp, DollarSign } from "lucide-react";
+import { Check, X, ExternalLink, TrendingUp, DollarSign } from "lucide-react";
 import { useCommunityStore } from "@/store/communityStore";
-import { useGetCommunitySubmissions, useReviewSubmission } from "@/hooks/campaign.hook";
+import { useGetCommunitySubmissions } from "@/hooks/campaign.hook";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,13 +14,18 @@ import { FaYoutube, FaTiktok, FaInstagram } from "react-icons/fa";
 const AllSubmissions = () => {
   const { selectedBrandCommunity } = useCommunityStore();
   const { data, isLoading } = useGetCommunitySubmissions(selectedBrandCommunity?.id);
-  const { mutate: reviewSubmission, isPending: isReviewing } = useReviewSubmission();
+
+  const [reviewModal, setReviewModal] = useState({ isOpen: false, submission: null, action: null });
 
   const submissions = data?.submissions || [];
   const totalSubmissions = data?.total_submissions || submissions?.length;
 
-  const handleReview = (submissionId, action) => {
-    reviewSubmission({ submissionId, action });
+  const openReviewModal = (submission, action) => {
+    setReviewModal({ isOpen: true, submission, action });
+  };
+
+  const closeReviewModal = () => {
+    setReviewModal({ isOpen: false, submission: null, action: null });
   };
 
   const getImageUrl = (path) => {
@@ -265,22 +271,20 @@ const AllSubmissions = () => {
                         <div className="flex gap-4 pt-2">
                           <Button
                             variant="ghost"
-                            onClick={() => handleReview(submission?.id, "approve")}
-                            disabled={isReviewing}
+                            onClick={() => openReviewModal(submission, "approve")}
                             className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-success hover:text-success/80 text-xs font-semibold flex items-center gap-1.5"
                           >
                             <Check className="size-4" />
-                            Approve Payout
+                            Approve Submission
                           </Button>
 
                           <Button
                             variant="ghost"
-                            onClick={() => handleReview(submission?.id, "reject")}
-                            disabled={isReviewing}
+                            onClick={() => openReviewModal(submission, "reject")}
                             className="!px-0 hover:bg-transparent hover:underline-none cursor-pointer text-error hover:text-error/80 text-xs font-semibold flex items-center gap-1.5"
                           >
                             <X className="size-4" />
-                            Reject
+                            Reject Submission
                           </Button>
                         </div>
                       )}
@@ -292,6 +296,13 @@ const AllSubmissions = () => {
           ))
         )}
       </div>
+      {/* Review Modal */}
+      <ReviewSubmissionModal
+        isOpen={reviewModal.isOpen}
+        onClose={closeReviewModal}
+        submission={reviewModal.submission}
+        action={reviewModal.action}
+      />
     </div>
   );
 };

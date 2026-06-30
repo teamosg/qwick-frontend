@@ -119,14 +119,14 @@ const ContentRewardApply = () => {
   return (
     <>
       <div className="p-6">
-        <div className="dark:text-white dark:bg-zinc-900  p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl">
+        <div className="dark:text-foreground dark:bg-card p-6 rounded-xl items-center justify-center mx-auto shadow mb-6 max-w-5xl">
           <div className="mb-6">
             <img
               src="/confirm-apply.png"
               alt=""
               className="w-full h-auto object-cover mb-7 rounded-xl"
             />
-            <p className="text-foreground-subtle text-xs mb-7 dark:text-zinc-400 flex gap-2 items-center">
+            <p className="text-foreground-subtle text-xs mb-7 dark:text-muted-foreground flex gap-2 items-center">
               <span>
                 <CircleAlert className="text-warning" />
               </span>
@@ -139,7 +139,7 @@ const ContentRewardApply = () => {
               <h4 className="text-foreground text-sm mb-2.5 dark:text-white">
                 PAID OUT
               </h4>
-              <p className="text-foreground-subtle text-xs flex justify-between dark:text-zinc-400">
+              <p className="text-foreground-subtle text-xs flex justify-between dark:text-muted-foreground">
                 <span className=""> $1673.18 of $14968.30</span> <span>7%</span>
               </p>
             </div>
@@ -150,7 +150,7 @@ const ContentRewardApply = () => {
               <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Reward
               </p>
-              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-muted-foreground">
                 $3.00/1k
               </p>
             </div>
@@ -158,7 +158,7 @@ const ContentRewardApply = () => {
               <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Type
               </p>
-              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-muted-foreground">
                 Clipping
               </p>
             </div>
@@ -166,7 +166,7 @@ const ContentRewardApply = () => {
               <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Clipping
               </p>
-              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-muted-foreground">
                 $3.00/1k
               </p>
             </div>
@@ -174,7 +174,7 @@ const ContentRewardApply = () => {
               <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Maximum Payout
               </p>
-              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-muted-foreground">
                 $3.00/1k
               </p>
             </div>
@@ -183,7 +183,7 @@ const ContentRewardApply = () => {
                 Platforms
               </p>
               <p className="text-foreground-strong text-sm">
-                <span className="flex gap-2 dark:text-zinc-400">
+                <span className="flex gap-2 dark:text-muted-foreground">
                   <FaInstagram size={20} /> <FaFacebook size={20} />
                   <FaYoutube size={20} />
                 </span>
@@ -193,7 +193,7 @@ const ContentRewardApply = () => {
               <p className="text-foreground text-sm mb-1 font-semibold dark:text-white">
                 Category
               </p>
-              <p className="text-foreground-subtle text-sm dark:text-zinc-400">
+              <p className="text-foreground-subtle text-sm dark:text-muted-foreground">
                 $3.00/1k
               </p>
             </div>
@@ -201,7 +201,7 @@ const ContentRewardApply = () => {
           <div className="text-center">
             <button
               onClick={handleApplyClick}
-              className="block text-white bg-foreground-strong dark:bg-foreground-strong dark:hover:bg-foreground-strong  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition  w-full "
+              className="block text-white bg-foreground-strong dark:bg-accent dark:hover:bg-accent  text-[18px] font-semibold p-2.5 rounded-full cursor-pointer hover:bg-emerald-700  transition  w-full "
             >
               Apply
             </button>
@@ -212,18 +212,18 @@ const ContentRewardApply = () => {
       {/* Popup Modal */}
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-zinc-800 rounded-2xl w-full max-w-3xl mx-auto relative overflow-y-auto max-h-[90vh] sm:p-6 p-4">
+          <div className="bg-card dark:bg-card rounded-2xl w-full max-w-3xl mx-auto relative overflow-y-auto max-h-[90vh] sm:p-6 p-4">
             {/* Close Button */}
             <button
               onClick={handleClosePopup}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100 transition-colors z-10"
+              className="absolute top-4 right-4 text-foreground-subtle hover:text-foreground dark:text-muted-foreground dark:hover:text-foreground transition-colors z-10"
             >
               <X size={24} />
             </button>
 
             <div className="space-y-6 mt-2 sm:mt-0">
               {/* Header */}
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h2 className="text-xl font-semibold text-foreground dark:text-foreground">
                 Create submission
               </h2>
 
@@ -250,10 +250,10 @@ const ContentRewardApply = () => {
               {/* Form Content */}
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-sm font-medium text-foreground dark:text-foreground mb-2">
                     Submit your social media post
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-zinc-400">
+                  <p className="text-sm text-gray-600 dark:text-muted-foreground">
                     Share your posts and the original image or video below. Once
                     approved, you'll start earning rewards based on the views
                     your content generates.
@@ -263,7 +263,7 @@ const ContentRewardApply = () => {
                 {/* Link Inputs */}
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                    <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">
                       Provide YouTube link
                     </label>
                     <input
@@ -273,7 +273,7 @@ const ContentRewardApply = () => {
                         handleInputChange("youtube", e.target.value)
                       }
                       placeholder="https://www.youtube.com/watch?v=..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.youtube
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-accent dark:text-foreground placeholder-muted-foreground dark:placeholder-muted-foreground ${errors.youtube
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
                         }`}
@@ -286,7 +286,7 @@ const ContentRewardApply = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                    <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">
                       Provide Instagram link
                     </label>
                     <input
@@ -296,7 +296,7 @@ const ContentRewardApply = () => {
                         handleInputChange("instagram", e.target.value)
                       }
                       placeholder="https://www.instagram.com/p/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.instagram
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-accent dark:text-foreground placeholder-muted-foreground dark:placeholder-muted-foreground ${errors.instagram
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
                         }`}
@@ -309,7 +309,7 @@ const ContentRewardApply = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                    <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">
                       Provide TikTok link
                     </label>
                     <input
@@ -319,7 +319,7 @@ const ContentRewardApply = () => {
                         handleInputChange("tiktok", e.target.value)
                       }
                       placeholder="https://www.tiktok.com/@user/video/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.tiktok
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-accent dark:text-foreground placeholder-muted-foreground dark:placeholder-muted-foreground ${errors.tiktok
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
                         }`}
@@ -332,7 +332,7 @@ const ContentRewardApply = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                    <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">
                       Provide LinkedIn link
                     </label>
                     <input
@@ -342,7 +342,7 @@ const ContentRewardApply = () => {
                         handleInputChange("linkedin", e.target.value)
                       }
                       placeholder="https://www.linkedin.com/posts/..."
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-zinc-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.linkedin
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-accent dark:text-foreground placeholder-muted-foreground dark:placeholder-muted-foreground ${errors.linkedin
                           ? "border-red-300 dark:border-red-600"
                           : "border-gray-300 dark:border-gray-600"
                         }`}
@@ -357,7 +357,7 @@ const ContentRewardApply = () => {
 
                 {/* Media Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                  <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">
                     Media<span className="text-red-500">*</span>
                   </label>
 
@@ -366,7 +366,7 @@ const ContentRewardApply = () => {
                     onDrop={handleDrop}
                   >
                     <div className="flex flex-col items-center space-y-3">
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <p className="text-sm text-muted-foreground dark:text-foreground">
                         Upload the original media file you posted (not a
                         screenshot). For videos, upload the video file. For
                         posts with multiple files, upload the first file.
@@ -389,7 +389,7 @@ const ContentRewardApply = () => {
                 <button
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className="block w-full bg-emerald-800 hover:bg-emerald-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-full text-center transition-colors"
+                  className="block w-full bg-emerald-800 hover:bg-emerald-700 disabled:bg-muted disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-full text-center transition-colors"
                 >
                   {isSubmitting ? "Submitting..." : "Apply"}
                 </button>

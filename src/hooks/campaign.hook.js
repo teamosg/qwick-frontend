@@ -18,6 +18,22 @@ export const useGetAllCampaigns = () => {
     });
 };
 
+export const useGetSingleCampaign = (campaignId) => {
+    return useQuery({
+        queryKey: ["singleCampaign", campaignId],
+        queryFn: async () => {
+            try {
+                const res = await axiosPrivate.get(`/v1/campaigns/${campaignId}/`);
+                return res?.data?.campaign;
+            } catch (error) {
+                handleApiError({ error, throwError: true, errorMessage: "Failed to fetch campaign" });
+            }
+        },
+        enabled: !!campaignId,
+        staleTime: 1000 * 60 * 2, // cache for 2 mins
+    });
+};
+
 
 export const useCreateCampaign = (communityId, setAlert) => {
     const queryClient = useQueryClient();
@@ -38,15 +54,10 @@ export const useCreateCampaign = (communityId, setAlert) => {
         },
         onSuccess: (data) => {
             if (data?.success) {
-                // if (data.requires_payment && data.checkout_url) {
-                if (data.checkout_url) {
-                    window.location.href = data.checkout_url;
-                    return;
-                }
-            toast.success(data?.message || "Campaign created successfully");
-            if (setAlert) setAlert({ type: "success", message: data.message });
-            queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
-        } else {
+                toast.success(data?.message || "Campaign created successfully");
+                if (setAlert) setAlert({ type: "success", message: data.message });
+                queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+            } else {
             toast.error(data?.message || "Failed to create campaign");
             if(setAlert) setAlert({
                 type: "error",
@@ -96,13 +107,7 @@ export const useSubmitCampaignContent = (campaignId) => {
                 toast.error(data?.message || "Failed to submit content");
             }
         },
-        onError: (error) => {
-            if (error?.response?.status === 400) {
-                toast.error("Please check your links and media file for errors.");
-            } else {
-                handleApiError({ error, errorMessage: "Failed to submit content" });
-            }
-        },
+        onError: (error) => { handleApiError({ error, errorMessage: "Failed to submit content" }); },
     });
 };
 
@@ -141,8 +146,12 @@ export const useReviewSubmission = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async ({ submissionId, action }) => {
-            const res = await axiosPrivate.post(`/v1/${submissionId}/content/approve/`, { action });
+        mutationFn: async ({ submissionId, action, feedback }) => {
+            const payload = { action };
+            if (feedback?.trim()) {
+                payload.feedback = feedback.trim();
+            }
+            const res = await axiosPrivate.post(`/v1/${submissionId}/content/approve/`, payload);
             return res?.data;
         },
         onSuccess: (data) => {
@@ -179,6 +188,7 @@ export const useUpdateCampaign = (campaignId) => {
             if (data?.success) {
                 toast.success(data?.message || "Campaign updated successfully");
                 queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+                queryClient.invalidateQueries({ queryKey: ["singleCampaign", campaignId] });
             } else {
                 toast.error(data?.message || "Failed to update campaign");
             }
@@ -235,6 +245,11 @@ export const useExtendCampaign = (campaignId) => {
             if (data?.success || data?.status === 200) {
                 toast.success(data?.message || "Campaign extended successfully");
                 queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+                queryClient.invalidateQueries({ queryKey: ["singleCampaign", campaignId] });
+
+                if (data?.data?.checkout_url) {
+                    window.location.href = data.data.checkout_url;
+                }
             } else {
                 toast.error(data?.message || "Failed to extend campaign");
             }
@@ -258,6 +273,7 @@ export const useWithdrawCampaign = (campaignId) => {
             if (data?.success || data?.status === 200) {
                 toast.success(data?.message || "Remaining balance withdrawn successfully");
                 queryClient.invalidateQueries({ queryKey: ["allCampaigns"] });
+                queryClient.invalidateQueries({ queryKey: ["singleCampaign", campaignId] });
             } else {
                 toast.error(data?.message || "Failed to withdraw balance");
             }

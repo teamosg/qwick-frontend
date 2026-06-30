@@ -94,7 +94,7 @@ const PostForm = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-xl dark:bg-zinc-900 rounded-2lg shadow p-3 sm:p-4 mb-6 max-w-2xl mx-auto">
+    <div className="bg-card border border-qwick-gray-100 dark:border-qwick-gray-800 rounded-xl shadow p-3 sm:p-4 mb-6 max-w-2xl mx-auto">
       <form onSubmit={handlePostSubmit}>
         <div className="flex items-start space-x-2 sm:space-x-3">
           <AvatarUser
@@ -108,7 +108,7 @@ const PostForm = () => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="What's on your mind?"
-              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-zinc-800 dark:text-gray-300 rounded-lg p-2 sm:p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-ring resize-none text-sm sm:text-base"
+              className="w-full bg-qwick-gray-100 dark:placeholder:text-qwick-gray-400 dark:bg-qwick-gray-800 dark:text-qwick-gray-300 rounded-lg p-2 sm:p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-ring resize-none text-sm sm:text-base"
               rows={3}
             />
 
@@ -125,7 +125,7 @@ const PostForm = () => {
                     <button
                       type="button"
                       onClick={() => removeImage(index)}
-                      className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-gray-800 bg-opacity-50 text-white rounded-full p-1"
+                      className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-qwick-gray-800 bg-opacity-50 text-white rounded-full p-1"
                     >
                       <X size={14} className="sm:w-4 sm:h-4" />
                     </button>
@@ -142,7 +142,7 @@ const PostForm = () => {
                   <button
                     type="button"
                     onClick={triggerFileInput}
-                    className="text-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+                    className="text-qwick-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
                   >
                     <ImageIcon size={18} className="sm:w-5 sm:h-5" />
                   </button>
@@ -157,7 +157,7 @@ const PostForm = () => {
                   <button
                     type="button"
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    className="text-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors emoji-button"
+                    className="text-qwick-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors emoji-button"
                   >
                     <Smile size={18} className="sm:w-5 sm:h-5" />
                   </button>
@@ -168,9 +168,9 @@ const PostForm = () => {
                   <button
                     type="button"
                     onClick={() => setShowCommunityDropdown(!showCommunityDropdown)}
-                    className="flex items-center dark:text-gray-300 space-x-1 text-xs sm:text-sm bg-gray-100 dark:bg-zinc-800 rounded-full px-2 sm:px-3 py-1 w-full sm:w-auto justify-center sm:justify-start"
+                    className="flex items-center dark:text-qwick-gray-300 space-x-1 text-xs sm:text-sm bg-qwick-gray-100 dark:bg-qwick-gray-800 rounded-full px-2 sm:px-3 py-1 w-full sm:w-auto justify-center sm:justify-start"
                   >
-                    <span className="dark:text-gray-300 truncate">
+                    <span className="dark:text-qwick-gray-300 truncate">
                       {selectedCommunity}
                     </span>
                     <ChevronDown
@@ -180,7 +180,7 @@ const PostForm = () => {
                   </button>
 
                   {showCommunityDropdown && (
-                    <div className="absolute z-10 mt-1 w-full sm:w-48 bg-white dark:bg-zinc-900 rounded-md shadow-lg border border-gray-200 dark:border-zinc-700">
+                    <div className="absolute z-10 mt-1 w-full sm:w-48 bg-card rounded-md shadow-lg border border-qwick-gray-200 dark:border-qwick-gray-800">
                       <div className="py-1">
                         {myCommunityList?.map((community) => (
                           <button
@@ -191,8 +191,8 @@ const PostForm = () => {
                               setShowCommunityDropdown(false);
                             }}
                             className={`w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm flex items-center ${selectedCommunity === community.business_name
-                              ? "bg-gray-100 dark:bg-zinc-800 text-foreground-strong"
-                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800"
+                              ? "bg-qwick-gray-100 dark:bg-qwick-gray-800 text-foreground-strong"
+                              : "text-qwick-gray-700 dark:text-qwick-gray-300 hover:bg-qwick-gray-50 dark:hover:bg-qwick-gray-800"
                               }`}
                           >
                             {community.business_name}
@@ -208,8 +208,8 @@ const PostForm = () => {
                 type="submit"
                 disabled={!content.trim() && imagePreviewUrls.length === 0 || isCreatingAnnouncement}
                 className={`disabled:cursor-not-allowed disabled:opacity-70 px-4 sm:px-8 py-2 rounded-full text-sm sm:text-base font-medium transition-colors ${content.trim() || imagePreviewUrls.length > 0
-                  ? "bg-foreground-strong text-white cursor-pointer hover:bg-foreground"
-                  : "bg-foreground-strong dark:bg-zinc-800 text-white cursor-not-allowed opacity-50"
+                  ? "bg-foreground-strong dark:bg-accent text-white cursor-pointer hover:bg-foreground dark:hover:bg-accent/80"
+                  : "bg-foreground-strong dark:bg-qwick-gray-800 text-white cursor-not-allowed opacity-50"
                   }`}
               >
                 {isCreatingAnnouncement ? "Posting..." : "Post"}

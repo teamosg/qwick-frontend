@@ -38,7 +38,7 @@ const PaymentSetDialog = ({showPaymentsModal, setShowForm, setShowPaymentsModal}
           </div>
 
           <Button
-            className="w-full bg-foreground-strong hover:bg-foreground text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+            className="w-full bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
             onClick={() => {
               setShowPaymentsModal(false);
               setShowForm(false);

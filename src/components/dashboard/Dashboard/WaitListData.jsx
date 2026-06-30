@@ -81,7 +81,7 @@ const WaitListData = () => {
         {waitingUsers?.map((user, index) => (
           <div
             key={index}
-            className="bg-white border rounded-lg p-4 shadow-sm dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
+            className="bg-card border rounded-lg p-4 shadow-sm dark:bg-card dark:border-border dark:text-foreground"
           >
             <div className="flex justify-between items-start mb-2">
               <div className="font-semibold text-foreground dark:text-white">
@@ -105,7 +105,7 @@ const WaitListData = () => {
         <div className="p-1 min-w-[700px]">
           <Table>
             <TableHeader className="">
-              <TableRow className="bg-muted/50 text-gray-900 dark:bg-zinc-800 dark:text-white border-black rounded-full">
+              <TableRow className="bg-muted/50 text-foreground dark:bg-accent dark:text-foreground border-border rounded-full">
                 <TableHead className="font-medium py-4 px-6 dark:text-white">
                   Name
                 </TableHead>
@@ -124,15 +124,15 @@ const WaitListData = () => {
               {waitingUsers?.map((user, index) => (
                 <TableRow
                   key={index}
-                  className="border-none hover:bg-white dark:hover:bg-zinc-800"
+                  className="border-none hover:bg-accent dark:hover:bg-accent"
                 >
-                  <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
+                  <TableCell className="py-4 px-6 font-medium text-foreground dark:text-foreground">
                     {user?.username}
                   </TableCell>
-                  <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
+                  <TableCell className="py-4 px-6 text-muted-foreground dark:text-foreground">
                     {user?.email}
                   </TableCell>
-                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                  <TableCell className="py-4 px-6 font-semibold text-foreground dark:text-foreground">
                     {getStatusBadge(user?.status)}
                   </TableCell>
                   <TableCell className="py-4 px-6 flex gap-2">

@@ -63,8 +63,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           onClick={handlePrev}
           disabled={currentPage === 1}
           className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border rounded-lg transition-all ${currentPage === 1
-              ? "bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-600 cursor-not-allowed border-gray-200 dark:border-zinc-700"
-              : "border-gray-300 dark:border-zinc-700 hover:bg-foreground-strong hover:text-white dark:text-white"
+              ? "bg-qwick-gray-100 dark:bg-qwick-gray-900 text-qwick-gray-400 dark:text-qwick-gray-600 cursor-not-allowed border-qwick-gray-200 dark:border-qwick-gray-800"
+              : "border-qwick-gray-300 dark:border-qwick-gray-800 hover:bg-foreground-strong dark:hover:bg-qwick-gray-800 hover:text-white dark:hover:text-white"
             }`}
         >
           <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -76,7 +76,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
               return (
                 <span
                   key={`ellipsis-${index}`}
-                  className="w-8 sm:w-10 md:w-12 text-center text-gray-500 dark:text-zinc-400"
+                  className="w-8 sm:w-10 md:w-12 text-center text-qwick-gray-500 dark:text-qwick-gray-400"
                 >
                   ...
                 </span>
@@ -90,8 +90,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 type="button"
                 onClick={() => handlePageClick(page)}
                 className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-xs sm:text-sm md:text-base rounded-lg transition-all ${isActive
-                    ? "bg-foreground-strong text-white shadow-lg"
-                    : "border border-gray-300 dark:border-zinc-700 hover:bg-foreground-strong hover:text-white dark:text-white"
+                    ? "bg-foreground-strong text-white dark:text-black shadow-lg"
+                    : "border border-qwick-gray-300 dark:border-qwick-gray-800 hover:bg-foreground-strong dark:hover:bg-qwick-gray-800 hover:text-white dark:hover:text-white"
                   }`}
               >
                 {page}
@@ -106,8 +106,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           onClick={handleNext}
           disabled={currentPage === totalPages}
           className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border rounded-lg transition-all ${currentPage === totalPages
-              ? "bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-600 cursor-not-allowed border-gray-200 dark:border-zinc-700"
-              : "border-gray-300 dark:border-zinc-700 hover:bg-foreground-strong hover:text-white dark:text-white"
+              ? "bg-qwick-gray-100 dark:bg-qwick-gray-900 text-qwick-gray-400 dark:text-qwick-gray-600 cursor-not-allowed border-qwick-gray-200 dark:border-qwick-gray-800"
+              : "border-qwick-gray-300 dark:border-qwick-gray-800 hover:bg-foreground-strong dark:hover:bg-qwick-gray-800 hover:text-white dark:hover:text-white"
             }`}
         >
           <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />

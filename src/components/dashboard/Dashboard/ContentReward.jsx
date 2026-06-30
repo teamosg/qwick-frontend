@@ -5,7 +5,7 @@ const ContentReward = ({ progress = 7 }) => {
   const progressWidth = `${progress}%`;
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-md p-4 w-full  border border-zinc-200 dark:border-zinc-700 transition-colors">
+    <div className="bg-card dark:bg-card rounded-xl shadow-md p-4 w-full border border-border dark:border-border transition-colors">
       {/* Header */}
       <div className="flex items-center gap-3 mb-3">
         <img
@@ -13,7 +13,7 @@ const ContentReward = ({ progress = 7 }) => {
           alt="Profile"
           className="w-9 h-9 rounded-full"
         />
-        <span className="text-sm font-medium text-zinc-800 dark:text-white">
+        <span className="text-sm font-medium text-foreground dark:text-foreground">
           Destroying.com
         </span>
       </div>
@@ -28,7 +28,7 @@ const ContentReward = ({ progress = 7 }) => {
       </p>
 
       {/* Progress */}
-      <div className="text-sm text-zinc-800 dark:text-white font-medium mb-2">
+      <div className="text-sm text-foreground dark:text-foreground font-medium mb-2">
         ${1673.18} of ${14968.3}
         <span className="ml-2">{progress}%</span>
       </div>

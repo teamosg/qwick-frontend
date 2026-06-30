@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "sonner";
+import clearLocalStorage from "@/services/clearLocalstore";
 
 // Base URL from Postman collection: https://qwick.softvencealpha.com/api
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -42,7 +43,7 @@ axiosPrivate.interceptors.response.use(
     // window.location.href = "/sign-in";
     if (error?.response?.status === 401) {
       // toast.error("Session expired. Please sign in again.");
-      localStorage.removeItem("token");
+      clearLocalStorage();
 
       setTimeout(() => {
         window.location.href = "/sign-in";

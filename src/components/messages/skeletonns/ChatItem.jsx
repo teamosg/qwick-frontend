@@ -36,21 +36,21 @@ const ChatItem = ({ chat, onSelectChat, selectedChatId, setSelectedChat, setOpen
         />
 
         {chat?.isOnline && (
-          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-zinc-900 rounded-full"></div>
+          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-qwick-gray-900 rounded-full"></div>
         )}
       </div>
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between">
-          <h3 className="font-medium text-sm text-gray-900 dark:text-white truncate">
+          <h3 className="font-medium text-sm text-qwick-gray-950 dark:text-white truncate">
             {conversationName}
           </h3>
-          <span className="text-xs text-gray-500 dark:text-gray-400">
+          <span className="text-xs text-muted-foreground dark:text-muted-foreground">
             {formattedDate}
           </span>
         </div>
         <div className="flex items-center justify-between mt-1">
-          <p className="text-xs text-gray-600 dark:text-gray-300 truncate">
+          <p className="text-xs text-muted-foreground dark:text-foreground truncate">
             {last_message}
           </p>
           {selectedChatId === conversationId && chat?.type === "dm" ? (

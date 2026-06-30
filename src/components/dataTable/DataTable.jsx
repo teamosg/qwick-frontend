@@ -38,13 +38,13 @@ export function DataTable({
         style={{ maxHeight }}
       >
         <Table className="min-w-full text-sm">
-          <TableHeader className="sticky top-0 bg-white dark:bg-gray-900 z-10">
+          <TableHeader className="sticky top-0 bg-card dark:bg-card z-10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className="text-gray-800 dark:text-gray-200 font-semibold"
+                    className="text-foreground dark:text-foreground font-semibold"
                   >
                     {header.isPlaceholder
                       ? null
@@ -73,7 +73,7 @@ export function DataTable({
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="text-gray-800 dark:text-gray-100"
+                      className="text-foreground dark:text-foreground"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -87,7 +87,7 @@ export function DataTable({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center text-gray-500 dark:text-gray-400"
+                  className="h-24 text-center text-muted-foreground dark:text-muted-foreground"
                 >
                   No results.
                 </TableCell>

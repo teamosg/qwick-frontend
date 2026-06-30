@@ -25,33 +25,33 @@ const PostActions = ({ post }) => {
     };
 
     return (
-        <div className="flex items-center justify-between pt-4 border-t-[1px] border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 mb-4">
+        <div className="flex items-center justify-between pt-4 border-t border-border bg-transparent mb-4">
             <div className="flex items-center space-x-6">
                 <div className="flex items-center space-x-2">
                     <button
                         onClick={handlePostLike}
                         disabled={isLiking || isDisliking}
-                        className="disabled:cursor-progress cursor-pointer text-gray-600 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors group"
+                        className="disabled:cursor-progress cursor-pointer text-foreground-subtle hover:text-primary transition-colors group"
                     >
                         <Heart
                             className={`w-5 h-5 ${post?.is_liked
-                                ? "fill-red-500 text-red-500"
-                                : "group-hover:text-red-500 dark:group-hover:text-red-400"
+                                ? "fill-primary text-primary"
+                                : "group-hover:text-primary"
                                 }`}
                         />
                     </button>
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                    <span className="text-sm font-medium text-foreground-subtle">
                         {post?.like_count || 0} Likes
                     </span>
                 </div>
 
                 <div className="flex items-center space-x-2">
                     <button 
-                        className="cursor-pointer flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors group"
+                        className="cursor-pointer flex items-center space-x-2 text-foreground-subtle hover:text-primary transition-colors group"
                     >
-                        <MessageCircle className="w-5 h-5 group-hover:text-blue-500 dark:group-hover:text-blue-400" />
+                        <MessageCircle className="w-5 h-5 group-hover:text-primary" />
                     </button>
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                    <span className="text-sm font-medium text-foreground-subtle">
                         {post?.comment_count || 0} comments
                     </span>
                 </div>
@@ -60,12 +60,12 @@ const PostActions = ({ post }) => {
             <button
                 onClick={handleSave}
                 disabled={isSaving || isUnsaving}
-                className="disabled:cursor-progress cursor-pointer text-gray-600 dark:text-gray-400 hover:text-foreground-strong dark:hover:text-emerald-400 transition-colors group"
+                className="disabled:cursor-progress cursor-pointer text-foreground-subtle hover:text-primary transition-colors group"
             >
                 <Bookmark
                     className={`w-5 h-5 ${post?.is_saved
-                        ? "fill-foreground-strong text-foreground-strong dark:fill-emerald-400 dark:text-emerald-400"
-                        : "group-hover:text-foreground-strong dark:group-hover:text-emerald-400"
+                        ? "fill-primary text-primary"
+                        : "group-hover:text-primary"
                         }`}
                 />
             </button>

@@ -763,7 +763,7 @@ const CampaignForm = ({
             type="submit"
             disabled={!isFormValid || isFormDisabled}
             className={`transition font-medium px-6 py-4 rounded-lg text-white ${isFormValid && !isFormDisabled
-              ? "bg-foreground-strong dark:bg-foreground-strong hover:bg-foreground dark:hover:bg-foreground-strong/90"
+              ? "bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80"
               : "bg-gray-300 dark:bg-gray-700 cursor-not-allowed opacity-50"
               }`}
           >

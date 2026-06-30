@@ -24,7 +24,7 @@ const ExploreStep1 = () => {
             of
           </p>
 
-          <Button className="bg-foreground-strong">Join</Button>
+          <Button className="bg-foreground-strong dark:bg-accent">Join</Button>
         </Form>
       </div>
     </>

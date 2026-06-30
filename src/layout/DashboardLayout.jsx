@@ -18,7 +18,7 @@ function DashboardLayout() {
 
       {/* Sidebar - hidden on mobile, shown on medium screens and up */}
       <div
-        className={`
+        className={` border-r
           fixed inset-y-0 left-0 z-30 w-64  transform 
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:relative lg:translate-x-0 transition-transform duration-200 ease-in-out

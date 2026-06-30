@@ -17,8 +17,8 @@ const ContentRewordPublic = () => {
 
   if (isCreator) {
     return (
-      <div className="flex items-center justify-center p-10 bg-white dark:bg-zinc-900 rounded-xl shadow">
-        <p className="text-gray-500 dark:text-zinc-400 font-medium">
+      <div className="flex items-center justify-center p-10 bg-card dark:bg-card rounded-xl shadow">
+        <p className="text-muted-foreground dark:text-muted-foreground font-medium">
           As the creator of this community, you cannot view or join these campaigns.
         </p>
       </div>
@@ -29,7 +29,7 @@ const ContentRewordPublic = () => {
     return (
       <div className="p-4 space-y-4">
         {[1, 2, 3].map(i => (
-          <div key={i} className="h-40 bg-gray-100 dark:bg-zinc-800 animate-pulse rounded-xl" />
+          <div key={i} className="h-40 bg-accent dark:bg-accent animate-pulse rounded-xl" />
         ))}
       </div>
     );
@@ -41,7 +41,7 @@ const ContentRewordPublic = () => {
         Campaigns
       </h2>
       {filteredCampaigns.length === 0 ? (
-        <div className="text-center py-20 text-gray-500">
+        <div className="text-center py-20 text-muted-foreground">
           No active campaigns for this community.
         </div>
       ) : (

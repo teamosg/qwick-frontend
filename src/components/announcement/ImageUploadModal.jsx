@@ -42,7 +42,7 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
   const handleUpload = () => {
     if (bannerImage) onImageUpload(bannerImage, "banner");
     if (profileImage) onImageUpload(profileImage, "profile");
-    
+
     onClose();
     setBannerImage(null);
     setBannerPreview(null);
@@ -70,16 +70,16 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
           {/* Profile Section */}
           <div className="flex flex-col items-center">
             <label className="w-full text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Profile Image
+              Community Icon
             </label>
-            <div 
+            <div
               onClick={() => profileInputRef.current.click()}
               className="relative w-20 h-20 border-2 border-dashed border-foreground-muted rounded-full flex items-center justify-center cursor-pointer bg-gray-50 dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors group"
             >
               {profilePreview ? (
                 <>
                   <img src={profilePreview} alt="Profile Preview" className="w-full h-full rounded-full object-cover" />
-                  <button 
+                  <button
                     onClick={(e) => removeImage(e, "profile")}
                     className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
                   >
@@ -98,14 +98,14 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Banner Image
             </label>
-            <div 
+            <div
               onClick={() => bannerInputRef.current.click()}
               className="relative border-2 border-dashed border-foreground-muted rounded-lg text-center cursor-pointer bg-gray-50 dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors group"
             >
               {bannerPreview ? (
                 <>
                   <img src={bannerPreview} alt="Banner Preview" className="mx-auto max-h-24 rounded-lg object-contain" />
-                  <button 
+                  <button
                     onClick={(e) => removeImage(e, "banner")}
                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
                   >
@@ -128,11 +128,10 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
           <button
             onClick={handleUpload}
             disabled={!bannerImage && !profileImage}
-            className={`w-full py-3 px-4 rounded-full text-white font-medium transition-colors ${
-              bannerImage || profileImage
-                ? "bg-foreground-strong hover:bg-foreground cursor-pointer"
+            className={`w-full py-3 px-4 rounded-full text-white font-medium transition-colors ${bannerImage || profileImage
+                ? "bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 cursor-pointer"
                 : "bg-gray-300 dark:bg-zinc-700 cursor-not-allowed"
-            }`}
+              }`}
           >
             Save Changes
           </button>

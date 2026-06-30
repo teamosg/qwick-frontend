@@ -87,7 +87,7 @@ const DepositModal = ({ open, setOpen }) => {
                 <Button
                     onClick={handleDeposit}
                     disabled={!amount || isDepositing}
-                    className="w-full bg-foreground-strong hover:bg-foreground text-white"
+                    className="w-full bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white"
                 >
                     {isDepositing ? <Spinner className="w-4 h-4" /> : "Confirm Deposit"}
                 </Button>

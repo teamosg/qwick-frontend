@@ -1,10 +1,10 @@
 import { CircleAlert, X, ExternalLink, Calendar as LucideCalendar, Wallet, CalendarIcon, Pencil } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok, FaGoogleDrive } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ContentRewardNav from "./ContentRewardNav";
-import { useGetAllCampaigns, useExtendCampaign, useWithdrawCampaign, useUpdateCampaign } from "@/hooks/campaign.hook";
+import { useGetSingleCampaign, useExtendCampaign, useWithdrawCampaign, useUpdateCampaign } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
 import CampaignProgress from "./CampaignProgress";
 import { format } from "date-fns";
@@ -23,7 +23,7 @@ const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetailsEdit = () => {
   const { id } = useParams();
-  const { data: campaignRes, isLoading } = useGetAllCampaigns();
+  const { data: campaign, isLoading } = useGetSingleCampaign(id);
 
   const { mutate: extendCampaign, isPending: isExtending } = useExtendCampaign(id);
   const { mutate: withdrawCampaign, isPending: isWithdrawing } = useWithdrawCampaign(id);
@@ -35,10 +35,6 @@ const ContentRewardDetailsEdit = () => {
   const [newEndDate, setNewEndDate] = useState("");
   const [addBudget, setAddBudget] = useState("");
   const [contentLink, setContentLink] = useState("");
-
-  const campaign = useMemo(() => {
-    return campaignRes?.campaigns?.find(c => c.id === parseInt(id));
-  }, [campaignRes, id]);
 
 
   const handleExtendSubmit = () => {
@@ -115,11 +111,16 @@ const ContentRewardDetailsEdit = () => {
     platforms,
     budget,
     max_payout,
+    min_payout,
     total_users_earning,
     initial_budget,
     available_content,
     end_date,
     is_withdrawn,
+    flat_fee_bonus,
+    currency,
+    total_content_views,
+    start_date,
   } = campaign;
 
   const isEnded = end_date ? new Date(end_date) < new Date() : false;
@@ -161,7 +162,7 @@ const ContentRewardDetailsEdit = () => {
               </p>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between mb-9">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 py-6 border-y border-gray-100 dark:border-zinc-800/50 mb-9 text-foreground-subtle">
             <div>
               <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Reward
@@ -180,14 +181,14 @@ const ContentRewardDetailsEdit = () => {
             </div>
             <div>
               <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Maximum Payout
+                Category
               </p>
               <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
-                ${max_payout}
+                {category?.name || "N/A"}
               </p>
             </div>
             <div>
-              <p className="text-foreground text-xs mb-1 font-semibold  dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Platforms
               </p>
               <div className="flex gap-2 dark:text-zinc-400 text-foreground-strong">
@@ -203,10 +204,58 @@ const ContentRewardDetailsEdit = () => {
             </div>
             <div>
               <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Category
+                Minimum Payout
               </p>
               <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
-                {category?.name || "N/A"}
+                ${min_payout || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Maximum Payout
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                ${max_payout || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Flat Fee Bonus
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                ${flat_fee_bonus || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Currency
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                {currency || "USD"}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Total Content Views
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                {total_content_views?.toLocaleString() || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Start Date
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                {start_date || "N/A"}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Budget Remaining
+              </p>
+              <p className="text-foreground-subtle text-sm dark:text-zinc-400 font-medium">
+                ${parseFloat(budget || 0).toFixed(2)}
               </p>
             </div>
           </div>
@@ -253,29 +302,31 @@ const ContentRewardDetailsEdit = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-end">
+            {
+              !is_withdrawn && (
+                <button
+                  onClick={() => setShowExtendModal(true)}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-foreground-strong/10"
+                >
+                  <LucideCalendar size={18} />
+                  Extend Date
+                </button>
+              )
+            }
             {is_withdrawn ? (
               <div className="px-6 py-2 bg-red-50 text-red-600 rounded-full text-sm font-bold border border-red-100 flex items-center gap-2">
                 <Wallet size={16} />
                 Campaign Withdrawn
               </div>
             ) : isEnded ? (
-              <>
-                <button
-                  onClick={() => setShowExtendModal(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-foreground-strong hover:bg-foreground text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-foreground-strong/10"
-                >
-                  <LucideCalendar size={18} />
-                  Extend Date
-                </button>
-                <button
-                  onClick={handleWithdrawClick}
-                  disabled={isWithdrawing}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-foreground-strong bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition"
-                >
-                  <Wallet size={18} />
-                  {isWithdrawing ? "Withdrawing..." : "Withdraw Remaining"}
-                </button>
-              </>
+              <button
+                onClick={handleWithdrawClick}
+                disabled={isWithdrawing}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 text-foreground-strong bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition"
+              >
+                <Wallet size={18} />
+                {isWithdrawing ? "Withdrawing..." : "Withdraw Remaining"}
+              </button>
             ) : (
               <div className="px-6 py-2 bg-emerald-50 text-foreground-strong rounded-full text-sm font-bold border border-emerald-100">
                 Active Campaign
@@ -331,9 +382,16 @@ const ContentRewardDetailsEdit = () => {
                       selected={newEndDate ? new Date(newEndDate) : undefined}
                       onSelect={(date) => setNewEndDate(date ? format(date, 'yyyy-MM-dd') : "")}
                       disabled={(date) => {
-                        const today = new Date()
-                        today.setHours(0, 0, 0, 0)
-                        return date < today
+                        if (!end_date) {
+                          const today = new Date();
+                          today.setHours(0, 0, 0, 0);
+                          return date < today;
+                        }
+                        const limitDate = new Date(end_date);
+                        limitDate.setHours(0, 0, 0, 0);
+                        const compareDate = new Date(date);
+                        compareDate.setHours(0, 0, 0, 0);
+                        return compareDate <= limitDate;
                       }}
                       initialFocus
                     />
@@ -372,7 +430,7 @@ const ContentRewardDetailsEdit = () => {
               <button
                 onClick={handleExtendSubmit}
                 disabled={isExtending || !newEndDate || !addBudget}
-                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong hover:bg-foreground shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isExtending ? "Extending..." : "Confirm Extension"}
               </button>
@@ -430,7 +488,7 @@ const ContentRewardDetailsEdit = () => {
               <button
                 onClick={handleContentSubmit}
                 disabled={isUpdating || !contentLink}
-                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong hover:bg-foreground shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isUpdating ? "Updating..." : "Update Assets"}
               </button>

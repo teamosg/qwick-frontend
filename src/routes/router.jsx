@@ -1,7 +1,7 @@
 import AnnouncementFeed from "@/components/announcement/AnnouncementFeed";
 import CommunityChat from "@/components/CommunityChat/CommunityChat";
 import Withdraw from "@/components/CommunityChat/Withdraw";
-import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
+// import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import ContentRewordPublic from "@/components/contentReward/ContentRewordPublic";
 import AutomatedMessage from "@/components/dashboard/Dashboard/AutomatedMessage";
@@ -25,6 +25,7 @@ import SuccessfullyUpdated from "@/pages/auth/SuccessfullyUpdated";
 import SuccessfullyVerified from "@/pages/auth/SuccessfullyVerified";
 import VerifyAccount from "@/pages/auth/VerifyAccount";
 import Dashboard from "@/pages/dashboard/Dashboard";
+import CampaignDetails from "@/pages/discover/CampaignDetails";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
@@ -43,6 +44,7 @@ import Home from "../pages/dashboard/Home";
 import DashboardLayout from "./../layout/DashboardLayout";
 import VerifyTwoAuth from "@/pages/auth/VerifyTwoAuth";
 import DepositSuccess from "@/pages/deposit/DepositSuccess";
+import PrivateRoute from "./PrivateRoute";
 const router = createBrowserRouter([
   // Landing Page
   {
@@ -100,7 +102,9 @@ const router = createBrowserRouter([
 
   {
     path: "/",
-    element: <DashboardLayout />,
+    element:  <PrivateRoute>
+                <DashboardLayout />
+              </PrivateRoute>,
     children: [
       {
         path: "/home",
@@ -109,6 +113,10 @@ const router = createBrowserRouter([
       {
         path: "/discover",
         element: <Discover />,
+      },
+      {
+        path: "/discover/:campaignId",
+        element: <CampaignDetails />,
       },
       {
         path: "/join-community/:communityUsername",
@@ -150,10 +158,10 @@ const router = createBrowserRouter([
                     path: "reward-details/:campaignId",
                     element: <ContentRewardDetails />,
                   },
-                  {
-                    path: "reward-details-payment/:campaignId",
-                    element: <ContentRewardDetailsPayment />,
-                  },
+                  // {
+                  //   path: "reward-details-payment/:campaignId",
+                  //   element: <ContentRewardDetailsPayment />,
+                  // },
                 ],
               },
               {
@@ -215,6 +223,14 @@ const router = createBrowserRouter([
               {
                 path: "content-reward/edit/:id",
                 element: <ContentRewardDetailsEdit />,
+              },
+              {
+                path: "announcement",
+                element: <AnnouncementFeed />,
+              },
+              {
+                path: "community-chat",
+                element: <CommunityChat />,
               },
             ]
           }
