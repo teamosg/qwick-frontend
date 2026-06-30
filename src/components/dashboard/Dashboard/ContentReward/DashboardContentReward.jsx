@@ -6,6 +6,7 @@ import DashboardSingleRewardItem from "./DashboardSingleRewardItem";
 import { useCommunityStore } from "@/store/communityStore";
 import { useCreateCampaign, useGetAllCampaigns } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
+import CampaignCheckoutModal from "./CampaignCheckoutModal";
 
 const DashboardContentReward = () => {
   const [alert, setAlert] = useState(null);
@@ -13,6 +14,9 @@ const DashboardContentReward = () => {
   const { selectedBrandCommunity } = useCommunityStore();
   const { mutate: createCampaign, isPending: isSubmitting } = useCreateCampaign(selectedBrandCommunity?.id, setAlert);
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
+
+  const [checkoutDetails, setCheckoutDetails] = useState(null);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
   const [showForm, setShowForm] = useState(false);
 
@@ -85,8 +89,12 @@ const DashboardContentReward = () => {
     });
 
     createCampaign(payload, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setShowForm(false);
+        if (data?.checkout_url) {
+          setCheckoutDetails(data);
+          setShowCheckoutModal(true);
+        }
       }
     });
   };
@@ -144,6 +152,12 @@ const DashboardContentReward = () => {
           <DashboardContentRewardBlank onCreateReward={handleCreateReward} />
         </div>
       )}
+
+      <CampaignCheckoutModal
+        open={showCheckoutModal}
+        setOpen={setShowCheckoutModal}
+        checkoutDetails={checkoutDetails}
+      />
     </div>
   );
 };
