@@ -65,26 +65,26 @@ const UpdateGroupModal = ({ isOpen, onClose, selectedChat, setSelectedChat }) =>
                         className="fixed inset-0 z-50 flex items-center justify-center p-4"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md max-h-[600px] flex flex-col">
+                        <div className="bg-white dark:bg-card rounded-2xl shadow-2xl w-full max-w-md max-h-[600px] flex flex-col">
 
                             {/* Header */}
-                            <div className="p-4 border-b border-gray-200 dark:border-zinc-800 flex items-center gap-3">
+                            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800 flex items-center gap-3">
                                 <button
                                     onClick={onClose}
-                                    className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
+                                    className="p-2 hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 rounded-lg transition-colors"
                                 >
-                                    <ArrowLeft className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                                    <ArrowLeft className="w-5 h-5 text-qwick-gray-500 dark:text-qwick-gray-400" />
                                 </button>
 
-                                <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex-1">
+                                <h2 className="text-lg font-semibold text-qwick-gray-950 dark:text-white flex-1">
                                     Update Group
                                 </h2>
 
                                 <button
                                     onClick={onClose}
-                                    className="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
+                                    className="p-2 hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 rounded-lg transition-colors"
                                 >
-                                    <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                                    <X className="w-5 h-5 text-qwick-gray-500 dark:text-qwick-gray-400" />
                                 </button>
                             </div>
 
@@ -113,7 +113,7 @@ const UpdateGroupModal = ({ isOpen, onClose, selectedChat, setSelectedChat }) =>
 
                                 {/* ✅ Group Name Input */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label className="text-sm font-medium text-qwick-gray-700 dark:text-qwick-gray-300">
                                         Group Name
                                     </label>
                                     <input
@@ -121,13 +121,13 @@ const UpdateGroupModal = ({ isOpen, onClose, selectedChat, setSelectedChat }) =>
                                         value={groupName}
                                         onChange={(e) => setGroupName(e.target.value)}
                                         placeholder="Enter group name"
-                                        className="w-full px-4 py-2 text-sm border border-gray-300 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-800/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-4 py-2 text-sm border border-qwick-gray-300 dark:border-qwick-gray-800 rounded-lg bg-qwick-gray-50 dark:bg-qwick-gray-800/50 text-qwick-gray-950 dark:text-white placeholder-qwick-gray-500 dark:placeholder-qwick-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
                             </div>
 
                             {/* Footer */}
-                            <div className="p-4 border-t border-gray-200 dark:border-zinc-800">
+                            <div className="p-4 border-t border-qwick-gray-200 dark:border-qwick-gray-800">
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}

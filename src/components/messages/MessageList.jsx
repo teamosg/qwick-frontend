@@ -91,7 +91,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
       <div className="p-4">
         <div className="relative mb-3 flex gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-qwick-gray-400" />
             <input
               type="text"
               placeholder="Search"
@@ -102,7 +102,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
           </div>
           <button
             onClick={() => setShowNewMessageSidebar(true)}
-            className="cursor-pointer p-2 border border-border dark:border-border rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors"
+            className="cursor-pointer p-2 border border-border dark:border-border rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
           >
             <MessageSquarePlus className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
           </button>
@@ -124,7 +124,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
                 {showUnreadOnly ? (
                   <X className="w-3.5 h-3.5" />
                 ) : (
-                  <span className="text-gray-400">{unreadConversations?.length || 0}</span>
+                  <span className="text-qwick-gray-400">{unreadConversations?.length || 0}</span>
                 )}
               </span>
             </button>
@@ -148,7 +148,7 @@ const MessageList = ({ selectedChat, onSelectChat, selectedChatId, setSelectedCh
                 {showRequestsOnly ? (
                   <X className="w-3.5 h-3.5" />
                 ) : (
-                  <span className="text-gray-400">{requestConversationList?.length || 0}</span>
+                  <span className="text-qwick-gray-400">{requestConversationList?.length || 0}</span>
                 )}
               </span>
             </button>

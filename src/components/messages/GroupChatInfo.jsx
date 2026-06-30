@@ -55,7 +55,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
   return (
     <div className="flex flex-col h-full bg-card dark:bg-card text-foreground dark:text-foreground">
       {/* Header with close button and group avatar + name */}
-      <div className="relative p-6 border-b border-gray-200 dark:border-zinc-800">
+      <div className="relative p-6 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 hover:bg-accent dark:hover:bg-accent rounded-lg transition-colors"
@@ -77,10 +77,10 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
       </div>
 
       {/* Action Buttons: Rename, Add User, Leave */}
-      <div className="grid grid-cols-3 gap-3 p-4 border-b border-gray-200 dark:border-zinc-800">
+      <div className="grid grid-cols-3 gap-3 p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
         <button
           onClick={() => setOpenUpdateModal(true)}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
           aria-label="Rename group"
         >
           <Edit2 className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
@@ -91,7 +91,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
 
         <button
           onClick={handleAddUser}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
           aria-label="Add user to group"
         >
           <UserPlus className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
@@ -102,7 +102,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
 
         <button
           onClick={handleLeave}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
           aria-label="Leave group"
         >
           <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
@@ -153,7 +153,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
             {members.map((member) => (
               <div
                 key={member?.id}
-                className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+                className="flex items-center justify-between p-3 rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <AvatarUser
@@ -162,7 +162,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <div>
-                    <h4 className="text-sm font-medium text-gray-900 dark:text-white">
+                    <h4 className="text-sm font-medium text-qwick-gray-950 dark:text-white">
                       {member?.username}
                     </h4>
                     {/* role  */}

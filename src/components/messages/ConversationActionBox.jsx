@@ -139,7 +139,7 @@ const ConversationActionBox = ({
                     <img
                       src={file.url}
                       alt={file.name}
-                      className="w-16 h-12 object-cover border border-gray-200 dark:border-zinc-800 rounded-lg"
+                      className="w-16 h-12 object-cover border border-qwick-gray-200 dark:border-qwick-gray-800 rounded-lg"
                     />
                     <button
                       onClick={() => handleRemoveAttachment(file.id)}
@@ -151,7 +151,7 @@ const ConversationActionBox = ({
                 ) : (
                   <div
                     key={file.id}
-                    className="pl-2 pr-3 py-2 rounded-lg border border-gray-200 dark:border-zinc-800 flex items-center gap-2 group relative"
+                    className="pl-2 pr-3 py-2 rounded-lg border border-qwick-gray-200 dark:border-qwick-gray-800 flex items-center gap-2 group relative"
                   >
                     <LuFile className="text-muted-foreground dark:text-muted-foreground" />
                     <div>
@@ -180,7 +180,7 @@ const ConversationActionBox = ({
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Write a message..."
-              className="flex-1 px-4 py-2 border border-border dark:border-border rounded-lg bg-gray-50 dark:bg-zinc-800/50 text-foreground dark:text-foreground placeholder-muted-foreground dark:placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="flex-1 px-4 py-2 border border-border dark:border-border rounded-lg bg-qwick-gray-50 dark:bg-qwick-gray-800/50 text-foreground dark:text-foreground placeholder-muted-foreground dark:placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             {/* Hidden file input for attachments */}
             <input
@@ -194,7 +194,7 @@ const ConversationActionBox = ({
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={handleAttachmentClick}
-              className="p-2 text-muted-foreground dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors"
+              className="p-2 text-muted-foreground dark:text-qwick-gray-400 hover:text-qwick-gray-700 dark:hover:text-qwick-gray-200 hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800/50 rounded-lg transition-colors"
               disabled={isUploading}
             >
               <FiImage className="w-5 h-5" />
@@ -203,7 +203,7 @@ const ConversationActionBox = ({
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                className="hidden sm:block p-2 text-muted-foreground dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors"
+                className="hidden sm:block p-2 text-muted-foreground dark:text-qwick-gray-400 hover:text-qwick-gray-700 dark:hover:text-qwick-gray-200 hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800/50 rounded-lg transition-colors"
               >
                 {/* Emoji Icon SVG */}
                 <svg

@@ -12,8 +12,8 @@ const MessageError = ({ isBlocked = false, isError = false, onUnblock }) => {
             transition={{ duration: 0.25 }}
             className="bottom-0 left-0 right-0 
             p-4
-            bg-white dark:bg-zinc-900
-            border-t border-gray-200 dark:border-gray-800
+            bg-white dark:bg-card
+            border-t border-qwick-gray-200 dark:border-qwick-gray-800
             flex flex-col items-center gap-3"
         >
             {/* ICON + MESSAGE */}
@@ -24,7 +24,7 @@ const MessageError = ({ isBlocked = false, isError = false, onUnblock }) => {
                         : !!isError && <AlertCircle className="text-yellow-500" size={20} />
                 }
 
-                <p className="text-sm md:text-base text-gray-800 dark:text-gray-200 font-medium">
+                <p className="text-sm md:text-base text-qwick-gray-800 dark:text-qwick-gray-200 font-medium">
                     {
                         isBlocked
                             ? "You have blocked this user."
@@ -40,9 +40,9 @@ const MessageError = ({ isBlocked = false, isError = false, onUnblock }) => {
                 <Button
                     variant="outline"
                     className="text-sm md:text-base 
-                border-gray-300 dark:border-gray-700
-                text-gray-800 dark:text-gray-200
-                hover:bg-gray-100 dark:hover:bg-zinc-800"
+                border-qwick-gray-300 dark:border-qwick-gray-700
+                text-qwick-gray-800 dark:text-qwick-gray-200
+                hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800"
                     onClick={onUnblock}
                 >
                     Unblock User

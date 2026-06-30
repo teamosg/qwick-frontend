@@ -79,7 +79,7 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
                         <div className="bg-card dark:bg-card rounded-2xl shadow-2xl w-full max-w-md max-h-[600px] flex flex-col">
 
                             {/* Header */}
-                            <div className="p-4 border-b border-gray-200 dark:border-zinc-800 flex items-center gap-3">
+                            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800 flex items-center gap-3">
                                 <button
                                     onClick={onClose}
                                     className="p-2 hover:bg-accent dark:hover:bg-accent rounded-lg transition-colors"
@@ -101,15 +101,15 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
                             </div>
 
                             {/* Search Bar */}
-                            <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
+                            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
                                 <div className="relative">
-                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-qwick-gray-400" />
                                     <input
                                         type="text"
                                         placeholder="Search users..."
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-800/50 text-foreground dark:text-foreground placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full pl-10 pr-4 py-2 text-sm border border-qwick-gray-300 dark:border-qwick-gray-800 rounded-lg bg-qwick-gray-50 dark:bg-qwick-gray-800/50 text-foreground dark:text-foreground placeholder-qwick-gray-500 dark:placeholder-qwick-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
 
@@ -165,7 +165,7 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
                                                 <div
                                                     className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${isSelected
                                                         ? "bg-blue-500 border-blue-500"
-                                                        : "border-gray-300 dark:border-gray-600"
+                                                        : "border-qwick-gray-300 dark:border-qwick-gray-600"
                                                         }`}
                                                 >
                                                     {isSelected && <Check className="w-4 h-4 text-white" />}
@@ -177,7 +177,7 @@ const AddMemberToGroupModal = ({ isOpen, onClose, existingMembers, selectedChat 
                             </div>
 
                             {/* Add Button */}
-                            <div className="p-4 border-t border-gray-200 dark:border-zinc-800">
+                            <div className="p-4 border-t border-qwick-gray-200 dark:border-qwick-gray-800">
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}

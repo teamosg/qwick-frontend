@@ -54,7 +54,7 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
                         <div className="bg-card dark:bg-card w-full max-w-md rounded-2xl shadow-2xl flex flex-col max-h-[600px]">
 
                             {/* Header */}
-                            <div className="p-4 border-b border-gray-200 dark:border-zinc-800 flex items-center gap-3">
+                            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800 flex items-center gap-3">
                                 <button
                                     onClick={onClose}
                                     className="p-2 hover:bg-accent dark:hover:bg-accent rounded-lg"
@@ -75,7 +75,7 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
                             </div>
 
                             {/* User Info */}
-                            <div className="px-4 py-3 border-b border-gray-200 dark:border-zinc-800 flex items-center gap-3">
+                            <div className="px-4 py-3 border-b border-qwick-gray-200 dark:border-qwick-gray-800 flex items-center gap-3">
                                 <AvatarUser
                                     src={chat?.avatar}
                                     alt={chat?.username}
@@ -90,15 +90,15 @@ const AddToGroupModal = ({ chat, isOpen, onClose, groups }) => {
                             </div>
 
                             {/* Search */}
-                            <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
+                            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
                                 <div className="relative">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-qwick-gray-400 w-4 h-4" />
                                     <input
                                         type="text"
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
                                         placeholder="Search groups..."
-                                        className="w-full pl-10 pr-4 py-2 rounded-lg bg-background dark:bg-accent/50 text-foreground dark:text-foreground border border-border dark:border-border focus:ring-2 focus:ring-teal-600 outline-none"
+                                        className="w-full pl-10 pr-4 py-2 rounded-lg bg-background dark:bg-background text-foreground dark:text-foreground border border-border dark:border-border focus:ring-2 focus:ring-teal-600 outline-none"
                                     />
                                 </div>
                             </div>

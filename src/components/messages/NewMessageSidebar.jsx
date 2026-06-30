@@ -90,7 +90,7 @@ const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onCl
             className="fixed left-0 top-0 h-full w-80 bg-card dark:bg-card border-r border-border dark:border-border z-50 flex flex-col"
           >
             {/* Header */}
-            <div className="p-4 border-b border-gray-200 dark:border-zinc-800 flex items-center justify-between">
+            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-foreground dark:text-foreground">New Message</h2>
               <button
                 onClick={onClose}
@@ -102,21 +102,21 @@ const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onCl
             </div>
 
             {/* Search Bar */}
-            <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
+            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-qwick-gray-400" />
                 <input
                   type="text"
                   placeholder="Search users..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-zinc-800 rounded-lg bg-background dark:bg-accent/50 text-foreground dark:text-foreground placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 text-sm border border-qwick-gray-300 dark:border-qwick-gray-800 rounded-lg bg-background dark:bg-background text-foreground dark:text-foreground placeholder-qwick-gray-500 dark:placeholder-qwick-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
 
             {/* Create Group Chat Button */}
-            <div className="px-4 py-3 border-b border-gray-200 dark:border-zinc-800">
+            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
               <button
                 onClick={onCreateGroup}
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent dark:hover:bg-accent transition-colors text-left"

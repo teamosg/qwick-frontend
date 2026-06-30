@@ -2,9 +2,9 @@ import React from "react";
 
 const EmptyChatBox = () => {
   return (
-    <div className=" h-full flex-1 py-20 flex items-center justify-center bg-background dark:bg-card">
+    <div className="h-full flex-1 py-20 flex items-center justify-center bg-background dark:bg-background">
       <div className="text-center">
-        <div className="w-16 h-16 mx-auto mb-4 bg-muted dark:bg-accent rounded-full flex items-center justify-center">
+        <div className="w-16 h-16 mx-auto mb-4 bg-qwick-gray-100 dark:bg-qwick-gray-800 rounded-full flex items-center justify-center">
           <svg
             className="w-8 h-8 text-foreground-subtle"
             fill="none"
@@ -22,7 +22,7 @@ const EmptyChatBox = () => {
         <h3 className="text-lg font-medium text-foreground dark:text-foreground mb-2">
           Select a conversation
         </h3>
-        <p className="text-gray-500 dark:text-foreground-subtle">
+        <p className="text-qwick-gray-500 dark:text-qwick-gray-400">
           Choose a chat from the list to start messaging
         </p>
       </div>
