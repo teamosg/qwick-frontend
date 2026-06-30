@@ -4,6 +4,7 @@ import { Bell, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useGetNotifications } from "@/hooks/notification.hook";
 import { Button } from "@/components/ui/button";
+import BellIcon from "@/components/ui/BellIcon";
 
 const Notifications = () => {
   const { setHasUnread } = useNotificationStore();
@@ -32,7 +33,7 @@ const Notifications = () => {
         <div className="bg-card dark:bg-card shadow-sm border border-border dark:border-border rounded-2xl overflow-hidden flex flex-col h-full md:max-h-[calc(100vh-8rem)]">
           <div className="px-4 md:px-6 py-4 md:py-5 border-b border-border dark:border-border flex items-center justify-between sticky top-0 bg-card dark:bg-card z-10">
             <h1 className="text-lg md:text-xl font-semibold text-foreground dark:text-foreground flex items-center gap-2">
-              <Bell className="w-5 h-5 text-foreground-strong dark:text-foreground-strong" />
+              <BellIcon className="w-5 h-5 text-foreground-strong dark:text-foreground-strong" />
               Notifications
             </h1>
             <span className="bg-accent dark:bg-accent text-muted-foreground dark:text-muted-foreground text-[10px] md:text-xs font-bold px-2.5 py-1 rounded-full whitespace-nowrap ml-2">
