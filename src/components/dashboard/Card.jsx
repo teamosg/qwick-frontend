@@ -52,25 +52,25 @@ const Card = ({ content, onApply }) => {
         </div>
 
         {/* Bottom: Content */}
-        <div className="p-5 flex flex-col gap-4 flex-1">
+        <div className="p-5 flex flex-col gap-4 flex-1 min-w-0">
           {/* Row 1: Profile, Community & Socials */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <Avatar className="w-9 h-9 border border-border dark:border-border shadow-sm">
+          <div className="flex items-center justify-between gap-2 min-w-0">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <Avatar className="w-9 h-9 border border-border dark:border-border shadow-sm flex-shrink-0">
                 <AvatarImage src={communityAvatar} alt={communityName} />
                 <AvatarFallback className="bg-foreground-strong dark:bg-accent text-white text-[10px] font-medium">
                   {communityName?.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div className="flex items-center gap-1.5 text-[14px] font-medium text-foreground dark:text-foreground tracking-tight">
-                <span className="truncate max-w-[140px]">{communityName}</span>
-                <span className="text-foreground-subtle dark:text-muted-foreground">•</span>
-                <span className="text-foreground-subtle dark:text-muted-foreground uppercase text-[11px] font-medium tracking-wider">
+              <div className="flex items-center gap-1.5 text-[14px] font-medium text-foreground dark:text-foreground tracking-tight min-w-0">
+                <span className="truncate">{communityName}</span>
+                <span className="text-foreground-subtle dark:text-muted-foreground flex-shrink-0">•</span>
+                <span className="text-foreground-subtle dark:text-muted-foreground uppercase text-[11px] font-medium tracking-wider flex-shrink-0">
                   {postedDate}
                 </span>
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-shrink-0">
               {(socials || []).map(({ icon: Icon, name }, idx) => (
                 <div
                   key={name + idx}
