@@ -56,7 +56,7 @@ const MessageRequestConfirmation = ({
               />
             </div>
           </div>
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          <h3 className="text-xl font-bold text-qwick-gray-950 dark:text-white mb-2">
             Accept message from {sender_username}?
           </h3>
           <p className="text-sm text-muted-foreground dark:text-muted-foreground leading-relaxed">
@@ -82,7 +82,7 @@ const MessageRequestConfirmation = ({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleDeleteRequest}
-            className="flex-1 px-6 py-3 border-2 border-gray-300 dark:border-zinc-800 text-foreground dark:text-foreground rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800/50 font-semibold transition-colors flex items-center justify-center gap-2"
+            className="flex-1 px-6 py-3 border-2 border-qwick-gray-300 dark:border-qwick-gray-800 text-foreground dark:text-foreground rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-850 font-semibold transition-colors flex items-center justify-center gap-2"
           >
             <XCircle className="w-5 h-5" />
             Delete Request

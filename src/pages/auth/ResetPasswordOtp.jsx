@@ -87,7 +87,7 @@ const ResetPasswordOtp = () => {
             <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
               FORGOT PASSWORD
             </h2>
-            <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
+            <p className="dark:text-qwick-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
               No worries, we'll send you reset instructions
             </p>
           </div>
@@ -95,7 +95,7 @@ const ResetPasswordOtp = () => {
           {/* OTP Input */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="text-black dark:text-gray-200 font-[Inter] text-[18px] not-italic font-medium leading-[155%] mb-4 block">
+              <label className="text-qwick-gray-900 dark:text-qwick-gray-200 font-[Inter] text-[18px] not-italic font-medium leading-[155%] mb-4 block">
                 Enter your OTP
               </label>
               <div className="flex justify-center gap-1.5 md:gap-2">
@@ -109,7 +109,7 @@ const ResetPasswordOtp = () => {
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    className="w-10 h-10 md:w-12 md:h-12 text-center border border-gray-300 dark:border-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-gray-900 dark:text-white text-lg font-medium"
+                    className="w-10 h-10 md:w-12 md:h-12 text-center border border-qwick-gray-300 dark:border-qwick-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-qwick-gray-900 dark:text-white text-lg font-medium"
                     placeholder=""
                   />
                 ))}

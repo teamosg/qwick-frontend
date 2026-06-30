@@ -40,14 +40,14 @@ const PostCommentSingle = ({ comment, profile }) => {
                 className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover"
             />
 
-            <div className="bg-gray-100 dark:bg-zinc-800 rounded-lg p-2 sm:p-3 flex-1 min-w-0">
+            <div className="bg-qwick-gray-100 dark:bg-qwick-gray-800 rounded-lg p-2 sm:p-3 flex-1 min-w-0">
                 <div className="flex justify-between items-start">
                     <div className="flex items-end gap-4">
                         <div className="font-medium text-xs sm:text-sm dark:text-white truncate">
                             {comment.author.full_name}
                         </div>
 
-                        <div className="text-[10px] text-gray-500 dark:text-zinc-400 mt-0.5">
+                        <div className="text-[10px] text-qwick-gray-500 dark:text-qwick-gray-400 mt-0.5">
                             {new Date(comment.created_at).toLocaleString()}
                         </div>
                     </div>
@@ -55,14 +55,14 @@ const PostCommentSingle = ({ comment, profile }) => {
                     {profile?.email === comment?.author?.email && (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <button className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1">
+                                <button className="text-qwick-gray-400 hover:text-qwick-gray-600 dark:hover:text-qwick-gray-300 p-1">
                                     <MoreHorizontal size={16} />
                                 </button>
                             </DropdownMenuTrigger>
 
                             <DropdownMenuContent
                                 align="end"
-                                className="w-32 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700"
+                                className="w-32 bg-card border border-qwick-gray-200 dark:border-qwick-gray-800"
                             >
                                 <DropdownMenuItem
                                     onClick={() => {
@@ -93,7 +93,7 @@ const PostCommentSingle = ({ comment, profile }) => {
                             type="text"
                             value={editContent}
                             onChange={(e) => setEditContent(e.target.value)}
-                            className="w-full px-3 py-1.5 text-sm rounded-md border bg-white dark:bg-zinc-900"
+                            className="w-full px-3 py-1.5 text-sm rounded-md border border-qwick-gray-300 dark:border-qwick-gray-800 bg-white dark:bg-qwick-gray-900"
                         />
                         <button
                             onClick={handleUpdateComment}
@@ -104,7 +104,7 @@ const PostCommentSingle = ({ comment, profile }) => {
                         </button>
                     </div>
                 ) : (
-                    <div className="text-gray-700 dark:text-zinc-400 text-xs sm:text-sm break-words mt-1">
+                    <div className="text-qwick-gray-700 dark:text-qwick-gray-400 text-xs sm:text-sm break-words mt-1">
                         {comment.content}
                     </div>
                 )}

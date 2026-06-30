@@ -103,7 +103,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                 <DialogHeader className="p-6 pb-2 shrink-0">
                     <div className="flex items-center gap-2">
                         {view === "saved_methods" && (
-                            <button 
+                            <button
                                 onClick={() => setView("main")}
                                 className="p-2 -ml-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full transition-colors"
                             >
@@ -195,16 +195,16 @@ const WithdrawModal = ({ open, setOpen }) => {
                                             <div className="space-y-3">
                                                 <div className="flex items-center justify-between">
                                                     <label className="text-xs font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider">Bank Details</label>
-                                                    <button 
+                                                    <button
                                                         onClick={() => setView("saved_methods")}
                                                         className="text-[10px] font-bold text-foreground-strong dark:text-foreground-strong hover:underline"
                                                     >
                                                         View All
                                                     </button>
                                                 </div>
-                                                
+
                                                 {selectedMethodId ? (
-                                                    <div 
+                                                    <div
                                                         onClick={() => setView("saved_methods")}
                                                         className="flex items-center justify-between p-4 bg-white dark:bg-zinc-800/50 border-2 border-foreground-muted/20 dark:border-foreground-muted/20 rounded-2xl cursor-pointer hover:border-foreground-muted dark:hover:border-foreground-muted transition-all"
                                                     >
@@ -220,7 +220,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                         <ArrowRight size={16} className="text-gray-300" />
                                                     </div>
                                                 ) : (
-                                                    <button 
+                                                    <button
                                                         onClick={() => setView("saved_methods")}
                                                         className="w-full flex items-center gap-3 p-4 bg-gray-50 dark:bg-zinc-800/30 border border-dashed border-gray-300 dark:border-zinc-700 rounded-2xl hover:bg-gray-100 dark:hover:bg-zinc-800/50 transition-all"
                                                     >
@@ -235,7 +235,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                 )}
 
                                                 <div className="flex justify-center">
-                                                    <button 
+                                                    <button
                                                         onClick={() => {
                                                             setShowManual(true);
                                                             setSelectedMethodId(null);
@@ -254,7 +254,7 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                 <div className="flex items-center justify-between">
                                                     <label className="text-xs font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider">Manual Entry</label>
                                                     {hasSavedMethods && (
-                                                        <button 
+                                                        <button
                                                             onClick={() => setShowManual(false)}
                                                             className="text-[10px] font-bold text-foreground-strong dark:text-foreground-strong hover:underline"
                                                         >
@@ -326,18 +326,16 @@ const WithdrawModal = ({ open, setOpen }) => {
                                             <div
                                                 key={m.id}
                                                 onClick={() => handleSelectSavedMethod(m)}
-                                                className={`group relative flex items-center justify-between p-4 rounded-2xl transition-all cursor-pointer border-2 ${
-                                                    selectedMethodId === m.id 
-                                                    ? "bg-foreground-strong/5 border-foreground-muted dark:bg-foreground-strong/5 dark:border-foreground-muted" 
+                                                className={`group relative flex items-center justify-between p-4 rounded-2xl transition-all cursor-pointer border-2 ${selectedMethodId === m.id
+                                                    ? "bg-foreground-strong/5 border-foreground-muted dark:bg-foreground-strong/5 dark:border-foreground-muted"
                                                     : "bg-white dark:bg-zinc-800/50 border-gray-100 dark:border-zinc-700 hover:border-gray-300 dark:hover:border-zinc-500"
-                                                }`}
+                                                    }`}
                                             >
                                                 <div className="flex items-center gap-4">
-                                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
-                                                        selectedMethodId === m.id 
-                                                        ? "bg-foreground-strong text-white dark:bg-foreground-strong" 
+                                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${selectedMethodId === m.id
+                                                        ? "bg-foreground-strong text-white dark:bg-foreground-strong"
                                                         : "bg-gray-100 dark:bg-zinc-700 text-gray-600 dark:text-gray-300"
-                                                    }`}>
+                                                        }`}>
                                                         <Landmark size={24} />
                                                     </div>
                                                     <div className="text-left">
@@ -358,18 +356,17 @@ const WithdrawModal = ({ open, setOpen }) => {
                                                     >
                                                         <Trash2 size={16} />
                                                     </button>
-                                                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                                                        selectedMethodId === m.id 
-                                                        ? "bg-foreground-strong border-foreground-muted dark:bg-foreground-strong dark:border-foreground-muted" 
+                                                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${selectedMethodId === m.id
+                                                        ? "bg-foreground-strong border-foreground-muted dark:bg-foreground-strong dark:border-foreground-muted"
                                                         : "border-gray-200 dark:border-zinc-700"
-                                                    }`}>
+                                                        }`}>
                                                         {selectedMethodId === m.id && <CheckCircle2 size={14} className="text-white" />}
                                                     </div>
                                                 </div>
                                             </div>
                                         ))}
-                                        
-                                        <button 
+
+                                        <button
                                             onClick={() => {
                                                 setShowManual(true);
                                                 setSelectedMethodId(null);
@@ -388,43 +385,74 @@ const WithdrawModal = ({ open, setOpen }) => {
                         <div className="space-y-8 py-4">
                             <div className="flex flex-col items-center justify-center text-center space-y-6">
                                 <div className="relative">
-                                    <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center animate-in zoom-in-50 duration-500">
-                                        <CheckCircle2 className="w-12 h-12 text-green-600 dark:text-green-400" />
+                                    <div className="w-20 h-20 bg-success-bg rounded-full flex items-center justify-center animate-in zoom-in-50 duration-500">
+                                        <CheckCircle2 className="w-12 h-12 text-success" />
                                     </div>
-                                    <div className="absolute -inset-2 bg-green-400/20 rounded-full blur-xl animate-pulse" />
+                                    <div className="absolute -inset-2 bg-success/20 rounded-full blur-xl animate-pulse" />
                                 </div>
                                 <div className="space-y-2">
-                                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                    <h3 className="text-2xl font-bold text-foreground-strong">
                                         Request Submitted!
                                     </h3>
-                                    <p className="text-sm text-gray-500 max-w-[240px] mx-auto leading-relaxed">
+                                    <p className="text-sm text-foreground-subtle max-w-[240px] mx-auto leading-relaxed">
                                         {withdrawalData?.message || "We've received your request and are processing it."}
                                     </p>
                                 </div>
 
-                                <div className="w-full bg-gray-50 dark:bg-zinc-800/50 rounded-3xl p-6 border border-gray-100 dark:border-zinc-700/50 space-y-4">
+                                <div className="w-full bg-background rounded-3xl p-6 border border-border space-y-4">
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-gray-500 font-medium">Transaction ID</span>
-                                        <span className="font-mono font-bold text-gray-900 dark:text-white bg-white dark:bg-zinc-700 px-2 py-1 rounded-lg border border-gray-100 dark:border-zinc-600">
+                                        <span className="text-foreground-muted font-medium">Transaction ID</span>
+                                        <span className="font-mono font-bold text-foreground-strong bg-surface px-2.5 py-1 rounded-lg border border-border">
                                             #{withdrawalData?.withdrawal_id}
                                         </span>
                                     </div>
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-gray-500 font-medium">Current Status</span>
-                                        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200/50 dark:border-amber-700/50">
+                                        <span className="text-foreground-muted font-medium">Current Status</span>
+                                        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-warning-bg text-warning border border-warning/20">
                                             {withdrawalData?.status || "pending"}
                                         </span>
                                     </div>
-                                    <div className="pt-2 border-t border-gray-200 dark:border-zinc-700 flex justify-between items-center text-sm">
-                                        <span className="text-gray-500 font-medium">Estimated Time</span>
-                                        <span className="text-gray-900 dark:text-white font-bold">7 - 10 Business Days</span>
+
+                                    <div className="h-px bg-border my-2" />
+
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-foreground-muted font-medium">Requested Amount</span>
+                                        <span className="font-bold text-foreground-strong">
+                                            ${withdrawalData?.amount ? Number(withdrawalData.amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "0.00"}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-foreground-muted font-medium">Platform Fee</span>
+                                        <span className="font-bold text-foreground-strong">
+                                            -${withdrawalData?.platform_fee ? Number(withdrawalData.platform_fee).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "0.00"}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-foreground-muted font-medium">Processing Fee</span>
+                                        <span className="font-bold text-foreground-strong">
+                                            -${withdrawalData?.processing_fee ? Number(withdrawalData.processing_fee).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "0.00"}
+                                        </span>
+                                    </div>
+
+                                    <div className="h-px bg-border my-2" />
+
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm text-foreground-strong font-bold">Net Amount</span>
+                                        <span className="text-base font-extrabold text-primary">
+                                            ${withdrawalData?.net_amount ? Number(withdrawalData.net_amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "0.00"}
+                                        </span>
+                                    </div>
+
+                                    <div className="pt-2 border-t border-border flex justify-between items-center text-sm">
+                                        <span className="text-foreground-muted font-medium">Estimated Time</span>
+                                        <span className="text-foreground-strong font-bold">7 - 10 Business Days</span>
                                     </div>
                                 </div>
                             </div>
 
                             <Button
                                 onClick={handleCancel}
-                                className="w-full h-14 rounded-2xl bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white shadow-xl shadow-foreground/10 font-bold text-base transition-all active:scale-[0.98]"
+                                className="w-full h-14 rounded-2xl bg-primary hover:bg-primary-hover text-white shadow-xl shadow-primary/10 font-bold text-base transition-all active:scale-[0.98] border-0"
                             >
                                 Done
                             </Button>

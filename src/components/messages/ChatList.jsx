@@ -68,7 +68,7 @@ const ChatList = ({
           }
 
           {/* All Conversations Section */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="p-4 border-t border-qwick-gray-200 dark:border-qwick-gray-800">
             <div className="flex items-center gap-2 mb-3">
               <List className="w-4 h-4 text-muted-foreground dark:text-muted-foreground" />
               <h3 className="text-sm font-medium text-foreground dark:text-foreground">
@@ -94,7 +94,7 @@ const ChatList = ({
           {/* Requests Chats Section */}
           {
             requestsChats?.length > 0 &&
-            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="p-4 border-t border-qwick-gray-200 dark:border-qwick-gray-800">
               <div className="flex items-center gap-2 mb-3">
                 <MessagesSquare className="w-4 h-4 text-muted-foreground dark:text-muted-foreground" />
                 <h3 className="text-sm font-medium text-foreground dark:text-foreground">

@@ -153,15 +153,15 @@ export const useWithdraw = () => {
     },
     onSuccess: (data) => {
       console.log(data)
-      if (data?.status) {
-        toast.success(data?.data?.message);
+      if (data?.status === 200 || data?.data?.success) {
+        toast.success(data?.data?.message || "Withdrawal request submitted successfully");
 
         queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
         queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
         queryClient.invalidateQueries({ queryKey: ["depositTransactions"] });
         queryClient.invalidateQueries({ queryKey: ["savedMethods"] });
       } else {
-        toast.error(data?.error || "Failed to withdraw");
+        toast.error(data?.data?.error || data?.data?.message || "Failed to withdraw");
       }
     },
     onError(error) {

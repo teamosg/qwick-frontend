@@ -25,7 +25,7 @@ const PostComments = ({ comments = [] }) => {
             {comments.length > 2 && !showAll && (
                 <button
                     onClick={() => setShowAll(true)}
-                    className="text-xs text-foreground-strong dark:text-zinc-400 mb-4 cursor-pointer hover:underline"
+                    className="text-xs text-foreground-strong dark:text-qwick-gray-400 mb-4 cursor-pointer hover:underline"
                 >
                     View all comments
                 </button>
@@ -35,7 +35,7 @@ const PostComments = ({ comments = [] }) => {
                 showAll && (
                     <button
                         onClick={() => setShowAll(false)}
-                        className="text-xs text-foreground-strong dark:text-zinc-400 mb-4 cursor-pointer hover:underline"
+                        className="text-xs text-foreground-strong dark:text-qwick-gray-400 mb-4 cursor-pointer hover:underline"
                     >
                         View less comments
                     </button>

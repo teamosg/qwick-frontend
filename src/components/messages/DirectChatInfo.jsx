@@ -37,15 +37,15 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
   }
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-zinc-900 text-gray-900 dark:text-white">
+    <div className="flex flex-col h-full bg-white dark:bg-card text-qwick-gray-950 dark:text-white">
       {/* Header with avatar, status, and close button */}
-      <div className="relative p-6 border-b border-gray-200 dark:border-zinc-800">
+      <div className="relative p-6 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
+          className="absolute top-4 right-4 p-2 hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 rounded-lg transition-colors"
           aria-label="Close chat info"
         >
-          <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+          <X className="w-5 h-5 text-qwick-gray-500 dark:text-qwick-gray-400" />
         </button>
 
         <div className="flex flex-col items-center">
@@ -56,11 +56,11 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
               className="w-20 h-20 rounded-full object-cover text-2xl"
             />
             {selectedChat.isOnline && (
-              <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-zinc-900 rounded-full"></div>
+              <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-qwick-gray-900 rounded-full"></div>
             )}
           </div>
           <h2 className="text-lg font-semibold text-center">{username}</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-qwick-gray-500 dark:text-qwick-gray-400">
             {selectedChat.isOnline ? "Active now" : "Offline"}
           </p>
         </div>
@@ -104,10 +104,10 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
         <div className="space-y-4">
           {/* About */}
           <div>
-            <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">
+            <h3 className="text-xs font-semibold text-qwick-gray-500 dark:text-qwick-gray-400 uppercase mb-2">
               About
             </h3>
-            <p className="text-sm text-gray-700 dark:text-gray-300">
+            <p className="text-sm text-qwick-gray-700 dark:text-qwick-gray-300">
               Available for chat
             </p>
           </div>
@@ -143,7 +143,7 @@ const DirectChatInfo = ({ selectedChat, setSelectedChat, onClose }) => {
       </div>
 
       {/* Block User Button */}
-      <div className="p-4 border-t border-gray-200 dark:border-zinc-800">
+      <div className="p-4 border-t border-qwick-gray-200 dark:border-qwick-gray-800">
         {
           blocked ? (
             <button
