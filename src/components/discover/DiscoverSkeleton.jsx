@@ -14,7 +14,7 @@ const DiscoverSkeleton = () => {
             {/* Grid Skeleton */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
-                    <div key={i} className="bg-white dark:bg-zinc-900 p-4 rounded-3xl border border-gray-100 dark:border-zinc-800 space-y-4 shadow-sm">
+                    <div key={i} className="bg-card p-4 rounded-3xl border border-qwick-gray-100 dark:border-qwick-gray-800 space-y-4 shadow-sm">
                         <Skeleton className="h-48 w-full rounded-2xl" />
                         <div className="space-y-3 px-2">
                             <div className="flex justify-between items-center">
