@@ -57,7 +57,7 @@ const ForgotPassword = () => {
             <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
               Forgot Password
             </h2>
-            <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
+            <p className="dark:text-qwick-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
               No worries. Reset instructions are on the way.
             </p>
           </div>
@@ -66,18 +66,15 @@ const ForgotPassword = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Email */}
             <div>
-              <label className="text-black dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
+              <label className="text-qwick-gray-900 dark:text-qwick-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
                 Email
               </label>
               <div className="relative">
-                {/* <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaEnvelope className="text-gray-400" />
-                </div> */}
                 <input
                   type="email"
                   {...register("email")}
                   placeholder="Email"
-                  className="w-full px-5 py-4 border border-border-strong dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
+                  className="w-full px-5 py-4 border border-qwick-gray-300 dark:border-qwick-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-qwick-gray-300 dark:focus:border-qwick-gray-700 bg-card text-black dark:text-white"
                 />
               </div>
               {errors.email && (
@@ -98,7 +95,7 @@ const ForgotPassword = () => {
 
           {/* Back to Sign In link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-qwick-gray-600 dark:text-qwick-gray-400">
               Remember your password?{" "}
               <Link
                 to="/sign-in"

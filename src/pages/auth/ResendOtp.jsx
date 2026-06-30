@@ -35,7 +35,7 @@ const ResendOtp = ({ type, email }) => {
 
     return (
         <div className="text-center">
-            <p className="text-gray-600 dark:text-gray-400 text-sm">
+            <p className="text-qwick-gray-600 dark:text-qwick-gray-400 text-sm">
                 Didn't receive the email?{" "}
                 <button
                     disabled={isPending || timer > 0}
@@ -47,7 +47,7 @@ const ResendOtp = ({ type, email }) => {
                 </button>
 
                 {timer > 0 && (
-                    <span className="ml-2 text-gray-500 text-sm">
+                    <span className="ml-2 text-qwick-gray-500 text-sm">
                         ({timer}s)
                     </span>
                 )}
