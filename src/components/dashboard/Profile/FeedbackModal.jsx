@@ -47,25 +47,25 @@ const FeedbackModal = ({ isOpen, onClose, submission }) => {
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-card dark:bg-card rounded-3xl w-full max-w-md mx-auto shadow-2xl border border-border dark:border-border overflow-hidden max-h-[90vh] flex flex-col">
+            <div className="bg-card rounded-3xl w-full max-w-md mx-auto shadow-2xl border border-border overflow-hidden max-h-[90vh] flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-border shrink-0">
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                     isRejected
-                      ? "bg-error-bg dark:bg-error/20 text-error"
-                      : "bg-success-bg dark:bg-success/20 text-success"
+                      ? "bg-error-bg text-error"
+                      : "bg-success-bg text-success"
                   }`}>
                     <MessageSquareText className="size-5" />
                   </div>
                   <div>
                     <h2 className="text-lg font-bold text-foreground">Submission Feedback</h2>
-                    <p className="text-xs text-muted-foreground">Review from the brand team</p>
+                    <p className="text-xs text-foreground-muted">Review from the brand team</p>
                   </div>
                 </div>
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-full hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+                  className="p-2 rounded-full hover:bg-accent transition-colors text-foreground-muted hover:text-foreground cursor-pointer"
                 >
                   <X size={20} />
                 </button>
@@ -80,8 +80,8 @@ const FeedbackModal = ({ isOpen, onClose, submission }) => {
                       {submission.campaign?.name || "Untitled Campaign"}
                     </h3>
                     <div className="flex items-center gap-2 mt-1">
-                      <Hash className="size-3 text-muted-foreground" />
-                      <span className="text-[11px] text-muted-foreground">ID: #{submission.id}</span>
+                      <Hash className="size-3 text-foreground-muted" />
+                      <span className="text-[11px] text-foreground-muted">ID: #{submission.id}</span>
                     </div>
                   </div>
                   <div className="flex-shrink-0">
@@ -91,7 +91,7 @@ const FeedbackModal = ({ isOpen, onClose, submission }) => {
 
                 {/* Submission Date */}
                 {submission.created_at && (
-                  <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                  <div className="flex items-center gap-2 text-[11px] text-foreground-muted">
                     <Calendar className="size-3" />
                     Submitted {format(new Date(submission.created_at), "PPP")}
                   </div>
@@ -105,8 +105,8 @@ const FeedbackModal = ({ isOpen, onClose, submission }) => {
                   <div className="flex items-center gap-2">
                     <div className={`p-1.5 rounded-lg ${
                       isRejected
-                        ? "bg-error-bg dark:bg-error/20 text-error"
-                        : "bg-success-bg dark:bg-success/20 text-success"
+                        ? "bg-error-bg text-error"
+                        : "bg-success-bg text-success"
                     }`}>
                       {isRejected ? (
                         <ThumbsDown className="size-3.5" />
@@ -118,7 +118,7 @@ const FeedbackModal = ({ isOpen, onClose, submission }) => {
                       {isRejected ? "Feedback on your rejection" : "Feedback from the team"}
                     </span>
                   </div>
-                  <div className="p-4 rounded-2xl bg-accent/50 border border-border">
+                  <div className="p-4 rounded-2xl bg-secondary border border-border">
                     <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">
                       {submission.feedback}
                     </p>
@@ -130,7 +130,7 @@ const FeedbackModal = ({ isOpen, onClose, submission }) => {
               <div className="p-6 border-t border-border shrink-0">
                 <button
                   onClick={onClose}
-                  className="w-full px-6 py-3 rounded-2xl font-bold text-foreground bg-accent hover:bg-accent/80 transition-all border border-border"
+                  className="w-full px-6 py-3 rounded-2xl font-bold text-foreground bg-secondary hover:bg-secondary-hover transition-all border border-border cursor-pointer"
                 >
                   Close
                 </button>
