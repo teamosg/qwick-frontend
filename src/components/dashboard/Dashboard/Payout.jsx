@@ -11,7 +11,7 @@ const Payout = () => {
   };
   return (
     <div>
-      <h2 className="text-xl md:text-2xl text-foreground dark:text-foreground font-semibold mb-3">
+      <h2 className="text-xl md:text-2xl text-foreground-strong font-semibold mb-3">
         Payout
       </h2>
 
@@ -21,7 +21,7 @@ const Payout = () => {
         <div className="flex items-center justify-between mb-3">
           <div className="">
             <p
-              className={`relative pb-2 text-sm font-medium transition-colorswithdrawal text-foreground dark:text-foreground`}
+              className={`relative pb-2 text-sm font-medium transition-colorswithdrawal text-foreground-strong`}
             >
               Withdrawals
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground-strong rounded-full"></span>

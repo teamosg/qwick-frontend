@@ -12,7 +12,7 @@ const CampaignCheckoutModal = ({ open, setOpen, checkoutDetails }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent 
-        className="sm:max-w-md p-6 overflow-hidden rounded-2xl border-border bg-surface shadow-2xl"
+        className="sm:max-w-md p-6 overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
       >
@@ -23,12 +23,12 @@ const CampaignCheckoutModal = ({ open, setOpen, checkoutDetails }) => {
           <DialogTitle className="text-center text-xl font-bold tracking-tight text-foreground-strong">
             Campaign Payment Summary
           </DialogTitle>
-          <DialogDescription className="text-center text-sm text-foreground-subtle max-w-xs mx-auto">
+          <DialogDescription className="text-center text-sm text-foreground-muted max-w-xs mx-auto">
             {checkoutDetails?.message || "Complete your payment to activate this campaign and start receiving content."}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="my-6 space-y-4 rounded-xl bg-background p-5 border border-border">
+        <div className="my-6 space-y-4 rounded-xl bg-secondary p-5 border border-border">
           <div className="flex justify-between items-center text-sm">
             <span className="text-foreground-muted font-medium">Campaign Budget</span>
             <span className="font-semibold text-foreground-strong">

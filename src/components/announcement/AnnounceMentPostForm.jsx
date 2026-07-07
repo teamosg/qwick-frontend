@@ -91,7 +91,7 @@ const AnnouncementPostForm = ({
   }, []);
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-lg shadow p-4 mb-6">
+    <div className="bg-card rounded-lg shadow p-4 mb-6 border border-border">
       <form onSubmit={handleSubmit}>
         <div className="flex items-start space-x-3">
           <AvatarUser
@@ -105,7 +105,7 @@ const AnnouncementPostForm = ({
               value={postText}
               onChange={(e) => setPostText(e.target.value)}
               placeholder="What's on your mind?"
-              className="w-full bg-gray-100 dark:placeholder:text-zinc-400 dark:bg-zinc-800  rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+              className="w-full bg-secondary dark:placeholder:text-foreground-muted rounded-lg p-3 mb-3 focus:outline-none focus:ring-2 focus:ring-ring resize-none"
               rows={5}
             />
 
@@ -123,7 +123,7 @@ const AnnouncementPostForm = ({
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
-                        className="absolute top-2 right-2 bg-gray-800 bg-opacity-50 text-white rounded-full p-1"
+                        className="absolute top-2 right-2 bg-neutral-800 bg-opacity-50 text-white rounded-full p-1"
                       >
                         <X size={16} />
                       </button>
@@ -139,7 +139,7 @@ const AnnouncementPostForm = ({
                 <button
                   type="button"
                   onClick={handleImageIconClick}
-                  className="text-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 "
+                  className="text-foreground-muted hover:text-foreground-strong p-2 rounded-full hover:bg-secondary transition-colors"
                 >
                   <ImageIcon size={20} />
                 </button>
@@ -160,7 +160,7 @@ const AnnouncementPostForm = ({
                 <button
                   type="button"
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  className="text-gray-500 hover:text-foreground-strong p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 "
+                  className="text-foreground-muted hover:text-foreground-strong p-2 rounded-full hover:bg-secondary transition-colors"
                 >
                   <Smile size={20} />
                 </button>

@@ -29,17 +29,17 @@ const DashboardSettings = () => {
   };
   return (
     <div>
-      <h2 className="text-[24px] text-gray-900 dark:text-white font-bold mb-6">
+      <h2 className="text-[24px] text-foreground-strong font-bold mb-6">
         Dashboard Settings
       </h2>
       <div className=" space-y-3">
         <Link
           to={`/dashboard/${communityUsername}/dashboard-settings/notifications`}
-          className="flex items-center justify-between bg-card dark:bg-card rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
+          className="flex items-center justify-between bg-card rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm"
         >
           <div className="flex items-center justify-center gap-3">
             <Bell className="size-5" />
-            <h3 className="text-foreground-strong dark:text-white text-[16px] font-semibold ">
+            <h3 className="text-foreground-strong text-[16px] font-semibold ">
               Notifications
             </h3>
           </div>
@@ -48,11 +48,11 @@ const DashboardSettings = () => {
 
         <div
           onClick={handleCopyRefLink}
-          className="flex items-center justify-between bg-card dark:bg-card rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm cursor-pointer"
+          className="flex items-center justify-between bg-card rounded-xl py-3 px-4 hover:shadow-lg transition-all duration-300 ease-in-out shadow-sm cursor-pointer"
         >
           <div className="flex items-center justify-center gap-3">
-            {copied ? <Check className="text-emerald-500 size-5" /> : <Share2 className="size-5" />}
-            <h3 className="text-foreground-strong dark:text-white text-[16px] font-semibold ">
+            {copied ? <Check className="text-success size-5" /> : <Share2 className="size-5" />}
+            <h3 className="text-foreground-strong text-[16px] font-semibold ">
               {copied ? "Link Copied!" : "Generate Reference Link"}
             </h3>
           </div>

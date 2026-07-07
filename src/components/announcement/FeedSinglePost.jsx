@@ -42,7 +42,7 @@ export default function FeedSinglePost({ post }) {
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-900 shadow rounded-[12px] p-6 border border-gray-200 dark:border-zinc-700">
+    <div className="bg-card shadow rounded-[12px] p-6 border border-border">
       {/* Post Header */}
       <div className="flex items-center space-x-3 mb-4">
         <AvatarUser
@@ -51,7 +51,7 @@ export default function FeedSinglePost({ post }) {
           className="w-12 h-12"
         />
         <div className="min-w-0 flex-1">
-          <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
+          <h3 className="font-semibold text-sm sm:text-base text-foreground-strong truncate">
             {post?.author?.full_name}
           </h3>
           <div className="text-xs text-foreground-subtle dark:text-foreground-subtle flex items-center">
@@ -103,12 +103,12 @@ export default function FeedSinglePost({ post }) {
 
             if (count === 2) {
               return (
-                <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800">
+                <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-border">
                   {files.map((file, i) => (
                     <div 
                       key={i} 
                       onClick={() => handleOpenImage(i)} 
-                      className="aspect-[21/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                      className="aspect-[21/9] cursor-pointer overflow-hidden bg-secondary"
                     >
                       <img 
                         src={file.file} 
@@ -123,10 +123,10 @@ export default function FeedSinglePost({ post }) {
 
             if (count === 3) {
               return (
-                <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800">
+                <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-border">
                   <div 
                     onClick={() => handleOpenImage(0)} 
-                    className="col-span-2 aspect-[21/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                    className="col-span-2 aspect-[21/9] cursor-pointer overflow-hidden bg-secondary"
                   >
                     <img 
                       src={files[0].file} 
@@ -136,7 +136,7 @@ export default function FeedSinglePost({ post }) {
                   </div>
                   <div 
                     onClick={() => handleOpenImage(1)} 
-                    className="aspect-[16/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                    className="aspect-[16/9] cursor-pointer overflow-hidden bg-secondary"
                   >
                     <img 
                       src={files[1].file} 
@@ -146,7 +146,7 @@ export default function FeedSinglePost({ post }) {
                   </div>
                   <div 
                     onClick={() => handleOpenImage(2)} 
-                    className="aspect-[16/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                    className="aspect-[16/9] cursor-pointer overflow-hidden bg-secondary"
                   >
                     <img 
                       src={files[2].file} 
@@ -159,12 +159,12 @@ export default function FeedSinglePost({ post }) {
             }
 
             return (
-              <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-gray-100 dark:border-zinc-800">
+              <div className="grid grid-cols-2 gap-1 rounded-xl overflow-hidden border border-border">
                 {files.slice(0, 4).map((file, i) => (
                   <div 
                     key={i} 
                     onClick={() => handleOpenImage(i)} 
-                    className="relative aspect-[16/9] cursor-pointer overflow-hidden bg-gray-50 dark:bg-zinc-900"
+                    className="relative aspect-[16/9] cursor-pointer overflow-hidden bg-secondary"
                   >
                     <img 
                       src={file.file} 
@@ -185,7 +185,7 @@ export default function FeedSinglePost({ post }) {
       )}
 
       {/* Post Actions */}
-      <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-600">
+      <div className="flex items-center justify-between pt-4 border-t border-border">
         <div className="flex items-center space-x-6">
           <div className=" flex items-center space-x-2">
             <button

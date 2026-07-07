@@ -54,13 +54,13 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] flex flex-col">
+      <div className="bg-card rounded-lg shadow-lg w-full max-w-md max-h-[90vh] flex flex-col border border-border">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-zinc-700">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div className="flex items-center justify-between p-6 border-b border-border">
+          <h2 className="text-lg font-semibold text-foreground-strong">
             Edit community images
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <button onClick={onClose} className="text-foreground-muted hover:text-foreground-strong transition-colors">
             <X size={20} />
           </button>
         </div>
@@ -69,12 +69,12 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
         <div className="p-6 space-y-6 overflow-y-auto">
           {/* Profile Section */}
           <div className="flex flex-col items-center">
-            <label className="w-full text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="w-full text-sm font-medium text-foreground-strong mb-2">
               Community Icon
             </label>
             <div
               onClick={() => profileInputRef.current.click()}
-              className="relative w-20 h-20 border-2 border-dashed border-foreground-muted rounded-full flex items-center justify-center cursor-pointer bg-gray-50 dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors group"
+              className="relative w-20 h-20 border-2 border-dashed border-foreground-muted rounded-full flex items-center justify-center cursor-pointer bg-secondary hover:bg-secondary/80 transition-colors group"
             >
               {profilePreview ? (
                 <>
@@ -87,7 +87,7 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
                   </button>
                 </>
               ) : (
-                <Upload className="h-6 w-6 text-gray-400" />
+                <Upload className="h-6 w-6 text-foreground-muted" />
               )}
             </div>
             <input ref={profileInputRef} type="file" accept="image/*" onChange={(e) => handleFile(e.target.files[0], "profile")} className="hidden" />
@@ -95,12 +95,12 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
 
           {/* Banner Section */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-foreground-strong mb-2">
               Banner Image
             </label>
             <div
               onClick={() => bannerInputRef.current.click()}
-              className="relative border-2 border-dashed border-foreground-muted rounded-lg text-center cursor-pointer bg-gray-50 dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors group"
+              className="relative border-2 border-dashed border-foreground-muted rounded-lg text-center cursor-pointer bg-secondary hover:bg-secondary/80 transition-colors group"
             >
               {bannerPreview ? (
                 <>
@@ -114,8 +114,8 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
                 </>
               ) : (
                 <div className="py-2">
-                  <ImageIcon className="mx-auto h-6 w-6 text-gray-400 mb-1" />
-                  <p className="text-[10px] text-gray-500 dark:text-zinc-400">Upload Banner</p>
+                  <ImageIcon className="mx-auto h-6 w-6 text-foreground-muted mb-1" />
+                  <p className="text-[10px] text-foreground-muted">Upload Banner</p>
                 </div>
               )}
             </div>
@@ -124,13 +124,13 @@ const ImageUploadModal = ({ isOpen, onClose, onImageUpload }) => {
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-gray-200 dark:border-zinc-700">
+        <div className="p-6 border-t border-border">
           <button
             onClick={handleUpload}
             disabled={!bannerImage && !profileImage}
             className={`w-full py-3 px-4 rounded-full text-white font-medium transition-colors ${bannerImage || profileImage
                 ? "bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 cursor-pointer"
-                : "bg-gray-300 dark:bg-zinc-700 cursor-not-allowed"
+                : "bg-secondary text-foreground-muted cursor-not-allowed"
               }`}
           >
             Save Changes

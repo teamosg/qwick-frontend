@@ -133,10 +133,10 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-700 px-6 py-4 relative">
+    <div className="bg-card border-b border-border px-6 py-4 relative">
       <div className="flex items-center justify-between">
         {/* Chat Title */}
-        <h1 className="text-xl font-medium text-gray-900 dark:text-white">
+        <h1 className="text-xl font-medium text-foreground-strong">
           Chat
         </h1>
 
@@ -152,19 +152,19 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
 
           {/* Search Button/Input */}
           {/* {isSearchOpen ? (
-            <div className="flex items-center space-x-2 bg-gray-100 dark:bg-zinc-800 rounded-lg px-3 py-1">
-              <Search className="w-4 h-4 text-gray-500" />
+            <div className="flex items-center space-x-2 bg-secondary rounded-lg px-3 py-1">
+              <Search className="w-4 h-4 text-foreground-muted" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={handleSearchChange}
                 placeholder="Search messages..."
-                className="bg-transparent border-none outline-none text-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 w-48"
+                className="bg-transparent border-none outline-none text-sm text-foreground placeholder-foreground-muted w-48"
                 autoFocus
               />
               <button
                 onClick={handleCloseSearch}
-                className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                className="text-foreground-muted hover:text-foreground"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -188,15 +188,15 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
 
       {/* Users Popup */}
       {isUsersOpen && (
-        <div className="absolute top-full right-0 mt-2 w-80 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-gray-200 dark:border-zinc-700 z-50">
+        <div className="absolute top-full right-0 mt-2 w-80 bg-card rounded-lg shadow-lg border border-border z-50">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-zinc-700">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="flex items-center justify-between p-4 border-b border-border">
+            <h3 className="text-lg font-semibold text-foreground-strong">
               Group Members ({users.length})
             </h3>
             <button
               onClick={handleCloseUsers}
-              className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+              className="text-foreground-muted hover:text-foreground"
             >
               <X className="w-5 h-5" />
             </button>
@@ -207,7 +207,7 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
             {users.map((user) => (
               <div
                 key={user.id}
-                className="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors"
+                className="flex items-center justify-between p-4 hover:bg-secondary transition-colors"
               >
                 <div className="flex items-center space-x-3">
                   <div className="relative">
@@ -217,23 +217,23 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
                       className="w-10 h-10 rounded-full"
                     />
                     <div
-                      className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-white dark:border-zinc-900 ${getStatusColor(
+                      className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-card ${getStatusColor(
                         user.status
                       )}`}
                     />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    <p className="text-sm font-medium text-foreground-strong">
                       {user.name}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-foreground-muted">
                       {getStatusText(user.status)}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
                   {user.role === "Admin" && (
-                    <span className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">
+                    <span className="px-2 py-1 text-xs bg-secondary text-primary rounded-full">
                       {user.role}
                     </span>
                   )}
@@ -243,8 +243,8 @@ export default function ChatHeader({ onSearch, searchQuery, setSearchQuery }) {
           </div>
 
           {/* Footer */}
-          <div className="p-4 border-t border-gray-200 dark:border-zinc-700">
-            <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+          <div className="p-4 border-t border-border">
+            <div className="flex items-center justify-between text-sm text-foreground-muted">
               <span>
                 {users.filter((u) => u.status === "online").length} online
               </span>

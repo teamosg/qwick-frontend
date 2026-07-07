@@ -132,7 +132,7 @@ const AnnouncementFeed = () => {
       transition={{ duration: 0.6 }}
     >
       <motion.h2
-        className="text-[24px] text-gray-900 dark:text-white font-semibold mb-3"
+        className="text-[24px] text-foreground-strong font-semibold mb-3"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}

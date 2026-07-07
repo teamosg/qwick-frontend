@@ -10,7 +10,7 @@ function CommunityUsersActions({ onApprove, onDemote, role }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <button className="cursor-pointer p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
+                <button className="cursor-pointer p-2 rounded hover:bg-secondary">
                     <EllipsisVertical className="h-5 w-5" />
                 </button>
             </DropdownMenuTrigger>
@@ -23,7 +23,7 @@ function CommunityUsersActions({ onApprove, onDemote, role }) {
                         )
                         : (
                             <DropdownMenuItem
-                                className="text-red-600 dark:text-red-400"
+                                className="text-error"
                                 onClick={onDemote}
                             >
                                 Demote to User

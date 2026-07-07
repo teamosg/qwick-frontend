@@ -130,7 +130,7 @@ const DashboardContentReward = () => {
       ) : filteredRewards.length > 0 ? (
         <div className="w-full">
           <div className="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 px-4 sm:px-6 mt-6">
-            <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
+            <p className="text-foreground-muted text-sm sm:text-base">
               Active {filteredRewards.length} content reward
               {filteredRewards.length !== 1 ? "s" : ""}
             </p>
