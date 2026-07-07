@@ -206,6 +206,30 @@ export const useManageCommunityUserRole = (communityUsername) => {
 }
 
 
+export const useRemoveCommunityMember = (communityUsername) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ userId }) => {
+      const res = await axiosPrivate.post(
+        `/v1/communities/${communityUsername}/remove-member/${userId}/`
+      );
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Member removed successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityUsers", communityUsername] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to remove member" });
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to remove member" });
+    },
+  });
+}
+
+
 
 export const useDeleteCommunity = () => {
   const queryClient = useQueryClient();

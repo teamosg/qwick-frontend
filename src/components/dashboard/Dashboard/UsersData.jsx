@@ -2,7 +2,7 @@ import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
 import { NoDataAlert } from "@/components/Alerts/NoDataAlert";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { useGetCommunityUsers, useManageCommunityUserRole } from "@/hooks/community.hook";
+import { useGetCommunityUsers, useManageCommunityUserRole, useRemoveCommunityMember } from "@/hooks/community.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import { EllipsisVertical, Link2 } from "lucide-react";
 import WaitListSkeleton from "./skeletons/WaitListSkeleton";
@@ -55,6 +55,7 @@ const UsersData = () => {
   const { selectedBrandCommunity } = useCommunityStore();
   const { data, isLoading, isError } = useGetCommunityUsers(selectedBrandCommunity?.username)
   const { mutate: changeRole, isPending: isChangingRole } = useManageCommunityUserRole(selectedBrandCommunity?.username)
+  const { mutate: removeMember, isPending: isRemovingMember } = useRemoveCommunityMember(selectedBrandCommunity?.username)
   const [userOnAction, setUserOnAction] = useState(null)
 
   const activeUsers = data?.members || [];
@@ -67,6 +68,11 @@ const UsersData = () => {
   const handleDemoteToUser = (userId) => {
     setUserOnAction(userId);
     changeRole({ userId, action: "demote" })
+  }
+
+  const handleRemoveMember = (userId) => {
+    setUserOnAction(userId);
+    removeMember({ userId })
   }
 
 
@@ -147,7 +153,7 @@ const UsersData = () => {
                   </TableCell>
                   <TableCell className="py-4 px-6 flex gap-2">
                     {
-                      isChangingRole && userOnAction === user?.id
+                      (isChangingRole || isRemovingMember) && userOnAction === user?.id
                         ? (
                           <Spinner />
                         )
@@ -156,6 +162,7 @@ const UsersData = () => {
                             role={user?.is_moderator ? 'moderator' : 'user'}
                             onApprove={() => handleApproveToModerator(user?.id)}
                             onDemote={() => handleDemoteToUser(user?.id)}
+                            onRemove={() => handleRemoveMember(user?.id)}
                           />
                         )
                     }
