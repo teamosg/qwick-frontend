@@ -32,9 +32,9 @@ const PaymentsData = () => {
 
   const getStatusBadge = (status) => {
     const variants = {
-      paid: "bg-green-100 text-green-800 border-green-200",
-      pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
-      cancel: "bg-red-100 text-red-800 border-red-200",
+      paid: "bg-success-bg text-success border-success",
+      pending: "bg-warning-bg text-warning border-warning",
+      cancel: "bg-error-bg text-error border-error",
     };
 
     const statusKey = status?.toLowerCase() || "pending";
@@ -68,7 +68,7 @@ const PaymentsData = () => {
               ? Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={index}
-                  className="bg-card dark:bg-card border rounded-lg p-4 shadow-sm dark:border-border"
+                  className="bg-card border border-border rounded-lg p-4 shadow-sm"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <Skeleton className="h-5 w-32" />
@@ -82,30 +82,30 @@ const PaymentsData = () => {
               : earnings.map((user, index) => (
                 <div
                   key={index}
-                  className="bg-card border rounded-lg p-4 shadow-sm dark:bg-card dark:border-border dark:text-foreground"
+                  className="bg-card border border-border rounded-lg p-4 shadow-sm text-foreground"
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <div className="font-semibold text-foreground dark:text-white">
+                    <div className="font-semibold text-foreground-strong">
                       {getDisplayName(user)}
                     </div>
                   </div>
-                  <div className="text-sm text-foreground dark:text-white p-1">
+                  <div className="text-sm text-foreground-muted p-1">
                     {user.email}
                   </div>
-                  <div className="text-sm text-foreground dark:text-white p-1">
+                  <div className="text-sm text-foreground-strong p-1">
                     {" "}
                     {getStatusBadge(user.status)}
                   </div>
-                  <div className="font-semibold text-foreground dark:text-white p-1">
+                  <div className="font-semibold text-foreground-strong p-1">
                     {user.contact || "N/A"}
                   </div>
-                  <div className="font-semibold text-foreground dark:text-white p-1">
+                  <div className="font-semibold text-foreground-strong p-1">
                     ${user.total_earned}
                   </div>
                 </div>
               ))}
             {!isLoading && earnings.length === 0 && (
-              <div className="text-center p-4 text-muted-foreground dark:text-muted-foreground">
+              <div className="text-center p-4 text-foreground-muted">
                 No attributes found.
               </div>
             )}
@@ -116,25 +116,19 @@ const PaymentsData = () => {
             <div className="p-1 min-w-[600px]">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="bg-muted/50 text-foreground border-border rounded-full dark:bg-accent dark:text-foreground dark:border-border">
-                    <TableHead className="font-medium py-4 px-6 dark:text-white">
+                  <TableRow className="bg-secondary text-foreground border-b border-border rounded-full">
+                    <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                       Name
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-white">
+                    <TableHead className=" font-medium py-4 px-6 text-foreground-strong">
                       Email
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-white">
+                    <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                       Status
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-white">
+                    <TableHead className=" font-medium py-4 px-6 text-foreground-strong">
                       Total amount
                     </TableHead>
-                    {/* <TableHead className="font-medium py-4 px-6 dark:text-white">
-                      Contact
-                    </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-white">
-                      Actions
-                    </TableHead> */}
                   </TableRow>
                 </TableHeader>
                 <TableBody className="rounded-xl">
@@ -158,33 +152,25 @@ const PaymentsData = () => {
                     : earnings.map((user, index) => (
                       <TableRow
                         key={index}
-                        className="border-none hover:bg-accent dark:hover:bg-accent dark:text-foreground"
+                        className="border-none hover:bg-secondary"
                       >
-                        <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
+                        <TableCell className="py-4 px-6 font-medium text-foreground-strong">
                           {getDisplayName(user)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
+                        <TableCell className="py-4 px-6 text-foreground-muted">
                           {user.email}
                         </TableCell>
-                        <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                        <TableCell className="py-4 px-6 font-semibold text-foreground-strong">
                           {getStatusBadge(user.status)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 dark:text-white">
+                        <TableCell className="py-4 px-6 text-foreground-strong">
                           $ {user.total_earned}
                         </TableCell>
-                        {/* <TableCell className="py-4 px-6 dark:text-white">
-                        {user.contact || "N/A"}
-                      </TableCell>
-                      <TableCell className="py-4 px-6 flex gap-2">
-                        <button className="cursor-pointer">
-                          <EllipsisVertical />
-                        </button>
-                      </TableCell> */}
                       </TableRow>
                     ))}
                   {!isLoading && earnings.length === 0 && (
                     <TableRow>
-                      <TableCell className="text-center py-4 text-muted-foreground dark:text-muted-foreground" colSpan={6}>
+                      <TableCell className="text-center py-4 text-foreground-muted" colSpan={6}>
                         No records found.
                       </TableCell>
                     </TableRow>

@@ -7,16 +7,16 @@ const ProfileBalanceData = () => {
     <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       <Tabs defaultValue="withdraw" className="w-full">
         {/* Tab Navigation */}
-        <TabsList className="grid w-full grid-cols-2 max-w-[200px] h-auto p-1 bg-gray-100 dark:bg-zinc-800 rounded-lg">
+        <TabsList className="grid w-full grid-cols-2 max-w-[200px] h-auto p-1 bg-secondary rounded-lg">
           <TabsTrigger
             value="withdraw"
-            className="text-sm font-medium text-foreground-subtle dark:text-white data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md py-2"
+            className="text-sm font-medium text-foreground-muted data-[state=active]:bg-card data-[state=active]:text-foreground-strong data-[state=active]:shadow-sm rounded-md py-2 cursor-pointer"
           >
             Withdraw
           </TabsTrigger>
           <TabsTrigger
             value="deposit"
-            className="text-sm font-medium text-foreground-subtle dark:text-white data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-black rounded-md py-2"
+            className="text-sm font-medium text-foreground-muted data-[state=active]:bg-card data-[state=active]:text-foreground-strong data-[state=active]:shadow-sm rounded-md py-2 cursor-pointer"
           >
             Deposit
           </TabsTrigger>

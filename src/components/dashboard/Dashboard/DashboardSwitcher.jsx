@@ -67,7 +67,7 @@ export default function DashboardSwitcher({
                     {community?.business_name?.slice(0, 15)}
                     {community?.business_name?.length > 15 ? "..." : ""}
                   </span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-foreground-muted">
                     @{community.username}
                   </span>
                 </div>

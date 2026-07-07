@@ -55,9 +55,9 @@ const WithdrawList = () => {
     }
 
     const variants = {
-      paid: "bg-green-100 text-green-800 border-green-200",
-      pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
-      cancel: "bg-red-100 text-red-800 border-red-200",
+      paid: "bg-success-bg text-success border-success/20",
+      pending: "bg-warning-bg text-warning border-warning/20",
+      cancel: "bg-error-bg text-error border-error/20",
     };
 
     return (
@@ -108,10 +108,10 @@ const WithdrawList = () => {
           return (
             <div
               key={index}
-              className="bg-white dark:bg-zinc-800 border rounded-lg p-4 shadow-sm"
+              className="bg-card border border-border rounded-lg p-4 shadow-sm"
             >
               <div className="flex justify-between items-start mb-2">
-                <div className="font-semibold text-foreground dark:text-white">
+                <div className="font-semibold text-foreground-strong dark:text-white">
                   {transaction.holder_name || "Unknown"}
                 </div>
                 <div className="flex items-center gap-2">
@@ -119,13 +119,14 @@ const WithdrawList = () => {
 
                   {!isFailed && (
                     <DropdownMenu>
-                      <DropdownMenuTrigger className="focus:outline-none">
-                        <MoreVertical className="h-4 w-4 text-gray-500" />
+                      <DropdownMenuTrigger className="focus:outline-none cursor-pointer">
+                        <MoreVertical className="h-4 w-4 text-foreground-muted" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem
                           onClick={() => handleProcessWithdraw(index + 1)}
                           disabled={isProcessing}
+                          className="cursor-pointer"
                         >
                           Process Withdraw request
                         </DropdownMenuItem>
@@ -134,10 +135,10 @@ const WithdrawList = () => {
                   )}
                 </div>
               </div>
-              <div className="text-sm text-foreground dark:text-white">
+              <div className="text-sm text-foreground-muted">
                 {formatDate(transaction.created_at)}
               </div>
-              <div className="font-semibold text-foreground dark:text-white">
+              <div className="font-semibold text-foreground-strong dark:text-white">
                 {formatAmount(transaction.amount)}
               </div>
             </div>
@@ -151,49 +152,49 @@ const WithdrawList = () => {
         <div className=" p-1">
           <Table>
             <TableHeader className="">
-              <TableRow className="border rounded-full">
-                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
+              <TableRow className="border border-border rounded-full">
+                <TableHead className="text-foreground-muted font-medium py-4 px-6">
                   Name
                 </TableHead>
-                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-muted font-medium py-4 px-6">
                   Date
                 </TableHead>
-                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-muted font-medium py-4 px-6">
                   Amount
                 </TableHead>
-                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-muted font-medium py-4 px-6">
                   Status
                 </TableHead>
-                <TableHead className="text-foreground-subtle font-medium dark:text-white py-4 px-6">
+                <TableHead className="text-foreground-muted font-medium py-4 px-6">
                   Actions
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="bg-white dark:bg-zinc-800 rounded-xl">
+            <TableBody className="bg-card rounded-xl">
               {transactions?.map((transaction, index) => {
 
                 return (
                   <TableRow
                     key={index}
-                    className="border-none hover:bg-gray-50 dark:hover:bg-foreground-muted"
+                    className="border-none hover:bg-secondary/50"
                   >
-                    <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
+                    <TableCell className="py-4 px-6 font-medium text-foreground-strong dark:text-white">
                       {transaction.holder_name || "Unknown"}
                     </TableCell>
-                    <TableCell className="py-4 px-6 text-gray-600 dark:text-white">
+                    <TableCell className="py-4 px-6 text-foreground-muted">
                       {formatDate(transaction.created_at)}
                     </TableCell>
-                    <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                    <TableCell className="py-4 px-6 font-semibold text-foreground-strong dark:text-white">
                       {formatAmount(transaction.amount)}
                     </TableCell>
-                    <TableCell className="py-4 px-6 dark:text-white">
+                    <TableCell className="py-4 px-6">
                       {getStatusBadge(transaction.status)}
                     </TableCell>
-                    <TableCell className="py-4 px-6 dark:text-white">
+                    <TableCell className="py-4 px-6">
                       {transaction.status?.toLowerCase() === "pending" && (
                         <DropdownMenu>
-                          <DropdownMenuTrigger className="focus:outline-none p-2 hover:bg-gray-100 rounded-full dark:hover:bg-gray-700 transition-colors">
-                            <MoreVertical className="h-4 w-4 text-gray-500 dark:text-gray-300" />
+                          <DropdownMenuTrigger className="focus:outline-none p-2 hover:bg-secondary rounded-full transition-colors cursor-pointer">
+                            <MoreVertical className="h-4 w-4 text-foreground-muted" />
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem

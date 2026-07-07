@@ -9,15 +9,15 @@ const CampaignProgress = ({ totalUsersEarning, initialBudget, budget, showTitle 
     return (
         <div className={showTitle ? "mb-4" : "mb-2.5"}>
             {showTitle && (
-                <h4 className="text-foreground text-sm mb-2.5 dark:text-white uppercase font-semibold">
+                <h4 className="text-foreground text-sm mb-2.5 text-foreground-strong uppercase font-semibold">
                     Campaign Progress
                 </h4>
             )}
-            <p className="text-foreground-subtle text-xs flex justify-between dark:text-zinc-400 mb-2 font-medium">
+            <p className="text-foreground-muted text-xs flex justify-between mb-2 font-medium">
                 <span> ${earning.toFixed(2)} of ${currentBudget}</span>
                 <span>{progress.toFixed(0)}%</span>
             </p>
-            <div className="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+            <div className="w-full h-2 bg-secondary rounded-full overflow-hidden">
                 <div
                     className="h-full bg-foreground-strong hover:bg-foreground transition-all duration-300 rounded-full"
                     style={{ width: `${progress}%` }}

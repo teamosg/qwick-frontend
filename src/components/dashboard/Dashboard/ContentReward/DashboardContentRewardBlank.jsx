@@ -12,14 +12,14 @@ const DashboardContentRewardBlank = ({ onCreateReward }) => {
   };
 
   return (
-    <Card className="bg-white dark:bg-zinc-900 border-0 shadow-sm rounded-2xl sm:rounded-3xl overflow-hidden">
+    <Card className="bg-card border-0 shadow-sm rounded-2xl sm:rounded-3xl overflow-hidden">
       <CardContent className="p-6 sm:p-12 text-center">
         <div className="py-4">
           <div className="mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground-strong mb-3">
               No Active Campaigns
             </h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-xs sm:max-w-md mx-auto text-sm sm:text-base leading-relaxed">
+            <p className="text-foreground-muted max-w-xs sm:max-w-md mx-auto text-sm sm:text-base leading-relaxed">
               You haven’t created a campaign yet. Start one to reward your users.
             </p>
           </div>

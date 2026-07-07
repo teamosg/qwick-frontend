@@ -6,6 +6,7 @@ import {
   StepperItem,
   StepperTrigger,
 } from "@/components/ui/stepper";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 
@@ -27,33 +28,43 @@ export default function AddCommunityStepper({
         <motion.button
           onClick={() => setCurrentStep((prev) => prev - 1)}
           disabled={currentStep === 1 || isLoading}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className={`transition-opacity duration-200 ${
-            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          whileHover={currentStep === 1 || isLoading ? {} : { scale: 1.05 }}
+          whileTap={currentStep === 1 || isLoading ? {} : { scale: 0.95 }}
+          className={`transition-all duration-200 ${
+            currentStep === 1
+              ? "opacity-0 pointer-events-none"
+              : "opacity-100"
           }`}
         >
-          <span className="bg-muted p-2 block rounded-md cursor-pointer hover:bg-gray-200 transition duration-300">
-            <ArrowLeft />
+          <span
+            className={`p-2 block rounded-md transition duration-300 bg-secondary dark:bg-qwick-gray-800 text-foreground-strong ${
+              isLoading
+                ? "opacity-50 cursor-not-allowed"
+                : "cursor-pointer hover:bg-qwick-gray-200 dark:hover:bg-qwick-gray-700"
+            }`}
+          >
+            <ArrowLeft className="w-5 h-5" />
           </span>
         </motion.button>
 
         <div className="flex-1">
           <Stepper
             value={currentStep}
-            onValueChange={() => setCurrentStep(setCurrentStep)}
-            className="bg-muted rounded-full overflow-hidden"
+            onValueChange={setCurrentStep}
+            className="bg-secondary dark:bg-qwick-gray-800 rounded-full overflow-hidden h-2.5 w-full flex"
           >
             {steps.map((step) => (
               <StepperItem key={step} step={step} className="flex-1">
                 <StepperTrigger
-                  className={`w-full flex-col items-start gap-2 bg-muted data-[state=completed]:bg-foreground-strong data-[state=active]:bg-foreground-strong transition-all duration-300`}
+                  className="w-full h-full flex"
                   asChild
                 >
                   <StepperIndicator
                     asChild
-                    className={`h-4 w-full transition-all duration-300`}
-                  ></StepperIndicator>
+                    className="h-full w-full bg-transparent data-[state=completed]:bg-primary data-[state=active]:bg-primary transition-all duration-300"
+                  >
+                    <span className="sr-only">Step {step}</span>
+                  </StepperIndicator>
                 </StepperTrigger>
               </StepperItem>
             ))}
@@ -63,7 +74,7 @@ export default function AddCommunityStepper({
 
       {/* Progress indicator */}
       <motion.div
-        className="text-sm text-gray-600"
+        className="text-sm text-foreground-muted"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -73,7 +84,7 @@ export default function AddCommunityStepper({
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="ml-2 text-foreground-strong"
+            className="ml-2 text-primary font-medium"
           >
             • Loading...
           </motion.span>

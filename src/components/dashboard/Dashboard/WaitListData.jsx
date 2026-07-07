@@ -30,7 +30,7 @@ const TableCell = ({ children, className = "" }) => (
 
 const getStatusBadge = (status = 'waiting') => {
   const variants = {
-    waiting: "bg-warning-bg text-warning border-yellow-200",
+    waiting: "bg-warning-bg text-warning border-warning",
   };
 
   return (
@@ -81,19 +81,19 @@ const WaitListData = () => {
         {waitingUsers?.map((user, index) => (
           <div
             key={index}
-            className="bg-card border rounded-lg p-4 shadow-sm dark:bg-card dark:border-border dark:text-foreground"
+            className="bg-card border border-border rounded-lg p-4 shadow-sm text-foreground"
           >
             <div className="flex justify-between items-start mb-2">
-              <div className="font-semibold text-foreground dark:text-white">
+              <div className="font-semibold text-foreground-strong">
                 {user?.username}
               </div>
             </div>
-            <div className="text-sm text-foreground dark:text-white">{user?.email}</div>
-            <div className="text-sm text-foreground dark:text-white">{user?.status}</div>
-            <div className="font-semibold text-foreground dark:text-white">
+            <div className="text-sm text-foreground-muted">{user?.email}</div>
+            <div className="text-sm text-foreground-muted">{user?.status}</div>
+            <div className="font-semibold text-foreground-strong">
               {user?.email}
             </div>
-            <div className="font-semibold text-foreground dark:text-white">
+            <div className="font-semibold text-foreground-strong">
               {user?.joined_at}
             </div>
           </div>
@@ -105,17 +105,17 @@ const WaitListData = () => {
         <div className="p-1 min-w-[700px]">
           <Table>
             <TableHeader className="">
-              <TableRow className="bg-muted/50 text-foreground dark:bg-accent dark:text-foreground border-border rounded-full">
-                <TableHead className="font-medium py-4 px-6 dark:text-white">
+              <TableRow className="bg-secondary text-foreground border-b border-border rounded-full">
+                <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                   Name
                 </TableHead>
-                <TableHead className=" font-medium py-4 px-6 dark:text-white">
+                <TableHead className=" font-medium py-4 px-6 text-foreground-strong">
                   Email
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-white">
+                <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                   Status
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-white">
+                <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                   Actions
                 </TableHead>
               </TableRow>
@@ -124,15 +124,15 @@ const WaitListData = () => {
               {waitingUsers?.map((user, index) => (
                 <TableRow
                   key={index}
-                  className="border-none hover:bg-accent dark:hover:bg-accent"
+                  className="border-none hover:bg-secondary"
                 >
-                  <TableCell className="py-4 px-6 font-medium text-foreground dark:text-foreground">
+                  <TableCell className="py-4 px-6 font-medium text-foreground-strong">
                     {user?.username}
                   </TableCell>
-                  <TableCell className="py-4 px-6 text-muted-foreground dark:text-foreground">
+                  <TableCell className="py-4 px-6 text-foreground-muted">
                     {user?.email}
                   </TableCell>
-                  <TableCell className="py-4 px-6 font-semibold text-foreground dark:text-foreground">
+                  <TableCell className="py-4 px-6 font-semibold text-foreground-strong">
                     {getStatusBadge(user?.status)}
                   </TableCell>
                   <TableCell className="py-4 px-6 flex gap-2">
