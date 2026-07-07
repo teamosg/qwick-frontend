@@ -17,17 +17,26 @@ import {
 } from "@/components/ui/sidebar";
 import { PencilIcon } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useParams, useLocation } from "react-router";
 import ImageUploadModal from "../../announcement/ImageUploadModal";
 import DashboardSwitcher from "./DashboardSwitcher";
 import { useEditCommunity, useGetMyCommunityList } from "@/hooks/community.hook";
 import { Spinner } from "@/components/ui/spinner";
 import { useCommunityStore } from "@/store/communityStore";
+import AvatarUser from "@/components/ui/AvatarUser";
 
 // Menu items.
 const items = [
   {
-    title: "Content Payout",
+    title: "Announcements",
+    url: "announcement",
+  },
+  {
+    title: "Community Chat",
+    url: "community-chat",
+  },
+  {
+    title: "My Campaigns",
     url: "content-payout",
   },
   {
@@ -35,7 +44,7 @@ const items = [
     url: "users",
   },
   {
-    title: "Wait list",
+    title: "Waitlist",
     url: "wait-list",
   },
   {
@@ -58,6 +67,8 @@ const items = [
 
 // Main sidebar content component
 export function DashboardSidebarContent() {
+  const { communityUsername } = useParams()
+  const location = useLocation();
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const { mutate: editCommunity, isPending } = useEditCommunity();
   const { setOpenMobile } = useSidebar();
@@ -71,15 +82,25 @@ export function DashboardSidebarContent() {
   const myCommunityList = communityList?.created_communities
 
 
-  const handleImageUpload = (imageFile) => {
-    if (!imageFile) return;
+  const handleImageUpload = (file, type) => {
+    if (!file) return;
 
     const formData = new FormData();
-    formData.append("banner_image", imageFile);
+    if (type === "banner") {
+      formData.append("banner_image", file);
+    } else if (type === "profile") {
+      formData.append("profile_image", file);
+    }
 
     editCommunity({
       communityUsername: selectedBrandCommunity?.username,
       payload: formData,
+    }, {
+      onSuccess: (response) => {
+        if (response?.status && response?.data) {
+          setSelectedBrandCommunity(response.data);
+        }
+      }
     });
   };
 
@@ -92,7 +113,7 @@ export function DashboardSidebarContent() {
 
   return (
     <>
-      <Sidebar className="relative h-full inset-auto md:w-64 border-r dark:border-zinc-800">
+      <Sidebar className="relative h-full inset-auto md:w-64 border-r border-border">
         <SidebarHeader
           className="p-0 bg-center bg-cover bg-no-repeat h-[135px] relative"
           style={{ backgroundImage: `url(${bg})` }}
@@ -104,8 +125,8 @@ export function DashboardSidebarContent() {
             <button
               disabled={isPending}
               onClick={openImageModal}
-              className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
-              title="Edit banner"
+              className="p-2 bg-card/20 backdrop-blur-sm rounded-full hover:bg-card/30 transition-colors"
+              title="Edit community images"
             >
               {
                 isPending
@@ -124,8 +145,8 @@ export function DashboardSidebarContent() {
                   <img src="/dashboardProfile.png" alt="" />
                 </div>
                 <div className="hidden sm:block">
-                  <h2 className="text-[16px] font-semibold text-gray-900 dark:text-white">Darren Chua</h2>
-                  <p className="text-sm text-gray-600 dark:text-zinc-400">@lofttypayoff</p>
+                  <h2 className="text-[16px] font-semibold text-foreground dark:text-foreground">Darren Chua</h2>
+                  <p className="text-sm text-muted-foreground dark:text-muted-foreground">@lofttypayoff</p>
                 </div>
               </div>
               <div className="hidden sm:block">
@@ -133,40 +154,73 @@ export function DashboardSidebarContent() {
               </div>
             </div>
           </div> */}
-          <DashboardSwitcher
+          <div className="z-40 flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg text-white focus-visible:outline-none">
+            <AvatarUser
+              src={selectedBrandCommunity?.avatar}
+              alt={selectedBrandCommunity?.business_name}
+              className="h-8 w-8"
+            />
+            <div className="text-start flex flex-col gap-1 leading-none w-full">
+              <span className="text-base leading-none font-semibold truncate max-w-[17ch]">
+                {selectedBrandCommunity?.business_name?.slice(0, 15)}
+                {selectedBrandCommunity?.business_name?.length > 15 ? "..." : ""}
+              </span>
+              <span className="text-xs truncate max-w-[20ch]">
+                @{selectedBrandCommunity?.username}
+              </span>
+            </div>
+          </div>
+          {/* <DashboardSwitcher
             data={myCommunityList}
             isLoading={isLoadingMyCommunityList}
             selectedCommunity={selectedBrandCommunity}
             setSelectedCommunity={setSelectedBrandCommunity}
-          />
+          /> */}
         </SidebarHeader>
 
         <SidebarContent>
           <SidebarGroup className="p-0">
             <SidebarGroupContent>
               <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem
-                    key={item.title}
-                    className="hover:hover:bg-none h-auto hover:shadow-none"
-                  >
-                    <SidebarMenuButton
-                      asChild
-                      className="text-[#717171] hover:shadow-none  text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent "
+                {items.map((item) => {
+                  const currentPath = location.pathname;
+
+                  const isActive = (() => {
+                    if (item.url === "content-payout") {
+                      return currentPath === `/dashboard/${communityUsername}` ||
+                             currentPath.startsWith(`/dashboard/${communityUsername}/content-payout`) ||
+                             currentPath.startsWith(`/dashboard/${communityUsername}/content-reward`);
+                    }
+                    if (item.url === "dashboard-settings") {
+                      return currentPath.startsWith(`/dashboard/${communityUsername}/dashboard-settings`);
+                    }
+                    return currentPath === `/dashboard/${communityUsername}/${item.url}` ||
+                           currentPath.startsWith(`/dashboard/${communityUsername}/${item.url}/`);
+                  })();
+
+                  return (
+                    <SidebarMenuItem
+                      key={item.title}
+                      className="hover:hover:bg-none h-auto hover:shadow-none"
                     >
-                      <Link
-                        className="hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full"
-                        to={item.url}
-                        onClick={() => setOpenMobile(false)}
+                      <SidebarMenuButton
+                        asChild
+                        className={`hover:shadow-none text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent ${isActive ? 'text-foreground-strong' : 'text-foreground-muted'}`}
                       >
-                        <span className="hover:bg-none hover:shadow-none font-medium">
-                          {item.title}
-                        </span>
-                      </Link>
-                    </SidebarMenuButton>
-                    <hr />
-                  </SidebarMenuItem>
-                ))}
+                        <Link
+                          className={`hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full relative ${isActive ? 'bg-secondary before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-6 before:w-0.5 before:bg-primary before:rounded-full' : ''}`}
+                          to={`/dashboard/${communityUsername}/${item.url}`}
+                          onClick={() => setOpenMobile(false)}
+                        >
+                          <span className={`hover:bg-none hover:shadow-none font-medium ${isActive ? 'text-foreground-strong font-semibold' : 'text-foreground-muted'}`}>
+                            {item.title}
+                          </span>
+                        </Link>
+                      </SidebarMenuButton>
+                      <hr />
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

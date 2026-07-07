@@ -4,8 +4,8 @@ import { useGetWalletBalance } from "@/hooks/payment.hook";
 import BalanceCardSkeleton from "./components/BalanceCardSkeleton";
 import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
 import WithdrawModal from "./components/WithdrawModal";
-import DepositModal from "./components/DepositModal";
 import { useState } from "react";
+import WithdrawList from "./components/WithdrawList";
 
 const ProfileBalance = () => {
   const {
@@ -15,7 +15,6 @@ const ProfileBalance = () => {
   } = useGetWalletBalance();
 
   const [openWithdraw, setOpenWithdraw] = useState(false);
-  const [openDeposit, setOpenDeposit] = useState(false);
 
   if (isErrorBalance)
     return (
@@ -27,10 +26,10 @@ const ProfileBalance = () => {
       {isLoadingBalance ? (
         <BalanceCardSkeleton />
       ) : (
-        <div className="p-6 text-left text-[#717171] dark:text-white text-sm mb-4 sm:mb-4.5 w-full shadow rounded-[16px] sm:rounded-[24px] bg-white dark:bg-[#2E2E2E]">
+        <div className="p-6 text-left text-foreground-muted text-sm mb-4 w-full shadow-sm border border-border rounded-2xl bg-card">
           <p>Total Balance</p>
 
-          <h3 className="py-3 text-[20px] text-[#090003] dark:text-white">
+          <h3 className="py-3 text-2xl font-bold text-foreground-strong dark:text-white">
             ${walletBalance?.balance || 0}
           </h3>
 
@@ -41,27 +40,19 @@ const ProfileBalance = () => {
             {/* Withdraw */}
             <Button
               onClick={() => setOpenWithdraw(true)}
-              className="bg-[#003933] text-white hover:bg-[#002822] rounded-full"
+              className="bg-primary hover:bg-primary-hover text-primary-foreground rounded-full cursor-pointer"
             >
               Withdraw
-            </Button>
-
-            {/* Deposit */}
-            <Button
-              onClick={() => setOpenDeposit(true)}
-              variant="outline"
-              className="border-[#003933] text-[#003933] dark:text-white dark:border-white rounded-full"
-            >
-              Deposit
             </Button>
           </div>
         </div>
       )}
 
       <WithdrawModal open={openWithdraw} setOpen={setOpenWithdraw} />
-      <DepositModal open={openDeposit} setOpen={setOpenDeposit} />
 
-      <ProfileBalanceData />
+      {/* <ProfileBalanceData /> */}
+
+      <WithdrawList />
     </div>
   );
 };

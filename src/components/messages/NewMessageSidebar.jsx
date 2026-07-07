@@ -87,45 +87,45 @@ const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onCl
             animate={{ x: 0 }}
             exit={{ x: -320 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed left-0 top-0 h-full w-80 bg-white dark:bg-[#171717] border-r border-gray-200 dark:border-[#282828] z-50 flex flex-col"
+            className="fixed left-0 top-0 h-full w-80 bg-card dark:bg-card border-r border-border dark:border-border z-50 flex flex-col"
           >
             {/* Header */}
-            <div className="p-4 border-b border-gray-200 dark:border-[#282828] flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">New Message</h2>
+            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800 flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-foreground dark:text-foreground">New Message</h2>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-[#282828] rounded-lg transition-colors"
+                className="p-2 hover:bg-accent dark:hover:bg-accent rounded-lg transition-colors"
                 aria-label="Close new message sidebar"
               >
-                <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                <X className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
               </button>
             </div>
 
             {/* Search Bar */}
-            <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-qwick-gray-400" />
                 <input
                   type="text"
                   placeholder="Search users..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-[#282828] rounded-lg bg-gray-50 dark:bg-[#232323] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 text-sm border border-qwick-gray-300 dark:border-qwick-gray-800 rounded-lg bg-background dark:bg-background text-foreground dark:text-foreground placeholder-qwick-gray-500 dark:placeholder-qwick-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
 
             {/* Create Group Chat Button */}
-            <div className="px-4 py-3 border-b border-gray-200 dark:border-[#282828]">
+            <div className="p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
               <button
                 onClick={onCreateGroup}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors text-left"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent dark:hover:bg-accent transition-colors text-left"
                 aria-label="Create a group chat"
               >
                 <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
                   <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 </div>
-                <span className="font-medium text-gray-900 dark:text-white">Create a group chat</span>
+                <span className="font-medium text-foreground dark:text-foreground">Create a group chat</span>
               </button>
             </div>
 
@@ -157,7 +157,7 @@ const NewMessageSidebar = ({ fetchedConversationList, onSelectChat, isOpen, onCl
                             />
                           )
                           : (
-                            <NoDataAlert message="No users found" />
+                            <NoDataAlert message="No user found" />
                           )
                       )
                   )

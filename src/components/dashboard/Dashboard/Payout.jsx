@@ -11,7 +11,7 @@ const Payout = () => {
   };
   return (
     <div>
-      <h2 className="text-xl md:text-2xl text-gray-900 dark:text-white font-semibold mb-3">
+      <h2 className="text-xl md:text-2xl text-foreground-strong font-semibold mb-3">
         Payout
       </h2>
 
@@ -21,15 +21,15 @@ const Payout = () => {
         <div className="flex items-center justify-between mb-3">
           <div className="">
             <p
-              className={`relative pb-2 text-sm font-medium transition-colorswithdrawal text-gray-900 dark:text-[#fff]`}
+              className={`relative pb-2 text-sm font-medium transition-colorswithdrawal text-foreground-strong`}
             >
               Withdrawals
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground-strong rounded-full"></span>
             </p>
 
             {/* <PayoutTab onTabChange={handleTabChange} /> */}
           </div>
-          {/* <button className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex gap-2">
+          {/* <button className="bg-foreground-strong dark:bg-foreground-strong text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-foreground dark:hover:bg-foreground-strong/90 transition font-medium cursor-pointer flex gap-2">
             Top Up
           </button> */}
         </div>
@@ -42,7 +42,7 @@ const Payout = () => {
         {activeTab === "payment-method" && (
           <div className="space-y-4"> */}
         {/* Stripe Setup Card */}
-        {/* <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
+        {/* <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4"> */}
         {/* Stripe Logo */}
@@ -52,7 +52,7 @@ const Payout = () => {
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-[#fff]">
+                    <h3 className="text-lg font-semibold text-foreground dark:text-foreground">
                       Setup Stripe
                     </h3>
                   </div>
@@ -76,12 +76,12 @@ const Payout = () => {
             </div> */}
 
         {/* senangPay Setup Card */}
-        {/* <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
+        {/* <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4"> */}
         {/* senangPay Logo */}
         {/* <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <span className="text-green-700 dark:text-[#fff] font-semibold text-xs">
+                    <span className="text-green-700 dark:text-white font-semibold text-xs">
                       <div className="text-center">
                         <div>senang</div>
                         <div className="text-xs">Pay</div>
@@ -89,12 +89,12 @@ const Payout = () => {
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-[#fff]">
+                    <h3 className="text-lg font-semibold text-foreground dark:text-foreground">
                       Setup senangPay
                     </h3>
                   </div>
                 </div>
-                <div className="text-gray-400 dark:text-[#fff]">
+                <div className="text-gray-400 dark:text-white">
                   <svg
                     className="w-5 h-5"
                     fill="none"

@@ -4,6 +4,7 @@ import commonAuthLogo from "../../assets/authImg.png";
 import { useForgotPassword } from "../../hooks/auth.hook.js";
 import { useNavigate } from "react-router";
 import LogoOnly from "@/components/Logo/LogoOnly";
+import Logo from "@/components/Logo/Logo";
 
 const ForgotPassword = () => {
   const navigate = useNavigate()
@@ -27,13 +28,14 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-white dark:bg-gray-900">
+    <div className="min-h-screen flex bg-background">
       {/* Left side - Form */}
-      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-white dark:bg-gray-900 ">
+      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col">
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
           {/* Logo */}
           <div className="py-5 md:py-7 mb-4 md:mb-5">
-            <LogoOnly />
+            {/* <LogoOnly /> */}
+            <Logo />
           </div>
 
           {/* Theme Toggle */}
@@ -52,11 +54,11 @@ const ForgotPassword = () => {
 
         <div className="max-w-md mx-auto w-full flex flex-col justify-center flex-1">
           <div className="mb-8 text-center">
-            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
-              FORGOT PASSWORD
+            <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight mb-2">
+              Forgot Password
             </h2>
-            <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
-              No worries, we'll send you reset instructions
+            <p className="dark:text-qwick-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
+              No worries. Reset instructions are on the way.
             </p>
           </div>
 
@@ -64,18 +66,15 @@ const ForgotPassword = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Email */}
             <div>
-              <label className="text-black dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
+              <label className="text-qwick-gray-900 dark:text-qwick-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2.5 block">
                 Email
               </label>
               <div className="relative">
-                {/* <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaEnvelope className="text-gray-400" />
-                </div> */}
                 <input
                   type="email"
                   {...register("email")}
-                  placeholder="Enter email"
-                  className="w-full px-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                  placeholder="Email"
+                  className="w-full px-5 py-4 border border-qwick-gray-300 dark:border-qwick-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-qwick-gray-300 dark:focus:border-qwick-gray-700 bg-card text-black dark:text-white"
                 />
               </div>
               {errors.email && (
@@ -88,7 +87,7 @@ const ForgotPassword = () => {
             <button
               type="submit"
               disabled={isPending}
-              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-primary hover:bg-primary-hover text-primary-foreground py-4 px-10 rounded-full transition mt-2 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPending ? "Sending..." : "Continue"}
             </button>
@@ -96,11 +95,11 @@ const ForgotPassword = () => {
 
           {/* Back to Sign In link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-qwick-gray-600 dark:text-qwick-gray-400">
               Remember your password?{" "}
               <Link
                 to="/sign-in"
-                className="text-[#003933] dark:text-primary font-medium hover:underline"
+                className="text-foreground-strong dark:text-foreground-strong font-medium hover:underline"
               >
                 Sign In
               </Link>
@@ -110,7 +109,7 @@ const ForgotPassword = () => {
       </div>
 
       {/* Right side - Image (hidden on mobile) */}
-      <div className="hidden md:block md:w-1/2 bg-white dark:bg-gray-800">
+      <div className="hidden md:block md:w-1/2">
         <div className="h-full w-full flex items-center justify-center p-2.5 rounded-[30px] overflow-hidden">
           <img
             src={commonAuthLogo}

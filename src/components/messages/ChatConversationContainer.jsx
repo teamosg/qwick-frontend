@@ -30,7 +30,7 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                 : "justify-end"
                 }`}
             >
-              <div className="relative max-w-[85%] sm:max-w-md flex items-center gap-2 sm:gap-3">
+              <div className="relative max-w-[75%] sm:max-w-[400px] flex items-center gap-2 sm:gap-3">
                 {message?.sender_id === sender_id && (
                   <AvatarUser
                     src={sender_avatar}
@@ -40,9 +40,9 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                 )}
                 <div>
                   <div
-                    className={`py-3 px-4 rounded-2xl text-sm ${message.sender_id !== sender_id
+                    className={`py-3 px-4 rounded-2xl text-sm break-all whitespace-pre-wrap ${message.sender_id !== sender_id
                       ? "bg-blue-500 text-white"
-                      : "bg-white dark:bg-[#232323] text-gray-900 dark:text-white"
+                      : "bg-white dark:bg-qwick-gray-800/50 text-qwick-gray-950 dark:text-white"
                       } ${message.isCard ? "border border-blue-300" : ""}`}
                   >
                     {/* File attachments in message */}
@@ -51,9 +51,9 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                         {message.attachments.map((attachment) => (
                           <div
                             key={attachment.id}
-                            className="flex items-center p-2 mb-2 bg-white dark:bg-[#282828] rounded-md border border-gray-200 dark:border-[#282828]"
+                            className="flex items-center p-2 mb-2 bg-card rounded-md border border-qwick-gray-200 dark:border-qwick-gray-800"
                           >
-                            <div className="p-2 bg-gray-100 dark:bg-[#171717] rounded-md">
+                            <div className="p-2 bg-qwick-gray-100 dark:bg-qwick-gray-900 rounded-md">
                               {attachment.type.includes("image/") ? (
                                 <FiImage size={16} />
                               ) : (
@@ -64,7 +64,7 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                               <span className="text-xs break-words font-medium">
                                 {attachment.name}
                               </span>
-                              <p className="text-xs text-gray-500">
+                              <p className="text-xs text-qwick-gray-500">
                                 {formatFileSize(attachment.size)}
                               </p>
                             </div>
@@ -76,7 +76,7 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                   </div>
                   <div
                     className={`${message.sender === "me" ? "text-right" : "text-left"
-                      } mt-1 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1`}
+                      } mt-1 text-xs text-qwick-gray-500 dark:text-qwick-gray-400 flex items-center gap-1`}
                   >
                     <span>{message.timestamp}</span>
                     {message.isRead && (
@@ -110,7 +110,7 @@ const ChatConversationContainer = ({ messages, sender, user }) => {
                 {message.sender_id !== sender_id && (
                   <AvatarUser
                     src={user?.avatar}
-                    alt={user?.first_name}
+                    alt={user?.full_name}
                     className="w-8 h-8"
                   />
                 )}

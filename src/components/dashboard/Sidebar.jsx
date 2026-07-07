@@ -30,8 +30,8 @@ const NavItem = ({ icon, text, to, onClose, showDot }) => {
       onClick={onClose}
       className={({ isActive, isPending }) =>
         `flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative navmenu" ${isActive || isPending
-          ? "bg-[#003933] text-white shadow-sm before:absolute before:-left-3 before:top-0 before:w-1 before:h-full before:bg-[#003933] before:rounded-tr-2xl before:rounded-br-2xl "
-          : "text-[#202224] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
+          ? "bg-nav-active-bg text-foreground-strong before:absolute before:-left-3 before:top-0 before:w-1 before:h-full before:bg-primary before:rounded-tr-2xl before:rounded-br-2xl "
+          : "text-foreground-strong dark:text-foreground hover:bg-accent dark:hover:bg-accent hover:text-foreground dark:hover:text-white"
         }`
       }
     >
@@ -39,15 +39,15 @@ const NavItem = ({ icon, text, to, onClose, showDot }) => {
         <div className="flex items-center justify-center gap-1.5">
           <div
             className={`flex-shrink-0 ${isActive || isPending
-              ? "text-white"
-              : "text-gray-500 dark:text-gray-400"
+              ? "text-foreground-strong"
+              : "text-foreground-subtle dark:text-muted-foreground"
               }`}
           >
             {React.cloneElement(icon, {
-              color: isActive || isPending ? "white" : theme === 'light' ? "#202224" : "white",
+              color: isActive || isPending ? "var(--foreground-strong)" : theme === 'light' ? "var(--foreground-strong)" : "white",
             })}
             {showDot && (
-              <span className="absolute top-3 left-7 w-2.5 h-2.5 bg-red-500 border-2 border-white dark:border-zinc-900 rounded-full" />
+              <span className="absolute top-3 left-7 w-2.5 h-2.5 bg-primary border-2 border-white dark:border-zinc-900 rounded-full" />
             )}
           </div>
           <span className="truncate text-[16px]">{text}</span>
@@ -58,7 +58,7 @@ const NavItem = ({ icon, text, to, onClose, showDot }) => {
 };
 
 const Sidebar = ({ onClose }) => {
-  const { setMyCommunityList } = useCommunityStore()
+  const { setMyCommunityList, setMyCommunityListAnnouncement } = useCommunityStore()
   const {
     data: communityList,
     isLoading: isLoadingCommunityList,
@@ -79,14 +79,16 @@ const Sidebar = ({ onClose }) => {
 
   useEffect(() => {
     const myCommunityList = [...createdCommunityList, ...joinedCommunityList]
+    const myCommunityListAnnouncement = { createdCommunities: [...createdCommunityList], joinedCommunities: [...joinedCommunityList] }
     setMyCommunityList(myCommunityList)
+    setMyCommunityListAnnouncement(myCommunityListAnnouncement)
   }, [communityList])
 
 
   const { hasUnread } = useNotificationStore();
 
   return (
-    <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#171717] overflow-y-auto no-scrollbar">
+    <div className="h-full flex flex-col bg-card overflow-y-auto no-scrollbar">
       <div className="flex flex-col justify-between h-full">
         <div>
           <div>
@@ -102,9 +104,9 @@ const Sidebar = ({ onClose }) => {
 
             <div className="flex-1 px-3 py-2 space-y-1">
               {[
-                { icon: <Home />, text: "Home", to: "/" },
+                { icon: <Home />, text: "Home", to: "/home" },
                 { icon: <DiscoverySVG />, text: "Discover", to: "/discover" },
-                { icon: <Megaphone />, text: "Announcement", to: "/announcement" },
+                // { icon: <Megaphone />, text: "Announcement", to: "/announcement" },
                 { icon: <MessageSVG />, text: "Messages", to: "/messages" },
                 {
                   icon: <NotificationSVG />,
@@ -151,7 +153,7 @@ const Sidebar = ({ onClose }) => {
           </div>
         </div>
 
-        <div className="p-4">
+        <div className="p-4 absolute bottom-0 bg-card w-full">
           <SettingsMenu />
         </div>
 

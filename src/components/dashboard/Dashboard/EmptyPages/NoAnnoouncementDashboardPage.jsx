@@ -12,7 +12,7 @@ const NoAnnouncementDashboardPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="bg-white dark:bg-zinc-900 p-8 rounded-xl shadow max-w-md w-full"
+                className="bg-card dark:bg-card p-8 rounded-xl shadow max-w-md w-full"
             >
                 {/* Icon */}
                 <motion.div
@@ -21,16 +21,16 @@ const NoAnnouncementDashboardPage = () => {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className="flex items-center justify-center mb-5"
                 >
-                    <FaUsers className="text-[#003933] dark:text-white" size={60} />
+                    <FaUsers className="text-foreground-strong dark:text-white" size={60} />
                 </motion.div>
 
                 {/* Title */}
-                <h2 className="text-xl font-semibold text-[#090003] dark:text-white mb-3">
+                <h2 className="text-xl font-semibold text-foreground dark:text-white mb-3">
                     No Communities Yet
                 </h2>
 
                 {/* Description */}
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">
+                <p className="text-sm text-muted-foreground dark:text-muted-foreground mb-6">
                     You haven’t created or joined a community yet. Create your own
                     community or join an existing one to stay connected and receive
                     announcements.
@@ -42,7 +42,7 @@ const NoAnnouncementDashboardPage = () => {
                     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
                         <Button
                             asChild
-                            className="bg-[#003933] hover:bg-[#002822] text-white px-6 py-2 rounded-full font-medium flex items-center gap-2"
+                            className="bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white px-6 py-2 rounded-full font-medium flex items-center gap-2"
                         >
                             <Link to="/addcommunity">
                                 <Plus size={18} />
@@ -56,7 +56,7 @@ const NoAnnouncementDashboardPage = () => {
                         <Button
                             asChild
                             variant="outline"
-                            className="border-[#003933] dark:border-white text-[#003933] dark:text-white hover:bg-[#003933] hover:text-white px-6 py-2 rounded-full font-medium flex items-center gap-2"
+                            className="border-foreground-muted dark:border-white text-foreground-strong dark:text-white hover:bg-foreground-strong dark:hover:bg-accent hover:text-white dark:hover:text-white px-6 py-2 rounded-full font-medium flex items-center gap-2"
                         >
                             <Link to="/discover">
                                 <FaUsers size={18} />

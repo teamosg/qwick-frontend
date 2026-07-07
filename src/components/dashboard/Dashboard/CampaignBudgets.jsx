@@ -15,13 +15,13 @@ const CampaignBudgets = () => {
             label: "Total Budget",
             value: `$${totalBudget.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
             icon: DollarSign,
-            bgColor: "bg-[#1BC285]",
+            bgColor: "bg-success",
         },
         {
             label: "Total Campaigns",
             value: totalCampaigns,
             icon: LayoutDashboard,
-            bgColor: "bg-blue-400",
+            bgColor: "bg-primary",
         },
         /* 
         // Hidden as per user request (missing info in campaign-budgets API)
@@ -41,7 +41,7 @@ const CampaignBudgets = () => {
           label: "Total Cash in",
           value: "0.00",
           icon: DollarSign,
-          bgColor: "bg-[#1BC285]",
+          bgColor: "bg-success",
         } 
         */
     ];

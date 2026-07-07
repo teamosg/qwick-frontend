@@ -17,7 +17,7 @@ const Timer = ({ timer, setTimer }) => {
     return (
         <>
             {timer > 0 && (
-                <span className="ml-2 text-gray-500 text-sm">
+                <span className="ml-2 text-qwick-gray-500 text-sm">
                     ({timer}s)
                 </span>
             )}

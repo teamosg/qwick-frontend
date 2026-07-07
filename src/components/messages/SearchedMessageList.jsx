@@ -24,8 +24,8 @@ const SearchedMessageList = ({
         <div className="flex-1 overflow-y-auto">
             <div className="p-4 animate-fadeIn">
                 <div className="flex items-center gap-2 mb-3">
-                    <MessagesSquare className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                    <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <MessagesSquare className="w-4 h-4 text-muted-foreground dark:text-muted-foreground" />
+                    <h3 className="text-sm font-medium text-foreground dark:text-foreground">
                         Searched Conversations
                     </h3>
                 </div>

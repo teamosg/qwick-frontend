@@ -33,7 +33,7 @@ export function PostShare() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex items-center cursor-pointer px-2 py-1 rounded-md hover:text-[#003933] hover:dark:text-emerald-300 transition-colors">
+        <button className="flex items-center cursor-pointer px-2 py-1 rounded-md hover:text-foreground-strong hover:dark:text-emerald-300 transition-colors">
           <Share />
         </button>
       </DialogTrigger>
@@ -73,7 +73,7 @@ export function PostShare() {
             <Button
               type="button"
               variant="secondary"
-              className="bg-[#003933] dark:bg-[#003933] text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-[#002822] hover:dark:bg-primary/90 transition font-medium cursor-pointer flex gap-2"
+              className="bg-foreground-strong dark:bg-accent text-white px-4 py-2 sm:py-4 sm:px-10 rounded-3xl sm:rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition font-medium cursor-pointer flex gap-2"
             >
               Close
             </Button>

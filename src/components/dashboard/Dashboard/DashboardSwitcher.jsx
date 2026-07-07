@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Spinner } from "@/components/ui/spinner";
 import { ArrowDown, Check } from "lucide-react";
+import { Link } from "react-router";
 
 export default function DashboardSwitcher({
   data: communityList,
@@ -27,12 +28,11 @@ export default function DashboardSwitcher({
     )
   }
 
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="z-40 flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg text-white focus-visible:outline-none">
         <AvatarUser
-          src={selectedCommunity?.avatar}
+          src={selectedCommunity?.profile_image}
           alt={selectedCommunity?.business_name}
           className="h-8 w-8"
         />
@@ -52,27 +52,30 @@ export default function DashboardSwitcher({
         {communityList.map((community) => (
           <DropdownMenuItem
             key={community.id}
+            asChild
             onClick={() => setSelectedCommunity(community)}
           >
-            <div className="flex items-center gap-2">
-              <AvatarUser
-                src={community?.avatar}
-                alt={community?.business_name}
-                className="h-8 w-8"
-              />
-              <div className="flex flex-col min-w-40">
-                <span>
-                  {community?.business_name?.slice(0, 15)}
-                  {community?.business_name?.length > 15 ? "..." : ""}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  @{community.username}
-                </span>
+            <Link to={`/dashboard/${community.username}`} className="w-full">
+              <div className="flex items-center gap-2">
+                <AvatarUser
+                  src={community?.profile_image}
+                  alt={community?.business_name}
+                  className="h-8 w-8"
+                />
+                <div className="flex flex-col min-w-40">
+                  <span>
+                    {community?.business_name?.slice(0, 15)}
+                    {community?.business_name?.length > 15 ? "..." : ""}
+                  </span>
+                  <span className="text-xs text-foreground-muted">
+                    @{community.username}
+                  </span>
+                </div>
+                {selectedCommunity.id === community.id && (
+                  <Check className="ml-auto" />
+                )}
               </div>
-            </div>
-            {selectedCommunity.id === community.id && (
-              <Check className="ml-auto" />
-            )}
+            </Link>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

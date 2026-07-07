@@ -10,19 +10,20 @@ import { toast } from "sonner";
 
 
 const AnnouncementFeed = () => {
-  const { selectedCreatorCommunity } = useCommunityStore()
+  const { selectedCreatorCommunity, selectedBrandCommunity } = useCommunityStore()
+  const community = selectedCreatorCommunity || selectedBrandCommunity
 
   const [postText, setPostText] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const fileInputRef = useRef(null);
 
-  const creator = selectedCreatorCommunity?.creator
+  const creator = community?.creator
 
 
-  const communityUsername = selectedCreatorCommunity?.username;
+  const communityUsername = community?.username;
   const { data: announcementsList, isLoading: isLoadingAnnouncements } = useGetAnnouncementsList(communityUsername);
-  const canPost = selectedCreatorCommunity?.can_edit
+  const canPost = community?.can_edit
 
 
   const { mutate: createAnnouncement, isPending: isCreatingAnnouncement } = useCreateAnnouncements(communityUsername)
@@ -125,18 +126,18 @@ const AnnouncementFeed = () => {
 
   return (
     <motion.div
-      className="bg-[#f9fafb] dark:bg-zinc-950 min-h-screen"
+      className="bg-background min-h-screen"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
       <motion.h2
-        className="text-[24px] text-gray-900 dark:text-white font-semibold mb-3"
+        className="text-[24px] text-foreground-strong font-semibold mb-3"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        Announcement
+        Announcements
       </motion.h2>
 
       {/* {

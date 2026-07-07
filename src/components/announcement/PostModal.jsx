@@ -23,30 +23,30 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                 </DialogHeader>
 
                 {/* Scroll Area */}
-                <div className="bg-white dark:bg-zinc-900 max-h-[calc(95vh-160px)] overflow-y-auto">
+                <div className="bg-card max-h-[calc(95vh-160px)] overflow-y-auto">
 
                     {/* Post Section */}
                     <div className="p-4 sm:p-6 border-b">
                         <div className="flex items-center gap-3 mb-4">
                             <AvatarUser
                                 src={post?.author?.avatar}
-                                alt={post?.author?.first_name}
+                                alt={post?.author?.full_name}
                                 className="w-10 h-10 sm:w-12 sm:h-12"
                             />
 
                             <div className="min-w-0 flex-1">
-                                <h3 className="font-semibold text-sm sm:text-base dark:text-white truncate">
-                                    {post?.author?.first_name} {post?.author?.last_name}
+                                <h3 className="font-semibold text-sm sm:text-base text-foreground-strong truncate">
+                                    {post?.author?.full_name}
                                 </h3>
 
-                                <div className="text-xs text-[#AAAAAA] dark:text-gray-400 flex items-center">
+                                <div className="text-xs text-foreground-muted flex items-center">
                                     <Clock size={10} className="mr-1" />
                                     {new Date(post?.created_at).toLocaleString()}
                                 </div>
                             </div>
                         </div>
 
-                        <p className="text-sm sm:text-base leading-relaxed mb-3 text-gray-700 dark:text-gray-200">
+                        <p className="text-sm sm:text-base leading-relaxed mb-3 text-foreground">
                             {post?.content}
                         </p>
 
@@ -87,7 +87,7 @@ const PostModal = ({ openComments, setOpenComments, post, setOpenImage }) => {
                             </div>
                         )}
 
-                        <div className="flex gap-4 mt-4 text-xs sm:text-sm text-gray-500">
+                        <div className="flex gap-4 mt-4 text-xs sm:text-sm text-foreground-muted">
                             <span>{post?.like_count} Likes</span>
                             <span>{post?.comment_count} Comments</span>
                         </div>

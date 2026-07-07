@@ -22,20 +22,20 @@ const ProfileBillingHistory = () => {
 
     if (s === "approved") {
       return (
-        <Badge variant="outline" className={`bg-green-100/10 text-green-500 border-green-500/20 ${commonClasses}`}>
+        <Badge variant="outline" className={`bg-success-bg text-success border-success/20 ${commonClasses}`}>
           Approved
         </Badge>
       );
     }
     if (s === "rejected") {
       return (
-        <Badge variant="outline" className={`bg-red-100/10 text-red-500 border-red-500/20 ${commonClasses}`}>
+        <Badge variant="outline" className={`bg-error-bg text-error border-error/20 ${commonClasses}`}>
           Rejected
         </Badge>
       );
     }
     return (
-      <Badge variant="outline" className={`bg-yellow-100/10 text-yellow-500 border-yellow-500/20 ${commonClasses}`}>
+      <Badge variant="outline" className={`bg-warning-bg text-warning border-warning/20 ${commonClasses}`}>
         Pending
       </Badge>
     );
@@ -58,19 +58,19 @@ const ProfileBillingHistory = () => {
   return (
     <div className="p-4 md:p-6 space-y-4 sm:space-y-6">
       {/* Header */}
-      <h1 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4 sm:mb-6">
-        Billing history
+      <h1 className="text-lg sm:text-xl font-semibold text-foreground-strong dark:text-white mb-4 sm:mb-6">
+        Billing History
       </h1>
 
       {/* Search Bar */}
       <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground-muted" />
         <Input
           type="text"
-          placeholder="Search by community or amount..."
+          placeholder="Search by community or amount"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10 pr-4 py-2 w-full rounded-lg border-gray-300 dark:border-zinc-800 dark:bg-[#2E2E2E] dark:text-white focus:border-[#003933] focus:ring-1 focus:ring-[#003933]"
+          className="pl-10 pr-4 py-2 w-full rounded-lg border border-border bg-secondary text-foreground focus:ring-1 focus:ring-ring"
         />
       </div>
 
@@ -80,22 +80,22 @@ const ProfileBillingHistory = () => {
           filteredTransactions.map((transaction) => (
             <div
               key={transaction.id}
-              className="flex items-center justify-between p-3 sm:p-4 bg-[#f5f5f5] dark:bg-[#2E2E2E] hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors border border-transparent dark:border-zinc-800"
+              className="flex items-center justify-between p-3 sm:p-4 bg-secondary hover:bg-secondary-hover rounded-lg transition-colors border border-border"
             >
               {/* Left side - Icon and Details */}
               <div className="flex items-center gap-4 flex-1">
-                <div className="w-10 h-10 rounded-full bg-[#003933]/10 flex items-center justify-center shrink-0">
-                  <span className="text-[#003933] font-bold text-sm">
+                <div className="w-10 h-10 rounded-full bg-foreground-strong/10 flex items-center justify-center shrink-0">
+                  <span className="text-foreground-strong font-bold text-sm">
                     {transaction.community?.charAt(0).toUpperCase()}
                   </span>
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-[#0D0D12] dark:text-white text-base truncate">
+                  <div className="font-semibold text-foreground-strong dark:text-white text-base truncate">
                     {transaction.community}
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#717171] dark:text-zinc-400 mt-1">
-                    <span className="font-medium text-[#003933] dark:text-[#00b89f]">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-foreground-muted mt-1">
+                    <span className="font-medium text-foreground">
                       ${transaction.amount.toFixed(2)}
                     </span>
                     <span>
@@ -114,8 +114,8 @@ const ProfileBillingHistory = () => {
             </div>
           ))
         ) : (
-          <div className="text-center py-10 text-gray-500 dark:text-zinc-500">
-            No billing history found.
+          <div className="text-center py-10 text-foreground-muted">
+            No Billing History
           </div>
         )}
       </div>

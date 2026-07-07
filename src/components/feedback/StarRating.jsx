@@ -45,7 +45,7 @@ const StarRating = ({
               className={`${sizeClasses[size]} ${
                 isFilled || isHalfFilled
                   ? "text-yellow-400 fill-yellow-400"
-                  : "text-gray-300"
+                  : "text-foreground-subtle"
               } transition-colors`}
             />
           </button>

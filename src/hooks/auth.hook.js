@@ -24,11 +24,12 @@ export const useSignUp = () => {
   const form = useForm({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
+      full_name: "",
+      username: "",
       email: "",
       password: "",
       confirm_password: "",
+      accepted_terms: false,
     },
   });
 
@@ -97,7 +98,7 @@ export const useSignIn = () => {
 
 
         if (access) {
-          navigate(redirectUrl || "/");
+          navigate(redirectUrl || "/home");
         } else {
           if (message.includes("2FA")) {
             navigate("/verify-2fa", {
@@ -164,7 +165,7 @@ export const useVerifyOtp = (otpType = "account_verification") => {
           localStorage.setItem("token", token);
           localStorage.setItem("refresh", refresh);
 
-          navigate("/");
+          navigate("/home");
         }
       } else {
         toast.error(data?.message || "OTP verification failed");
@@ -448,9 +449,7 @@ export const useDeleteAccount = () => {
     onSuccess: (data) => {
       if (data?.status) {
         toast.success(data?.message || "Account deleted successfully!");
-        localStorage.removeItem("token");
-        localStorage.removeItem("refresh");
-        localStorage.removeItem("user");
+        clearLocalStorage();
         queryClient.clear();
         navigate("/sign-in");
       } else {
@@ -535,7 +534,7 @@ export const useGoogleSignInHook = () => {
           localStorage.setItem("user", JSON.stringify(user));
         }
 
-        navigate(redirectUrl || "/");
+        navigate(redirectUrl || "/home");
       } else {
         toast.error(data?.message || "Failed to sign in with Google");
       }

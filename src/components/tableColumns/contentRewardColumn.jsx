@@ -1,15 +1,14 @@
-import { Cell } from "recharts";
-
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
+import { FaYoutube, FaTiktok, FaInstagram } from "react-icons/fa";
 
 const contentRewardColumn = [
   {
     accessorKey: "campaign_name",
     header: "Campaign",
     cell: ({ row }) => (
-      <span className="font-medium text-gray-900 dark:text-gray-100 truncate max-w-[150px] inline-block">
-        {row.original.campaign_name || `Campaign #${row.original.campaign}`}
+      <span className="font-medium text-foreground dark:text-foreground truncate max-w-[150px] inline-block">
+        {row.original.campaign_name || row.original.campaign?.name || `Campaign #${row.original.campaign}`}
       </span>
     ),
   },
@@ -34,7 +33,7 @@ const contentRewardColumn = [
     accessorKey: "views",
     header: "Views",
     cell: ({ row }) => (
-      <span className="text-gray-600 dark:text-gray-400 font-medium">
+      <span className="text-muted-foreground dark:text-muted-foreground font-medium">
         {row.original.views?.toLocaleString()}
       </span>
     ),
@@ -43,29 +42,54 @@ const contentRewardColumn = [
     id: "submission",
     header: "Submission",
     cell: ({ row }) => {
-      const link = row.original.tiktok_link || row.original.youtube_link || row.original.instagram_link;
+      const stats = row.original.platform_stats || {};
+      
+      let platformName = "";
+      let link = "";
+      let icon = null;
+
+      if (stats.youtube?.link) {
+        platformName = "YouTube";
+        link = stats.youtube.link;
+        icon = <FaYoutube className="text-red-600 size-3.5" />;
+      } else if (stats.tiktok?.link) {
+        platformName = "TikTok";
+        link = stats.tiktok.link;
+        icon = <FaTiktok className="text-black dark:text-white size-3.5" />;
+      } else if (stats.instagram?.link) {
+        platformName = "Instagram";
+        link = stats.instagram.link;
+        icon = <FaInstagram className="text-pink-600 size-3.5" />;
+      }
+
       return link ? (
         <a
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-blue-500 hover:text-blue-600 transition-colors text-sm font-medium"
+          className="inline-flex items-center gap-1.5 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition-colors text-sm font-semibold group cursor-pointer"
         >
-          View <ExternalLink size={12} />
+          {icon}
+          <span>{platformName}</span>
+          <ExternalLink size={12} className="text-foreground-subtle group-hover:text-current transition-colors" />
         </a>
       ) : (
-        <span className="text-gray-400 italic text-xs">No link</span>
+        <span className="text-foreground-subtle italic text-xs">No link</span>
       );
     },
   },
   {
     accessorKey: "payout",
     header: "Payout",
-    cell: ({ row }) => (
-      <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-        ${parseFloat(row.original.payout || 0).toFixed(2)}
-      </span>
-    ),
+    cell: ({ row }) => {
+      const payoutVal = row.original.payout;
+      const amount = typeof payoutVal === "object" ? payoutVal?.total_earned : payoutVal;
+      return (
+        <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+          ${parseFloat(amount || 0).toFixed(2)}
+        </span>
+      );
+    },
   },
 ];
 

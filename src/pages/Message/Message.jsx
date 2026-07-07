@@ -17,9 +17,9 @@ const Message = () => {
   };
 
   return (
-    <div className="flex h-full bg-gray-50 dark:bg-[#15161E] overflow-hidden">
+    <div className="flex h-full bg-background dark:bg-background overflow-hidden">
       {/* Left Sidebar - Message List */}
-      <div className={`${selectedChat ? "hidden md:flex" : "flex"} w-full md:w-80 border-r border-gray-200 dark:border-[#282828]`}>
+      <div className={`${selectedChat ? "hidden md:flex" : "flex"} w-full md:w-80 border-r border-border dark:border-border`}>
         <MessageList
           onSelectChat={handleSelectChat}
           selectedChatId={selectedChat?.user_id || selectedChat?.group_id}

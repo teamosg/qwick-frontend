@@ -14,8 +14,8 @@ import { toast } from "sonner";
 export const useCreateCommunity = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ business_name, country, category, subcategory }) => {
-      const payload = { business_name, country, category, subcategory }
+    mutationFn: async ({ business_name, country, category, subcategory, require_approval }) => {
+      const payload = { business_name, country, category, subcategory, require_approval }
       const res = await axiosPrivate.post("/v1/communities/", payload)
       return res?.data || {}
     },
@@ -201,6 +201,30 @@ export const useManageCommunityUserRole = (communityUsername) => {
 
     onError: (error) => {
       handleApiError({ error, errorMessage: "Failed to change user role" })
+    },
+  });
+}
+
+
+export const useRemoveCommunityMember = (communityUsername) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ userId }) => {
+      const res = await axiosPrivate.delete(
+        `/v1/communities/${communityUsername}/remove-member/${userId}/`
+      );
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        toast.success(data?.message || "Member removed successfully!");
+        queryClient.invalidateQueries({ queryKey: ["communityUsers", communityUsername] });
+      } else {
+        handleApiError({ error: data?.message, errorMessage: "Failed to remove member" });
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to remove member" });
     },
   });
 }

@@ -20,7 +20,7 @@ const AnnounceMentCommentAction = ({ AnnouncementId }) => {
 
 
     return (
-        <div className="sticky bottom-0 bg-white dark:bg-zinc-900 border-t p-3 sm:p-4 flex gap-2 sm:gap-3 items-end">
+        <div className="sticky bottom-0 bg-card border-t border-border p-3 sm:p-4 flex gap-2 sm:gap-3 items-end">
             <Textarea
                 placeholder="Write a comment..."
                 value={commentText}
@@ -32,7 +32,7 @@ const AnnounceMentCommentAction = ({ AnnouncementId }) => {
             <button
                 onClick={handleComment}
                 disabled={!commentText || isCommenting}
-                className="bg-[#002822] disabled:bg-[#002822]/60 text-white px-3 sm:px-4 py-2 rounded-lg"
+                className="bg-foreground-strong dark:bg-accent disabled:opacity-60 text-white px-3 sm:px-4 py-2 rounded-lg"
             >
                 <Send className="w-4 h-4" />
             </button>

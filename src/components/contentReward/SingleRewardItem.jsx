@@ -1,12 +1,12 @@
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import CampaignProgress from "../dashboard/Dashboard/ContentReward/CampaignProgress";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const SingleRewardItem = ({ campaign }) => {
   const navigate = useNavigate();
-
+  const { communityUsername } = useParams()
   if (!campaign) return null;
 
 
@@ -23,10 +23,13 @@ const SingleRewardItem = ({ campaign }) => {
     max_payout,
     total_users_earning,
     initial_budget,
+    end_date,
   } = campaign;
 
+  const isEnded = end_date ? new Date(end_date) < new Date() : false;
+
   const handleNavigate = () => {
-    navigate(`/content-reward/reward-details/${id}`);
+    navigate(`/announcement/${communityUsername}/content-reward/reward-details/${id}`);
   };
 
   const fullThumbnail = thumbnail?.startsWith("http")
@@ -36,7 +39,7 @@ const SingleRewardItem = ({ campaign }) => {
   return (
     <div
       onClick={handleNavigate}
-      className=" dark:text-white dark:bg-zinc-900 p-4 rounded-xl shadow mb-4 bg-white cursor-pointer hover:shadow-md transition-shadow transition-transform hover:scale-[1.01]"
+      className=" dark:text-foreground dark:bg-card p-4 rounded-xl shadow mb-4 bg-card cursor-pointer hover:shadow-md transition-shadow transition-transform hover:scale-[1.01]"
     >
       <div className="overflow-hidden flex flex-col sm:flex-row gap-4 w-full">
         <img
@@ -47,15 +50,20 @@ const SingleRewardItem = ({ campaign }) => {
         <div className="flex-1">
           <div className="mb-2.5">
 
-            <h4 className="text-[#090003] text-lg font-semibold mb-1.5 dark:text-white">
+            <h4 className="text-foreground text-lg font-semibold mb-1.5 dark:text-white">
               {name}
             </h4>
-            <p className="text-xs dark:text-zinc-400 flex gap-2 items-center mb-3.5">
+            <p className="text-xs dark:text-muted-foreground flex gap-2 items-center mb-2">
               <span>
                 Only views after you submit count towards payout. Submit as soon
                 as you post to get paid for all of your views.
               </span>
             </p>
+            {end_date && (
+              <p className={`text-[11px] mb-3.5 font-medium ${isEnded ? "text-red-500" : "text-muted-foreground dark:text-muted-foreground"}`}>
+                {isEnded ? "Ended on" : "Ends on"} {end_date}
+              </p>
+            )}
             <CampaignProgress
               totalUsersEarning={total_users_earning}
               initialBudget={initial_budget}
@@ -66,34 +74,34 @@ const SingleRewardItem = ({ campaign }) => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <p className="text-[#090003] text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
                 Reward
               </p>
-              <p className="text-sm dark:text-zinc-400 font-medium">${reward_rate}/1k</p>
+              <p className="text-sm dark:text-muted-foreground font-medium">${reward_rate}/1k</p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
                 Type
               </p>
-              <p className="text-sm dark:text-zinc-400 font-medium">{campaign_type?.name || "N/A"}</p>
+              <p className="text-sm dark:text-muted-foreground font-medium">{campaign_type?.name || "N/A"}</p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
                 Category
               </p>
-              <p className="text-sm dark:text-zinc-400 font-medium">{category?.name || "N/A"}</p>
+              <p className="text-sm dark:text-muted-foreground font-medium">{category?.name || "N/A"}</p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-0.5 font-semibold dark:text-white uppercase opacity-70">
                 Max Payout
               </p>
-              <p className="text-sm dark:text-zinc-400 font-medium">${max_payout}</p>
+              <p className="text-sm dark:text-muted-foreground font-medium">${max_payout}</p>
             </div>
             <div className="col-span-2">
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Platforms
               </p>
-              <div className="flex gap-3 dark:text-zinc-400 text-[#003933]">
+              <div className="flex gap-3 dark:text-muted-foreground text-foreground-strong">
                 {platforms?.map((p, idx) => {
                   const pName = p.name?.toLowerCase();
                   if (pName === 'instagram') return <FaInstagram key={idx} size={18} />;

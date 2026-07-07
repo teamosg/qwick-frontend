@@ -14,14 +14,14 @@ const DepositSuccess = () => {
     const sessionId = searchParams.get("session_id");
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 bg-[#f9fafb] dark:bg-zinc-950 relative overflow-hidden font-[Inter]">
+        <div className="min-h-screen flex items-center justify-center p-4 bg-background dark:bg-background relative overflow-hidden font-[Inter]">
             {/* Background Decorative Elements */}
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#003933]/5 rounded-full blur-[120px]"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#003933]/5 rounded-full blur-[120px]"></div>
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-foreground-strong/5 rounded-full blur-[120px]"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-foreground-strong/5 rounded-full blur-[120px]"></div>
 
-            <div className="max-w-lg w-full bg-white dark:bg-zinc-900 rounded-[2.5rem] shadow-2xl overflow-hidden border border-white dark:border-zinc-800 relative z-10 transition-all hover:shadow-shadow-600/10">
+            <div className="max-w-lg w-full bg-card dark:bg-card rounded-[2.5rem] shadow-2xl overflow-hidden border border-border dark:border-border relative z-10 transition-all hover:shadow-shadow-600/10">
                 {/* Header/Banner */}
-                <div className="relative h-48 bg-[#003933] flex flex-col items-center justify-center overflow-hidden">
+                <div className="relative h-48 bg-foreground-strong flex flex-col items-center justify-center overflow-hidden">
                     {/* Logo in top left of card */}
                     <div className="absolute top-6 left-8">
                         <img src={logo} alt="Logo" className="h-6 brightness-0 invert opacity-40 shrink-0" />
@@ -41,28 +41,28 @@ const DepositSuccess = () => {
                 </div>
 
                 <div className="p-10 text-center">
-                    <div className="inline-flex items-center justify-center w-20 h-20 bg-green-50 dark:bg-green-900/20 rounded-3xl mb-8 text-green-600 dark:text-green-400 rotate-12 transition-transform hover:rotate-0 duration-500">
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-success-bg dark:bg-success/20 rounded-3xl mb-8 text-success dark:text-success rotate-12 transition-transform hover:rotate-0 duration-500">
                         <div className="rotate-[-12deg] group-hover:rotate-0 transition-transform">
                             <CheckCircle2 size={40} />
                         </div>
                     </div>
 
                     <div className="space-y-4 mb-10">
-                        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white leading-tight flex items-center justify-center gap-2">
+                        <h1 className="text-4xl font-extrabold text-foreground dark:text-foreground leading-tight flex items-center justify-center gap-2">
                             Payment Received! <Sparkles className="text-yellow-400" size={24} />
                         </h1>
-                        <p className="text-lg text-gray-500 dark:text-gray-400 font-medium">
+                        <p className="text-lg text-muted-foreground dark:text-muted-foreground font-medium">
                             We've successfully processed your deposit. Your balance has been updated instantly.
                         </p>
                     </div>
 
                     {sessionId && (
-                        <div className="mb-10 p-5 bg-gray-50 dark:bg-zinc-800/40 rounded-2xl border border-gray-100 dark:border-zinc-700/50 group transition-colors hover:bg-gray-100 dark:hover:bg-zinc-800/60">
-                            <div className="flex items-center justify-between mb-3 border-b border-gray-100 dark:border-zinc-700 pb-2">
-                                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold">Transaction Details</p>
-                                <div className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-[10px] rounded-full font-bold">STRIKE VERIFIED</div>
+                        <div className="mb-10 p-5 bg-accent dark:bg-accent/40 rounded-2xl border border-border dark:border-border/50 group transition-colors hover:bg-accent dark:hover:bg-accent/60">
+                            <div className="flex items-center justify-between mb-3 border-b border-border dark:border-border pb-2">
+                                <p className="text-[10px] uppercase tracking-[0.2em] text-foreground-subtle font-bold">Transaction Details</p>
+                                <div className="px-3 py-1 bg-success-bg dark:bg-success/30 text-success dark:text-success text-[10px] rounded-full font-bold">STRIKE VERIFIED</div>
                             </div>
-                            <p className="text-sm font-mono text-gray-500 dark:text-gray-400 break-all text-left">
+                            <p className="text-sm font-mono text-muted-foreground dark:text-muted-foreground break-all text-left">
                                 {sessionId}
                             </p>
                         </div>
@@ -71,7 +71,7 @@ const DepositSuccess = () => {
                     <div className="flex flex-col sm:flex-row gap-4">
                         <Link
                             to="/dashboard/payments"
-                            className="flex-1 flex items-center justify-center gap-3 bg-[#003933] hover:bg-[#002d28] text-white py-5 px-8 rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#003933]/25 group"
+                            className="flex-1 flex items-center justify-center gap-3 bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white py-5 px-8 rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-foreground-strong/25 group"
                         >
                             <Wallet size={20} />
                             <span>Go to Wallet</span>
@@ -80,7 +80,7 @@ const DepositSuccess = () => {
 
                         <Link
                             to="/dashboard"
-                            className="flex-1 flex items-center justify-center gap-3 bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 text-gray-800 dark:text-white py-5 px-8 rounded-2xl font-bold border border-gray-200 dark:border-zinc-700 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                            className="flex-1 flex items-center justify-center gap-3 bg-card dark:bg-accent hover:bg-accent dark:hover:bg-accent text-foreground dark:text-foreground py-5 px-8 rounded-2xl font-bold border border-border dark:border-border transition-all hover:scale-[1.02] active:scale-[0.98]"
                         >
                             <LayoutDashboard size={20} />
                             <span>Main Menu</span>
@@ -88,9 +88,9 @@ const DepositSuccess = () => {
                     </div>
                 </div>
 
-                <div className="py-6 border-t border-gray-50 dark:border-zinc-800/50 text-center bg-gray-50/50 dark:bg-zinc-900/50">
-                    <p className="text-sm text-gray-400">
-                        Need help with your transaction? <Link to="/need-help" className="text-[#003933] font-bold hover:underline transition-colors decoration-2 underline-offset-4">Contact Support</Link>
+                <div className="py-6 border-t border-border dark:border-border/50 text-center bg-accent/50 dark:bg-accent/50">
+                    <p className="text-sm text-foreground-subtle">
+                        Need help with your transaction? <Link to="/need-help" className="text-foreground-strong font-bold hover:underline transition-colors decoration-2 underline-offset-4">Contact Support</Link>
                     </p>
                 </div>
             </div>

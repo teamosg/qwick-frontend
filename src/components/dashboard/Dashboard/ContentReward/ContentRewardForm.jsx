@@ -140,6 +140,14 @@ const CampaignForm = ({
     }
   };
 
+  const calculateViews = (payout, rate) => {
+    if (!payout || !rate || Number(rate) === 0) return null;
+    const views = (Number(payout) / Number(rate)) * 1000;
+    if (views >= 1000000) return `~${(views / 1000000).toFixed(1)}M views`;
+    if (views >= 1000) return `~${Math.round(views / 1000)}k views`;
+    return `~${Math.round(views)} views`;
+  };
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -197,25 +205,27 @@ const CampaignForm = ({
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 dark:bg-[#1E1E1E] min-h-screen">
+    <div className="max-w-3xl mx-auto p-6 bg-card border border-border rounded-2xl shadow-sm">
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Upload Thumbnail */}
         <div className="space-y-3">
           {formData.thumbnailPreview ? (
-            <div className="relative border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-4">
-              <img
-                src={formData.thumbnailPreview}
-                alt="Thumbnail preview"
-                className="w-full h-40 object-cover rounded-lg"
-              />
-              <div className="flex flex-col sm:flex-row gap-3 mt-4">
+            <div className="relative border-2 border-dashed border-border rounded-xl overflow-hidden group">
+              <div className="aspect-[16/9] w-full">
+                <img
+                  src={formData.thumbnailPreview}
+                  alt="Thumbnail preview"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                 <button
                   type="button"
                   disabled={isFormDisabled}
                   onClick={() =>
                     document.getElementById("thumbnail-upload").click()
                   }
-                  className="px-4 py-2 text-sm bg-gray-100 dark:bg-[#2E2E2E] text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-[#2E2E2E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm bg-card text-foreground-strong border border-border rounded-lg hover:bg-secondary transition-colors font-medium"
                 >
                   Change Image
                 </button>
@@ -223,11 +233,12 @@ const CampaignForm = ({
                   type="button"
                   disabled={isFormDisabled}
                   onClick={removeThumbnail}
-                  className="px-4 py-2 text-sm bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
                 >
                   Remove
                 </button>
               </div>
+
               <input
                 id="thumbnail-upload"
                 type="file"
@@ -237,21 +248,19 @@ const CampaignForm = ({
               />
             </div>
           ) : (
-            <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 sm:p-10 text-center hover:border-gray-300 dark:hover:border-gray-600 transition-colors cursor-pointer">
-              <div className="flex flex-col items-center space-y-3">
-                <div className="">
-                  <button
-                    type="button"
-                    disabled={isFormDisabled}
-                    onClick={() =>
-                      document.getElementById("thumbnail-upload").click()
-                    }
-                    className="dark:bg-[#2E2E2E]  text-sm font-medium text-black dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex gap-3 px-5 py-2 bg-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Upload className="w-5 h-5 text-black dark:text-gray-400" />
-                    Upload thumbnail
-                  </button>
+            <div 
+              onClick={() => document.getElementById("thumbnail-upload").click()}
+              className="border-2 border-dashed border-border rounded-2xl aspect-[16/9] w-full flex items-center justify-center bg-secondary hover:bg-secondary/80 transition-all cursor-pointer group"
+            >
+              <div className="flex flex-col items-center space-y-4">
+                <div className="p-4 rounded-full bg-card shadow-sm border border-border group-hover:scale-110 transition-transform">
+                  <Upload className="w-6 h-6 text-foreground-strong" />
                 </div>
+                <div className="text-center px-4">
+                  <p className="text-sm font-semibold text-foreground-strong">Upload thumbnail</p>
+                  <p className="text-xs text-foreground-muted mt-1">Recommended size: 1280x720 (16:9)</p>
+                </div>
+
                 <input
                   id="thumbnail-upload"
                   type="file"
@@ -266,7 +275,7 @@ const CampaignForm = ({
 
         {/* Campaign name */}
         <div className="space-y-6">
-          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
+          <label className="text-sm font-medium text-foreground-muted mb-4 inline-block">
             Campaign name*
           </label>
           <input
@@ -274,15 +283,15 @@ const CampaignForm = ({
             disabled={isFormDisabled}
             value={formData.campaignName}
             onChange={(e) => handleInputChange("campaignName", e.target.value)}
-            placeholder="e.g. Summer UGC Challenge"
-            className="w-full px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none text-gray-900 dark:text-white placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+            placeholder="Campaign Name"
+            className="w-full px-3 py-3 bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none text-foreground-strong placeholder:text-foreground-muted disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         {/* Type and Personal Brand */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
+            <label className="text-sm font-medium text-foreground-muted mb-4 inline-block">
               Type*
             </label>
             <div className="relative w-full">
@@ -290,10 +299,7 @@ const CampaignForm = ({
                 value={formData.type}
                 disabled={isFormDisabled}
                 onChange={(e) => handleInputChange("type", e.target.value)}
-                className="w-full px-3 py-3 pr-10 bg-white dark:text-white dark:bg-[#2E2E2E] 
-               border border-gray-200 dark:border-gray-700 rounded-lg
-               focus:ring-2 focus:ring-[#364152] focus:border-transparent
-               transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-3 py-3 pr-10 bg-secondary text-foreground-strong border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <option value="">{isTypesLoading ? "Loading types..." : "Select Type"}</option>
                 {campaignTypes.map((type) => (
@@ -304,14 +310,14 @@ const CampaignForm = ({
               </select>
 
               {/* Custom arrow */}
-              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted">
                 <ChevronDown />
               </div>
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
+            <label className="text-sm font-medium text-foreground-muted mb-4 inline-block">
               Category*
             </label>
             <div className="relative w-full">
@@ -319,10 +325,7 @@ const CampaignForm = ({
                 value={formData.category}
                 disabled={isFormDisabled}
                 onChange={(e) => handleInputChange("category", e.target.value)}
-                className="w-full px-3 py-3 pr-10 bg-white dark:text-white dark:bg-[#2E2E2E]
-               border border-gray-200 dark:border-gray-700 rounded-lg
-               focus:ring-2 focus:ring-[#364152] focus:border-transparent
-               transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-3 py-3 pr-10 bg-secondary text-foreground-strong border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <option value="">{isCategoriesLoading ? "Loading categories..." : "Select Category"}</option>
                 {categories.map((cat) => (
@@ -333,7 +336,7 @@ const CampaignForm = ({
               </select>
 
               {/* Custom dropdown icon */}
-              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted">
                 <ChevronDown />
               </div>
             </div>
@@ -343,12 +346,12 @@ const CampaignForm = ({
 
         {/* Campaign budget */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Campaign budget*
+          <label className="text-sm font-medium text-foreground-muted mb-4 inline-block">
+            Campaign Budget*
           </label>
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400"></span>
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground-muted"></span>
               <input
                 type="number"
                 disabled={isFormDisabled}
@@ -356,8 +359,8 @@ const CampaignForm = ({
                 onChange={(e) =>
                   handleInputChange("campaignBudget", e.target.value)
                 }
-                placeholder="e.g. 1000"
-                className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                placeholder="0.00"
+                className="w-full px-3 py-3 text-foreground-strong bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none placeholder:text-foreground-muted disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
             <div className="relative">
@@ -365,10 +368,7 @@ const CampaignForm = ({
                 value={formData.currency}
                 disabled={isFormDisabled}
                 onChange={(e) => handleInputChange("currency", e.target.value)}
-                className="px-3 py-3 pr-10 bg-white dark:text-white dark:bg-[#2E2E2E]
-               border border-gray-200 dark:border-gray-700 rounded-lg
-               focus:ring-2 focus:ring-[#364152] focus:border-transparent
-               transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-3 pr-10 bg-secondary text-foreground-strong border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <option value="">{isCurrenciesLoading ? "Loading..." : "Select Currency"}</option>
                 {currencies.map((currency) => (
@@ -379,7 +379,7 @@ const CampaignForm = ({
               </select>
 
               {/* Custom dropdown icon */}
-              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted">
                 <ChevronDown />
               </div>
             </div>
@@ -389,8 +389,8 @@ const CampaignForm = ({
 
         {/* Reward rate */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Reward rate* (per 1k views)
+          <label className="text-sm font-medium text-foreground-muted mb-4 inline-block">
+            Reward Rate* (per 1k views)
           </label>
           <div className="relative">
             <input
@@ -398,21 +398,21 @@ const CampaignForm = ({
               disabled={isFormDisabled}
               value={formData.rewardRate}
               onChange={(e) => handleInputChange("rewardRate", e.target.value)}
-              placeholder="e.g. 5"
-              className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              placeholder="0.00"
+              className="w-full px-3 py-3 text-foreground-strong bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none placeholder:text-foreground-muted disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
 
         {/* Min and Max payout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-              Minimum payout*
+            <label className="text-sm font-medium text-foreground-strong mb-2 flex items-center gap-2">
+              Minimum Payout*
               <Popover>
                 <PopoverTrigger asChild>
                   <button type="button" tabIndex={-1}>
-                    <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                    <HelpCircle className="w-4 h-4 text-foreground-muted hover:text-foreground-strong" />
                   </button>
                 </PopoverTrigger>
                 <PopoverContent className="w-72 text-sm">
@@ -427,19 +427,24 @@ const CampaignForm = ({
                 disabled={isFormDisabled}
                 value={formData.minPayout}
                 onChange={(e) => handleInputChange("minPayout", e.target.value)}
-                placeholder="e.g. 10"
-                className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                placeholder="0.00"
+                className="w-full px-3 py-3 text-foreground-strong bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none placeholder:text-foreground-muted disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
+            {formData.minPayout && formData.rewardRate && (
+              <p className="text-xs text-foreground-muted mt-1.5 ml-1 font-medium">
+                {calculateViews(formData.minPayout, formData.rewardRate)}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-              Maximum payout*
+            <label className="text-sm font-medium text-foreground-strong mb-2 flex items-center gap-2">
+              Maximum Payout*
               <Popover>
                 <PopoverTrigger asChild>
                   <button type="button" tabIndex={-1}>
-                    <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                    <HelpCircle className="w-4 h-4 text-foreground-muted hover:text-foreground-strong" />
                   </button>
                 </PopoverTrigger>
                 <PopoverContent className="w-72 text-sm">
@@ -454,22 +459,26 @@ const CampaignForm = ({
                 disabled={isFormDisabled}
                 value={formData.maxPayout}
                 onChange={(e) => handleInputChange("maxPayout", e.target.value)}
-                placeholder="e.g. 500"
-                className="w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                placeholder="0.00"
+                className="w-full px-3 py-3 text-foreground-strong bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none placeholder:text-foreground-muted disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
+            {formData.maxPayout && formData.rewardRate && (
+              <p className="text-xs text-foreground-muted mt-1.5 ml-1 font-medium">
+                {calculateViews(formData.maxPayout, formData.rewardRate)}
+              </p>
+            )}
           </div>
         </div>
 
         {/* Flat fee bonus */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-            Flat fee bonus (optional) -
-            Max 10% of the total budget
+          <label className="text-sm font-medium text-foreground-strong mb-4 flex items-center gap-2">
+            Flat Fee Bonus (Optional) - Max 10% of the Total Budget
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
-                  <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                  <HelpCircle className="w-4 h-4 text-foreground-muted hover:text-foreground-strong" />
                 </button>
               </PopoverTrigger>
               <PopoverContent className="w-72 text-sm">
@@ -486,9 +495,9 @@ const CampaignForm = ({
               onChange={(e) =>
                 handleInputChange("flatFeeBonus", e.target.value)
               }
-              placeholder="e.g. 20"
+              placeholder="0.00"
               className={cn(
-                "w-full px-3 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed",
+                "w-full px-3 py-3 text-foreground-strong bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none placeholder:text-foreground-muted disabled:opacity-50 disabled:cursor-not-allowed",
                 formData.flatFeeBonus && Number(formData.flatFeeBonus) > (Number(formData.campaignBudget) * 0.1) && "border-red-500 focus:ring-red-500"
               )}
             />
@@ -502,14 +511,14 @@ const CampaignForm = ({
 
         {/* Platform */}
         <div className="space-y-3">
-          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
+          <label className="text-sm font-medium text-foreground-muted mb-4 inline-block">
             Platform*
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {["Instagram", "Tiktok", "Youtube"].map((platform) => (
+            {["Instagram", "TikTok", "Youtube"].map((platform) => (
               <label
                 key={platform}
-                className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-[#2E2E2E] hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="flex items-center space-x-3 cursor-pointer px-4 py-3 border border-border rounded-lg bg-secondary hover:bg-secondary/80 transition-colors"
               >
                 <input
                   type="checkbox"
@@ -520,7 +529,7 @@ const CampaignForm = ({
                   }
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 />
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <span className="text-sm font-medium text-foreground-strong">
                   {platform}
                 </span>
               </label>
@@ -530,10 +539,10 @@ const CampaignForm = ({
 
         {/* Available content */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Available content
+          <label className="text-sm font-medium text-foreground-muted mb-4 inline-block">
+            Available Content
           </label>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-foreground-muted">
             We suggest adding your guides, raw footage, and other materials for
             creators to edit with here via a Google Drive link
           </p>
@@ -546,7 +555,7 @@ const CampaignForm = ({
                 handleInputChange("availableContent", e.target.value)
               }
               placeholder="e.g. https://drive.google.com/drive/folders/..."
-              className="w-full px-4 py-3 text-gray-900 dark:text-white bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 text-foreground-strong bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none placeholder:text-foreground-muted disabled:opacity-50 disabled:cursor-not-allowed"
             />
             {formData.availableContent && !/^(https?:\/\/)?(www\.)?(drive|docs)\.google\.com\/.+$/.test(formData.availableContent) && (
               <p className="text-xs text-red-500 mt-1">Please enter a valid Google Drive link</p>
@@ -556,10 +565,10 @@ const CampaignForm = ({
 
         {/* Content requirement */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 inline-block">
-            Content requirement*
+          <label className="text-sm font-medium text-foreground-muted mb-4 inline-block">
+            Content Requirement*
           </label>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-foreground-muted">
             We recommend including content guidelines for users to follow.
           </p>
           <textarea
@@ -568,20 +577,20 @@ const CampaignForm = ({
             onChange={(e) =>
               handleInputChange("contentRequirement", e.target.value)
             }
-            placeholder="e.g. Video must be at least 30 seconds long, include the brand logo..."
+            placeholder="Enter Requirement"
             rows={4}
-            className="w-full px-3 text-gray-900 dark:text-white py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#364152] focus:border-transparent transition-all outline-none placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-3 text-foreground-strong py-3 bg-secondary border border-border rounded-xl focus:ring-2 focus:ring-foreground-muted focus:border-transparent transition-all outline-none placeholder:text-foreground-muted disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         {/* Campaign Duration */}
         <div className="space-y-3">
-          <label className="text-sm font-medium text-[#364152] dark:text-gray-300 mb-4 flex items-center gap-2">
-            Campaign duration* (Min 30days)
+          <label className="text-sm font-medium text-foreground-strong mb-4 flex items-center gap-2">
+            Campaign Duration (Min 30 Days)
             <Popover>
               <PopoverTrigger asChild>
                 <button type="button" tabIndex={-1}>
-                  <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300" />
+                  <HelpCircle className="w-4 h-4 text-foreground-muted hover:text-foreground-strong" />
                 </button>
               </PopoverTrigger>
               <PopoverContent className="w-72 text-sm">
@@ -594,18 +603,18 @@ const CampaignForm = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Start Date */}
             <div className="space-y-2">
-              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+              <label className="text-xs font-medium text-foreground-muted">
                 Start date
               </label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="outline"
-                    disabled={isFormDisabled}
-                    className={cn(
-                      "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white",
-                      !formData.startDate && "text-gray-400 dark:text-gray-500"
-                    )}
+                     variant="outline"
+                     disabled={isFormDisabled}
+                     className={cn(
+                       "w-full justify-start text-left font-normal bg-secondary border-border hover:bg-secondary/80 text-foreground-strong",
+                       !formData.startDate && "text-foreground-muted"
+                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {formData.startDate ? (
@@ -637,7 +646,7 @@ const CampaignForm = ({
 
             {/* End Date */}
             <div className="space-y-2">
-              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
+              <label className="text-xs font-medium text-foreground-muted">
                 End date
               </label>
               <Popover>
@@ -646,8 +655,8 @@ const CampaignForm = ({
                     variant="outline"
                     disabled={isFormDisabled}
                     className={cn(
-                      "w-full justify-start text-left font-normal bg-white dark:bg-[#2E2E2E] border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white",
-                      !formData.endDate && "text-gray-400 dark:text-gray-500"
+                      "w-full justify-start text-left font-normal bg-secondary border-border hover:bg-secondary/80 text-foreground-strong",
+                      !formData.endDate && "text-foreground-muted"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
@@ -685,8 +694,8 @@ const CampaignForm = ({
 
           {/* Duration Display */}
           {formData.startDate && formData.endDate && (
-            <div className="mt-3 p-4 bg-gradient-to-br from-[#003933]/5 to-[#003933]/10 dark:from-[#003933]/10 dark:to-[#003933]/20 border border-[#003933]/20 dark:border-[#003933]/30 rounded-lg">
-              <p className="text-sm text-[#003933] dark:text-[#00b89f] font-semibold flex items-center gap-2">
+            <div className="mt-3 p-4 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 border border-foreground-muted/20 dark:border-foreground-muted/30 rounded-lg">
+              <p className="text-sm text-foreground-strong dark:text-foreground-strong font-semibold flex items-center gap-2">
                 <CalendarIcon className="w-4 h-4" />
                 Campaign duration:{" "}
                 {Math.ceil(
@@ -698,37 +707,41 @@ const CampaignForm = ({
             </div>
           )}
         </div>
-        {
-          alert && (
+        {alert && (
+          typeof alert === 'object' ? (
             <CommonAlert alert={alert} onClose={() => setAlert(null)} />
+          ) : (
+            <div className="text-sm text-red-500 p-3 bg-red-50 dark:bg-red-950/20 rounded-lg">
+              {alert}
+            </div>
           )
-        }
+        )}
         {/* Terms and Conditions */}
         {!isEditMode && (
-          <div className="flex items-start space-x-3 p-4 bg-gray-50 dark:bg-[#2E2E2E] rounded-xl border border-gray-100 dark:border-gray-800 transition-colors">
+          <div className="flex items-start space-x-3 p-4 bg-secondary rounded-xl border border-border transition-colors">
             <div className="flex items-center h-5">
               <input
                 id="terms"
                 type="checkbox"
                 checked={formData.termsAccepted}
                 onChange={(e) => handleInputChange("termsAccepted", e.target.checked)}
-                className="size-4 rounded border-gray-300 text-[#003933] focus:ring-[#003933] dark:bg-zinc-800 dark:border-zinc-700 cursor-pointer"
+                className="size-4 rounded border-border text-foreground-strong focus:ring-ring bg-card cursor-pointer"
               />
             </div>
             <div className="text-sm">
-              <label htmlFor="terms" className="font-medium text-gray-700 dark:text-zinc-300 cursor-pointer">
+              <label htmlFor="terms" className="font-medium text-foreground-strong cursor-pointer">
                 I agree to the{" "}
                 <a
                   href="/terms-and-conditions"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#003933] dark:text-[#00b89f] hover:underline font-bold"
+                  className="text-foreground-strong hover:underline font-bold"
                   onClick={(e) => e.stopPropagation()}
                 >
                   Terms & Conditions
                 </a>
               </label>
-              <p className="text-gray-500 dark:text-zinc-400 mt-1 text-xs">
+              <p className="text-foreground-muted mt-1 text-xs">
                 You must accept the terms before creating a new content reward campaign.
               </p>
             </div>
@@ -741,8 +754,8 @@ const CampaignForm = ({
             type="submit"
             disabled={!isFormValid || isFormDisabled}
             className={`transition font-medium px-6 py-4 rounded-lg text-white ${isFormValid && !isFormDisabled
-              ? "bg-[#003933] dark:bg-[#003933] hover:bg-[#002822] dark:hover:bg-primary/90"
-              : "bg-gray-300 dark:bg-gray-700 cursor-not-allowed opacity-50"
+              ? "bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80"
+              : "bg-secondary text-foreground-muted cursor-not-allowed opacity-50"
               }`}
           >
             {isSubmitting ? "Processing..." : isEditMode ? "Update Campaign" : "Create Campaign"}
@@ -752,7 +765,7 @@ const CampaignForm = ({
             variant="outline"
             disabled={isFormDisabled}
             onClick={handleCancel}
-            className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 px-6 py-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="border-border text-foreground-strong hover:bg-secondary px-6 py-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancel
           </Button>

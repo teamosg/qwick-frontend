@@ -10,6 +10,7 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { ArrowDown, Check } from "lucide-react";
 import AvatarUser from "../ui/AvatarUser";
+import { Link } from "react-router";
 
 export default function CommunitySwitcher({
   data: communityList,
@@ -18,6 +19,8 @@ export default function CommunitySwitcher({
   selectedCommunity,
 }) {
 
+  const joinedCommunities = communityList?.joinedCommunities || [];
+  const createdCommunities = communityList?.createdCommunities || [];
 
   if (isLoadingCommunityList || !selectedCommunity) {
     return (
@@ -26,6 +29,7 @@ export default function CommunitySwitcher({
       </div>
     )
   }
+
 
 
   return (
@@ -48,31 +52,66 @@ export default function CommunitySwitcher({
         <ArrowDown />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuLabel>Communities</DropdownMenuLabel>
-        {communityList.map((community) => (
+        <DropdownMenuLabel className="text-base font-bold">My Communities</DropdownMenuLabel>
+        {createdCommunities?.map((community) => (
           <DropdownMenuItem
             key={community.id}
+            asChild
             onClick={() => setSelectedCommunity(community)}
           >
-            <div className="flex items-center gap-2">
-              <AvatarUser
-                src={community?.avatar}
-                alt={community?.business_name}
-                className="h-8 w-8"
-              />
-              <div className="flex flex-col min-w-40">
-                <span>
-                  {community?.business_name?.slice(0, 15)}
-                  {community?.business_name?.length > 15 ? "..." : ""}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  @{community.username}
-                </span>
+            <Link to={`/announcement/${community.username}`} className="w-full">
+              <div className="flex items-center gap-2">
+                <AvatarUser
+                  src={community?.avatar}
+                  alt={community?.business_name}
+                  className="h-8 w-8"
+                />
+                <div className="flex flex-col min-w-40">
+                  <span>
+                    {community?.business_name?.slice(0, 15)}
+                    {community?.business_name?.length > 15 ? "..." : ""}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    @{community.username}
+                  </span>
+                </div>
+                {selectedCommunity.id === community.id && (
+                  <Check className="ml-auto" />
+                )}
               </div>
-            </div>
-            {selectedCommunity.id === community.id && (
-              <Check className="ml-auto" />
-            )}
+            </Link>
+          </DropdownMenuItem>
+        ))}
+
+
+        <DropdownMenuLabel className="text-base font-bold mt-4">Joined Communities</DropdownMenuLabel>
+        {joinedCommunities?.map((community) => (
+          <DropdownMenuItem
+            key={community.id}
+            asChild
+            onClick={() => setSelectedCommunity(community)}
+          >
+            <Link to={`/announcement/${community.username}`} className="w-full">
+              <div className="flex items-center gap-2">
+                <AvatarUser
+                  src={community?.avatar}
+                  alt={community?.business_name}
+                  className="h-8 w-8"
+                />
+                <div className="flex flex-col min-w-40">
+                  <span>
+                    {community?.business_name?.slice(0, 15)}
+                    {community?.business_name?.length > 15 ? "..." : ""}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    @{community.username}
+                  </span>
+                </div>
+                {selectedCommunity.id === community.id && (
+                  <Check className="ml-auto" />
+                )}
+              </div>
+            </Link>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

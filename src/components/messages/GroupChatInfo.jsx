@@ -53,15 +53,15 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
   // };
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-[#171717] text-gray-900 dark:text-white">
+    <div className="flex flex-col h-full bg-card dark:bg-card text-foreground dark:text-foreground">
       {/* Header with close button and group avatar + name */}
-      <div className="relative p-6 border-b border-gray-200 dark:border-[#282828]">
+      <div className="relative p-6 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-[#282828] rounded-lg transition-colors"
+          className="absolute top-4 right-4 p-2 hover:bg-accent dark:hover:bg-accent rounded-lg transition-colors"
           aria-label="Close group info"
         >
-          <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+          <X className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
         </button>
 
         <div className="flex flex-col items-center">
@@ -77,32 +77,32 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
       </div>
 
       {/* Action Buttons: Rename, Add User, Leave */}
-      <div className="grid grid-cols-3 gap-3 p-4 border-b border-gray-200 dark:border-[#282828]">
+      <div className="grid grid-cols-3 gap-3 p-4 border-b border-qwick-gray-200 dark:border-qwick-gray-800">
         <button
           onClick={() => setOpenUpdateModal(true)}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
           aria-label="Rename group"
         >
-          <Edit2 className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-          <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+          <Edit2 className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
+          <span className="text-xs font-medium text-foreground dark:text-foreground">
             Edit
           </span>
         </button>
 
         <button
           onClick={handleAddUser}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
           aria-label="Add user to group"
         >
-          <UserPlus className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-          <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+          <UserPlus className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
+          <span className="text-xs font-medium text-foreground dark:text-foreground">
             Add user
           </span>
         </button>
 
         <button
           onClick={handleLeave}
-          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+          className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
           aria-label="Leave group"
         >
           <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
@@ -113,15 +113,15 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
       </div>
 
       {/* Notifications Toggle */}
-      {/* <div className="p-4 border-b border-gray-200 dark:border-[#282828]">
+      {/* <div className="p-4 border-b border-gray-200 dark:border-zinc-800">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {notificationsEnabled ? (
-              <Bell className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+              <Bell className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
             ) : (
-              <BellOff className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+              <BellOff className="w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
             )}
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span className="text-sm font-medium text-foreground dark:text-foreground">
               Notifications
             </span>
           </div>
@@ -129,7 +129,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
             onClick={() => setNotificationsEnabled(!notificationsEnabled)}
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${notificationsEnabled
                 ? "bg-blue-600"
-                : "bg-gray-300 dark:bg-gray-600"
+                : "bg-muted dark:bg-muted"
               }`}
             aria-pressed={notificationsEnabled}
             aria-label="Toggle notifications"
@@ -146,14 +146,14 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
       {/* Members List */}
       <div className="flex-1 overflow-y-auto">
         <div className="p-4">
-          <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+          <h3 className="text-sm font-semibold text-foreground dark:text-foreground mb-3">
             {members.length} members
           </h3>
           <div className="space-y-1">
             {members.map((member) => (
               <div
                 key={member?.id}
-                className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#282828] transition-colors"
+                className="flex items-center justify-between p-3 rounded-lg hover:bg-qwick-gray-100 dark:hover:bg-qwick-gray-800 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <AvatarUser
@@ -162,12 +162,12 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <div>
-                    <h4 className="text-sm font-medium text-gray-900 dark:text-white">
+                    <h4 className="text-sm font-medium text-qwick-gray-950 dark:text-white">
                       {member?.username}
                     </h4>
                     {/* role  */}
                     {/* {index === 0 && (
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="text-xs text-muted-foreground dark:text-muted-foreground">
                         {member?.role}
                       </span>
                     )} */}
@@ -177,7 +177,7 @@ const GroupChatInfo = ({ selectedChat, onClose, setSelectedChat }) => {
                 {/* {index !== 0 && (
                   <button
                     onClick={() => handleRemoveMember(member?.name)}
-                    className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                    className="text-xs font-medium text-muted-foreground dark:text-muted-foreground hover:text-red-600 dark:hover:text-red-400 transition-colors"
                     aria-label={`Remove ${member?.name}`}
                   >
                     Remove

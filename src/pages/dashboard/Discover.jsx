@@ -1,30 +1,27 @@
-/* eslint-disable react/prop-types */
 import Card from "@/components/dashboard/Card";
 import DiscoverFilter from "@/components/discover/Filter";
 import Pagination from "@/components/discover/Pagination";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetAllCampaigns } from "@/hooks/campaign.hook";
-import { useGetCommunityList, useGetMyCommunityList } from "@/hooks/community.hook";
-import { useCommunityStore } from "@/store/communityStore";
+import { useGetCommunityList } from "@/hooks/community.hook";
 import { useState, useMemo } from "react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import DiscoverSkeleton from "@/components/discover/DiscoverSkeleton";
 import { formatViewCount } from "@/lib/utils";
+import { format } from "date-fns";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const Discover = () => {
   const navigate = useNavigate();
   const { data: campaignRes, isLoading: isLoadingCampaigns } = useGetAllCampaigns();
-  const { data: myCommunityRes, isLoading: isLoadingMyCommunities } = useGetMyCommunityList();
   const { data: allCommunities, isLoading: isLoadingAllCommunities } = useGetCommunityList();
-  const { setSelectedCreatorCommunity } = useCommunityStore();
 
   const [selectedType, setSelectedType] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedSort, setSelectedSort] = useState("Highest available budget");
+  const [selectedSort, setSelectedSort] = useState("Newest");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
@@ -53,16 +50,19 @@ const Discover = () => {
 
     // Sort
     list = [...list].sort((a, b) => {
-      if (selectedSort === "Highest available budget") {
+      if (selectedSort === "Highest Available Budget") {
         return parseFloat(b.budget || 0) - parseFloat(a.budget || 0);
       }
+      if (selectedSort === "Highest Budget") {
+        return parseFloat(b.initial_budget || 0) - parseFloat(a.initial_budget || 0);
+      }
       if (selectedSort === "Most Paid Out") {
-        return parseFloat(b.max_payout || 0) - parseFloat(a.max_payout || 0);
+        return parseFloat(b.total_users_earning || 0) - parseFloat(a.total_users_earning || 0);
       }
       if (selectedSort === "Highest CPM") {
         return parseFloat(b.reward_rate || 0) - parseFloat(a.reward_rate || 0);
       }
-      if (selectedSort === "Nearest") {
+      if (selectedSort === "Newest" || selectedSort === "Most Creators") {
         return b.id - a.id;
       }
       return 0;
@@ -78,43 +78,14 @@ const Discover = () => {
   );
 
   const handleCampaignClick = (campaign) => {
-    const joinedCommunities = myCommunityRes?.joined_communities || [];
-    const createdCommunities = myCommunityRes?.created_communities || [];
-
-    const communityId = campaign.community;
-
-    // Check if user is the creator
-    const communityAsCreator = createdCommunities.find(c => c.id === communityId);
-
-    // Check if campaign has ended
     const isEnded = campaign.end_date && new Date(campaign.end_date) < new Date();
 
-    if (isEnded && !communityAsCreator) {
+    if (isEnded) {
       toast.error("This campaign has ended.");
       return;
     }
 
-    if (communityAsCreator) {
-      toast.info("As the creator of this community, you cannot join as a member.");
-      return;
-    }
-
-    // Check if user has joined
-    const communityAsMember = joinedCommunities.find(c => c.id === communityId);
-
-    if (communityAsMember) {
-      // Already joined
-      setSelectedCreatorCommunity(communityAsMember);
-      navigate("/content-reward");
-    } else {
-      // Find community username from all communities to navigate to join page
-      const targetCommunity = allCommunities?.find(c => c.id === communityId);
-      if (targetCommunity?.username) {
-        navigate(`/join-community/${targetCommunity.username}`);
-      } else {
-        toast.error("Community information not found.");
-      }
-    }
+    navigate(`/discover/${campaign.id}`);
   };
 
   const containerVariants = {
@@ -145,7 +116,7 @@ const Discover = () => {
     },
   };
 
-  if (isLoadingCampaigns || isLoadingMyCommunities || isLoadingAllCommunities) {
+  if (isLoadingCampaigns || isLoadingAllCommunities) {
     return (
       <div className="p-4">
         <DiscoverSkeleton />
@@ -155,7 +126,7 @@ const Discover = () => {
 
   return (
     <motion.div
-      className=" p-4 bg-[#f9fafb] dark:bg-zinc-950 min-h-0 flex-1 overflow-y-auto"
+      className=" p-4 bg-background dark:bg-zinc-950 min-h-0 flex-1 overflow-y-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -185,52 +156,53 @@ const Discover = () => {
         animate="visible"
       >
         <AnimatePresence mode="popLayout">
-          {currentCampaigns.map((campaign) => (
-            <motion.div
-              key={campaign.id}
-              variants={cardVariants}
-              whileHover={{
-                scale: 1.02,
-                y: -5,
-                transition: { duration: 0.2 },
-              }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full"
-            >
-              <Card
-                content={{
-                  thumbnail: campaign?.thumbnail ? (campaign.thumbnail.startsWith('http') ? campaign.thumbnail : `${MEDIA_BASE_URL}${campaign.thumbnail}`) : null,
-                  name: campaign.category?.name || "No Category",
-                  meta: campaign.campaign_type?.name || "Campaign",
-                  type: campaign.campaign_type?.name,
-                  views: formatViewCount(campaign.total_content_views),
-                  title: campaign.name,
-                  socials: campaign.platforms?.map(p => {
-                    if (p.name?.toLowerCase() === 'instagram') return { name: 'Instagram', icon: FaInstagram };
-                    if (p.name?.toLowerCase() === 'facebook') return { name: 'Facebook', icon: FaFacebook };
-                    if (p.name?.toLowerCase() === 'youtube') return { name: 'YouTube', icon: FaYoutube };
-                    return null;
-                  }).filter(Boolean),
-                  progress: campaign.initial_budget > 0
-                    ? Math.min(Math.max((parseFloat(campaign.total_users_earning || 0) / parseFloat(campaign.initial_budget)) * 100, 0), 100)
-                    : 0,
-                  compensation: {
-                    label: "Compensation",
-                    details: `$${campaign.reward_rate} per 1k views`,
-                  },
-                  cta: "Apply",
-                  isEnded: campaign.end_date && new Date(campaign.end_date) < new Date(),
-                  endDate: campaign.end_date,
-                }}
-                onApply={() => handleCampaignClick(campaign)}
-              />
-            </motion.div>
-          ))}
+          {currentCampaigns.map((campaign) => {
+            const community = allCommunities?.find(c => c.id === campaign.community) || {};
+            const isEnded = campaign.end_date && new Date(campaign.end_date) < new Date();
+
+            return (
+              <motion.div
+                key={campaign.id}
+                variants={cardVariants}
+                whileHover={!isEnded ? {
+                  scale: 1.02,
+                  y: -5,
+                  transition: { duration: 0.2 },
+                } : {}}
+                whileTap={!isEnded ? { scale: 0.98 } : {}}
+                className="w-full"
+              >
+                <Card
+                  content={{
+                    thumbnail: campaign?.thumbnail ? (campaign.thumbnail.startsWith('http') ? campaign.thumbnail : `${MEDIA_BASE_URL}${campaign.thumbnail}`) : null,
+                    communityName: community.business_name || "Community",
+                    communityAvatar: community.avatar ? (community.avatar.startsWith('http') ? community.avatar : `${MEDIA_BASE_URL}${community.avatar}`) : null,
+                    postedDate: campaign.created_at ? format(new Date(campaign.created_at), 'MMM dd, yyyy') : "N/A",
+                    views: campaign.total_content_views,
+                    title: campaign.name,
+                    socials: campaign.platforms?.map(p => {
+                      if (p.name?.toLowerCase() === 'instagram') return { name: 'Instagram', icon: FaInstagram };
+                      if (p.name?.toLowerCase() === 'facebook') return { name: 'Facebook', icon: FaFacebook };
+                      if (p.name?.toLowerCase() === 'youtube') return { name: 'YouTube', icon: FaYoutube };
+                      return null;
+                    }).filter(Boolean),
+                    progress: campaign.initial_budget > 0
+                      ? Math.min(Math.max((parseFloat(campaign.total_users_earning || 0) / parseFloat(campaign.initial_budget)) * 100, 0), 100)
+                      : 0,
+                    compensation: `$${campaign.reward_rate} / 1K VIEWS`,
+                    isEnded: isEnded,
+                    endDate: campaign.end_date,
+                  }}
+                  onApply={() => handleCampaignClick(campaign)}
+                />
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </motion.div>
 
       {processedCampaigns.length === 0 && (
-        <div className="text-center py-20 text-gray-500">
+        <div className="text-center py-20 text-muted-foreground">
           No campaigns found matching your filters.
         </div>
       )}

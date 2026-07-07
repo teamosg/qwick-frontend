@@ -1,4 +1,5 @@
 import ChangePassword from "./components/ChangePassword";
+import DeleteAccount from "./components/DeleteAccount";
 import TwoFactorStatus from "./components/TwoFactorStatus";
 
 const SecurityPrivacy = () => {
@@ -9,6 +10,9 @@ const SecurityPrivacy = () => {
 
       {/* Change Password Section */}
       <ChangePassword />
+
+      {/* Delete Account Section */}
+      <DeleteAccount />
     </div>
   );
 };

@@ -28,17 +28,17 @@ const LeaveGroupModal = ({ isOpen, onClose, onConfirm, isLeaving }) => {
                         className="fixed inset-0 z-50 flex items-center justify-center p-4"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="bg-white dark:bg-[#171717] rounded-xl shadow-2xl w-full max-w-sm p-6 text-center">
+                        <div className="bg-white dark:bg-card rounded-xl shadow-2xl w-full max-w-sm p-6 text-center">
 
                             <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <AlertCircle className="w-6 h-6 text-red-600 dark:text-red-500" />
                             </div>
 
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                            <h3 className="text-xl font-semibold text-qwick-gray-950 dark:text-white mb-2">
                                 Leave this group?
                             </h3>
 
-                            <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">
+                            <p className="text-qwick-gray-500 dark:text-qwick-gray-400 text-sm mb-6">
                                 You will no longer receive messages from this group. You can only rejoin if added by a member.
                             </p>
 
@@ -54,7 +54,7 @@ const LeaveGroupModal = ({ isOpen, onClose, onConfirm, isLeaving }) => {
                                 <button
                                     onClick={onClose}
                                     disabled={isLeaving}
-                                    className="w-full py-2.5 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors"
+                                    className="w-full py-2.5 bg-qwick-gray-100 dark:bg-qwick-gray-800 hover:bg-qwick-gray-200 dark:hover:bg-qwick-gray-700 text-qwick-gray-700 dark:text-qwick-gray-300 rounded-lg font-medium transition-colors"
                                 >
                                     Cancel
                                 </button>

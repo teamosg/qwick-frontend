@@ -6,11 +6,11 @@ import { Link, useLocation } from "react-router";
 
 const NotificationItem = ({ title, time, isRead }) => (
   <div
-    className={`p-4 ${!isRead ? "bg-primary/10" : ""
+    className={`p-4 ${!isRead ? "bg-foreground-strong/5" : ""
       } hover:bg-accent cursor-pointer`}
   >
-    <p className="text-sm font-medium text-gray-900 dark:text-white">{title}</p>
-    <p className="text-xs text-gray-600 dark:text-zinc-400 mt-1">{time}</p>
+    <p className="text-sm font-medium text-foreground dark:text-foreground">{title}</p>
+    <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-1">{time}</p>
   </div>
 );
 
@@ -94,7 +94,7 @@ const menuItems = [
   },
 ];
 
-const Header = ({ onMenuClick }) => {
+const  Header = ({ onMenuClick }) => {
   const location = useLocation();
   const isHome = location.pathname === "/";
 
@@ -113,7 +113,7 @@ const Header = ({ onMenuClick }) => {
           >
             <Menu size={22} className="text-foreground" />
           </button>
-          <h2 className="text-xl md:text-2xl text-gray-900 dark:text-white font-semibold">
+          <h2 className="text-xl md:text-2xl text-foreground dark:text-foreground font-semibold">
             {menuItems.find((item) => item.path === location.pathname)?.text}
           </h2>
 
@@ -122,7 +122,7 @@ const Header = ({ onMenuClick }) => {
 
           <Link
             to={`/addcommunity`}
-            className="bg-[#003933] dark:bg-[#003933] text-white px-3 py-2 sm:py-2.5 sm:px-6 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition font-medium cursor-pointer flex items-center gap-2 whitespace-nowrap"
+            className="bg-primary text-primary-foreground px-3 py-2 sm:py-2.5 sm:px-6 rounded-full hover:bg-primary-hover transition font-medium cursor-pointer flex items-center gap-2 whitespace-nowrap"
           >
             <Plus size={20} />
             <span className="hidden sm:inline">Add Community</span>

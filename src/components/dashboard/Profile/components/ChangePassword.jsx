@@ -56,11 +56,11 @@ const ChangePassword = () => {
 
     return (
         <div>
-            <h2 className="text-[18px] font-semibold text-[#090003] dark:text-white mb-4">
+            <h2 className="text-[18px] font-semibold text-foreground-strong dark:text-white mb-4">
                 Change Password
             </h2>
 
-            <Card className="border-[#003933] shadow rounded-[24px]">
+            <Card className="border-border shadow-sm rounded-2xl bg-card">
                 <CardContent className="p-6">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -71,21 +71,21 @@ const ChangePassword = () => {
                                 name="current_password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="text-gray-900 dark:text-white">
+                                        <FormLabel className="text-foreground-strong dark:text-white">
                                             Current Password
                                         </FormLabel>
                                         <FormControl>
                                             <div className="relative">
                                                 <Input
                                                     type={showCurrent ? "text" : "password"}
-                                                    placeholder="Enter current password"
+                                                    placeholder="Current Password"
                                                     {...field}
                                                     className="pr-10"
                                                 />
                                                 <button
                                                     type="button"
                                                     onClick={() => setShowCurrent(!showCurrent)}
-                                                    className="absolute right-3 top-2.5 text-gray-500 dark:text-gray-300"
+                                                    className="absolute right-3 top-2.5 text-foreground-muted cursor-pointer"
                                                 >
                                                     {showCurrent ? <EyeOff size={18} /> : <Eye size={18} />}
                                                 </button>
@@ -102,21 +102,21 @@ const ChangePassword = () => {
                                 name="new_password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="text-gray-900 dark:text-white">
+                                        <FormLabel className="text-foreground-strong dark:text-white">
                                             New Password
                                         </FormLabel>
                                         <FormControl>
                                             <div className="relative">
                                                 <Input
                                                     type={showNew ? "text" : "password"}
-                                                    placeholder="Enter new password"
+                                                    placeholder="New Password"
                                                     {...field}
                                                     className="pr-10"
                                                 />
                                                 <button
                                                     type="button"
                                                     onClick={() => setShowNew(!showNew)}
-                                                    className="absolute right-3 top-2.5 text-gray-500 dark:text-gray-300"
+                                                    className="absolute right-3 top-2.5 text-foreground-muted cursor-pointer"
                                                 >
                                                     {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
                                                 </button>
@@ -133,21 +133,21 @@ const ChangePassword = () => {
                                 name="confirm_password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="text-gray-900 dark:text-white">
+                                        <FormLabel className="text-foreground-strong dark:text-white">
                                             Confirm New Password
                                         </FormLabel>
                                         <FormControl>
                                             <div className="relative">
                                                 <Input
                                                     type={showConfirm ? "text" : "password"}
-                                                    placeholder="Confirm new password"
+                                                    placeholder="Confirm New Password"
                                                     {...field}
                                                     className="pr-10"
                                                 />
                                                 <button
                                                     type="button"
                                                     onClick={() => setShowConfirm(!showConfirm)}
-                                                    className="absolute right-3 top-2.5 text-gray-500 dark:text-gray-300"
+                                                    className="absolute right-3 top-2.5 text-foreground-muted cursor-pointer"
                                                 >
                                                     {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
                                                 </button>
@@ -161,7 +161,7 @@ const ChangePassword = () => {
                             <Button
                                 type="submit"
                                 disabled={isChanging}
-                                className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed bg-[#003933] hover:bg-[#005a52] text-white rounded-xl"
+                                className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed bg-primary hover:bg-primary-hover text-primary-foreground rounded-xl cursor-pointer"
                             >
                                 {
                                     isChanging

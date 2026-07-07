@@ -1,17 +1,6 @@
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import AddCommunityItem from "./AddCommunityItem";
-
-const communityOneData = [
-  { id: 1, title: "Coaching and Courses" },
-  { id: 2, title: "Agency services" },
-  { id: 3, title: "Paid group" },
-  { id: 4, title: "Software" },
-  { id: 5, title: "Events" },
-  { id: 6, title: "Newsletter" },
-  { id: 7, title: "Physical products" },
-  { id: 8, title: "Brick and mortar" },
-  { id: 9, title: "Other" },
-];
 
 const AddCommunityOne = ({ selectedId, onClick, categories = [] }) => {
   return (

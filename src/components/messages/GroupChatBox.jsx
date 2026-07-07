@@ -38,8 +38,9 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
   });
 
   const members = {}
-  selectedChat?.members?.forEach(member => {
-    return members[member?.username] = member
+  const groupMembers = conversationDetails?.group?.members || selectedChat?.members || [];
+  groupMembers.forEach(member => {
+    members[member?.username] = member
   })
 
 
@@ -68,20 +69,26 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
   }
 
 
-  // set members
+  // sync messages and enrich selectedChat with group details
   useEffect(() => {
-    if (selectedChat) {
-      setMessages(conversationDetails?.messages || []);
-      setMessages(conversationDetails?.messages || []);
-      setSelectedChat({ ...selectedChat, members: conversationDetails?.group?.members || [], name: conversationDetails?.group?.name, avatar: conversationDetails?.group?.avatar || selectedChat?.group_avatar })
+    if (conversationDetails) {
+      setMessages(conversationDetails.messages || []);
+      
+      if (conversationDetails.group) {
+        setSelectedChat(prev => ({
+          ...prev,
+          members: conversationDetails.group.members || [],
+          name: conversationDetails.group.name,
+          avatar: conversationDetails.group.avatar || prev?.group_avatar || prev?.avatar
+        }));
+      }
     }
-  }, [conversationDetails, selectedChat, setSelectedChat]);
+  }, [conversationDetails, setSelectedChat]);
 
 
-  // Load messages whenever chat changes
+  // WebSocket connection management
   useEffect(() => {
     if (!group_id) return;
-    setMessages(conversationDetails?.messages || []);
 
     ws.current = new WebSocket(
       `wss://darrenchua.softvencealpha.com/ws/group/${group_id}/?token=${token}`
@@ -129,7 +136,7 @@ const GroupChatBox = ({ selectedChat, setSelectedChat }) => {
     return <ConversationDetailsSkeleton />;
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-[#171717] h-full min-h-0">
+    <div className="flex-1 flex flex-col bg-background h-full min-h-0">
       {/* Messages Area */}
       <div className="flex-1 p-4 overflow-y-auto no-scrollbar">
         {/* Message bubbles, colors updated for dark mode */}

@@ -6,6 +6,7 @@ import DashboardSingleRewardItem from "./DashboardSingleRewardItem";
 import { useCommunityStore } from "@/store/communityStore";
 import { useCreateCampaign, useGetAllCampaigns } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
+import CampaignCheckoutModal from "./CampaignCheckoutModal";
 
 const DashboardContentReward = () => {
   const [alert, setAlert] = useState(null);
@@ -13,6 +14,9 @@ const DashboardContentReward = () => {
   const { selectedBrandCommunity } = useCommunityStore();
   const { mutate: createCampaign, isPending: isSubmitting } = useCreateCampaign(selectedBrandCommunity?.id, setAlert);
   const { data: campaignRes, isLoading } = useGetAllCampaigns();
+
+  const [checkoutDetails, setCheckoutDetails] = useState(null);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
   const [showForm, setShowForm] = useState(false);
 
@@ -26,7 +30,6 @@ const DashboardContentReward = () => {
   };
 
   const handleFormSubmit = async (formData) => {
-    // Mappings
     const typeMap = {
       "UGC": 1,
       "Sponsored": 2,
@@ -46,10 +49,9 @@ const DashboardContentReward = () => {
 
     const platformMap = {
       "Instagram": 2,
-      "Tiktok": 3,
+      "TikTok": 3,
       "Youtube": 1
     };
-
 
     const payload = new FormData();
 
@@ -67,6 +69,7 @@ const DashboardContentReward = () => {
     payload.append("max_payout", Number(formData.maxPayout) || 0);
     payload.append("available_content", formData.availableContent || "");
     payload.append("content_requirement", formData.contentRequirement);
+    payload.append("flat_fee_bonus", Number(formData.flatFeeBonus) || 0);
 
     if (formData.startDate) {
       const date = new Date(formData.startDate);
@@ -77,7 +80,6 @@ const DashboardContentReward = () => {
       payload.append("end_date", date.toISOString().split('T')[0]);
     }
 
-    // Platforms
     const platforms = formData.platforms || [];
     platforms.forEach((p) => {
       const id = platformMap[p];
@@ -87,8 +89,12 @@ const DashboardContentReward = () => {
     });
 
     createCampaign(payload, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setShowForm(false);
+        if (data?.checkout_url) {
+          setCheckoutDetails(data);
+          setShowCheckoutModal(true);
+        }
       }
     });
   };
@@ -100,7 +106,7 @@ const DashboardContentReward = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-20">
-        <Spinner className="size-10 text-[#003933]" />
+        <Spinner className="size-10 text-foreground-strong" />
       </div>
     );
   }
@@ -124,15 +130,15 @@ const DashboardContentReward = () => {
       ) : filteredRewards.length > 0 ? (
         <div className="w-full">
           <div className="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 px-4 sm:px-6 mt-6">
-            <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
+            <p className="text-foreground-muted text-sm sm:text-base">
               Active {filteredRewards.length} content reward
               {filteredRewards.length !== 1 ? "s" : ""}
             </p>
             <button
               onClick={handleCreateReward}
-              className="w-full sm:w-auto bg-[#003933] text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-[#002822] transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/10"
+              className="w-full sm:w-auto bg-foreground-strong dark:bg-accent text-white px-6 py-3 sm:py-3.5 sm:px-8 rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition-all font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-foreground-strong/10"
             >
-              Create New Reward
+              Create Campaign
             </button>
           </div>
           <div className="space-y-4 pb-6 mt-6">
@@ -146,6 +152,12 @@ const DashboardContentReward = () => {
           <DashboardContentRewardBlank onCreateReward={handleCreateReward} />
         </div>
       )}
+
+      <CampaignCheckoutModal
+        open={showCheckoutModal}
+        setOpen={setShowCheckoutModal}
+        checkoutDetails={checkoutDetails}
+      />
     </div>
   );
 };

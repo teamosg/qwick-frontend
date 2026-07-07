@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import commonAuthLogo from "../../assets/authImg.png";
 import { useResetPassword } from "../../hooks/auth.hook.js";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import LogoOnly from "@/components/Logo/LogoOnly";
+import Logo from "@/components/Logo/Logo";
 
 const ResetPassword = () => {
   const {
@@ -33,13 +34,14 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-white dark:bg-gray-900">
+    <div className="min-h-screen flex bg-background">
       {/* Left side - Form */}
-      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col bg-white dark:bg-gray-900 ">
+      <div className="w-full md:w-1/2 px-6 md:px-12 lg:px-20 pb-6 md:pb-10 flex flex-col">
         <div className="max-w-md mx-auto w-full flex justify-between items-center">
           {/* Logo */}
           <div className="py-5 md:py-7 mb-4 md:mb-5">
-            <LogoOnly />
+            {/* <LogoOnly /> */}
+            <Logo/>
           </div>
 
           {/* Theme Toggle */}
@@ -61,7 +63,7 @@ const ResetPassword = () => {
             <h2 className="text-black dark:text-white text-center font-[Inter] text-2xl md:text-3xl not-italic font-medium leading-tight uppercase mb-2">
               RESET PASSWORD
             </h2>
-            <p className="dark:text-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
+            <p className="dark:text-qwick-gray-400 text-center font-[Inter] text-base not-italic font-normal leading-relaxed">
               Create a new strong password for your account
             </p>
           </div>
@@ -71,7 +73,7 @@ const ResetPassword = () => {
             {/* mail input */}
 
             <div>
-              <label className="text-gray-900 dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
+              <label className="text-qwick-gray-900 dark:text-qwick-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
                 Email
               </label>
               <input
@@ -79,24 +81,20 @@ const ResetPassword = () => {
                 type="email"
                 {...register("email", {
                   required: "Email is required",
-                  // pattern: {
-                  //   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  //   message: "Invalid email address",
-                  // },
                 })}
                 placeholder="Enter your email"
-                className="w-full px-4 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                className="w-full px-4 py-4 border border-qwick-gray-300 dark:border-qwick-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label className="text-gray-900 dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
+              <label className="text-qwick-gray-900 dark:text-qwick-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
                 Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="text-gray-400" />
+                  <FaLock className="text-qwick-gray-400" />
                 </div>
                 <input
                   name="new_password"
@@ -109,7 +107,7 @@ const ResetPassword = () => {
                     },
                   })}
                   placeholder="Your password"
-                  className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                  className="w-full pl-10 pr-5 py-4 border border-qwick-gray-300 dark:border-qwick-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
                 />
                 <button
                   type="button"
@@ -117,9 +115,9 @@ const ResetPassword = () => {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <FaEyeSlash className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
+                    <FaEyeSlash className="text-qwick-gray-400 hover:text-qwick-gray-600 dark:hover:text-qwick-gray-300" />
                   ) : (
-                    <FaEye className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
+                    <FaEye className="text-qwick-gray-400 hover:text-qwick-gray-600 dark:hover:text-qwick-gray-300" />
                   )}
                 </button>
               </div>
@@ -132,12 +130,12 @@ const ResetPassword = () => {
 
             {/* Confirm Password */}
             <div>
-              <label className="text-gray-900 dark:text-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
+              <label className="text-qwick-gray-900 dark:text-qwick-gray-200 font-[Inter] text-[14px] not-italic font-medium leading-[155%] mb-1.5 md:mb-2 block">
                 Confirm Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="text-gray-400" />
+                  <FaLock className="text-qwick-gray-400" />
                 </div>
                 <input
                   name="confirm_password"
@@ -148,7 +146,7 @@ const ResetPassword = () => {
                       "Passwords do not match",
                   })}
                   placeholder="Confirm your password"
-                  className="w-full pl-10 pr-5 py-4 border border-[#C3C3C3] dark:border-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-[#003933] dark:focus:ring-primary focus:border-[#003933] dark:focus:border-primary bg-white dark:bg-gray-800 text-black dark:text-white"
+                  className="w-full pl-10 pr-5 py-4 border border-qwick-gray-300 dark:border-qwick-gray-700 rounded-full focus:outline-none focus:ring-1 focus:ring-ring dark:focus:ring-ring focus:border-border-strong dark:focus:border-border-strong bg-card text-black dark:text-white"
                 />
                 <button
                   type="button"
@@ -156,9 +154,9 @@ const ResetPassword = () => {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? (
-                    <FaEyeSlash className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
+                    <FaEyeSlash className="text-qwick-gray-400 hover:text-qwick-gray-600 dark:hover:text-qwick-gray-300" />
                   ) : (
-                    <FaEye className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
+                    <FaEye className="text-qwick-gray-400 hover:text-qwick-gray-600 dark:hover:text-qwick-gray-300" />
                   )}
                 </button>
               </div>
@@ -170,7 +168,7 @@ const ResetPassword = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer"
+              className="w-full bg-primary hover:bg-primary-hover text-primary-foreground py-4 px-10 rounded-full transition mt-2 font-medium cursor-pointer"
             >
               Reset Password
             </button>
@@ -178,21 +176,21 @@ const ResetPassword = () => {
 
           {/* Back to Sign In link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-qwick-gray-600 dark:text-qwick-gray-400">
               Remember your password?{" "}
               <Link
                 to="/sign-in"
-                className="text-[#003933] dark:text-primary font-medium hover:underline"
+                className="text-foreground-strong dark:text-foreground-strong font-medium hover:underline"
               >
                 Sign In
               </Link>
             </p>
           </div>
         </div>
-      </div>
+      </div> 
 
       {/* Right side - Image (hidden on mobile) */}
-      <div className="hidden md:block md:w-1/2 bg-white dark:bg-gray-800">
+      <div className="hidden md:block md:w-1/2">
         <div className="h-full w-full flex items-center justify-center p-2.5 rounded-[30px] overflow-hidden">
           <img
             src={commonAuthLogo}

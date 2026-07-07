@@ -1,7 +1,7 @@
 import AnnouncementFeed from "@/components/announcement/AnnouncementFeed";
 import CommunityChat from "@/components/CommunityChat/CommunityChat";
 import Withdraw from "@/components/CommunityChat/Withdraw";
-import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
+// import ContentRewardDetailsPayment from "@/components/contentReward/ContentRewardDetailsPayment";
 import ContentRewardDetails from "@/components/contentReward/ContentRewordDetails";
 import ContentRewordPublic from "@/components/contentReward/ContentRewordPublic";
 import AutomatedMessage from "@/components/dashboard/Dashboard/AutomatedMessage";
@@ -25,6 +25,7 @@ import SuccessfullyUpdated from "@/pages/auth/SuccessfullyUpdated";
 import SuccessfullyVerified from "@/pages/auth/SuccessfullyVerified";
 import VerifyAccount from "@/pages/auth/VerifyAccount";
 import Dashboard from "@/pages/dashboard/Dashboard";
+import CampaignDetails from "@/pages/discover/CampaignDetails";
 import Discover from "@/pages/dashboard/Discover";
 import JoinCommunity from "@/pages/dashboard/JoinCommunity";
 import Profile from "@/pages/dashboard/Profile";
@@ -38,12 +39,18 @@ import NotFound from "@/shared/NotFound";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import SignIn from "../pages/auth/SignIn";
+import Landing from "../pages/landing/Landing";
 import Home from "../pages/dashboard/Home";
 import DashboardLayout from "./../layout/DashboardLayout";
 import VerifyTwoAuth from "@/pages/auth/VerifyTwoAuth";
 import DepositSuccess from "@/pages/deposit/DepositSuccess";
+import PrivateRoute from "./PrivateRoute";
 const router = createBrowserRouter([
-  //Admin Dashboard layout
+  // Landing Page
+  {
+    path: "/",
+    element: <Landing />,
+  },
 
   {
     path: "/",
@@ -86,20 +93,30 @@ const router = createBrowserRouter([
         path: "/successfully-updated",
         element: <SuccessfullyUpdated />,
       },
+      {
+        path: "/terms-and-conditions",
+        element: <TermsAndConditions />,
+      },
     ],
   },
 
   {
     path: "/",
-    element: <DashboardLayout />,
+    element:  <PrivateRoute>
+                <DashboardLayout />
+              </PrivateRoute>,
     children: [
       {
-        index: true,
+        path: "/home",
         element: <Home />,
       },
       {
         path: "/discover",
         element: <Discover />,
+      },
+      {
+        path: "/discover/:campaignId",
+        element: <CampaignDetails />,
       },
       {
         path: "/join-community/:communityUsername",
@@ -114,39 +131,45 @@ const router = createBrowserRouter([
         element: <AddCommunity />,
       },
       {
+        path: "announcement",
         element: <Announcement />,
         children: [
           {
-            path: "/announcement",
-            index: true,
-            element: <AnnouncementFeed />,
-          },
-          {
-            path: "/content-reward",
+            path: ":communityUsername",
             element: <Outlet />,
             children: [
               {
                 index: true,
-                element: <ContentRewordPublic />,
+                element: <AnnouncementFeed />,
               },
               {
-                path: "reward-details/:campaignId",
-                element: <ContentRewardDetails />,
+                path: "announcement",
+                element: <AnnouncementFeed />,
               },
               {
-                path: "reward-details-payment/:campaignId",
-                element: <ContentRewardDetailsPayment />,
+                path: "content-reward",
+                element: <Outlet />,
+                children: [
+                  {
+                    index: true,
+                    element: <ContentRewordPublic />,
+                  },
+                  {
+                    path: "reward-details/:campaignId",
+                    element: <ContentRewardDetails />,
+                  },
+                  // {
+                  //   path: "reward-details-payment/:campaignId",
+                  //   element: <ContentRewardDetailsPayment />,
+                  // },
+                ],
+              },
+              {
+                path: "community-chat",
+                element: <CommunityChat />,
               },
             ],
           },
-          {
-            path: "community-chat",
-            element: <CommunityChat />,
-          },
-          // {
-          //   path: "withdraw",
-          //   element: <Withdraw />,
-          // },
         ],
       },
       {
@@ -154,53 +177,63 @@ const router = createBrowserRouter([
         element: <Dashboard />,
         children: [
           {
-            index: true,
-            element: <DashboardContentReward />,
-          },
-          {
-            path: "content-payout",
-            element: <DashboardContentReward />,
-          },
-          {
-            path: "all-submissions",
-            element: <MySubmissions />,
-          },
-          {
-            path: "analytics",
-            element: <Analytics />,
-          },
-          {
-            path: "users",
-            element: <Users />,
-          },
-          {
-            path: "wait-list",
-            element: <WaitList />,
-          },
-          {
-            path: "payments",
-            element: <Payments />,
-          },
-          // {
-          //   path: "payout",
-          //   element: <Payout />,
-          // },
-          {
-            path: "automated-message",
-            element: <AutomatedMessage />,
-          },
-          {
-            path: "dashboard-settings",
-            element: <DashboardSettings />,
-          },
-          {
-            path: "dashboard-settings/notifications",
-            element: <NotificationsSettings />,
-          },
-          {
-            path: "content-reward/edit/:id",
-            element: <ContentRewardDetailsEdit />,
-          },
+            path: ':communityUsername',
+            element: <Outlet />,
+            children: [
+              {
+                index: true,
+                element: <DashboardContentReward />,
+              },
+              {
+                path: "content-payout",
+                element: <DashboardContentReward />,
+              },
+              {
+                path: "all-submissions",
+                element: <MySubmissions />,
+              },
+              {
+                path: "analytics",
+                element: <Analytics />,
+              },
+              {
+                path: "users",
+                element: <Users />,
+              },
+              {
+                path: "wait-list",
+                element: <WaitList />,
+              },
+              {
+                path: "payments",
+                element: <Payments />,
+              },
+              {
+                path: "automated-message",
+                element: <AutomatedMessage />,
+              },
+              {
+                path: "dashboard-settings",
+                element: <DashboardSettings />,
+              },
+              {
+                path: "dashboard-settings/notifications",
+                element: <NotificationsSettings />,
+              },
+              {
+                path: "content-reward/edit/:id",
+                element: <ContentRewardDetailsEdit />,
+              },
+              {
+                path: "announcement",
+                element: <AnnouncementFeed />,
+              },
+              {
+                path: "community-chat",
+                element: <CommunityChat />,
+              },
+            ]
+          }
         ],
       },
       {
@@ -222,10 +255,6 @@ const router = createBrowserRouter([
       {
         path: "/feedback",
         element: <Feedback />,
-      },
-      {
-        path: "/terms-and-conditions",
-        element: <TermsAndConditions />,
       },
       // if page now found
       {

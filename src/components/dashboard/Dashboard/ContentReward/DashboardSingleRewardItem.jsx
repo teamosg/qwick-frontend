@@ -1,11 +1,11 @@
-/* eslint-disable react/prop-types */
 import CampaignProgress from "./CampaignProgress";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 
 const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const DashboardSingleRewardItem = ({ reward }) => {
+  const { communityUsername } = useParams();
   if (!reward) return null;
 
   const {
@@ -31,8 +31,8 @@ const DashboardSingleRewardItem = ({ reward }) => {
     : `${MEDIA_BASE_URL}${thumbnail}`;
 
   return (
-    <Link to={`/dashboard/content-reward/edit/${id}`}>
-      <div className="hover:scale-101 hover:shadow-lg transition-all duration-300 ease-in-out dark:text-white dark:bg-zinc-900 p-4 rounded-xl items-center justify-center mx-auto shadow mb-4 bg-white">
+    <Link to={`/dashboard/${communityUsername}/content-reward/edit/${id}`}>
+      <div className="hover:scale-101 hover:shadow-lg transition-all duration-300 ease-in-out dark:text-foreground dark:bg-card p-4 rounded-xl items-center justify-center mx-auto shadow mb-4 bg-card">
         <div className="flex flex-col sm:flex-row gap-4 w-full">
           <img
             src={thumbnail ? fullThumbnail : "https://placehold.co/150x150"}
@@ -41,21 +41,21 @@ const DashboardSingleRewardItem = ({ reward }) => {
           />
           <div className="flex-1">
             <div className="mb-2.5">
-              <h4 className="text-[#090003] text-sm mb-2.5 font-semibold dark:text-white">
+              <h4 className="text-foreground text-sm mb-2.5 font-semibold text-foreground-strong">
                 {name}
               </h4>
-              <p className="text-xs dark:text-zinc-400 flex gap-2 items-center mb-3.5">
+              <p className="text-xs text-foreground-muted flex gap-2 items-center mb-3.5">
                 <span>
                   Only views after you submit count towards payout. Submit as
                   soon as you post to get paid for all of your views.
                 </span>
               </p>
               {is_withdrawn ? (
-                <p className="text-[11px] mt-2 font-bold text-red-600 flex items-center gap-1">
+                <p className="text-[11px] mt-2 font-bold text-error flex items-center gap-1">
                   <span>Withdrawn</span>
                 </p>
               ) : end_date && (
-                <p className={`text-[11px] mt-2 font-medium ${isEnded ? "text-red-500" : "text-gray-500 dark:text-zinc-400"}`}>
+                <p className={`text-[11px] mt-2 font-medium ${isEnded ? "text-error" : "text-foreground-muted"}`}>
                   {isEnded ? "Ended on" : "Ends on"} {end_date}
                 </p>
               )}
@@ -69,28 +69,28 @@ const DashboardSingleRewardItem = ({ reward }) => {
             />
             <div className="flex flex-wrap gap-x-8 gap-y-4">
               <div>
-                <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                <p className="text-foreground text-xs mb-1 font-semibold text-foreground-strong uppercase opacity-70">
                   Reward
                 </p>
-                <p className="text-sm dark:text-zinc-400 font-medium">${reward_rate}/1k</p>
+                <p className="text-sm text-foreground-muted font-medium">${reward_rate}/1k</p>
               </div>
               <div>
-                <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                <p className="text-foreground text-xs mb-1 font-semibold text-foreground-strong uppercase opacity-70">
                   Type
                 </p>
-                <p className="text-sm dark:text-zinc-400 font-medium">{campaign_type?.name || "N/A"}</p>
+                <p className="text-sm text-foreground-muted font-medium">{campaign_type?.name || "N/A"}</p>
               </div>
               <div>
-                <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                <p className="text-foreground text-xs mb-1 font-semibold text-foreground-strong uppercase opacity-70">
                   Maximum Payout
                 </p>
-                <p className="text-sm dark:text-zinc-400 font-medium">${max_payout}</p>
+                <p className="text-sm text-foreground-muted font-medium">${max_payout}</p>
               </div>
               <div>
-                <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                <p className="text-foreground text-xs mb-1 font-semibold text-foreground-strong uppercase opacity-70">
                   Platforms
                 </p>
-                <div className="flex gap-2 dark:text-zinc-400 text-[#003933]">
+                <div className="flex gap-2 text-foreground-muted">
                   {platforms?.map((p, idx) => {
                     const pName = p.name?.toLowerCase();
                     if (pName === 'instagram') return <FaInstagram key={idx} size={18} />;
@@ -102,10 +102,10 @@ const DashboardSingleRewardItem = ({ reward }) => {
                 </div>
               </div>
               <div>
-                <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                <p className="text-foreground text-xs mb-1 font-semibold text-foreground-strong uppercase opacity-70">
                   Category
                 </p>
-                <p className="text-sm dark:text-zinc-400 font-medium">{category?.name || "N/A"}</p>
+                <p className="text-sm text-foreground-muted font-medium">{category?.name || "N/A"}</p>
               </div>
             </div>
           </div>

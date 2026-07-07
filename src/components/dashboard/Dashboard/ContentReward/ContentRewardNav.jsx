@@ -1,37 +1,38 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 
 const ContentRewardNav = () => {
+  const { communityUsername } = useParams();
   const location = useLocation();
   const currentPath = location.pathname.split("/").pop() || "content-payout";
 
   return (
-    <div className="grid max-w-xl grid-cols-1 sm:grid-cols-3 bg-transparent dark:bg-[#1E1E1E] mb-6 rounded-full gap-2 sm:gap-0">
+    <div className="flex flex-nowrap overflow-x-auto sm:grid sm:grid-cols-3 max-w-2xl bg-secondary p-1 mb-6 rounded-2xl sm:rounded-full gap-1 no-scrollbar border border-border">
       <Link
-        to="/dashboard/content-payout"
-        className={` py-2  rounded-full dark:bg-transparent text-center transition-colors text-sm sm:text-base ${
-          currentPath === "content-payout" || currentPath == "dashboard"
-            ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-[#e4e4e7] shadow-none "
-            : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+        to={`/dashboard/${communityUsername}/content-payout`}
+        className={`px-4 py-2 rounded-xl sm:rounded-full text-center transition-all text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0 ${
+          currentPath === "content-payout" || currentPath === communityUsername
+            ? "bg-card text-foreground shadow-sm border border-border"
+            : "text-foreground-muted hover:text-foreground hover:bg-card/50 dark:hover:bg-secondary"
         }`}
       >
-        Content Payout
+        My Campaigns
       </Link>
       <Link
-        to="/dashboard/all-submissions"
-        className={` py-2  rounded-full text-center transition-colors text-sm sm:text-base ${
+        to={`/dashboard/${communityUsername}/all-submissions`}
+        className={`px-4 py-2 rounded-xl sm:rounded-full text-center transition-all text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0 ${
           currentPath === "all-submissions"
-            ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-[#e4e4e7] shadow-none"
-            : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+            ? "bg-card text-foreground shadow-sm border border-border"
+            : "text-foreground-muted hover:text-foreground hover:bg-card/50 dark:hover:bg-secondary"
         }`}
       >
         All Submissions
       </Link>
       <Link
-        to="/dashboard/analytics"
-        className={` py-2  rounded-full text-center transition-colors text-sm sm:text-base ${
+        to={`/dashboard/${communityUsername}/analytics`}
+        className={`px-4 py-2 rounded-xl sm:rounded-full text-center transition-all text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0 ${
           currentPath === "analytics"
-            ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-[#e4e4e7] shadow-none"
-            : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+            ? "bg-card text-foreground shadow-sm border border-border"
+            : "text-foreground-muted hover:text-foreground hover:bg-card/50 dark:hover:bg-secondary"
         }`}
       >
         Analytics

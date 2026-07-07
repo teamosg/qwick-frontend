@@ -64,7 +64,7 @@ export default function CampaignProgress() {
             {Array.from({ length: totalBars }).map((_, index) => (
               <div
                 key={index}
-                className={`flex-1 h-16 transition-all duration-300 bg-[#454545] ${
+                className={`flex-1 h-16 transition-all duration-300 bg-muted ${
                   index < filledBars ? "bg-white" : ""
                 }`}
               />

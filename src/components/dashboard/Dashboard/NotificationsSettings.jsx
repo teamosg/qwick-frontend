@@ -24,19 +24,19 @@ const NotificationsSettings = () => {
 
   return (
     <div className="">
-      <h2 className="text-[20px] md:text-[24px] text-gray-900 dark:text-white font-bold mb-6">
+      <h2 className="text-[20px] md:text-[24px] text-foreground-strong font-bold mb-6">
         Notification Settings
       </h2>
 
       <div className="space-y-4">
         {/* Joins Notification */}
-        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+        <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-[#003933] dark:text-white text-lg font-semibold mb-2">
+              <h3 className="text-foreground-strong text-lg font-semibold mb-2">
                 Joins
               </h3>
-              <p className="text-gray-600 dark:text-zinc-400 text-sm">
+              <p className="text-foreground-muted text-sm">
                 Get notification when new members that join your community
               </p>
             </div>
@@ -49,13 +49,13 @@ const NotificationsSettings = () => {
         </div>
 
         {/* Payments Notification */}
-        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+        <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-[#003933] dark:text-white text-lg font-semibold mb-2">
+              <h3 className="text-foreground-strong text-lg font-semibold mb-2">
                 Payments
               </h3>
-              <p className="text-gray-600 dark:text-zinc-400 text-sm">
+              <p className="text-foreground-muted text-sm">
                 Get notification when Purchases and subscription renewals
               </p>
             </div>
@@ -68,13 +68,13 @@ const NotificationsSettings = () => {
         </div>
 
         {/* Waitlists Notification */}
-        <div className="bg-white dark:bg-[#2E2E2E] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+        <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-[#003933] dark:text-white text-lg font-semibold mb-2">
+              <h3 className="text-foreground-strong text-lg font-semibold mb-2">
                 Waitlists
               </h3>
-              <p className="text-gray-600 dark:text-zinc-400 text-sm">
+              <p className="text-foreground-muted text-sm">
                 Get notification when there are New entries
               </p>
             </div>

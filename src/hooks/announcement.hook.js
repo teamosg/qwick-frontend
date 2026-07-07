@@ -110,22 +110,10 @@ export const useLikeAnnouncement = () => {
         },
         onSuccess: data => {
             if (data?.status) {
-                toast.success(data?.message || "Announcement liked successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
                 queryClient.invalidateQueries({ queryKey: ["feed",] })
-            } else {
-                handleApiError({
-                    error: data,
-                    errorMessage: "Failed to like announcement"
-                })
             }
         },
-        onError: data => {
-            handleApiError({
-                error: data,
-                errorMessage: "Failed to like announcement"
-            })
-        }
     })
 }
 
@@ -140,14 +128,8 @@ export const useDislikeAnnouncement = () => {
         },
         onSuccess: data => {
             if (data?.success) {
-                toast.success(data?.message || "Announcement disliked successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
                 queryClient.invalidateQueries({ queryKey: ["feed",] })
-            } else {
-                handleApiError({
-                    error: data,
-                    errorMessage: "Failed to dislike announcement"
-                })
             }
         }
     })
@@ -163,23 +145,11 @@ export const useSaveAnnouncement = () => {
         },
         onSuccess: data => {
             if (data?.success) {
-                toast.success(data?.message || "Announcement saved successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
                 queryClient.invalidateQueries({ queryKey: ["feed",] })
                 queryClient.invalidateQueries({ queryKey: ["savedAnnouncements",] })
-            } else {
-                handleApiError({
-                    error: data,
-                    errorMessage: "Failed to save announcement"
-                })
             }
         },
-        onError: data => {
-            handleApiError({
-                error: data,
-                errorMessage: "Failed to save announcement"
-            })
-        }
     })
 }
 
@@ -193,23 +163,11 @@ export const useUnsaveAnnouncement = () => {
         },
         onSuccess: data => {
             if (data?.success) {
-                toast.success(data?.message || "Announcement unsaved successfully!");
                 queryClient.invalidateQueries({ queryKey: ["announcementsList",] })
                 queryClient.invalidateQueries({ queryKey: ["feed",] })
                 queryClient.invalidateQueries({ queryKey: ["savedAnnouncements",] })
-            } else {
-                handleApiError({
-                    error: data,
-                    errorMessage: "Failed to unsave announcement"
-                })
             }
         },
-        onError: data => {
-            handleApiError({
-                error: data,
-                errorMessage: "Failed to unsave announcement"
-            })
-        }
     })
 }
 

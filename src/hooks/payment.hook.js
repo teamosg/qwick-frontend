@@ -153,14 +153,15 @@ export const useWithdraw = () => {
     },
     onSuccess: (data) => {
       console.log(data)
-      if (data?.status) {
-        toast.success(data?.data?.message);
+      if (data?.status === 200 || data?.data?.success) {
+        toast.success(data?.data?.message || "Withdrawal request submitted successfully");
 
         queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
         queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
         queryClient.invalidateQueries({ queryKey: ["depositTransactions"] });
+        queryClient.invalidateQueries({ queryKey: ["savedMethods"] });
       } else {
-        toast.error(data?.error || "Failed to withdraw");
+        toast.error(data?.data?.error || data?.data?.message || "Failed to withdraw");
       }
     },
     onError(error) {
@@ -185,6 +186,7 @@ export const useProcessWithdrawal = () => {
         toast.error(data?.reason || data?.error || "Failed to process withdrawal");
       }
       queryClient.invalidateQueries({ queryKey: ["withdrawTransactions"] });
+      queryClient.invalidateQueries({ queryKey: ["savedMethods"] });
     },
     onError: (error) => {
       const responseData = error?.response?.data;
@@ -216,5 +218,47 @@ export const useGetCurrencies = () => {
       }
     },
     staleTime: 1000 * 60 * 60, // 1 hour stale time
+  });
+};
+
+export const useGetSavedMethods = () => {
+  return useQuery({
+    queryKey: ["savedMethods"],
+    queryFn: async () => {
+      try {
+        const res = await axiosPrivate.get("/v1/payment/saved-methods/");
+        return res?.data?.data || [];
+      } catch (error) {
+        const message =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error.message ||
+          "Failed to fetch saved methods";
+        toast.error(message);
+        throw new Error(message);
+      }
+    },
+    staleTime: 1000 * 60 * 5, // 5 mins
+  });
+};
+
+export const useDeleteSavedMethod = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["deleteSavedMethod"],
+    mutationFn: async (id) => {
+      const res = await axiosPrivate.delete(`/v1/payment/saved-methods/${id}/`);
+      return res?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        toast.success(data?.message || "Deleted successfully");
+        queryClient.invalidateQueries({ queryKey: ["savedMethods"] });
+        queryClient.invalidateQueries({ queryKey: ["walletBalance"] });
+      }
+    },
+    onError: (error) => {
+      handleApiError({ error, errorMessage: "Failed to delete saved method" });
+    },
   });
 };

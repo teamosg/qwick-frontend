@@ -1,10 +1,16 @@
 import { countries } from "@/data/countriesData";
 import { useCreateCommunity } from "@/hooks/community.hook";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, CircleHelp } from "lucide-react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export default function AddCommunityForm({
   formData,
@@ -18,6 +24,7 @@ export default function AddCommunityForm({
   const navigate = useNavigate()
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [requireApproval, setRequireApproval] = useState(true);
 
 
   const filteredCountries = countries.filter(country =>
@@ -57,7 +64,7 @@ export default function AddCommunityForm({
     e.preventDefault()
     if (!valiDateForm()) return
 
-    createCommunity(formData, {
+    createCommunity({ ...formData, require_approval: requireApproval }, {
       onSuccess: data => {
         if (data?.data) navigate('/dashboard')
       }
@@ -66,7 +73,7 @@ export default function AddCommunityForm({
 
   return (
     <motion.div
-      className="mx-auto p-6 bg-white dark:bg-zinc-900 dark:text-white"
+      className="mx-auto p-6 bg-white dark:bg-zinc-900 dark:text-white w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -80,16 +87,16 @@ export default function AddCommunityForm({
         >
           <label
             htmlFor="businessName"
-            className="block text-base font-medium text-[#0D0D12] mb-2 dark:text-white"
+            className="block text-base font-medium text-foreground-strong mb-2 dark:text-white"
           >
-            Business Name
+            Community Name
           </label>
           <input
             id="businessName"
             type="text"
             value={formData?.business_name || ""}
             onChange={(e) => setFormData({ ...formData, business_name: e.target.value })}
-            placeholder="Write here..."
+            placeholder="Community Name"
             className={`w-full px-4 py-3 border rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-sm transition-colors duration-200  dark:text-white ${errors?.businessName
               ? "border-red-500 focus:ring-red-500"
               : "border-gray-200"
@@ -106,6 +113,46 @@ export default function AddCommunityForm({
           )}
         </motion.div>
 
+        {/* Require Approval Checkbox */}
+        <motion.div
+          className="mt-6"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.25 }}
+        >
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="requireApproval"
+              checked={requireApproval}
+              onCheckedChange={(checked) => setRequireApproval(checked)}
+            />
+            <label
+              htmlFor="requireApproval"
+              className="text-base font-medium text-foreground-strong dark:text-white cursor-pointer select-none"
+            >
+              Require Approval
+            </label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center h-5 w-5 rounded-full border border-muted-foreground text-muted-foreground hover:text-foreground hover:border-foreground transition-colors cursor-pointer"
+                  aria-label="Require approval info"
+                >
+                  <CircleHelp className="h-3.5 w-3.5" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                side="top"
+                align="center"
+                className="text-sm text-muted-foreground dark:text-muted-foreground max-w-xs"
+              >
+                If enabled, users will need brand owner permission to join the community.
+              </PopoverContent>
+            </Popover>
+          </div>
+        </motion.div>
+
         {/* Country Dropdown */}
         <motion.div
           className="mt-6"
@@ -115,7 +162,7 @@ export default function AddCommunityForm({
         >
           <label
             htmlFor="country"
-            className="block text-base font-medium text-[#0D0D12] mb-2 dark:text-white"
+            className="block text-base font-medium text-foreground-strong mb-2 dark:text-white"
           >
             Country
           </label>
@@ -143,7 +190,7 @@ export default function AddCommunityForm({
             <AnimatePresence>
               {isDropdownOpen && (
                 <motion.div
-                  className="absolute z-10 w-full mt-1 bg-white dark:bg-[#2E2E2E] border border-gray-200 dark:border-zinc-700 rounded-lg shadow-lg max-h-60 overflow-hidden flex flex-col"
+                  className="absolute z-10 w-full mt-1 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg shadow-lg max-h-60 overflow-hidden flex flex-col"
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -207,7 +254,7 @@ export default function AddCommunityForm({
           <button
             type="submit"
             disabled={isPending}
-            className={`w-full bg-[#003933] dark:bg-[#003933] text-white py-4 px-10 rounded-full hover:bg-[#002822] dark:hover:bg-primary/90 transition mt-2 font-medium cursor-pointer ${isPending ? "opacity-50 cursor-not-allowed" : ""
+            className={`w-full bg-foreground-strong dark:bg-accent text-white py-4 px-10 rounded-full hover:bg-foreground dark:hover:bg-accent/80 transition mt-2 font-medium cursor-pointer ${isPending ? "opacity-50 cursor-not-allowed" : ""
               }`}
             data-discover="true"
           >
@@ -221,7 +268,7 @@ export default function AddCommunityForm({
                 Creating...
               </motion.div>
             ) : (
-              "Create Business"
+              "Create Community"
             )}
           </button>
         </motion.div>

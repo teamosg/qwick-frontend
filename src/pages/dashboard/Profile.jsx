@@ -20,6 +20,7 @@ import {
   X,
   Loader2,
   Coins,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
 import { FaFileInvoice } from "react-icons/fa";
@@ -38,7 +39,7 @@ const tabs = [
     content: <ProfileGeneral />,
   },
   {
-    name: "Connected accounts",
+    name: "Connected Accounts",
     value: "connected-accounts",
     icon: Link2,
     content: <ConnectedAccounts />,
@@ -63,12 +64,12 @@ const tabs = [
   },
   {
     name: "Billing history",
-    value: "billing-history",
+    value: "Billing History",
     icon: FaFileInvoice,
     content: <ProfileBillingHistory />,
   },
   {
-    name: "My submission",
+    name: "My Submissions",
     value: "my-submission",
     icon: Captions,
     content: <ProfileMySubmission />,
@@ -80,17 +81,17 @@ const tabs = [
     content: <ProfileMyEarnings />,
   },
   {
-    name: "Saved Post",
+    name: "Saved Posts",
     value: "saved-post",
     icon: Save,
     content: <SavedPosts />,
   },
-  {
-    name: "Delete Account",
-    value: "delete-account",
-    icon: CircleAlert,
-    content: <ProfileDangerZone />,
-  },
+  // {
+  //   name: "Sign Out",
+  //   value: "sign-out",
+  //   icon: LogOut,
+  //   content: <ProfileDangerZone />,
+  // },
 ];
 
 const Profile = () => {
@@ -110,15 +111,15 @@ const Profile = () => {
     editProfile(formData);
   };
 
-  const userName = profile?.first_name || "User Name";
+  const userName = profile?.username || "User Name";
   const userAvatar = profile?.avatar;
 
   return (
-    <div className="flex-1 flex flex-col min-h-0 bg-[#f9fafb] dark:bg-zinc-950 overflow-hidden relative">
-      <div className="md:hidden p-4 bg-white dark:bg-zinc-900 border-b dark:border-zinc-800">
+    <div className="flex-1 flex flex-col min-h-0 bg-background dark:bg-background overflow-hidden relative">
+      <div className="md:hidden p-4 bg-card dark:bg-card border-b dark:border-border">
         <button
           onClick={() => setIsTabsOpen(!isTabsOpen)}
-          className="text-gray-700 dark:text-white p-2 rounded-md border border-gray-300 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors"
+          className="text-foreground dark:text-foreground p-2 rounded-md border border-border dark:border-border hover:bg-accent dark:hover:bg-accent transition-colors"
         >
           <Menu className="h-5 w-5" />
         </button>
@@ -127,23 +128,23 @@ const Profile = () => {
       <Tabs
         orientation="vertical"
         defaultValue={tabs[0].value}
-        className="flex-1 flex flex-col md:flex-row gap-6 min-h-0 overflow-hidden"
+        className="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden gap-0!"
       >
         {/* Tabs Sidebar */}
         <div
           className={`${isTabsOpen
             ? "translate-x-0 opacity-100"
             : "-translate-x-full opacity-0"
-            } md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-700 shadow-lg md:shadow-none transition-all duration-300 ease-in-out flex flex-col min-h-0`}
+            } md:translate-x-0 md:opacity-100 fixed md:relative top-0 left-0 z-50 md:z-auto w-80 md:w-64 h-full md:h-auto bg-card dark:bg-card border-r border-border dark:border-border shadow-lg md:shadow-none transition-all duration-300 ease-in-out flex flex-col min-h-0`}
         >
           {/* Mobile Close Button */}
-          <div className="md:hidden flex justify-between items-center p-4 border-b border-gray-200 dark:border-zinc-700">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="md:hidden flex justify-between items-center p-4 border-b border-border dark:border-border">
+            <h2 className="text-lg font-semibold text-foreground dark:text-foreground">
               Profile Settings
             </h2>
             <button
               onClick={() => setIsTabsOpen(false)}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1 rounded-md hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+              className="text-muted-foreground hover:text-foreground dark:text-muted-foreground dark:hover:text-foreground p-1 rounded-md hover:bg-accent dark:hover:bg-accent transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
@@ -178,7 +179,7 @@ const Profile = () => {
                 />
               </div>
 
-              <h4 className="font-semibold text-base text-[#191919] dark:text-white mt-3">
+              <h4 className="font-semibold text-base text-foreground dark:text-white mt-3">
                 {isProfileLoading ? "Loading..." : userName}
               </h4>
             </div>
@@ -189,10 +190,10 @@ const Profile = () => {
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="cursor-pointer !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-gray-100 dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-[#090003] dark:data-[state=active]:text-white justify-start dark:text-gray-400 p-3 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all duration-200"
+                  className="cursor-pointer flex items-center gap-x-2 !w-full data-[state=active]:rounded-none hover:rounded-none data-[state=active]:bg-accent dark:data-[state=active]:bg-accent data-[state=active]:shadow-none data-[state=active]:border-none data-[state=active]:text-foreground-strong dark:data-[state=active]:text-foreground justify-start dark:text-muted-foreground p-3 hover:bg-accent dark:hover:bg-accent transition-all duration-200"
                   onClick={() => setIsTabsOpen(false)}
                 >
-                  <tab.icon className="mr-2 h-4 w-4" /> {tab.name}
+                  <tab.icon /> {tab.name}
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -208,7 +209,7 @@ const Profile = () => {
         )}
 
         {/* Tabs Content */}
-        <div className="flex-1 overflow-y-auto min-h-0 bg-white dark:bg-zinc-900/50 p-4 md:p-6 lg:p-8">
+        <div className="flex-1 overflow-y-auto min-h-0 bg-card dark:bg-card/50 p-4 md:p-6 lg:p-8">
           <div className="max-w-4xl">
             {tabs.map((tab) => (
               <TabsContent

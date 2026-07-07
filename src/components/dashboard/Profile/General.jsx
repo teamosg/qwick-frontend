@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useEditProfile, useProfile } from "@/hooks/auth.hook";
 import { useEffect, useState } from "react";
 import ProfileInfoSkeleton from "./components/ProfileInfoSkeleton";
+import { formatUsername } from "@/utils/usernameUtils";
 
 const ProfileGeneral = () => {
   const { data, isLoading: isProfileLoading } = useProfile();
@@ -18,7 +19,7 @@ const ProfileGeneral = () => {
   useEffect(() => {
     if (data) {
       setFormData({
-        name: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
+        name: data.full_name || "",
         bio: data.bio || "",
         username: data.username || "",
         phone: data.phone_number || "",
@@ -27,27 +28,27 @@ const ProfileGeneral = () => {
   }, [data]);
 
   const handleInputChange = (field, value) => {
+    let processedValue = value;
+    if (field === "username") {
+      processedValue = formatUsername(value);
+    }
     setFormData((prev) => ({
       ...prev,
-      [field]: value,
+      [field]: processedValue,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Split the name field before sending
-    const [first_name = "", last_name = ""] = formData.name.trim().split(" ");
+    // Create FormData for multipart submission
+    const formDataPayload = new FormData();
+    formDataPayload.append("full_name", formData.name);
+    formDataPayload.append("bio", formData.bio);
+    formDataPayload.append("username", formatUsername(formData.username));
+    formDataPayload.append("phone_number", formData.phone);
 
-    const payload = {
-      first_name,
-      last_name,
-      bio: formData.bio,
-      username: formData.username,
-      phone_number: formData.phone,
-    };
-
-    editProfile(payload);
+    editProfile(formDataPayload);
   };
 
   if (isProfileLoading) {
@@ -60,7 +61,7 @@ const ProfileGeneral = () => {
       <div className="space-y-2">
         <label
           htmlFor="name"
-          className="text-sm font-medium text-[#0d0d12] dark:text-white"
+          className="text-sm font-medium text-foreground-strong dark:text-white"
         >
           Name
         </label>
@@ -70,7 +71,7 @@ const ProfileGeneral = () => {
           value={formData.name}
           onChange={(e) => handleInputChange("name", e.target.value)}
           placeholder="Enter your name"
-          className="w-full mt-2 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-foreground-muted outline-none text-foreground placeholder:text-foreground-muted"
         />
       </div>
 
@@ -78,7 +79,7 @@ const ProfileGeneral = () => {
       <div className="space-y-2">
         <label
           htmlFor="bio"
-          className="text-sm font-medium text-[#0d0d12] dark:text-white"
+          className="text-sm font-medium text-foreground-strong dark:text-white"
         >
           Bio
         </label>
@@ -88,7 +89,7 @@ const ProfileGeneral = () => {
           value={formData.bio}
           onChange={(e) => handleInputChange("bio", e.target.value)}
           placeholder="Tell us about yourself"
-          className="w-full mt-2 px-3 py-3 max-h-60 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 max-h-60 bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-foreground-muted outline-none text-foreground placeholder:text-foreground-muted"
         />
       </div>
 
@@ -96,7 +97,7 @@ const ProfileGeneral = () => {
       <div className="space-y-2">
         <label
           htmlFor="username"
-          className="text-sm font-medium text-[#0d0d12] dark:text-white"
+          className="text-sm font-medium text-foreground-strong dark:text-white"
         >
           Username
         </label>
@@ -106,7 +107,7 @@ const ProfileGeneral = () => {
           value={formData.username}
           onChange={(e) => handleInputChange("username", e.target.value)}
           placeholder="Enter your username"
-          className="w-full mt-2 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          className="w-full mt-2 px-3 py-3 bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-foreground-muted outline-none text-foreground placeholder:text-foreground-muted"
         />
       </div>
 
@@ -114,7 +115,7 @@ const ProfileGeneral = () => {
       <div className="space-y-2">
         <label
           htmlFor="phone"
-          className="text-sm font-medium text-[#0d0d12] dark:text-white"
+          className="text-sm font-medium text-foreground-strong dark:text-white"
         >
           Phone Number
         </label>
@@ -123,8 +124,8 @@ const ProfileGeneral = () => {
           type="tel"
           value={formData.phone}
           onChange={(e) => handleInputChange("phone", e.target.value)}
-          placeholder="Enter phone number"
-          className="w-full mt-2 px-3 py-3 bg-white dark:bg-[#2E2E2E] border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#364152] focus:border-transparent outline-none placeholder:text-[#697586]"
+          placeholder="Phone Number"
+          className="w-full mt-2 px-3 py-3 bg-secondary border border-border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-foreground-muted outline-none text-foreground placeholder:text-foreground-muted"
         />
       </div>
 
@@ -132,7 +133,7 @@ const ProfileGeneral = () => {
       <Button
         type="submit"
         disabled={isPending}
-        className="w-full sm:w-auto bg-[#003933] text-white dark:bg-[#002822] dark:text-white px-12 py-5 cursor-pointer rounded-lg hover:bg-[#002822] transition font-medium flex gap-2 justify-center"
+        className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white px-12 py-5 cursor-pointer rounded-lg transition font-medium flex gap-2 justify-center"
       >
         {isPending ? "Updating..." : "Update"}
       </Button>

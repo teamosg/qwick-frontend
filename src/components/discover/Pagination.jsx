@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
@@ -17,31 +16,42 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   const getPageNumbers = () => {
-    const pages = [];
-    const maxVisiblePages = 5;
+    const siblingCount = 1;
+    const totalPageNumbers = siblingCount + 5;
 
-    if (totalPages <= maxVisiblePages) {
+    if (totalPages <= totalPageNumbers) {
+      const pages = [];
       for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      if (currentPage <= 3) {
-        for (let i = 1; i <= 4; i++) pages.push(i);
-        pages.push("...");
-        pages.push(totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1);
-        pages.push("...");
-        for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i);
-      } else {
-        pages.push(1);
-        pages.push("...");
-        pages.push(currentPage - 1);
-        pages.push(currentPage);
-        pages.push(currentPage + 1);
-        pages.push("...");
-        pages.push(totalPages);
-      }
+      return pages;
     }
-    return pages;
+
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);
+
+    const shouldShowLeftDots = leftSiblingIndex > 2;
+    const shouldShowRightDots = rightSiblingIndex < totalPages - 1;
+
+    if (!shouldShowLeftDots && shouldShowRightDots) {
+      const leftItemCount = 3 + 2 * siblingCount;
+      const leftRange = [];
+      for (let i = 1; i <= leftItemCount; i++) leftRange.push(i);
+      return [...leftRange, "...", totalPages];
+    }
+
+    if (shouldShowLeftDots && !shouldShowRightDots) {
+      const rightItemCount = 3 + 2 * siblingCount;
+      const rightRange = [];
+      for (let i = totalPages - rightItemCount + 1; i <= totalPages; i++) rightRange.push(i);
+      return [1, "...", ...rightRange];
+    }
+
+    if (shouldShowLeftDots && shouldShowRightDots) {
+      const middleRange = [];
+      for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) middleRange.push(i);
+      return [1, "...", ...middleRange, "...", totalPages];
+    }
+
+    return [];
   };
 
   return (
@@ -53,8 +63,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           onClick={handlePrev}
           disabled={currentPage === 1}
           className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border rounded-lg transition-all ${currentPage === 1
-              ? "bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-600 cursor-not-allowed border-gray-200 dark:border-zinc-700"
-              : "border-gray-300 dark:border-zinc-700 hover:bg-[#003933] hover:text-white dark:text-white"
+              ? "bg-qwick-gray-100 dark:bg-qwick-gray-900 text-qwick-gray-400 dark:text-qwick-gray-600 cursor-not-allowed border-qwick-gray-200 dark:border-qwick-gray-800"
+              : "border-qwick-gray-300 dark:border-qwick-gray-800 hover:bg-foreground-strong dark:hover:bg-qwick-gray-800 hover:text-white dark:hover:text-white"
             }`}
         >
           <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -66,7 +76,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
               return (
                 <span
                   key={`ellipsis-${index}`}
-                  className="w-8 sm:w-10 md:w-12 text-center text-gray-500 dark:text-zinc-400"
+                  className="w-8 sm:w-10 md:w-12 text-center text-qwick-gray-500 dark:text-qwick-gray-400"
                 >
                   ...
                 </span>
@@ -80,8 +90,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 type="button"
                 onClick={() => handlePageClick(page)}
                 className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-xs sm:text-sm md:text-base rounded-lg transition-all ${isActive
-                    ? "bg-[#003933] text-white shadow-lg"
-                    : "border border-gray-300 dark:border-zinc-700 hover:bg-[#003933] hover:text-white dark:text-white"
+                    ? "bg-foreground-strong text-white dark:text-black shadow-lg"
+                    : "border border-qwick-gray-300 dark:border-qwick-gray-800 hover:bg-foreground-strong dark:hover:bg-qwick-gray-800 hover:text-white dark:hover:text-white"
                   }`}
               >
                 {page}
@@ -96,8 +106,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           onClick={handleNext}
           disabled={currentPage === totalPages}
           className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border rounded-lg transition-all ${currentPage === totalPages
-              ? "bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-600 cursor-not-allowed border-gray-200 dark:border-zinc-700"
-              : "border-gray-300 dark:border-zinc-700 hover:bg-[#003933] hover:text-white dark:text-white"
+              ? "bg-qwick-gray-100 dark:bg-qwick-gray-900 text-qwick-gray-400 dark:text-qwick-gray-600 cursor-not-allowed border-qwick-gray-200 dark:border-qwick-gray-800"
+              : "border-qwick-gray-300 dark:border-qwick-gray-800 hover:bg-foreground-strong dark:hover:bg-qwick-gray-800 hover:text-white dark:hover:text-white"
             }`}
         >
           <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />

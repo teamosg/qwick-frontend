@@ -42,11 +42,11 @@ const PayoutData = () => {
 
   const getStatusBadge = (status) => {
     const variants = {
-      approved: "bg-green-100 text-green-800 border-green-200",
-      paid: "bg-green-100 text-green-800 border-green-200",
-      pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
-      rejected: "bg-red-100 text-red-800 border-red-200",
-      cancel: "bg-red-100 text-red-800 border-red-200",
+      approved: "bg-success-bg text-success border-success/30",
+      paid: "bg-success-bg text-success border-success/30",
+      pending: "bg-warning-bg text-warning border-warning/30",
+      rejected: "bg-error-bg text-error border-error/30",
+      cancel: "bg-error-bg text-error border-error/30",
     };
 
     const statusKey = status?.toLowerCase() || "pending";
@@ -63,8 +63,8 @@ const PayoutData = () => {
   };
 
   const getDisplayName = (user) => {
-    if (user.first_name || user.last_name) {
-      return `${user.first_name || ""} ${user.last_name || ""}`.trim();
+    if (user.full_name) {
+      return user.full_name;
     }
     return user.user || "Unknown User";
   };
@@ -80,7 +80,7 @@ const PayoutData = () => {
               ? Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={index}
-                  className="bg-white dark:bg-[#2E2E2E] border rounded-lg p-4 shadow-sm dark:border-[#444]"
+                  className="bg-card border border-border rounded-lg p-4 shadow-sm"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <Skeleton className="h-5 w-32" />
@@ -95,10 +95,10 @@ const PayoutData = () => {
               : withdrawals.map((withdrawal, index) => (
                 <div
                   key={index}
-                  className="bg-[#fff] dark:bg-[#2E2E2E] border rounded-lg p-4 shadow-sm dark:border-[#444] dark:text-[#fff]"
+                  className="bg-card border border-border rounded-lg p-4 shadow-sm text-foreground"
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <div className="font-semibold text-[#25324B] dark:text-[#fff]">
+                    <div className="font-semibold text-foreground-strong">
                       {getDisplayName(withdrawal)}
                     </div>
                     {withdrawal.status?.toLowerCase() === "pending" && (
@@ -106,42 +106,42 @@ const PayoutData = () => {
                         <button
                           onClick={() => handleApprove(withdrawal.id)}
                           disabled={isApproving || isRejecting}
-                          className="text-xs bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 disabled:opacity-50"
+                          className="text-xs bg-success text-white px-2 py-1 rounded hover:bg-success/90 disabled:opacity-50"
                         >
                           {isApproving ? "..." : "Approve"}
                         </button>
                         <button
                           onClick={() => handleReject(withdrawal.id)}
                           disabled={isApproving || isRejecting}
-                          className="text-xs bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 disabled:opacity-50"
+                          className="text-xs bg-error text-white px-2 py-1 rounded hover:bg-error/90 disabled:opacity-50"
                         >
                           {isRejecting ? "..." : "Reject"}
                         </button>
                       </div>
                     )}
                   </div>
-                  <div className="text-sm text-[#25324B] dark:text-[#fff] p-1">
+                  <div className="text-sm text-foreground-muted p-1">
                     {withdrawal.email}
                   </div>
-                  <div className="text-sm text-[#25324B] dark:text-[#fff]  p-1">
+                  <div className="text-sm text-foreground-strong p-1">
                     {" "}
                     {getStatusBadge(withdrawal.status)}
                   </div>
                   {withdrawal.contact && (
-                    <div className="font-semibold text-[#25324B] dark:text-[#fff]  p-1">
+                    <div className="font-semibold text-foreground-strong p-1">
                       {withdrawal.contact}
                     </div>
                   )}
-                  <div className="font-semibold text-[#25324B] dark:text-[#fff] p-1">
+                  <div className="font-semibold text-foreground-strong p-1">
                     ${withdrawal.amount}
                   </div>
                 </div>
               ))}
-            {!isLoading && withdrawals.length === 0 && (
-              <div className="text-center p-4 text-gray-500 dark:text-gray-400">
+             {!isLoading && withdrawals.length === 0 && (
+              <div className="text-center p-4 text-foreground-muted">
                 No withdrawals found.
               </div>
-            )}
+             )}
           </div>
 
           {/* Desktop Table View */}
@@ -149,23 +149,23 @@ const PayoutData = () => {
             <div className="p-1">
               <Table>
                 <TableHeader className="">
-                  <TableRow className="bg-[#f5f5f5] dark:bg-[#2E2E2E] text-gray-900 dark:text-[#fff] border-black rounded-full dark:border-[#444]">
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                  <TableRow className="bg-secondary text-foreground border-b border-border rounded-full">
+                    <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                       Name
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className=" font-medium py-4 px-6 text-foreground-strong">
                       Email
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                       Status
                     </TableHead>
-                    <TableHead className=" font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className=" font-medium py-4 px-6 text-foreground-strong">
                       Total amount
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                       Contact
                     </TableHead>
-                    <TableHead className="font-medium py-4 px-6 dark:text-[#fff]">
+                    <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                       Actions
                     </TableHead>
                   </TableRow>
@@ -197,21 +197,21 @@ const PayoutData = () => {
                     : withdrawals.map((withdrawal, index) => (
                       <TableRow
                         key={index}
-                        className="border-none hover:bg-[#f5f5f5] dark:hover:bg-[#2E2E2E] dark:text-[#fff]"
+                        className="border-none hover:bg-secondary text-foreground"
                       >
-                        <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 font-medium text-foreground-strong">
                           {getDisplayName(withdrawal)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 text-foreground-muted">
                           {withdrawal.email}
                         </TableCell>
-                        <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 font-semibold text-foreground-strong">
                           {getStatusBadge(withdrawal.status)}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 text-foreground-strong">
                           $ {withdrawal.amount}
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-gray-600 dark:text-[#fff]">
+                        <TableCell className="py-4 px-6 text-foreground-muted">
                           {withdrawal.contact || "N/A"}
                         </TableCell>
                         <TableCell className="py-4 px-6 flex gap-2 items-center">
@@ -220,28 +220,25 @@ const PayoutData = () => {
                               <button
                                 onClick={() => handleApprove(withdrawal.id)}
                                 disabled={isApproving || isRejecting}
-                                className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 disabled:opacity-50 transition-colors"
+                                className="bg-success text-white px-3 py-1 rounded text-sm hover:bg-success/90 disabled:opacity-50 transition-colors"
                               >
                                 {isApproving ? "Processing..." : "Approve"}
                               </button>
                               <button
                                 onClick={() => handleReject(withdrawal.id)}
                                 disabled={isApproving || isRejecting}
-                                className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 disabled:opacity-50 transition-colors"
+                                className="bg-error text-white px-3 py-1 rounded text-sm hover:bg-error/90 disabled:opacity-50 transition-colors"
                               >
                                 {isRejecting ? "Processing..." : "Reject"}
                               </button>
                             </div>
                           )}
-                          {/* <button className="cursor-pointer">
-                          <EllipsisVertical />
-                        </button> */}
                         </TableCell>
                       </TableRow>
                     ))}
                   {!isLoading && withdrawals.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center py-4 text-gray-500 dark:text-gray-400">
+                      <TableCell colSpan={6} className="text-center py-4 text-foreground-muted">
                         No withdrawals found.
                       </TableCell>
                     </TableRow>

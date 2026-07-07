@@ -29,19 +29,20 @@ const DepositModal = ({ open, setOpen }) => {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="sm:max-w-md space-y-4">
+            <DialogContent className="sm:max-w-md space-y-4 bg-card border border-border text-foreground">
                 <DialogHeader>
-                    <DialogTitle>Add Funds</DialogTitle>
+                    <DialogTitle className="text-foreground-strong dark:text-white">Add Funds</DialogTitle>
                 </DialogHeader>
 
                 {/* Amount */}
                 <div>
-                    <label className="text-sm">Amount ($)</label>
+                    <label className="text-xs font-bold text-foreground-muted uppercase tracking-wider mb-1.5 block">Amount ($)</label>
                     <Input
                         type="number"
                         placeholder="Enter amount"
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}
+                        className="bg-secondary border-border focus-visible:ring-2 focus-visible:ring-primary/20 text-foreground"
                     />
                 </div>
 
@@ -87,9 +88,9 @@ const DepositModal = ({ open, setOpen }) => {
                 <Button
                     onClick={handleDeposit}
                     disabled={!amount || isDepositing}
-                    className="w-full bg-[#003933] hover:bg-[#002822] text-white"
+                    className="w-full bg-primary hover:bg-primary-hover text-primary-foreground cursor-pointer"
                 >
-                    {isDepositing ? <Spinner className="w-4 h-4" /> : "Confirm Deposit"}
+                    {isDepositing ? <Spinner className="w-4 h-4 text-primary-foreground" /> : "Confirm Deposit"}
                 </Button>
             </DialogContent>
         </Dialog>

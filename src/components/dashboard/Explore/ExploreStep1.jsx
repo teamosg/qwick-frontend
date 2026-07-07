@@ -5,7 +5,7 @@ import { Form } from 'react-router';
 const ExploreStep1 = () => {
   return (
     <>
-      <div className="h-screen bg-[#9a9a9c] ">
+      <div className="h-screen bg-muted ">
         <Form className="flex pt-4 md:pt-6 items-center">
           <div className="">
             <img src={exploreStep} />
@@ -24,7 +24,7 @@ const ExploreStep1 = () => {
             of
           </p>
 
-          <Button className="bg-[#003933]">Join</Button>
+          <Button className="bg-foreground-strong dark:bg-accent">Join</Button>
         </Form>
       </div>
     </>

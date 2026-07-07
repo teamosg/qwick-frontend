@@ -5,51 +5,52 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useGetMyCommunityList } from "@/hooks/community.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import { useEffect } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useParams, useNavigate, useLocation } from "react-router";
 
 const Dashboard = () => {
-  const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore((state) => state);
+  const { communityUsername } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { selectedBrandCommunity, setSelectedBrandCommunity } = useCommunityStore();
+  const isChat = location.pathname.includes("community-chat");
+
   const {
     data: communityList,
-    isLoading: isLoadingMyCommunityList,
-    isError: isErrorMyCommunityList,
+    isLoading,
   } = useGetMyCommunityList();
-  const createdCommunityList = communityList?.created_communities
 
-
-
-  const selectedBrandCommunityExist = createdCommunityList?.find(
-    (community) => community?.id === selectedBrandCommunity?.id
-  );
+  const createdCommunityList = communityList?.created_communities || [];
 
   useEffect(() => {
-    if (!selectedBrandCommunityExist) setSelectedBrandCommunity(null)
-    if (!createdCommunityList?.length) return
+    if (isLoading) return;
 
-
-    if (selectedBrandCommunityExist) {
-      setSelectedBrandCommunity(selectedBrandCommunityExist);
-    } else {
-      if (
-        createdCommunityList?.length &&
-        !isLoadingMyCommunityList &&
-        !isErrorMyCommunityList
-      ) {
-        setSelectedBrandCommunity(createdCommunityList[0]);
-      } else {
-        setSelectedBrandCommunity(null);
+    if (createdCommunityList.length > 0) {
+      // If no communityUsername in params, redirect to the first one
+      if (!communityUsername) {
+        navigate(`/dashboard/${createdCommunityList[0].username}`, { replace: true });
+        return;
       }
+
+      // Find the community that matches the username in URL, fallback to the first one
+      const targetCommunity = createdCommunityList.find((c) => c.username === communityUsername) || createdCommunityList[0];
+
+      // Update store only if different or if data has changed (e.g. require_approval)
+      if (
+        selectedBrandCommunity?.id !== targetCommunity.id ||
+        selectedBrandCommunity?.require_approval !== targetCommunity.require_approval
+      ) {
+        setSelectedBrandCommunity(targetCommunity);
+      }
+    } else if (selectedBrandCommunity !== null) {
+      setSelectedBrandCommunity(null);
     }
-  }, [createdCommunityList, isLoadingMyCommunityList, isErrorMyCommunityList, selectedBrandCommunityExist, setSelectedBrandCommunity]);
+  }, [communityUsername, createdCommunityList, isLoading, setSelectedBrandCommunity, selectedBrandCommunity?.id, navigate]);
 
-
-
-  if (isLoadingMyCommunityList) {
-    return <DashboardSkeleton />
+  if (isLoading) {
+    return <DashboardSkeleton />;
   }
 
-
-  if (!selectedBrandCommunity) {
+  if (createdCommunityList.length === 0) {
     return <NoCommunityDashboardPage />;
   }
 
@@ -57,14 +58,14 @@ const Dashboard = () => {
     <SidebarProvider className="flex-1 flex min-h-0 overflow-hidden">
       <DashboardSidebarContent />
 
-      <main className="flex-1 flex flex-col min-h-0 bg-[#f9fafb] dark:bg-zinc-950 overflow-hidden relative">
+      <main className="flex-1 flex flex-col min-h-0 bg-background dark:bg-background overflow-hidden relative">
         {/* Mobile toggle button */}
-        <div className="flex-none md:hidden p-4 border-b dark:border-zinc-800">
+        <div className="flex-none md:hidden p-4 border-b dark:border-border">
           <SidebarTrigger />
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
-          <div className="max-w-7xl mx-auto w-full">
+        <div className={`flex-1 flex flex-col min-h-0 ${isChat ? 'overflow-hidden' : 'overflow-y-auto p-4 md:p-6 lg:p-8'}`}>
+          <div className={`flex-1 flex flex-col min-h-0 ${!isChat ? 'max-w-7xl mx-auto w-full' : 'w-full'}`}>
             <Outlet />
           </div>
         </div>

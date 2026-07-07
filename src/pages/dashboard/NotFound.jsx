@@ -52,7 +52,7 @@ const NotFound = () => {
   };
 
   return (
-    <div className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-gray-900 text-white">
+    <div className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-foreground-strong text-white">
       <StarryBackground />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/60 z-10" />
 

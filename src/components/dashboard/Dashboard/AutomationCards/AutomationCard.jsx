@@ -40,23 +40,23 @@ const AutomationCard = ({
     }
 
     return (
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 p-5 sm:p-6 md:p-8 w-full mx-auto relative overflow-hidden">
+        <div className="bg-card rounded-2xl shadow-sm border border-border p-5 sm:p-6 md:p-8 w-full mx-auto relative overflow-hidden">
             {isPending && (
-                <div className="absolute inset-0 bg-white/50 dark:bg-zinc-900/50 flex items-center justify-center z-10 rounded-xl">
-                    <Loader2 className="w-8 h-8 animate-spin text-[#003933] dark:text-white" />
+                <div className="absolute inset-0 bg-card/50 flex items-center justify-center z-10 rounded-xl">
+                    <Loader2 className="w-8 h-8 animate-spin text-foreground-strong" />
                 </div>
             )}
             {isEnabled ? (
                 <>
                     {/* Header with toggle */}
                     <div className="flex items-center justify-between mb-4 sm:mb-6">
-                        <h2 className="text-xl sm:text-2xl font-bold text-[#003933] dark:text-white">
+                        <h2 className="text-xl sm:text-2xl font-bold text-foreground-strong">
                             {title}
                         </h2>
                         <div className="flex items-center">
                             <button
                                 onClick={toggleEnabled}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isEnabled ? "bg-[#003933]" : "bg-gray-200"
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isEnabled ? "bg-primary" : "bg-muted"
                                     }`}
                             >
                                 <span
@@ -67,7 +67,7 @@ const AutomationCard = ({
                         </div>
                     </div>
 
-                    <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base mb-6 leading-relaxed">
+                    <p className="text-foreground-muted text-sm sm:text-base mb-6 leading-relaxed">
                         {description}
                     </p>
 
@@ -76,7 +76,7 @@ const AutomationCard = ({
                             key={messageText} // Re-render when data arrives
                             ref={textRef}
                             defaultValue={messageText || ""}
-                            className="w-full h-32 p-3 sm:p-4 border border-gray-200 dark:border-zinc-800 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-[#003933] dark:bg-zinc-800 dark:text-white placeholder-gray-400 text-sm sm:text-base"
+                            className="w-full h-32 p-3 sm:p-4 border border-border rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-ring bg-secondary text-foreground placeholder-foreground-muted text-sm sm:text-base"
                             placeholder="Enter your automated message..."
                         />
                     </div>
@@ -86,7 +86,7 @@ const AutomationCard = ({
                         <button
                             onClick={handleSave}
                             disabled={isPending}
-                            className="w-full sm:w-auto bg-[#003933] hover:bg-[#002822] text-white font-semibold px-8 py-3 rounded-full transition-all duration-200 shadow-md shadow-emerald-900/10 min-w-[120px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
+                            className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-primary-foreground font-semibold px-8 py-3 rounded-full transition-all duration-200 shadow-md shadow-primary/10 min-w-[120px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer"
                         >
                             {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                             {isPending ? "Saving..." : "Save Changes"}
@@ -99,28 +99,28 @@ const AutomationCard = ({
                     <div className="flex items-center justify-center mb-8">
                         <div className="flex items-center space-x-4">
                             {/* User Icon */}
-                            <div className="bg-gray-100 rounded-lg p-3 flex items-center justify-center transition-all duration-300">
-                                <User className="w-6 h-6 text-gray-600" />
+                            <div className="bg-secondary rounded-lg p-3 flex items-center justify-center transition-all duration-300">
+                                <User className="w-6 h-6 text-foreground-muted" />
                             </div>
 
                             {/* Arrow */}
-                            <div className="text-gray-300">
+                            <div className="text-foreground-muted">
                                 <MoveRight className="w-8 h-8" />
                             </div>
 
                             {/* Message Icon */}
-                            <div className="bg-gray-100 rounded-lg p-3 flex items-center justify-center transition-all duration-300">
-                                <MessageCircle className="w-6 h-6 text-gray-600" />
+                            <div className="bg-secondary rounded-lg p-3 flex items-center justify-center transition-all duration-300">
+                                <MessageCircle className="w-6 h-6 text-foreground-muted" />
                             </div>
                         </div>
                     </div>
 
                     {/* Title and Description */}
                     <div className="text-center mb-8">
-                        <h2 className="text-xl sm:text-2xl font-bold text-[#003933] dark:text-white mb-2">
+                        <h2 className="text-xl sm:text-2xl font-bold text-foreground-strong mb-2">
                             {title}
                         </h2>
-                        <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base leading-relaxed px-4">
+                        <p className="text-foreground-muted text-sm sm:text-base leading-relaxed px-4">
                             {description}
                         </p>
                     </div>
@@ -129,7 +129,7 @@ const AutomationCard = ({
                     <div className="flex justify-center">
                         <button
                             onClick={handleEnableAutomation}
-                            className="w-full sm:w-auto bg-[#003933] hover:bg-[#002822] text-white font-semibold px-10 py-3.5 rounded-full transition-all duration-200 shadow-lg shadow-emerald-900/10 min-w-[200px] text-sm sm:text-base"
+                            className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-primary-foreground font-semibold px-10 py-3.5 rounded-full transition-all duration-200 shadow-lg shadow-primary/10 min-w-[200px] text-sm sm:text-base cursor-pointer"
                         >
                             Enable Automation
                         </button>

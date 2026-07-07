@@ -1,10 +1,10 @@
 import { CircleAlert, X, ExternalLink, Calendar as LucideCalendar, Wallet, CalendarIcon, Pencil } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok, FaGoogleDrive } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import ContentRewardNav from "./ContentRewardNav";
-import { useGetAllCampaigns, useExtendCampaign, useWithdrawCampaign, useUpdateCampaign } from "@/hooks/campaign.hook";
+import { useGetSingleCampaign, useExtendCampaign, useWithdrawCampaign, useUpdateCampaign } from "@/hooks/campaign.hook";
 import { Spinner } from "@/components/ui/spinner";
 import CampaignProgress from "./CampaignProgress";
 import { format } from "date-fns";
@@ -23,7 +23,7 @@ const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL;
 
 const ContentRewardDetailsEdit = () => {
   const { id } = useParams();
-  const { data: campaignRes, isLoading } = useGetAllCampaigns();
+  const { data: campaign, isLoading } = useGetSingleCampaign(id);
 
   const { mutate: extendCampaign, isPending: isExtending } = useExtendCampaign(id);
   const { mutate: withdrawCampaign, isPending: isWithdrawing } = useWithdrawCampaign(id);
@@ -35,10 +35,6 @@ const ContentRewardDetailsEdit = () => {
   const [newEndDate, setNewEndDate] = useState("");
   const [addBudget, setAddBudget] = useState("");
   const [contentLink, setContentLink] = useState("");
-
-  const campaign = useMemo(() => {
-    return campaignRes?.campaigns?.find(c => c.id === parseInt(id));
-  }, [campaignRes, id]);
 
 
   const handleExtendSubmit = () => {
@@ -93,7 +89,7 @@ const ContentRewardDetailsEdit = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-20">
-        <Spinner className="size-10 text-[#003933]" />
+        <Spinner className="size-10 text-foreground-strong" />
       </div>
     );
   }
@@ -101,7 +97,7 @@ const ContentRewardDetailsEdit = () => {
   if (!campaign) {
     return (
       <div className="flex items-center justify-center p-20">
-        <p className="text-gray-500">Campaign not found.</p>
+        <p className="text-foreground-muted">Campaign not found.</p>
       </div>
     );
   }
@@ -115,11 +111,16 @@ const ContentRewardDetailsEdit = () => {
     platforms,
     budget,
     max_payout,
+    min_payout,
     total_users_earning,
     initial_budget,
     available_content,
     end_date,
     is_withdrawn,
+    flat_fee_bonus,
+    currency,
+    total_content_views,
+    start_date,
   } = campaign;
 
   const isEnded = end_date ? new Date(end_date) < new Date() : false;
@@ -132,17 +133,17 @@ const ContentRewardDetailsEdit = () => {
     <div>
       {/* Tabs Navigation */}
       <ContentRewardNav />
-      <div className="mt-6 text-[#717171]">
-        <div className="dark:text-white dark:bg-[#1E1E1E] p-4 sm:p-6 rounded-2xl items-center justify-center mx-auto shadow-sm mb-6 max-w-5xl bg-white border border-gray-100 dark:border-zinc-800">
+      <div className="mt-6 text-foreground-subtle">
+        <div className="dark:text-white dark:bg-card p-4 sm:p-6 rounded-2xl items-center justify-center mx-auto shadow-sm mb-6 max-w-5xl bg-white border border-border">
           <div className="mb-6">
             <img
               src={thumbnail ? fullThumbnail : "/confirm-apply.png"}
               alt={name}
               className="w-full h-[300px] object-cover mb-7 rounded-xl"
             />
-            <p className="text-[#717171] text-xs mb-7 dark:text-zinc-400 flex gap-2 items-center">
+            <p className="text-foreground-muted text-xs mb-7 flex gap-2 items-center">
               <span>
-                <CircleAlert className="text-[#FEC260]" />
+                <CircleAlert className="text-warning" />
               </span>
               <span>
                 Only views after you submit count towards payout. Submit as soon
@@ -156,41 +157,41 @@ const ContentRewardDetailsEdit = () => {
               showTitle={true}
             />
             {end_date && (
-              <p className={`text-xs mt-3 font-medium ${isEnded ? "text-red-500" : "text-gray-500 dark:text-zinc-400"}`}>
+              <p className={`text-xs mt-3 font-medium ${isEnded ? "text-error" : "text-foreground-muted"}`}>
                 {isEnded ? "Ended on" : "Ends on"} {end_date}
               </p>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:flex sm:justify-between mb-9">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 py-6 border-y border-border mb-9 text-foreground-muted">
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Reward
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400 font-medium">
+              <p className="text-foreground-strong text-sm font-medium">
                 ${reward_rate}/1k
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Type
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400 font-medium">
+              <p className="text-foreground-strong text-sm font-medium">
                 {campaign_type?.name || "N/A"}
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Maximum Payout
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Category
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400 font-medium">
-                ${max_payout}
+              <p className="text-foreground-strong text-sm font-medium">
+                {category?.name || "N/A"}
               </p>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold  dark:text-white uppercase opacity-70">
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
                 Platforms
               </p>
-              <div className="flex gap-2 dark:text-zinc-400 text-[#003933]">
+              <div className="flex gap-2 text-foreground-muted">
                 {platforms?.map((p, idx) => {
                   const pName = p.name?.toLowerCase();
                   if (pName === 'instagram') return <FaInstagram key={idx} size={20} />;
@@ -202,21 +203,69 @@ const ContentRewardDetailsEdit = () => {
               </div>
             </div>
             <div>
-              <p className="text-[#090003] text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
-                Category
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Minimum Payout
               </p>
-              <p className="text-[#717171] text-sm dark:text-zinc-400 font-medium">
-                {category?.name || "N/A"}
+              <p className="text-foreground-strong text-sm font-medium">
+                ${min_payout || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Maximum Payout
+              </p>
+              <p className="text-foreground-strong text-sm font-medium">
+                ${max_payout || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Flat Fee Bonus
+              </p>
+              <p className="text-foreground-strong text-sm font-medium">
+                ${flat_fee_bonus || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Currency
+              </p>
+              <p className="text-foreground-strong text-sm font-medium">
+                {currency || "USD"}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Total Content Views
+              </p>
+              <p className="text-foreground-strong text-sm font-medium">
+                {total_content_views?.toLocaleString() || 0}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Start Date
+              </p>
+              <p className="text-foreground-strong text-sm font-medium">
+                {start_date || "N/A"}
+              </p>
+            </div>
+            <div>
+              <p className="text-foreground text-xs mb-1 font-semibold dark:text-white uppercase opacity-70">
+                Budget Remaining
+              </p>
+              <p className="text-foreground-strong text-sm font-medium">
+                ${parseFloat(budget || 0).toFixed(2)}
               </p>
             </div>
           </div>
 
           {/* Campaign Assets Box */}
-          <div className="bg-indigo-50 dark:bg-zinc-800/50 text-indigo-900 dark:text-indigo-400 p-5 sm:p-6 rounded-2xl border border-indigo-100 dark:border-zinc-700 shadow-sm transition-all hover:bg-indigo-100/50 dark:hover:bg-zinc-800/80 mb-9 relative group">
+          <div className="bg-secondary text-foreground p-5 sm:p-6 rounded-2xl border border-border shadow-sm mb-9 relative group">
             <div className="absolute top-4 right-4">
               <button
                 onClick={handleContentEditClick}
-                className="p-2 bg-white dark:bg-zinc-700 text-indigo-600 dark:text-indigo-400 rounded-full shadow-sm hover:scale-110 transition-transform cursor-pointer border border-indigo-100 dark:border-zinc-600"
+                className="p-2 bg-card text-foreground rounded-full shadow-sm hover:scale-110 transition-transform cursor-pointer border border-border"
                 title="Edit Assets"
               >
                 <Pencil size={16} />
@@ -225,12 +274,12 @@ const ContentRewardDetailsEdit = () => {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex items-start sm:items-center gap-4">
-                <div className="bg-indigo-500/10 dark:bg-indigo-500/20 p-3 rounded-2xl text-indigo-600 dark:text-indigo-400 shrink-0">
+                <div className="bg-primary/10 p-3 rounded-2xl text-primary shrink-0">
                   <FaGoogleDrive size={24} />
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-base font-bold text-gray-900 dark:text-white leading-tight">Campaign Assets & Resources</h4>
-                  <p className="text-xs text-indigo-700/70 dark:text-indigo-400/70 max-w-sm font-medium">
+                  <h4 className="text-base font-bold text-foreground-strong leading-tight">Campaign Assets & Resources</h4>
+                  <p className="text-xs text-foreground-muted max-w-sm font-medium">
                     {available_content
                       ? "Download raw footage, brand logos, and creative guidelines to help you create your video."
                       : "No assets added yet. Click edit to add resources."}
@@ -243,7 +292,7 @@ const ContentRewardDetailsEdit = () => {
                   to={available_content}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-indigo-200 dark:shadow-none active:scale-95 group"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary/95 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary/20 active:scale-95 group"
                 >
                   Access Materials
                   <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -253,31 +302,33 @@ const ContentRewardDetailsEdit = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-end">
-            {is_withdrawn ? (
-              <div className="px-6 py-2 bg-red-50 text-red-600 rounded-full text-sm font-bold border border-red-100 flex items-center gap-2">
-                <Wallet size={16} />
-                Campaign Withdrawn
-              </div>
-            ) : isEnded ? (
-              <>
+            {
+              !is_withdrawn && (
                 <button
                   onClick={() => setShowExtendModal(true)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-[#003933] hover:bg-[#002822] text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-emerald-900/10"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition shadow-lg shadow-foreground-strong/10"
                 >
                   <LucideCalendar size={18} />
                   Extend Date
                 </button>
-                <button
-                  onClick={handleWithdrawClick}
-                  disabled={isWithdrawing}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-[#003933] bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition"
-                >
-                  <Wallet size={18} />
-                  {isWithdrawing ? "Withdrawing..." : "Withdraw Remaining"}
-                </button>
-              </>
+              )
+            }
+            {is_withdrawn ? (
+              <div className="px-6 py-2 bg-error-bg text-error rounded-full text-sm font-bold border border-error flex items-center gap-2">
+                <Wallet size={16} />
+                Campaign Withdrawn
+              </div>
+            ) : isEnded ? (
+              <button
+                onClick={handleWithdrawClick}
+                disabled={isWithdrawing}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 text-success bg-success-bg hover:bg-success-bg/85 border border-success text-[16px] font-semibold px-8 py-3 rounded-full cursor-pointer transition"
+              >
+                <Wallet size={18} />
+                {isWithdrawing ? "Withdrawing..." : "Withdraw Remaining"}
+              </button>
             ) : (
-              <div className="px-6 py-2 bg-emerald-50 text-[#003933] rounded-full text-sm font-bold border border-emerald-100">
+              <div className="px-6 py-2 bg-success-bg text-success rounded-full text-sm font-bold border border-success">
                 Active Campaign
               </div>
             )}
@@ -288,15 +339,15 @@ const ContentRewardDetailsEdit = () => {
       {/* Extend Date Modal */}
       {showExtendModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
-            <div className="p-6 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center bg-gray-50/50 dark:bg-zinc-800/20">
-              <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
-                <LucideCalendar className="text-[#003933] dark:text-[#0dc4a5]" size={22} />
+          <div className="bg-card rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-border animate-in zoom-in-95 duration-300">
+            <div className="p-6 border-b border-border flex justify-between items-center bg-secondary">
+              <h2 className="text-xl font-bold text-foreground-strong flex items-center gap-2">
+                <LucideCalendar className="text-foreground-strong" size={22} />
                 Extend Campaign
               </h2>
               <button
                 onClick={() => setShowExtendModal(false)}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                className="p-2 rounded-full hover:bg-secondary text-foreground-muted hover:text-foreground-strong transition-colors"
               >
                 <X size={20} />
               </button>
@@ -304,7 +355,7 @@ const ContentRewardDetailsEdit = () => {
 
             <div className="p-8 space-y-6">
               <div className="space-y-3">
-                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <label className="block text-sm font-bold text-foreground-strong uppercase tracking-wider">
                   Select New End Date
                 </label>
 
@@ -313,11 +364,11 @@ const ContentRewardDetailsEdit = () => {
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-full justify-start text-left font-normal h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]",
-                        !newEndDate && "text-gray-400 dark:text-gray-500"
+                        "w-full justify-start text-left font-normal h-14 rounded-2xl border-2 border-border bg-card text-foreground hover:border-border-strong transition-all focus:border-border-strong dark:focus:border-border-strong",
+                        !newEndDate && "text-foreground-muted"
                       )}
                     >
-                      <CalendarIcon className="mr-2 h-5 w-5 text-gray-400" />
+                      <CalendarIcon className="mr-2 h-5 w-5 text-foreground-muted" />
                       {newEndDate ? (
                         format(new Date(newEndDate), "PPP")
                       ) : (
@@ -331,9 +382,16 @@ const ContentRewardDetailsEdit = () => {
                       selected={newEndDate ? new Date(newEndDate) : undefined}
                       onSelect={(date) => setNewEndDate(date ? format(date, 'yyyy-MM-dd') : "")}
                       disabled={(date) => {
-                        const today = new Date()
-                        today.setHours(0, 0, 0, 0)
-                        return date < today
+                        if (!end_date) {
+                          const today = new Date();
+                          today.setHours(0, 0, 0, 0);
+                          return date < today;
+                        }
+                        const limitDate = new Date(end_date);
+                        limitDate.setHours(0, 0, 0, 0);
+                        const compareDate = new Date(date);
+                        compareDate.setHours(0, 0, 0, 0);
+                        return compareDate <= limitDate;
                       }}
                       initialFocus
                     />
@@ -342,7 +400,7 @@ const ContentRewardDetailsEdit = () => {
               </div>
 
               <div className="space-y-3">
-                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <label className="block text-sm font-bold text-foreground-strong uppercase tracking-wider">
                   Add Budget (Must be ≥ 50% of budget: ${(budget * 0.5).toFixed(2)})
                 </label>
                 <Input
@@ -350,29 +408,29 @@ const ContentRewardDetailsEdit = () => {
                   placeholder="Enter additional budget"
                   value={addBudget}
                   onChange={(e) => setAddBudget(e.target.value)}
-                  className="h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]"
+                  className="h-14 rounded-2xl border-2 border-border bg-card text-foreground hover:border-border-strong transition-all focus:border-border-strong dark:focus:border-border-strong"
                 />
               </div>
 
-              <div className="flex gap-4 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100/50 dark:border-blue-900/20">
-                <CircleAlert className="text-blue-500 shrink-0" size={20} />
-                <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed font-medium">
+              <div className="flex gap-4 p-4 bg-info-bg rounded-2xl border border-info">
+                <CircleAlert className="text-info shrink-0" size={20} />
+                <p className="text-xs text-info leading-relaxed font-medium">
                   Extending the date allows creators to continue applying and submitting content for this campaign.
                 </p>
               </div>
             </div>
 
-            <div className="p-6 flex gap-3 bg-gray-50/50 dark:bg-zinc-800/20 mt-2">
+            <div className="p-6 flex gap-3 bg-secondary mt-2">
               <button
                 onClick={() => setShowExtendModal(false)}
-                className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-all border border-gray-200 dark:border-zinc-700"
+                className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-foreground-muted hover:bg-secondary/80 transition-all border border-border"
               >
                 Cancel
               </button>
               <button
                 onClick={handleExtendSubmit}
                 disabled={isExtending || !newEndDate || !addBudget}
-                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-[#003933] hover:bg-[#002822] shadow-lg shadow-emerald-900/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isExtending ? "Extending..." : "Confirm Extension"}
               </button>
@@ -384,15 +442,15 @@ const ContentRewardDetailsEdit = () => {
       {/* Edit Content Modal */}
       {showContentModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
-            <div className="p-6 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center bg-gray-50/50 dark:bg-zinc-800/20">
-              <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
-                <FaGoogleDrive className="text-[#003933] dark:text-[#0dc4a5]" size={22} />
+          <div className="bg-card rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-border animate-in zoom-in-95 duration-300">
+            <div className="p-6 border-b border-border flex justify-between items-center bg-secondary">
+              <h2 className="text-xl font-bold text-foreground-strong flex items-center gap-2">
+                <FaGoogleDrive className="text-foreground-strong" size={22} />
                 Update Assets
               </h2>
               <button
                 onClick={() => setShowContentModal(false)}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                className="p-2 rounded-full hover:bg-secondary text-foreground-muted hover:text-foreground-strong transition-colors"
               >
                 <X size={20} />
               </button>
@@ -400,7 +458,7 @@ const ContentRewardDetailsEdit = () => {
 
             <div className="p-8 space-y-6">
               <div className="space-y-3">
-                <Label className="block text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <Label className="block text-sm font-bold text-foreground-strong uppercase tracking-wider">
                   Assets URL (Google Drive/Dropbox)
                 </Label>
                 <Input
@@ -408,29 +466,29 @@ const ContentRewardDetailsEdit = () => {
                   placeholder="https://drive.google.com/..."
                   value={contentLink || ""}
                   onChange={(e) => setContentLink(e.target.value)}
-                  className="h-14 rounded-2xl border-2 border-gray-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white hover:border-gray-200 dark:hover:border-zinc-600 transition-all focus:border-[#003933] dark:focus:border-[#0dc4a5]"
+                  className="h-14 rounded-2xl border-2 border-border bg-card text-foreground hover:border-border-strong transition-all focus:border-border-strong dark:focus:border-border-strong"
                 />
               </div>
 
-              <div className="flex gap-4 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100/50 dark:border-blue-900/20">
-                <CircleAlert className="text-blue-500 shrink-0" size={20} />
-                <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed font-medium">
+              <div className="flex gap-4 p-4 bg-info-bg rounded-2xl border border-info">
+                <CircleAlert className="text-info shrink-0" size={20} />
+                <p className="text-xs text-info leading-relaxed font-medium">
                   Provide a direct link to a folder where influencers can download the necessary assets for this campaign.
                 </p>
               </div>
             </div>
 
-            <div className="p-6 flex gap-3 bg-gray-50/50 dark:bg-zinc-800/20 mt-2">
+            <div className="p-6 flex gap-3 bg-secondary mt-2">
               <button
                 onClick={() => setShowContentModal(false)}
-                className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-all border border-gray-200 dark:border-zinc-700"
+                className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-foreground-muted hover:bg-secondary/80 transition-all border border-border"
               >
                 Cancel
               </button>
               <button
                 onClick={handleContentSubmit}
                 disabled={isUpdating || !contentLink}
-                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-[#003933] hover:bg-[#002822] shadow-lg shadow-emerald-900/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 shadow-lg shadow-foreground-strong/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 {isUpdating ? "Updating..." : "Update Assets"}
               </button>
@@ -442,32 +500,37 @@ const ContentRewardDetailsEdit = () => {
       {/* Withdraw Confirmation Modal */}
       {showWithdrawModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-gray-100 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+          <div className="bg-card rounded-3xl w-full max-w-md mx-auto relative overflow-hidden shadow-2xl border border-border animate-in zoom-in-95 duration-300">
             <div className="p-8 text-center space-y-6">
-              <div className="mx-auto w-20 h-20 bg-red-50 dark:bg-red-900/10 rounded-full flex items-center justify-center text-red-600 border border-red-100 dark:border-red-900/20 animate-bounce">
+              <div className="mx-auto w-20 h-20 bg-error-bg rounded-full flex items-center justify-center text-error border border-error animate-bounce">
                 <Wallet size={40} />
               </div>
 
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold dark:text-white">Withdraw Balance?</h2>
-                <p className="text-gray-500 dark:text-zinc-400 text-sm leading-relaxed px-4">
+                <h2 className="text-2xl font-bold text-foreground-strong">Withdraw Balance?</h2>
+                <p className="text-foreground-muted text-sm leading-relaxed px-4">
                   Are you sure you want to withdraw the remaining balance from this campaign? This action will transfer unspent funds back to your wallet.
                 </p>
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="bg-warning-bg border border-warning/20 rounded-2xl p-4 text-center">
+                <p className="text-sm text-warning font-semibold">
+                  ⚠️ Note: Withdrawals are currently disabled.
+                </p>
+              </div>
+
+              <div className="flex gap-4 pt-2">
                 <button
                   onClick={() => setShowWithdrawModal(false)}
-                  className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-all border border-gray-200 dark:border-zinc-700"
+                  className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-foreground-muted hover:bg-secondary/80 transition-all border border-border"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={handleWithdrawConfirm}
-                  disabled={isWithdrawing}
-                  className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-red-600 hover:bg-red-700 shadow-lg shadow-red-900/20 disabled:opacity-50 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                  disabled={true}
+                  className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-red-600 hover:bg-red-700 shadow-lg shadow-red-900/20 disabled:opacity-50 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-not-allowed"
                 >
-                  {isWithdrawing ? "Processing..." : "Yes, Withdraw"}
+                  Yes, Withdraw
                 </button>
               </div>
             </div>

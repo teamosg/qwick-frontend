@@ -1,3 +1,5 @@
+import { Skeleton } from "@/components/ui/skeleton";
+
 const ProfileBalanceDataSkeleton = () => {
   return (
     <>
@@ -6,8 +8,10 @@ const ProfileBalanceDataSkeleton = () => {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="p-4 rounded-lg bg-gray-200 dark:bg-gray-700 animate-pulse h-16"
-          ></div>
+            className="p-4 rounded-lg bg-card border border-border h-16 flex items-center"
+          >
+            <Skeleton className="h-4 w-3/4 ml-2" />
+          </div>
         ))}
       </div>
     </>

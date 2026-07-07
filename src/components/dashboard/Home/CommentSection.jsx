@@ -66,7 +66,7 @@ const CommentSection = ({ post }) => {
         >
             <AvatarUser
                 src={profile?.avatar}
-                alt={profile?.first_name}
+                alt={profile?.full_name}
                 className="w-6 h-6 sm:w-8 sm:h-8 rounded-full object-cover"
             />
 
@@ -77,7 +77,7 @@ const CommentSection = ({ post }) => {
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder="Write a comment..."
-                    className="w-full disabled:opacity-60 disabled:cursor-not-allowed bg-gray-100 dark:bg-[#2E2E2E] rounded-lg py-2 px-3 sm:px-4 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary pr-20 text-sm sm:text-base resize-none overflow-y-auto"
+                    className="w-full disabled:opacity-60 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 rounded-lg py-2 px-3 sm:px-4 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-ring pr-20 text-sm sm:text-base resize-none overflow-y-auto"
                 />
 
                 {/* ✅ Emoji + Send Buttons */}
@@ -86,12 +86,12 @@ const CommentSection = ({ post }) => {
                         type="button"
                         disabled={isCommenting}
                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                        className={`disabled:cursor-not-allowed comment-emoji-button-${post.id} text-gray-400 hover:text-primary p-1`}
+                        className={`disabled:cursor-not-allowed comment-emoji-button-${post.id} text-gray-400 hover:text-foreground-strong p-1`}
                     >
                         <Smile size={16} />
                     </button>
 
-                    <button type="submit" className="text-primary p-1">
+                    <button type="submit" className="text-foreground-strong p-1">
                         <Send size={16} />
                     </button>
                 </div>

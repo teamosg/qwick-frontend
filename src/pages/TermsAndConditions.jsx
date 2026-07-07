@@ -2,14 +2,14 @@
 const TermsAndConditions = () => {
     return (
         <div className="overflow-y-auto">
-            <div className="p-6 md:p-12 dark:bg-zinc-950 max-w-6xl mx-auto text-[#191919] dark:text-gray-300 ">
+            <div className="p-6 md:p-12 bg-background max-w-6xl mx-auto text-foreground dark:text-foreground ">
                 <div className="mb-8">
-                    <h1 className="text-3xl md:text-4xl font-bold mb-4 text-[#090003] dark:text-white">Terms of Service</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold mb-4 text-foreground-strong dark:text-foreground">Terms of Service</h1>
                     <p className="mb-6 leading-relaxed">
                         Thank you for your interest in Qwick (“Qwick,” “we,” “our,” or “us”) and our website at <a href="http://www.qwick.asia" className="text-blue-600 hover:underline">www.qwick.asia</a>, including any related web pages, mobile applications, hosted platforms, and other online services operated by us (collectively, the “Service”). These Terms of Service (“Terms”) form a legally binding agreement between you (“User,” “you,” or “your”) and Qwick, governing your access to and use of the Service, including participation in our Content Rewards system and any other features we provide. By accessing or using the Service, you acknowledge that you have read, understood, and agreed to be bound by these Terms and our Privacy Policy, in compliance with the applicable laws of Malaysia.
                     </p>
 
-                    <div className="bg-gray-50 dark:bg-zinc-900 p-6 rounded-xl border border-gray-200 dark:border-zinc-800 mb-8">
+                    <div className="bg-accent dark:bg-card p-6 rounded-xl border border-border dark:border-border mb-8">
                         <h3 className="font-bold text-lg mb-2 dark:text-white">Please read the following terms carefully</h3>
                         <p className="leading-relaxed">
                             By clicking “I Accept,” creating an account, or by accessing or using the Service in any manner, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service (“Terms”), along with our Privacy Policy, Community Guidelines, and any additional policies or terms referenced herein, which may be updated from time to time. If you do not agree to these Terms or are not eligible to use the Service, you must not access or use it. Your access to or use of the Service, and our provision of the Service to you, constitutes a binding agreement between you and Qwick, governed by the laws of Malaysia.
@@ -19,7 +19,7 @@ const TermsAndConditions = () => {
 
                 <div className="space-y-8">
                     <section>
-                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#090003] dark:text-white">1. Qwick Services Overview</h2>
+                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-foreground-strong dark:text-foreground">1. Qwick Services Overview</h2>
                         <p className="mb-3 leading-relaxed">
                             Qwick (“we,” “our,” or “us”) currently provides a digital platform that enables users (“Creators”) to earn rewards by creating, sharing, or promoting content in connection with participating brands or campaigns (the “Content Rewards Service”). Through the Service, Creators may submit content for review, track engagement, and receive rewards or payments based on approved participation.
                         </p>
@@ -32,7 +32,7 @@ const TermsAndConditions = () => {
                     </section>
 
                     <section>
-                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#090003] dark:text-white">2. Eligibility</h2>
+                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-foreground-strong dark:text-foreground">2. Eligibility</h2>
                         <p className="mb-3 leading-relaxed">
                             To use the Service, you must be at least 13 years old. By accessing or using the Service, you represent and warrant that:
                         </p>
@@ -47,7 +47,7 @@ const TermsAndConditions = () => {
                     </section>
 
                     <section>
-                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#090003] dark:text-white">3. Accounts and Registration</h2>
+                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-foreground-strong dark:text-foreground">3. Accounts and Registration</h2>
                         <p className="mb-3 leading-relaxed">
                             To access most features of the Service, you are required to create a Qwick account. When registering, you may need to provide certain personal details such as your name, email address, contact information, or other relevant data, and, where applicable, connect external payment accounts or digital wallets operated by our Payment Partners (collectively, “Linked Accounts”).
                         </p>
@@ -117,7 +117,7 @@ const TermsAndConditions = () => {
                     </section>
 
                     <section>
-                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#090003] dark:text-white">4. General Payment Terms</h2>
+                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-foreground-strong dark:text-foreground">4. General Payment Terms</h2>
                         <p className="mb-3 leading-relaxed">
                             Certain features of the Qwick platform — such as accessing premium tools, promotional features, or receiving payments for eligible activities — may involve fees or charges. Before any payment is made, you will have the opportunity to review and confirm the amount and purpose of such fees.
                         </p>
@@ -226,7 +226,7 @@ const TermsAndConditions = () => {
                     </section>
 
                     <section>
-                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#090003] dark:text-white">Regulatory Compliance, Account Suspension or Termination, and Violations of Terms</h2>
+                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-foreground-strong dark:text-foreground">Regulatory Compliance, Account Suspension or Termination, and Violations of Terms</h2>
                         <p className="mb-3 leading-relaxed">
                             Qwick is not a financial institution. However, we are required to comply with applicable regulations and with the compliance policies of our financial and payment partners. Qwick reserves the right, at its sole discretion, to suspend or terminate any Buyer or Seller account.
                         </p>

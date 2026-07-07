@@ -27,10 +27,10 @@ const Withdraw = () => {
         <div className="max-w-xl mx-auto py-10 px-4 sm:px-6">
             <div className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden">
                 {/* Header Section */}
-                <div className="bg-[#002822]/5 dark:bg-[#002822]/10 p-6 border-b border-gray-200 dark:border-zinc-800">
+                <div className="bg-foreground/5 dark:bg-foreground/10 p-6 border-b border-gray-200 dark:border-zinc-800">
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-[#002822]/10 dark:bg-[#002822]/20 rounded-xl">
-                            <Landmark className="h-6 w-6 text-[#002822] dark:text-[#002822]" />
+                        <div className="p-3 bg-foreground/10 dark:bg-foreground/20 rounded-xl">
+                            <Landmark className="h-6 w-6 text-foreground dark:text-foreground" />
                         </div>
                         <div>
                             <h1 className="text-xl font-bold text-gray-900 dark:text-white">Withdraw Funds</h1>
@@ -46,7 +46,7 @@ const Withdraw = () => {
                                 Withdrawal Amount
                             </label>
                             <div className="relative group">
-                                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#002822] transition-colors">
+                                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-foreground-strong transition-colors">
                                     <DollarSign className="h-5 w-5" />
                                 </div>
                                 <Input
@@ -56,7 +56,7 @@ const Withdraw = () => {
                                     step="0.01"
                                     value={amount}
                                     onChange={(e) => setAmount(e.target.value)}
-                                    className="pl-12 py-6 text-lg rounded-xl border-gray-300 dark:border-zinc-700 focus:ring-2 focus:ring-[#002822]/20 focus:border-[#002822] dark:bg-zinc-900/50 dark:text-white transition-all font-semibold"
+                                    className="pl-12 py-6 text-lg rounded-xl border-gray-300 dark:border-zinc-700 focus:ring-2 focus:ring-ring/20 focus:border-border-strong dark:bg-zinc-900/50 dark:text-white transition-all font-semibold"
                                     required
                                 />
                             </div>
@@ -68,7 +68,7 @@ const Withdraw = () => {
                         <Button
                             disabled={isPending || !amount}
                             type="submit"
-                            className="w-full py-6 text-base font-bold bg-[#002822] hover:bg-[#002822]/90 text-white rounded-xl shadow-lg shadow-[#002822]/10 transition-all group border-none"
+                            className="w-full py-6 text-base font-bold bg-foreground-strong hover:bg-foreground/90 text-white rounded-xl shadow-lg shadow-foreground/10 transition-all group border-none"
                         >
                             {isPending ? (
                                 <>
@@ -88,7 +88,7 @@ const Withdraw = () => {
                 {/* Footer Info */}
                 {/* <div className="px-8 py-4 bg-gray-50/30 dark:bg-zinc-800/20 border-t border-gray-100 dark:border-zinc-800/50">
                     <div className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-zinc-500">
-                        <div className="h-1.5 w-1.5 rounded-full bg-[#002822] animate-pulse" />
+                        <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
                         <span>Secure withdrawal processed within 3-5 business days.</span>
                     </div>
                 </div> */}
