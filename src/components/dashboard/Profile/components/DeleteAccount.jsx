@@ -35,22 +35,22 @@ const DeleteAccount = () => {
   return (
     <div className="space-y-4">
       <div className="mb-8">
-        <h2 className="text-[18px] font-semibold text-foreground dark:text-white mb-1">
+        <h2 className="text-[18px] font-semibold text-foreground-strong dark:text-white mb-1">
           Delete Account
         </h2>
-        <p className="text-foreground-subtle text-sm">
+        <p className="text-foreground-muted text-sm">
           Permanently remove your account and all of your data from our platform
         </p>
       </div>
 
-      <Card className="border-destructive shadow rounded-[24px] overflow-hidden">
+      <Card className="border-error/30 shadow-sm rounded-2xl overflow-hidden bg-card">
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
-              <h3 className="font-medium text-gray-900 dark:text-white">
+              <h3 className="font-medium text-foreground-strong dark:text-white">
                 Delete your account
               </h3>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-foreground-muted">
                 Once you delete your account, there is no going back. Please be certain.
               </p>
             </div>
@@ -59,36 +59,36 @@ const DeleteAccount = () => {
               <AlertDialogTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="cursor-pointer hover:text-white hover:bg-destructive active:scale-[0.98] transition-all duration-300 ease-in-out px-8 rounded-full text-destructive text-[16px] border border-destructive bg-transparent"
+                  className="cursor-pointer hover:text-white hover:bg-error active:scale-[0.98] transition-all duration-300 ease-in-out px-8 rounded-full text-error text-base border border-error bg-transparent"
                 >
                   Delete account
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent className="w-[95%] max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border-0 p-6 md:p-8">
+              <AlertDialogContent className="w-[95%] max-w-md bg-card border border-border rounded-2xl shadow-2xl p-6 md:p-8">
                 <div className="flex justify-center mb-4">
-                  <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30">
+                  <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-error-bg border border-error/20">
                     <AlertTriangle
-                      className="w-7 h-7 sm:w-8 sm:h-8 text-destructive"
+                      className="w-7 h-7 sm:w-8 sm:h-8 text-error"
                       strokeWidth={2.5}
                     />
                   </div>
                 </div>
 
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="text-lg sm:text-xl font-bold text-center text-gray-900 dark:text-gray-100">
+                  <AlertDialogTitle className="text-lg sm:text-xl font-bold text-center text-foreground-strong dark:text-white">
                     Delete your account?
                   </AlertDialogTitle>
-                  <AlertDialogDescription className="text-center text-gray-600 dark:text-gray-400 text-sm leading-relaxed pt-2">
+                  <AlertDialogDescription className="text-center text-foreground-muted text-sm leading-relaxed pt-2">
                     This action cannot be undone. This will permanently delete your
                     account and remove all your data from our servers.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
 
-                <div className="bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-900/30 rounded-xl p-4 my-4">
-                  <p className="text-sm text-red-800 dark:text-red-400 font-semibold mb-2">
+                <div className="bg-error-bg border border-error/20 rounded-xl p-4 my-4">
+                  <p className="text-sm text-error font-semibold mb-2">
                     ⚠️ You will lose:
                   </p>
-                  <ul className="text-sm text-red-700 dark:text-red-400 space-y-1 ml-4 list-disc">
+                  <ul className="text-sm text-error space-y-1 ml-4 list-disc">
                     <li>All your campaigns and content</li>
                     <li>Your profile and settings</li>
                     <li>Access to all your data</li>
@@ -98,14 +98,14 @@ const DeleteAccount = () => {
                 <AlertDialogFooter className="flex flex-col sm:flex-row gap-3">
                   <AlertDialogCancel
                     disabled={isDeletingPending}
-                    className="w-full sm:w-auto border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto border border-border bg-secondary hover:bg-secondary-hover text-foreground rounded-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     Cancel
                   </AlertDialogCancel>
                   <Button
                     onClick={handleDeleteAccount}
                     disabled={isDeletingPending}
-                    className="w-full sm:w-auto bg-destructive hover:bg-destructive text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed py-2"
+                    className="w-full sm:w-auto bg-error hover:bg-error-hover text-primary-foreground font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed py-2 cursor-pointer"
                   >
                     {isDeletingPending ? "Deleting..." : "Delete account"}
                   </Button>

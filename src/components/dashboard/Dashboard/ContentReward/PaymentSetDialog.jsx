@@ -11,7 +11,7 @@ import { Button } from "../../../ui/button";
 const PaymentSetDialog = ({showPaymentsModal, setShowForm, setShowPaymentsModal}) => {
   return (
     <Dialog open={showPaymentsModal} onOpenChange={setShowPaymentsModal}>
-      <DialogContent className="max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border-0 p-0 overflow-hidden">
+      <DialogContent className="max-w-md bg-card rounded-2xl shadow-2xl border border-border p-0 overflow-hidden">
         {/* Header with brand accent */}
         <div className="relative bg-gradient-to-br from-primary to-primary-dark px-6 pt-8 pb-6">
           <div className="flex justify-center mb-4">
@@ -30,8 +30,8 @@ const PaymentSetDialog = ({showPaymentsModal, setShowForm, setShowPaymentsModal}
 
         {/* Body content */}
         <div className="px-6 py-6 space-y-4">
-          <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+          <div className="bg-secondary rounded-lg p-4 border border-border">
+            <p className="text-sm text-foreground-muted leading-relaxed">
               Connect your payment method to start receiving payouts and manage
               campaign budgets seamlessly.
             </p>
@@ -51,7 +51,7 @@ const PaymentSetDialog = ({showPaymentsModal, setShowForm, setShowPaymentsModal}
           <button
             type="button"
             onClick={() => setShowPaymentsModal(false)}
-            className="w-full text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 font-medium transition-colors"
+            className="w-full text-sm text-foreground-muted hover:text-foreground-strong font-medium transition-colors"
           >
             I'll do this later
           </button>

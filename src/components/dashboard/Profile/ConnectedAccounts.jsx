@@ -117,11 +117,11 @@ const ConnectedAccounts = () => {
     <div className="md:p-6 space-y-8">
       {/* Connected Accounts Section */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        <h2 className="text-lg font-semibold text-foreground-strong dark:text-white mb-4">
           Connected Accounts
         </h2>
         {connectedList.length === 0 ? (
-          <div className="text-center text-foreground-subtle dark:text-white text-[16px] py-10 px-4 w-full shadow rounded-[24px]">
+          <div className="text-center text-foreground-muted text-base py-10 px-4 w-full shadow-sm bg-card border border-border rounded-2xl">
             <p>No Accounts Connected</p>
           </div>
         ) : (
@@ -133,17 +133,17 @@ const ConnectedAccounts = () => {
                   key={account.id}
                   variant="outline"
                   onClick={() => handleAccountClick(account, true, connectedUrl)}
-                  className="flex items-center justify-between w-full p-4 h-12 rounded-full border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20"
+                  className="flex items-center justify-between w-full p-4 h-12 rounded-full border border-success/30 bg-success-bg hover:bg-success-bg/80 text-success cursor-pointer transition-all"
                 >
                   <div className="flex items-center gap-3">
-                    <account.icon className="h-5 w-5 text-green-600 dark:text-green-400" />
-                    <span className="text-green-700 dark:text-green-300 font-medium">
+                    <account.icon className="h-5 w-5 text-success" />
+                    <span className="text-success font-medium">
                       {account.name}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-green-600 hidden sm:inline">Connected</span>
-                    <ExternalLink className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    <span className="text-xs text-success/80 hidden sm:inline">Connected</span>
+                    <ExternalLink className="h-4 w-4 text-success" />
                   </div>
                 </Button>
               );
@@ -155,7 +155,7 @@ const ConnectedAccounts = () => {
       {/* Add New Account Section */}
       {unconnectedList.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-lg font-semibold text-foreground-strong dark:text-white mb-4">
             Connect Your Accounts
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -164,15 +164,15 @@ const ConnectedAccounts = () => {
                 key={account.id}
                 variant="outline"
                 onClick={() => handleAccountClick(account, false, null)}
-                className="flex items-center justify-between w-full p-4 h-12 rounded-full border border-gray-300 dark:border-foreground-muted hover:bg-gray-50 dark:hover:bg-zinc-800"
+                className="flex items-center justify-between w-full p-4 h-12 rounded-full border border-border bg-secondary hover:bg-secondary-hover text-foreground cursor-pointer transition-all"
               >
                 <div className="flex items-center gap-3">
-                  <account.icon className="h-5 w-5 text-gray-600 dark:text-white" />
-                  <span className="text-gray-700 dark:text-white font-medium">
+                  <account.icon className="h-5 w-5 text-foreground-muted" />
+                  <span className="text-foreground font-medium">
                     {account.name}
                   </span>
                 </div>
-                <Plus className="h-4 w-4 text-gray-600 dark:text-white" />
+                <Plus className="h-4 w-4 text-foreground-muted" />
               </Button>
             ))}
           </div>
@@ -203,16 +203,16 @@ const ConnectedAccounts = () => {
                 <Button
                   variant="outline"
                   onClick={handleCancel}
-                  className="flex-1"
+                  className="flex-1 cursor-pointer"
                 >
                   Cancel
                 </Button>
                 <Button
                   onClick={handleConfirmConnect}
                   disabled={!url || isPending}
-                  className="flex-1 bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white"
+                  className="flex-1 bg-primary hover:bg-primary-hover text-primary-foreground cursor-pointer"
                 >
-                  {isPending ? <Spinner className="w-4 h-4 text-white" /> : "Generate OTP"}
+                  {isPending ? <Spinner className="w-4 h-4 text-primary-foreground" /> : "Generate OTP"}
                 </Button>
               </div>
             </>
@@ -220,17 +220,17 @@ const ConnectedAccounts = () => {
             // Step 2: Verify OTP
             <>
               <div className="space-y-3">
-                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                  <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">
+                <div className="p-4 bg-info/10 dark:bg-info/5 rounded-lg border border-info/30 dark:border-info/20">
+                  <p className="text-sm font-medium text-info mb-2">
                     Your OTP Code:
                   </p>
-                  <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-wider">
+                  <p className="text-2xl font-bold text-info tracking-wider">
                     {otp}
                   </p>
                 </div>
 
-                <div className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
-                  <p className="font-medium">Next steps:</p>
+                <div className="text-sm text-foreground-muted space-y-2">
+                  <p className="font-medium text-foreground-strong">Next steps:</p>
                   <ol className="list-decimal list-inside space-y-1">
                     <li>
                       Add this OTP to your {selectedPlatform?.name}{" "}
@@ -246,16 +246,16 @@ const ConnectedAccounts = () => {
                 <Button
                   variant="outline"
                   onClick={handleCancel}
-                  className="flex-1"
+                  className="flex-1 cursor-pointer"
                 >
                   Cancel
                 </Button>
                 <Button
                   onClick={handleVerify}
                   disabled={isVerifying}
-                  className="flex-1 bg-foreground-strong dark:bg-accent hover:bg-foreground dark:hover:bg-accent/80 text-white"
+                  className="flex-1 bg-primary hover:bg-primary-hover text-primary-foreground cursor-pointer"
                 >
-                  {isVerifying ? <Spinner className="w-4 h-4 text-white" /> : "Verify"}
+                  {isVerifying ? <Spinner className="w-4 h-4 text-primary-foreground" /> : "Verify"}
                 </Button>
               </div>
             </>

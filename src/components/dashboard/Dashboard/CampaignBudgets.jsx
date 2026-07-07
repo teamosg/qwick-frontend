@@ -21,7 +21,7 @@ const CampaignBudgets = () => {
             label: "Total Campaigns",
             value: totalCampaigns,
             icon: LayoutDashboard,
-            bgColor: "bg-blue-400",
+            bgColor: "bg-primary",
         },
         /* 
         // Hidden as per user request (missing info in campaign-budgets API)

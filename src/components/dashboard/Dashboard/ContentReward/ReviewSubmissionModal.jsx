@@ -94,21 +94,21 @@ const ReviewSubmissionModal = ({ isOpen, onClose, submission, action }) => {
 
                 {/* Submission Info */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="p-3 rounded-xl bg-accent/50 border border-border">
+                  <div className="p-3 rounded-xl bg-secondary border border-border">
                     <span className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Campaign</span>
                     <p className="text-sm font-semibold text-foreground mt-0.5 truncate">{campaignName}</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-accent/50 border border-border">
+                  <div className="p-3 rounded-xl bg-secondary border border-border">
                     <span className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Creator</span>
                     <p className="text-sm font-semibold text-foreground mt-0.5 truncate">{creatorName}</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-accent/50 border border-border">
+                  <div className="p-3 rounded-xl bg-secondary border border-border">
                     <span className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground flex items-center gap-1">
                       <TrendingUp className="size-3" /> Views
                     </span>
                     <p className="text-sm font-bold text-foreground mt-0.5">{views?.toLocaleString()}</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-accent/50 border border-border">
+                  <div className="p-3 rounded-xl bg-secondary border border-border">
                     <span className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground flex items-center gap-1">
                       <DollarSign className="size-3" /> Payout
                     </span>
@@ -127,7 +127,7 @@ const ReviewSubmissionModal = ({ isOpen, onClose, submission, action }) => {
 
                 {/* Platform Links */}
                 {submission?.platform_stats && Object.values(submission.platform_stats).some(v => v?.link) && (
-                  <div className="p-3 rounded-xl bg-accent/50 border border-border space-y-2">
+                  <div className="p-3 rounded-xl bg-secondary border border-border space-y-2">
                     <span className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground flex items-center gap-1">
                       <FileText className="size-3" /> Platform Links
                     </span>
@@ -171,7 +171,7 @@ const ReviewSubmissionModal = ({ isOpen, onClose, submission, action }) => {
                       : "Explain why this submission is being rejected (optional)..."
                     }
                     rows={3}
-                    className="w-full px-4 py-3 text-sm rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground resize-none focus:outline-none focus:ring-2 focus:ring-ring transition-all"
+                    className="w-full px-4 py-3 text-sm rounded-xl border border-border bg-secondary text-foreground placeholder:text-muted-foreground resize-none focus:outline-none focus:ring-2 focus:ring-ring transition-all"
                   />
                 </div>
               </div>

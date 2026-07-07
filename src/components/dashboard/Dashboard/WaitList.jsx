@@ -47,16 +47,16 @@ const WaitList = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-[20px] md:text-[24px] text-foreground dark:text-foreground font-bold">
+      <h2 className="text-[20px] md:text-[24px] text-foreground-strong font-bold">
         Waitlist
       </h2>
 
       {selectedBrandCommunity && (
-        <div className="bg-card dark:bg-card rounded-xl p-6 shadow-sm border border-border dark:border-border">
+        <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
               <div className="flex items-center gap-1.5 mb-1 sm:mb-2">
-                <h3 className="text-foreground-strong dark:text-white text-base sm:text-lg font-semibold">
+                <h3 className="text-foreground-strong text-base sm:text-lg font-semibold">
                   User Auto Join
                 </h3>
                 <TooltipProvider>
@@ -64,7 +64,7 @@ const WaitList = () => {
                     <TooltipTrigger asChild>
                       <button
                         type="button"
-                        className="inline-flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                        className="inline-flex items-center justify-center text-foreground-muted hover:text-foreground transition-colors cursor-pointer"
                         aria-label="User auto join information"
                       >
                         <Info className="h-4 w-4" />
@@ -80,7 +80,7 @@ const WaitList = () => {
                   </Tooltip>
                 </TooltipProvider>
               </div>
-              <p className="text-muted-foreground dark:text-muted-foreground text-sm">
+              <p className="text-foreground-muted text-sm">
                 Allow users to join your community instantly without waiting for admin approval.
               </p>
             </div>

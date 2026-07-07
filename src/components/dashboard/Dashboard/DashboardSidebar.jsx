@@ -113,7 +113,7 @@ export function DashboardSidebarContent() {
 
   return (
     <>
-      <Sidebar className="relative h-full inset-auto md:w-64 border-r dark:border-zinc-800">
+      <Sidebar className="relative h-full inset-auto md:w-64 border-r border-border">
         <SidebarHeader
           className="p-0 bg-center bg-cover bg-no-repeat h-[135px] relative"
           style={{ backgroundImage: `url(${bg})` }}
@@ -205,14 +205,14 @@ export function DashboardSidebarContent() {
                     >
                       <SidebarMenuButton
                         asChild
-                        className={`hover:shadow-none text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent ${isActive ? 'text-foreground' : 'text-foreground-subtle'}`}
+                        className={`hover:shadow-none text-[16px] h-auto flex gap-4 hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent ${isActive ? 'text-foreground-strong' : 'text-foreground-muted'}`}
                       >
                         <Link
-                          className={`hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full relative ${isActive ? 'bg-accent/10 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-6 before:w-0.5 before:bg-primary before:rounded-full' : ''}`}
+                          className={`hover:bg-none hover:shadow-none inline-block px-5 py-3 w-full relative ${isActive ? 'bg-secondary before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-6 before:w-0.5 before:bg-primary before:rounded-full' : ''}`}
                           to={`/dashboard/${communityUsername}/${item.url}`}
                           onClick={() => setOpenMobile(false)}
                         >
-                          <span className={`hover:bg-none hover:shadow-none font-medium ${isActive ? 'text-foreground' : ''}`}>
+                          <span className={`hover:bg-none hover:shadow-none font-medium ${isActive ? 'text-foreground-strong font-semibold' : 'text-foreground-muted'}`}>
                             {item.title}
                           </span>
                         </Link>

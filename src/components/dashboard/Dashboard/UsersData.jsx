@@ -2,7 +2,7 @@ import { FetchErrorAlert } from "@/components/Alerts/FetchErrorAlerts";
 import { NoDataAlert } from "@/components/Alerts/NoDataAlert";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { useGetCommunityUsers, useManageCommunityUserRole } from "@/hooks/community.hook";
+import { useGetCommunityUsers, useManageCommunityUserRole, useRemoveCommunityMember } from "@/hooks/community.hook";
 import { useCommunityStore } from "@/store/communityStore";
 import { EllipsisVertical, Link2 } from "lucide-react";
 import WaitListSkeleton from "./skeletons/WaitListSkeleton";
@@ -32,10 +32,10 @@ const TableCell = ({ children, className = "" }) => (
 
 const getStatusBadge = (status = 'active') => {
   const variants = {
-    active: "bg-green-100 text-green-800 border-green-200",
-    moderator: "bg-green-100 text-green-800 border-green-200",
-    pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
-    cancel: "bg-red-100 text-red-800 border-red-200",
+    active: "bg-success-bg text-success border-success",
+    moderator: "bg-success-bg text-success border-success",
+    pending: "bg-warning-bg text-warning border-warning",
+    cancel: "bg-error-bg text-error border-error",
   };
 
   return (
@@ -55,6 +55,7 @@ const UsersData = () => {
   const { selectedBrandCommunity } = useCommunityStore();
   const { data, isLoading, isError } = useGetCommunityUsers(selectedBrandCommunity?.username)
   const { mutate: changeRole, isPending: isChangingRole } = useManageCommunityUserRole(selectedBrandCommunity?.username)
+  const { mutate: removeMember, isPending: isRemovingMember } = useRemoveCommunityMember(selectedBrandCommunity?.username)
   const [userOnAction, setUserOnAction] = useState(null)
 
   const activeUsers = data?.members || [];
@@ -69,6 +70,11 @@ const UsersData = () => {
     changeRole({ userId, action: "demote" })
   }
 
+  const handleRemoveMember = (userId) => {
+    setUserOnAction(userId);
+    removeMember({ userId })
+  }
+
 
   if (isLoading) return <WaitListSkeleton />
 
@@ -79,19 +85,19 @@ const UsersData = () => {
         {activeUsers?.map((user, index) => (
           <div
             key={index}
-            className="bg-card border rounded-lg p-4 shadow-sm dark:bg-card dark:border-border dark:text-foreground"
+            className="bg-card border border-border rounded-lg p-4 shadow-sm text-foreground"
           >
             <div className="flex justify-between items-start mb-2">
-              <div className="font-semibold text-foreground dark:text-white">
+              <div className="font-semibold text-foreground-strong">
                 {user?.username}
               </div>
             </div>
-            <div className="text-sm text-foreground dark:text-white">{user?.email}</div>
-            <div className="text-sm text-foreground dark:text-white">{user?.status}</div>
-            <div className="font-semibold text-foreground dark:text-white">
+            <div className="text-sm text-foreground-muted">{user?.email}</div>
+            <div className="text-sm text-foreground-muted">{user?.status}</div>
+            <div className="font-semibold text-foreground-strong">
               {user?.email}
             </div>
-            <div className="font-semibold text-foreground dark:text-white">
+            <div className="font-semibold text-foreground-strong">
               {user?.joined_at}
             </div>
           </div>
@@ -103,23 +109,23 @@ const UsersData = () => {
         <div className="p-1 min-w-[800px]">
           <Table>
             <TableHeader className="">
-              <TableRow className="bg-muted/50 text-foreground dark:bg-accent dark:text-foreground border-border rounded-full">
-                <TableHead className="font-medium py-4 px-6 dark:text-white">
+              <TableRow className="bg-secondary text-foreground border-b border-border rounded-full">
+                <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                   Name
                 </TableHead>
-                <TableHead className=" font-medium py-4 px-6 dark:text-white">
+                <TableHead className=" font-medium py-4 px-6 text-foreground-strong">
                   Email
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-white">
+                <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                   Status
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-white">
+                <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                   Role
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-white">
+                <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                   Joined at
                 </TableHead>
-                <TableHead className="font-medium py-4 px-6 dark:text-white">
+                <TableHead className="font-medium py-4 px-6 text-foreground-strong">
                   Actions
                 </TableHead>
               </TableRow>
@@ -128,26 +134,26 @@ const UsersData = () => {
               {activeUsers?.map((user, index) => (
                 <TableRow
                   key={index}
-                  className="border-none hover:bg-accent dark:hover:bg-accent"
+                  className="border-none hover:bg-secondary"
                 >
-                  <TableCell className="py-4 px-6 font-medium text-gray-900 dark:text-white">
+                  <TableCell className="py-4 px-6 font-medium text-foreground-strong">
                     {user?.username}
                   </TableCell>
-                  <TableCell className="py-4 px-6 text-muted-foreground dark:text-foreground">
+                  <TableCell className="py-4 px-6 text-foreground-muted">
                     {user?.email}
                   </TableCell>
-                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                  <TableCell className="py-4 px-6 font-semibold text-foreground-strong">
                     {getStatusBadge(user?.status)}
                   </TableCell>
-                  <TableCell className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                  <TableCell className="py-4 px-6 font-semibold text-foreground-strong">
                     {getStatusBadge(user?.is_moderator ? 'moderator' : 'user')}
                   </TableCell>
-                  <TableCell className="py-4 px-6 font-semibold text-sm text-muted-foreground dark:text-foreground">
+                  <TableCell className="py-4 px-6 font-semibold text-sm text-foreground-muted">
                     {user?.joined_at?.substring(0, 10)}
                   </TableCell>
                   <TableCell className="py-4 px-6 flex gap-2">
                     {
-                      isChangingRole && userOnAction === user?.id
+                      (isChangingRole || isRemovingMember) && userOnAction === user?.id
                         ? (
                           <Spinner />
                         )
@@ -156,6 +162,7 @@ const UsersData = () => {
                             role={user?.is_moderator ? 'moderator' : 'user'}
                             onApprove={() => handleApproveToModerator(user?.id)}
                             onDemote={() => handleDemoteToUser(user?.id)}
+                            onRemove={() => handleRemoveMember(user?.id)}
                           />
                         )
                     }

@@ -25,14 +25,14 @@ export default function ChatBox() {
         <div className="space-y-2">
           {/* Kwasig's message with emoji */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-full max-w-xs">
+            <div className="bg-primary text-primary-foreground px-4 py-2 rounded-full max-w-xs">
               <span>Kwasig 😂😂</span>
             </div>
           </div>
 
           {/* Kwasig's longer message */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-2xl max-w-sm">
+            <div className="bg-primary text-primary-foreground px-4 py-2 rounded-2xl max-w-sm">
               <span>You dey hung dier you kai say house dey</span>
             </div>
           </div>
@@ -47,10 +47,10 @@ export default function ChatBox() {
               className="w-8 h-8 rounded-full object-cover flex-shrink-0"
             />
             <div className="space-y-1">
-              <div className="bg-gray-200 text-gray-800 px-4 py-2 rounded-2xl max-w-sm">
+              <div className="bg-secondary text-foreground px-4 py-2 rounded-2xl max-w-sm">
                 <span>Yo mandem</span>
               </div>
-              <div className="bg-gray-200 text-gray-800 px-4 py-2 rounded-2xl max-w-sm">
+              <div className="bg-secondary text-foreground px-4 py-2 rounded-2xl max-w-sm">
                 <span>Cho dey house?</span>
               </div>
             </div>
@@ -61,14 +61,14 @@ export default function ChatBox() {
         <div className="space-y-2">
           {/* Kwasig's message with emoji */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-full max-w-xs">
+            <div className="bg-primary text-primary-foreground px-4 py-2 rounded-full max-w-xs">
               <span>Kwasig 😂😂</span>
             </div>
           </div>
 
           {/* Kwasig's longer message */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-2xl max-w-sm">
+            <div className="bg-primary text-primary-foreground px-4 py-2 rounded-2xl max-w-sm">
               <span>You dey hung dier you kai say house dey</span>
             </div>
           </div>
@@ -82,10 +82,10 @@ export default function ChatBox() {
               className="w-8 h-8 rounded-full object-cover flex-shrink-0"
             />
             <div className="space-y-1">
-              <div className="bg-gray-200 text-gray-800 px-4 py-2 rounded-2xl max-w-sm">
+              <div className="bg-secondary text-foreground px-4 py-2 rounded-2xl max-w-sm">
                 <span>Yo mandem</span>
               </div>
-              <div className="bg-gray-200 text-gray-800 px-4 py-2 rounded-2xl max-w-sm">
+              <div className="bg-secondary text-foreground px-4 py-2 rounded-2xl max-w-sm">
                 <span>Cho dey house?</span>
               </div>
             </div>
@@ -96,14 +96,14 @@ export default function ChatBox() {
         <div className="space-y-2">
           {/* Kwasig's message with emoji */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-full max-w-xs">
+            <div className="bg-primary text-primary-foreground px-4 py-2 rounded-full max-w-xs">
               <span>Kwasig 😂😂</span>
             </div>
           </div>
 
           {/* Kwasig's longer message */}
           <div className="flex justify-end">
-            <div className="bg-blue-500 text-primary-foreground px-4 py-2 rounded-2xl max-w-sm">
+            <div className="bg-primary text-primary-foreground px-4 py-2 rounded-2xl max-w-sm">
               <span>You dey hung dier you kai say house dey</span>
             </div>
           </div>
@@ -120,12 +120,12 @@ export default function ChatBox() {
               onChange={(e) => setMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Text message"
-              className="w-full px-4 py-3 pr-12 bg-gray-100 rounded-full border-none outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 placeholder-gray-400"
+              className="w-full px-4 py-3 pr-12 bg-secondary rounded-full border-none outline-none focus:ring-2 focus:ring-primary/20 text-foreground placeholder:text-foreground-muted"
             />
 
             {/* Image/Attachment Button */}
-            <button className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-200 rounded-full transition-colors">
-              <Image className="w-5 h-5 text-muted-foreground" />
+            <button className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-secondary-hover rounded-full transition-colors">
+              <Image className="w-5 h-5 text-foreground-muted" />
             </button>
           </div>
 
@@ -133,7 +133,7 @@ export default function ChatBox() {
           <button
             onClick={handleSendMessage}
             disabled={!message.trim()}
-            className="p-3 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground rounded-full transition-colors"
+            className="p-3 bg-primary hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground rounded-full transition-colors cursor-pointer"
           >
             <Send className="w-5 h-5" />
           </button>

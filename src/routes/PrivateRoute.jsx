@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useProfile } from "@/hooks/auth.hook";
-import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
+import SplashScreen from "@/components/SplashScreen";
 
 const PrivateRoute = ({ children }) => {
   const { isLoading, isSuccess, isError } = useProfile();
@@ -11,9 +11,9 @@ const PrivateRoute = ({ children }) => {
     return <Navigate to="/sign-in" replace />;
   }
 
-  // Fetching profile data — show dashboard skeleton
+  // Fetching profile data — show splash screen
   if (isLoading) {
-    return <DashboardSkeleton />;
+    return <SplashScreen />;
   }
 
   // Profile fetch failed — redirect to sign-in
