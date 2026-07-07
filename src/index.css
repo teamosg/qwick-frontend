@@ -79,6 +79,18 @@
   --color-qwick-gray-800: var(--qwick-gray-800);
   --color-qwick-gray-900: var(--qwick-gray-900);
   --color-qwick-gray-950: var(--qwick-gray-950);
+  --color-qwick-red-25: var(--qwick-red-25);
+  --color-qwick-red-50: var(--qwick-red-50);
+  --color-qwick-red-100: var(--qwick-red-100);
+  --color-qwick-red-200: var(--qwick-red-200);
+  --color-qwick-red-300: var(--qwick-red-300);
+  --color-qwick-red-400: var(--qwick-red-400);
+  --color-qwick-red-500: var(--qwick-red-500);
+  --color-qwick-red-600: var(--qwick-red-600);
+  --color-qwick-red-700: var(--qwick-red-700);
+  --color-qwick-red-800: var(--qwick-red-800);
+  --color-qwick-red-900: var(--qwick-red-900);
+  --color-qwick-red-950: var(--qwick-red-950);
   --font-inter: "Inter", sans-serif;
   --font-silkscreen: "Silkscreen", cursive;
   --font-space: "Space Grotesk", sans-serif;
@@ -93,6 +105,20 @@
   --primary-hover: #C20C17;
   --primary-light: #FFF1F2;
   --primary-foreground: #FFFFFF;
+
+  /* Red Palette */
+  --qwick-red-25: #FFE2E4;
+  --qwick-red-50: #FFE2E4;
+  --qwick-red-100: #FEBCC1;
+  --qwick-red-200: #FD979E;
+  --qwick-red-300: #FC727B;
+  --qwick-red-400: #F94E58;
+  --qwick-red-500: #F62B36;
+  --qwick-red-600: #EF0C18;
+  --qwick-red-700: #C20C17;
+  --qwick-red-800: #950A15;
+  --qwick-red-900: #690811;
+  --qwick-red-950: #3E060B;
 
   /* Gray Palette */
   --qwick-gray-25: #FCFCFC;
