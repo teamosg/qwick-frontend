@@ -364,7 +364,7 @@ const ContentRewardDetailsEdit = () => {
                     <Button
                       variant="outline"
                       className={cn(
-                         "w-full justify-start text-left font-normal h-14 rounded-2xl border-2 border-border bg-card text-foreground hover:border-border-strong transition-all focus:border-border-strong dark:focus:border-border-strong",
+                        "w-full justify-start text-left font-normal h-14 rounded-2xl border-2 border-border bg-card text-foreground hover:border-border-strong transition-all focus:border-border-strong dark:focus:border-border-strong",
                         !newEndDate && "text-foreground-muted"
                       )}
                     >
@@ -513,7 +513,13 @@ const ContentRewardDetailsEdit = () => {
                 </p>
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="bg-warning-bg border border-warning/20 rounded-2xl p-4 text-center">
+                <p className="text-sm text-warning font-semibold">
+                  ⚠️ Note: Withdrawals are currently disabled.
+                </p>
+              </div>
+
+              <div className="flex gap-4 pt-2">
                 <button
                   onClick={() => setShowWithdrawModal(false)}
                   className="flex-1 px-6 py-3.5 rounded-2xl font-bold text-foreground-muted hover:bg-secondary/80 transition-all border border-border"
@@ -521,11 +527,10 @@ const ContentRewardDetailsEdit = () => {
                   Cancel
                 </button>
                 <button
-                  onClick={handleWithdrawConfirm}
-                  disabled={isWithdrawing}
-                  className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-red-600 hover:bg-red-700 shadow-lg shadow-red-900/20 disabled:opacity-50 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                  disabled={true}
+                  className="flex-[1.5] px-6 py-3.5 rounded-2xl font-bold text-white bg-red-600 hover:bg-red-700 shadow-lg shadow-red-900/20 disabled:opacity-50 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-not-allowed"
                 >
-                  {isWithdrawing ? "Processing..." : "Yes, Withdraw"}
+                  Yes, Withdraw
                 </button>
               </div>
             </div>
