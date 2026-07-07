@@ -210,7 +210,7 @@ export const useRemoveCommunityMember = (communityUsername) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ userId }) => {
-      const res = await axiosPrivate.post(
+      const res = await axiosPrivate.delete(
         `/v1/communities/${communityUsername}/remove-member/${userId}/`
       );
       return res?.data;
